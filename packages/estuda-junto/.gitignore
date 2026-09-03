@@ -1,0 +1,20 @@
+# Dependencies and build outputs
+node_modules/
+dist/
+build/
+.next/
+
+# Environment and local operational data
+.env
+.env.*
+!.env.example
+*.local
+data/
+.vercel/
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
+
+.vercel
+.env*
