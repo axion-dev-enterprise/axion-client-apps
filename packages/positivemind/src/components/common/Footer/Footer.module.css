@@ -1,0 +1,131 @@
+.footer {
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+  padding: var(--space-3xl) 0 var(--space-lg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.logo {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: var(--space-md);
+}
+
+.slogan {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pm-orange);
+  margin-bottom: var(--space-sm);
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+  max-width: 280px;
+}
+
+.socials {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.socialLink {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pm-gray);
+  border: 1px solid var(--pm-black-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.socialLink:hover {
+  color: var(--pm-orange);
+  border-color: var(--pm-orange);
+}
+
+.colTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pm-white);
+  margin-bottom: var(--space-lg);
+}
+
+.navList,
+.contactList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.navLink,
+.contactLink {
+  font-size: 0.9rem;
+  color: var(--pm-gray-mid);
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover,
+.contactLink:hover {
+  color: var(--pm-orange);
+}
+
+.address {
+  font-size: 0.9rem;
+  color: var(--pm-gray-mid);
+  margin-top: var(--space-sm);
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding-top: var(--space-lg);
+}
+
+.legal,
+.copy {
+  font-size: 0.8rem;
+  color: var(--pm-gray-dark);
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+}

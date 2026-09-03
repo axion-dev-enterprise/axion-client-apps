@@ -1,0 +1,135 @@
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+/* Coluna esquerda — sticky enquanto scroll */
+.left {
+  position: sticky;
+  top: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.titulo {
+  color: var(--pm-white);
+}
+
+.sub {
+  color: var(--pm-gray-mid);
+}
+
+.numeros {
+  display: flex;
+  gap: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.numero {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.numeroValor {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  color: var(--pm-white);
+  line-height: 1;
+}
+
+.numeroLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--pm-gray-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Coluna direita — lista de diferenciais */
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: flex;
+  gap: var(--space-lg);
+  padding: var(--space-xl) 0;
+  border-bottom: 1px solid var(--pm-black-border);
+  transition: padding-left var(--transition-mid);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.item:hover {
+  padding-left: var(--space-md);
+}
+
+.item:hover .itemNumero {
+  color: var(--pm-orange);
+}
+
+.itemNumero {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--pm-gray-dark);
+  letter-spacing: 0.05em;
+  min-width: 28px;
+  padding-top: 3px;
+  transition: color var(--transition-fast);
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.itemTitulo {
+  color: var(--pm-white);
+  font-size: 1.1rem;
+}
+
+.itemDescricao {
+  color: var(--pm-gray-mid);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    position: static;
+  }
+}
+
+@media (max-width: 599px) {
+  .numeros {
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+  }
+
+  .numeroValor {
+    font-size: 2rem;
+  }
+}

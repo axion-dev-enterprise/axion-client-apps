@@ -1,0 +1,168 @@
+.section {
+  padding: var(--space-4xl) 0;
+  background: var(--pm-black);
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--pm-black);
+  background: var(--pm-orange);
+  padding: 6px 14px;
+  border-radius: var(--radius-xl);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  color: var(--pm-white);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin-top: var(--space-sm);
+}
+
+.accent {
+  color: var(--pm-orange);
+}
+
+.subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--pm-gray-mid);
+  max-width: 720px;
+  margin-bottom: var(--space-xl);
+}
+
+.entregaveisGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  width: 100%;
+  margin-bottom: var(--space-2xl);
+  text-align: left;
+}
+
+.cardEntregavel {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.iconCircle {
+  width: 36px;
+  height: 36px;
+  background: rgba(245, 166, 35, 0.1);
+  color: var(--pm-orange);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.cardDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--pm-gray-mid);
+}
+
+.footerDestaque {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  padding: var(--space-2xl);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.politicas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xl);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--pm-white);
+  font-weight: 500;
+}
+
+.politicaItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.check {
+  color: var(--pm-orange);
+  font-weight: 700;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 36px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.btnPrimary:hover {
+  background: var(--pm-orange-hover);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1023px) {
+  .entregaveisGrid {
+    grid-template-columns: 1fr;
+  }
+  .politicas {
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+}

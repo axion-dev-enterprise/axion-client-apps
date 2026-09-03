@@ -1,0 +1,172 @@
+.section {
+  padding: var(--space-4xl) 0;
+  background: var(--pm-black-soft);
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pm-orange);
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  color: var(--pm-white);
+  text-transform: uppercase;
+  max-width: 800px;
+  line-height: 1.1;
+  margin-bottom: var(--space-xl);
+}
+
+.accent {
+  color: var(--pm-orange);
+}
+
+.gridDores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+
+.cardDor {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  padding: var(--space-xl);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.cardDor:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+  transform: translateY(-4px);
+}
+
+.cardNum {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 2rem;
+  color: var(--pm-orange);
+  line-height: 1;
+}
+
+.cardTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.35rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+}
+
+.cardDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--pm-gray-mid);
+}
+
+.splitSintomas {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-3xl);
+  align-items: center;
+  border-top: 1px solid var(--pm-black-border);
+  padding-top: var(--space-3xl);
+}
+
+.sintomasLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.sintomasTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.sintomasText {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--pm-gray-mid);
+}
+
+.btnCta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--pm-orange);
+  border: 1px solid var(--pm-orange);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btnCta:hover {
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  transform: translateY(-2px);
+}
+
+.sintomasRight {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+}
+
+.listSintomas {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.sintomaItem {
+  display: flex;
+  gap: var(--space-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--pm-gray);
+  align-items: flex-start;
+}
+
+.sintomaIcon {
+  width: 20px;
+  height: 20px;
+  color: #EF4444; /* Vermelho para dores */
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+@media (max-width: 1023px) {
+  .gridDores {
+    grid-template-columns: 1fr;
+  }
+  .splitSintomas {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}

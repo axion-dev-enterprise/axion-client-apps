@@ -1,0 +1,287 @@
+.orange { color: var(--pm-orange); }
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.titulo { color: var(--pm-white); }
+
+/* Parceria */
+.parceriaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.parceriaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.parceriaVisual {}
+
+.photoPlaceholder {
+  aspect-ratio: 4/3;
+  background: var(--pm-black-card);
+  border: 2px dashed var(--pm-black-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: 3.5rem;
+}
+
+.photoPlaceholder p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: var(--pm-gray-dark);
+}
+
+.placeholderNote {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--pm-orange);
+  background: rgba(245, 166, 35, 0.1);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.parceriaContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  width: fit-content;
+}
+
+.badgeText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--pm-orange);
+}
+
+.desc { color: var(--pm-gray-mid); }
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 28px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.ctaBtn:hover {
+  background: var(--pm-orange-hover);
+  color: var(--pm-black);
+  transform: translateY(-1px);
+}
+
+/* Estrutura */
+.estruturaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.estruturaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.estruturaCard {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: border-color var(--transition-mid), transform var(--transition-mid);
+}
+
+.estruturaCard:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+  transform: translateY(-2px);
+}
+
+.estruturaIcone { font-size: 2rem; line-height: 1; }
+
+.estruturaTitulo {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--pm-white);
+}
+
+.estruturaDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.6;
+}
+
+/* Atividades */
+.atividadesSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.atividadesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.atividadeCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition: border-color var(--transition-fast);
+}
+
+.atividadeCard:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+}
+
+.atividadeIcone {
+  font-size: 1.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.atividadeNome {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--pm-white);
+  margin-bottom: 4px;
+}
+
+.atividadeDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.55;
+}
+
+/* Galeria */
+.galeriaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.galeriaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.galeriaItem {
+  aspect-ratio: 4/3;
+  background: var(--pm-black-card);
+  border: 1px dashed var(--pm-black-border);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0.35;
+}
+
+.galeriaNota {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--pm-gray-dark);
+  font-style: italic;
+}
+
+/* CTA */
+.ctaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.ctaInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-lg);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.ctaTitulo { color: var(--pm-white); }
+
+.ctaSub {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.65;
+}
+
+.ctaBtnLarge {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 36px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ctaBtnLarge:hover {
+  background: var(--pm-orange-hover);
+  color: var(--pm-black);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1023px) {
+  .parceriaGrid { grid-template-columns: 1fr; }
+  .estruturaGrid { grid-template-columns: repeat(2, 1fr); }
+  .galeriaGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .atividadesGrid { grid-template-columns: 1fr; }
+  .estruturaGrid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 599px) {
+  .galeriaGrid { grid-template-columns: 1fr; }
+  .ctaBtnLarge { width: 100%; justify-content: center; }
+}

@@ -1,0 +1,74 @@
+.orange { color: var(--pm-orange); }
+
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  max-width: 560px;
+}
+
+.titulo { color: var(--pm-white); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-lg);
+}
+
+.card {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-mid), transform var(--transition-mid);
+}
+
+.card:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+  transform: translateY(-2px);
+}
+
+.video {
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: block;
+  background: var(--pm-black);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-md) var(--space-lg);
+}
+
+.nome {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--pm-white);
+}
+
+.cargo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--pm-gray-mid);
+}
+
+.empresa {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--pm-orange);
+}
+
+@media (max-width: 767px) {
+  .grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,143 @@
+.section {
+  padding: var(--space-4xl) 0;
+  background: var(--pm-black-soft);
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pm-orange);
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--pm-white);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2xl);
+}
+
+.accent {
+  color: var(--pm-orange);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+}
+
+.card {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-mid), transform var(--transition-mid);
+}
+
+.card:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+  transform: translateY(-4px);
+}
+
+.fotoWrapper {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform var(--transition-mid);
+}
+
+.card:hover .foto {
+  transform: scale(1.03);
+}
+
+.badgeServico {
+  position: absolute;
+  bottom: var(--space-sm);
+  left: var(--space-sm);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pm-orange);
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+}
+
+.cardContent {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  flex: 1;
+}
+
+.quoteIcon {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--pm-orange);
+  opacity: 0.25;
+  line-height: 0.7;
+  margin-bottom: -10px;
+}
+
+.quoteText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--pm-gray-mid);
+  flex: 1;
+}
+
+.autor {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--pm-black-border);
+  margin-top: auto;
+}
+
+.nome {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.cargo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--pm-gray-dark);
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

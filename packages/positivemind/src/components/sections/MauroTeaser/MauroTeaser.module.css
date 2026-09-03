@@ -1,0 +1,141 @@
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+.foto {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+.fotoOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--pm-black) 0%, transparent 100%);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.nome {
+  color: var(--pm-white);
+  line-height: 1;
+}
+
+.titulo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--pm-orange);
+  line-height: 1.5;
+}
+
+.bio {
+  color: var(--pm-gray-mid);
+  max-width: 520px;
+}
+
+.especialidades {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.especialidadesLabel {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--pm-gray-dark);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--pm-gray);
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-xl);
+  padding: 5px 12px;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.tag:hover {
+  border-color: rgba(245, 166, 35, 0.4);
+  color: var(--pm-white);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--pm-orange);
+  border-bottom: 1px solid rgba(245, 166, 35, 0.3);
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: border-color var(--transition-fast);
+}
+
+.cta:hover {
+  border-color: var(--pm-orange);
+}
+
+@media (max-width: 1199px) {
+  .layout {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .foto {
+    max-width: 360px;
+    margin: 0 auto;
+  }
+
+  .img {
+    aspect-ratio: 1/1;
+  }
+}
+
+@media (max-width: 479px) {
+  .cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

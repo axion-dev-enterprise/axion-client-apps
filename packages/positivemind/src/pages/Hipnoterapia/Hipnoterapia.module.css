@@ -1,0 +1,166 @@
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.contentCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.subTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--pm-gray-mid);
+}
+
+.gridFoco {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.cardFoco {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.cardFoco:hover {
+  border-color: rgba(245, 166, 35, 0.2);
+}
+
+.cardTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--pm-orange);
+  text-transform: uppercase;
+}
+
+.cardDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--pm-gray-mid);
+}
+
+.caseBox {
+  background: rgba(245, 166, 35, 0.04);
+  border: 1px solid rgba(245, 166, 35, 0.15);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.caseTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+  margin-bottom: var(--space-xs);
+}
+
+.caseDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--pm-gray-mid);
+}
+
+.ctaCol {
+  position: sticky;
+  top: 108px;
+}
+
+.ctaCard {
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  align-items: center;
+  text-align: center;
+}
+
+.ctaTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.ctaDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--pm-gray-mid);
+}
+
+.btnPrimary {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 20px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btnPrimary:hover {
+  background: var(--pm-orange-hover);
+  transform: translateY(-2px);
+}
+
+.telefone {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  color: var(--pm-gray-dark);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+  .ctaCol {
+    position: static;
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .gridFoco {
+    grid-template-columns: 1fr;
+  }
+}

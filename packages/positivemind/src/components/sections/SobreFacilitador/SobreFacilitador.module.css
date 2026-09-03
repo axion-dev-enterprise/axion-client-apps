@@ -1,0 +1,151 @@
+.section {
+  padding: var(--space-4xl) 0;
+  background: var(--pm-black-soft);
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--pm-orange);
+  margin-bottom: var(--space-xs);
+  display: block;
+}
+
+.title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--pm-white);
+  text-transform: uppercase;
+  margin-bottom: var(--space-2xl);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: var(--space-3xl);
+  align-items: start;
+}
+
+.imageCol {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--pm-black-border);
+  box-shadow: var(--shadow-card);
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-mid);
+}
+
+.imageCol:hover .image {
+  transform: scale(1.03);
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.subTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+}
+
+.cargos {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--pm-orange);
+}
+
+.bio {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--pm-gray-mid);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+  margin: var(--space-lg) 0;
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statValor {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 1.75rem;
+  color: var(--pm-orange);
+  line-height: 1.1;
+}
+
+.statRotulo {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--pm-gray-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btnCta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.btnCta:hover {
+  background: var(--pm-orange-hover);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .imageCol {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+}

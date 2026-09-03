@@ -1,0 +1,74 @@
+:root {
+  /* Positive Mind Brand Colors */
+  --pm-orange:        #F5A623;
+  --pm-orange-hover:  #E8951A;
+  --pm-orange-dark:   #C47D10;
+  --pm-orange-light:  #FBD08A;
+  --pm-black:         #0A0A0A;
+  --pm-black-soft:    #141414;
+  --pm-black-card:    #1A1A1A;
+  --pm-black-border:  #2A2A2A;
+  --pm-gray:          #D4D4D4;
+  --pm-gray-mid:      #9E9E9E;
+  --pm-gray-dark:     #555555;
+  --pm-white:         #FFFFFF;
+
+  /* Spacing scale */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:   16px;
+  --space-lg:   24px;
+  --space-xl:   40px;
+  --space-2xl:  64px;
+  --space-3xl:  96px;
+  --space-4xl:  128px;
+
+  /* Border radius */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  16px;
+  --radius-xl:  24px;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card-hover: 0 8px 40px rgba(245, 166, 35, 0.25);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-mid:  250ms ease;
+
+  /* Container */
+  --container-max: 1280px;
+  --container-px:  24px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --space-xl:  28px;
+    --space-2xl: 40px;
+    --space-3xl: 56px;
+    --space-4xl: 80px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-px: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --container-px: 64px;
+  }
+}
+
+/* Override Atlaskit blue tokens with Positive Mind orange */
+:root {
+  --ds-background-brand-bold:         var(--pm-orange);
+  --ds-background-brand-bold-hovered: var(--pm-orange-hover);
+  --ds-background-brand-bold-pressed: var(--pm-orange-dark);
+  --ds-text-brand:                    var(--pm-orange);
+  --ds-link:                          var(--pm-orange);
+  --ds-link-pressed:                  var(--pm-orange-dark);
+}

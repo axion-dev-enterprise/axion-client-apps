@@ -1,0 +1,108 @@
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-orange);
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(10, 10, 10, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.titulo {
+  color: var(--pm-black);
+  line-height: 1.0;
+}
+
+.sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: rgba(10, 10, 10, 0.7);
+  line-height: 1.65;
+  max-width: 420px;
+}
+
+.acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.btnWhatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: var(--pm-black);
+  color: var(--pm-white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btnWhatsapp:hover {
+  background: #111;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.btnEmail {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: rgba(10, 10, 10, 0.75);
+  border-bottom: 1px solid rgba(10, 10, 10, 0.3);
+  padding-bottom: 2px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.btnEmail:hover {
+  color: var(--pm-black);
+  border-color: var(--pm-black);
+}
+
+.info {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(10, 10, 10, 0.55);
+}
+
+@media (max-width: 1023px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+@media (max-width: 599px) {
+  .btnWhatsapp {
+    width: 100%;
+    justify-content: center;
+  }
+}

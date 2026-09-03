@@ -1,0 +1,370 @@
+.orange { color: var(--pm-orange); }
+.titulo { color: var(--pm-white); }
+.desc { color: var(--pm-gray-mid); }
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  max-width: 680px;
+}
+
+/* ─── ESPAÇO ─── */
+.espacoSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.espacoAlt {
+  background: var(--pm-black-soft);
+}
+
+.espacoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.espacoVisual {}
+
+.espacoBgVideo {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  display: block;
+  object-fit: cover;
+}
+
+.espacoFoto {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  object-fit: cover;
+  display: block;
+}
+
+.photoPlaceholder {
+  aspect-ratio: 4/3;
+  background: var(--pm-black-card);
+  border: 2px dashed var(--pm-black-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: 3.5rem;
+}
+
+.photoPlaceholder p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: var(--pm-gray-dark);
+}
+
+.placeholderNote {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: var(--pm-orange);
+  background: rgba(245, 166, 35, 0.1);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.espacoContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  width: fit-content;
+}
+
+.badgeText {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--pm-orange);
+}
+
+.espacoMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.metaTag {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--pm-gray-mid);
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+}
+
+/* ─── ATIVIDADES ─── */
+.atividadesList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.atividadesTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--pm-white);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.atividadesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.atividadeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.atividadeItem strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pm-white);
+  margin-bottom: 2px;
+}
+
+.atividadeItem p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ─── CTAs ─── */
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 28px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.ctaBtn:hover {
+  background: var(--pm-orange-hover);
+  color: var(--pm-black);
+  transform: translateY(-1px);
+}
+
+/* ─── GALERIA ─── */
+.galeriaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.galeriaGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.galeriaItem {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--pm-black-card);
+}
+
+.galeriaImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.galeriaItem:hover .galeriaImg {
+  transform: scale(1.04);
+}
+
+/* ─── BADGE ROW ─── */
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.parceiroBadge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--pm-gray-dark);
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+}
+
+/* ─── LIBERDADE DE ESCOLHA ─── */
+.liberdadeSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black-soft);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.liberdadeInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.liberdadeContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.liberdadeDesc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.liberdadeCards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.liberdadeCard {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--pm-black-card);
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md) var(--space-lg);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--pm-gray-mid);
+  font-size: 1.25rem;
+  gap: var(--space-sm);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.liberdadeCard span:first-child {
+  font-size: 1.4rem;
+}
+
+.liberdadeCard span:last-child {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--pm-gray-mid);
+}
+
+.liberdadeCard:hover {
+  border-color: rgba(245, 166, 35, 0.3);
+  color: var(--pm-white);
+}
+
+.liberdadeCard:hover span:last-child {
+  color: var(--pm-white);
+}
+
+/* ─── CTA FINAL ─── */
+.ctaSection {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+}
+
+.ctaInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-lg);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.ctaTitulo { color: var(--pm-white); }
+
+.ctaSub {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--pm-gray-mid);
+  line-height: 1.65;
+}
+
+.ctaBtnLarge {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 36px;
+  background: var(--pm-orange);
+  color: var(--pm-black);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ctaBtnLarge:hover {
+  background: var(--pm-orange-hover);
+  color: var(--pm-black);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 1023px) {
+  .espacoGrid { grid-template-columns: 1fr; }
+  .atividadesGrid { grid-template-columns: 1fr; }
+  .galeriaGrid { grid-template-columns: repeat(3, 1fr); }
+  .liberdadeInner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767px) {
+  .galeriaGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 599px) {
+  .ctaBtnLarge { width: 100%; justify-content: center; }
+  .ctaBtn { width: 100%; justify-content: center; }
+  .espacoMeta { gap: var(--space-xs); }
+}

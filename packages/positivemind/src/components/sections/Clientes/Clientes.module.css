@@ -1,0 +1,113 @@
+.section {
+  padding: var(--space-3xl) 0;
+  background: var(--pm-black);
+  border-top: 1px solid var(--pm-black-border);
+  overflow: hidden;
+}
+
+.header {
+  margin-bottom: var(--space-2xl);
+}
+
+.titulo {
+  color: var(--pm-white);
+  margin-top: var(--space-md);
+}
+
+/* Carrossel */
+.carrossel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+  /* fade nas bordas */
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.track {
+  overflow: hidden;
+}
+
+.list {
+  display: flex;
+  gap: var(--space-lg);
+  width: max-content;
+  animation: scrollLeft 40s linear infinite;
+}
+
+.listReverse {
+  animation: scrollRight 40s linear infinite;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 120px;
+  height: 80px;
+  background: #fff;
+  border: 1px solid var(--pm-black-border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: default;
+}
+
+.item:hover {
+  border-color: rgba(245, 166, 35, 0.4);
+  box-shadow: 0 0 0 2px rgba(245, 166, 35, 0.15);
+}
+
+.itemLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.itemTexto {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  color: #333;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.nota {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--pm-gray-dark);
+  text-align: center;
+  line-height: 1.7;
+}
+
+@keyframes scrollLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes scrollRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Pausa no hover */
+.track:hover .list {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .list,
+  .listReverse {
+    animation: none;
+  }
+
+  .list {
+    flex-wrap: wrap;
+    width: auto;
+    padding: 0 var(--container-px);
+  }
+}

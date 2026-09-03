@@ -1,0 +1,28 @@
+.hero {
+  background: var(--pm-black);
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--pm-black-border);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 760px;
+}
+
+.eyebrow {
+  color: var(--pm-orange);
+}
+
+.titulo {
+  color: var(--pm-white);
+}
+
+.highlight {
+  color: var(--pm-orange);
+}
+
+.sub {
+  color: var(--pm-gray-mid);
+}
