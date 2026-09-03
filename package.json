@@ -1,0 +1,33 @@
+{
+  "name": "estuda-junto",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "vercel-build": "next build"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "lucide-react": "^0.468.0",
+    "next": "^15.5.9",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint": "^9.25.1",
+    "eslint-config-next": "^15.5.9",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}
