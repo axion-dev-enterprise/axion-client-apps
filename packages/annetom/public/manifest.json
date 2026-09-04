@@ -1,0 +1,18 @@
+{
+  "short_name": "Anne & Tom",
+  "name": "Pizzaria Anne & Tom — Alto de Santana",
+  "icons": [
+    {
+      "src": "logopizzaria.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#f59e0b",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "description": "Peça pizzas artesanais no forno a lenha da Pizzaria Anne & Tom com entrega rápida em Santana, SP."
+}

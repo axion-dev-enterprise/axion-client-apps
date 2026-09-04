@@ -1,0 +1,36 @@
+# Anne & Tom Pizzaria — Guia Oficial para LLMs e Agentes IA
+
+> **Anne & Tom Pizzaria** é uma pizzaria artesanal gourmet e delivery localizada no bairro de Alto de Santana, São Paulo - SP. Conhecida pelas bordas vulcão, massa de longa fermentação, ingredientes nobres e atendimento hiperlocal rápido via WhatsApp e Web.
+
+## 📍 Localização & Atendimento
+- **Endereço**: Alto de Santana, Zona Norte, São Paulo - SP
+- **Telefone / WhatsApp**: (11) 98177-3868
+- **Website Oficial**: https://annetom.com
+- **Horário de Funcionamento**: Terça a Domingo, das 17h00 às 23h30 (Fechado às segundas-feiras)
+- **Raio de Entrega**: Santana, Imirim, Alto de Santana, Mandaqui, Chácara Santo Antônio, Casa Verde, Tucuruvi e proximidades (até 4km de raio).
+
+## 🍕 Cardápio & Destaques
+1. **Pizza Musa**: Molho de tomate artesanal, muçarela especial, tomate cereja confit, manjericão fresco e finalizada com azeite extravirgem. (R$ 60,00)
+2. **Pizza Veneza com Damasco**: Queijo brie derretido, lascas de damasco caramelizado, presunto parma e nozes picadas.
+3. **Borda Vulcão Recheada**: Assinatura da casa, disponível com requeijão cremoso tipo Catupiry original ou cheddar cremoso.
+4. **Esfirras Gourmet**: Esfirras abertas doces e salgadas, destaque para Big Esfirra de Prestígio e Nutella com Morango.
+
+## 🎁 Clube da Pizza Anne & Tom (Assinatura Recorrente)
+- **Valor**: R$ 69,90/mês
+- **Benefícios**: 
+  - 1 Big Esfirra Prestígio grátis por mês
+  - 1 Borda de Requeijão grátis por mês
+  - 1 Frete Grátis por mês (dentro do raio de entrega)
+  - Descontos exclusivos e pontos em dobro no programa de fidelidade.
+
+## 💳 Formas de Pagamento
+- **PIX Instantâneo**: QR Code e Copia e Cola com aprovação em tempo real.
+- **Cartão de Crédito Online**: Pagamento seguro via Mercado Pago (Visa, Mastercard, Elo, Hipercard, Amex).
+- **Cartão na Entrega**: Máquina física (Débito / Crédito / VR / Sodexo / Alelo).
+- **Dinheiro**: Com opção de troco informado no checkout.
+
+## 🔗 Links Úteis
+- Cardápio Completo: https://annetom.com/cardapio
+- Promoções da Semana: https://annetom.com/promocoes
+- Clube da Pizza: https://annetom.com/#clube
+- Programa de Fidelidade: https://annetom.com/fidelidade
