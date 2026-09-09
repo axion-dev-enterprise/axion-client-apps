@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Simples — Gramaticalizando</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/diagnostico.css">
+</head>
+<body class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="dashboard-container">
+      <div class="dashboard-brand">
+        <img src="/assets/img/logo.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-right: 8px; border-radius: 4px;" />
+        <div>
+          <div class="dashboard-title">Gramaticalizando</div>
+          <div>Diagnóstico rápido</div>
+        </div>
+      </div>
+
+      <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+      <nav class="nav-links" data-mobile-menu>
+        <span style="color: #9ca3af; font-size: 0.875rem;">Complete o diagnóstico para continuar</span>
+      </nav>
+
+      <div class="dashboard-user"></div>
+    </div>
+  </header>
+
+  <main class="diagnostic-page">
+    <div class="diagnostic-header">
+      <p class="dashboard-title">Diagnóstico rápido</p>
+      <h1>Conte um pouco sobre seus objetivos e seu nível atual.</h1>
+      <p>Com essas respostas, a plataforma ajusta a jornada de estudos antes de você entrar no painel principal.</p>
+    </div>
+
+    <div class="diagnostic-grid">
+      <section class="diagnostic-card">
+        <h2>Objetivos</h2>
+        <form id="diagnosticForm" class="diagnostic-form">
+          <div class="form-group">
+            <label for="objetivo">Qual é seu objetivo principal?</label>
+            <select id="objetivo" required>
+              <option value="concurso_publico">Concurso público</option>
+              <option value="enem">ENEM</option>
+              <option value="vestibular">Vestibular</option>
+              <option value="escola_faculdade">Escola / Faculdade</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="materia">Qual matéria você quer focar primeiro?</label>
+            <select id="materia" required>
+              <option value="Português">Português</option>
+              <option value="Matemática">Matemática</option>
+              <option value="Redação">Redação</option>
+              <option value="Interpretação de texto">Interpretação de texto</option>
+              <option value="Outras">Outras</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prova">Prova ou curso alvo</label>
+            <input id="prova" type="text" placeholder="Ex.: ENEM, OAB, Bacharelado" required>
+          </div>
+
+          <div class="form-group">
+            <label for="horas">Horas disponíveis por semana</label>
+            <input id="horas" type="number" min="1" max="80" placeholder="Ex.: 12" required>
+          </div>
+
+          <div class="form-group">
+            <label>Como você descreveria seu objetivo?</label>
+            <div class="radio-grid">
+              <label class="radio-card"><input type="radio" name="objetivo_descricao" value="concluir_prova" checked><span>Concluir a prova com confiança</span></label>
+              <label class="radio-card"><input type="radio" name="objetivo_descricao" value="melhorar_notas"><span>Melhorar notas/resultado</span></label>
+              <label class="radio-card"><input type="radio" name="objetivo_descricao" value="organizar_estudo"><span>Organizar os estudos</span></label>
+            </div>
+          </div>
+
+          <div class="submit-actions">
+            <button type="submit" class="btn btn-primary">Continuar</button>
+          </div>
+        </form>
+      </section>
+
+      <aside class="diagnostic-card">
+        <h2>Sobre você</h2>
+        <div class="form-group">
+          <label>Como você avalia seu nível atual?</label>
+          <div class="radio-grid">
+            <label class="radio-card"><input type="radio" name="nivel" value="iniciante" checked><span>Iniciante</span></label>
+            <label class="radio-card"><input type="radio" name="nivel" value="intermediario"><span>Intermediário</span></label>
+            <label class="radio-card"><input type="radio" name="nivel" value="avancado"><span>Avançado</span></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Como está sua confiança nos estudos?</label>
+          <div class="radio-grid">
+            <label class="radio-card"><input type="radio" name="confianca" value="baixa" checked><span>Baixa</span></label>
+            <label class="radio-card"><input type="radio" name="confianca" value="media"><span>Média</span></label>
+            <label class="radio-card"><input type="radio" name="confianca" value="alta"><span>Alta</span></label>
+          </div>
+        </div>
+
+        <div class="diagnostic-tip">
+          Responda com honestidade para que a plataforma direcione o conteúdo certo para você. Depois do cadastro, você poderá acessar o painel principal e começar a estudar.
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/diagnostico.js"></script>
+</body>
+</html>

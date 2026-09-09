@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor — Materiais</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class='professor-brand' href='/professor/index.html'>
+        <div class="professor-brand-mark">P</div>
+        <div class="professor-brand-text">
+          <span>Gramaticalizando</span>
+          <small>Painel do professor</small>
+        </div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
+          <span class="professor-nav-icon">🏠</span>
+          Painel
+        </a>
+        <a class='professor-nav-item' data-nav-item='students' href='/professor/alunos.html'>
+          <span class="professor-nav-icon">👥</span>
+          Alunos
+        </a>
+        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
+          <span class="professor-nav-icon">📝</span>
+          Redações
+        </a>
+        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
+          <span class="professor-nav-icon">📖</span>
+          Português
+        </a>
+        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
+          <span class="professor-nav-icon">📊</span>
+          Diagnósticos
+        </a>
+        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
+          <span class="professor-nav-icon">✏️</span>
+          Correções
+        </a>
+        <a class='professor-nav-item' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
+          <span class="professor-nav-icon">🎥</span>
+          Videoaulas
+        </a>
+        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
+          <span class="professor-nav-icon">🧾</span>
+          Simulados
+        </a>
+        <a class='professor-nav-item active' data-nav-item='materiais' href='/professor/materiais.html'>
+          <span class="professor-nav-icon">📚</span>
+          Material
+        </a>
+        <a class='professor-nav-item' data-nav-item='cronograma' href='/professor/cronograma.html'>
+          <span class="professor-nav-icon">📅</span>
+          Cronograma
+        </a>
+        <a class='professor-nav-item' data-nav-item='profile' href='/professor/perfil.html'>
+          <span class="professor-nav-icon">👤</span>
+          Meu perfil
+        </a>
+        <a class='professor-nav-item' data-nav-item='settings' href='/professor/configuracoes.html'>
+          <span class="professor-nav-icon">⚙️</span>
+          Configurações
+        </a>
+      </nav>
+      <div class="professor-sidebar-footer">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
+      </div>
+    </aside>
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting">
+          <h1>Materiais</h1>
+          <p>Centralize conteúdos e materiais de apoio para os alunos.</p>
+        </div>
+      </header>
+      <section class="professor-content">
+        <div class="page-heading">
+          <div>
+            <h1>Materiais</h1>
+            <p>Envie PDFs, anotações e recursos para enriquecer o estudo.</p>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; margin-top: 1.5rem;">
+          <article class="panel-card">
+            <h3>Publicar Novo Material</h3>
+            <p style="font-size: 0.85rem; color: #6b607d; margin-bottom: 1rem;">Envie apostilas, guias e resumos didáticos aos alunos.</p>
+            <form id="formAddMaterial" style="display: flex; flex-direction: column; gap: 0.85rem;">
+              <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Título do Material</label>
+                <input type="text" id="matTitulo" required placeholder="Ex: Manual de Conectivos para Redação" style="width: 100%; box-sizing: border-box; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;" />
+              </div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                  <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Categoria</label>
+                  <select id="matCategoria" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;">
+                    <option value="Gramática">Gramática</option>
+                    <option value="Redação">Redação</option>
+                    <option value="Exercícios">Exercícios</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Formato</label>
+                  <select id="matFormato" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;">
+                    <option value="PDF">PDF</option>
+                    <option value="Apostila">Apostila</option>
+                    <option value="Mapa Mental">Mapa Mental</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Tamanho</label>
+                <input type="text" id="matTamanho" value="2.5 MB" required style="width: 100%; box-sizing: border-box; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Descrição Curta</label>
+                <textarea id="matDescricao" rows="2" placeholder="Explicação resumida do material" style="width: 100%; box-sizing: border-box; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit; resize: vertical;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="background: #7c3aed; color: #fff; margin-top: 0.5rem; padding: 0.7rem; border-radius: 8px; border: none; font-weight: 700; cursor: pointer;">
+                + Publicar Material
+              </button>
+            </form>
+          </article>
+
+          <section class="activities-card">
+            <div class="activities-header">
+              <div>
+                <h2>Repositório de Materiais</h2>
+                <p>Materiais didáticos ativos disponíveis para download pelos alunos.</p>
+              </div>
+            </div>
+            <div id="professorMaterialsList" class="activities-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../assets/js/professor/materiais.js"></script>
+</body>
+</html>

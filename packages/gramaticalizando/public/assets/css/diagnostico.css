@@ -1,0 +1,131 @@
+/* @import "./shared-dashboard.css" resolved */
+
+.diagnostic-page {
+  padding: 2rem 1rem 3rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.diagnostic-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.diagnostic-header {
+  padding: 2rem;
+  border-radius: 2rem;
+  background: var(--surface);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: var(--shadow-soft);
+}
+
+.diagnostic-header h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 2.7vw, 2.6rem);
+}
+
+.diagnostic-header p {
+  margin: 0;
+  color: var(--text-medium);
+  line-height: 1.8;
+}
+
+.diagnostic-card {
+  padding: 1.8rem;
+  border-radius: 1.8rem;
+  background: var(--surface);
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  box-shadow: var(--shadow-soft);
+}
+
+.diagnostic-card h2 {
+  margin: 0 0 1rem;
+  font-size: 1.35rem;
+}
+
+.diagnostic-form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  border-radius: 1rem;
+  padding: 0.95rem 1rem;
+  background: #fff;
+  color: var(--text-dark);
+}
+
+.form-group textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.radio-grid {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.radio-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.radio-card:hover {
+  border-color: rgba(124, 58, 237, 0.25);
+  transform: translateY(-1px);
+}
+
+.radio-card input {
+  accent-color: var(--accent);
+}
+
+.radio-card span {
+  color: var(--text-medium);
+}
+
+.submit-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit-actions .btn {
+  min-width: 160px;
+}
+
+.diagnostic-tip {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  background: #f9f7ff;
+  border: 1px solid rgba(124, 58, 237, 0.12);
+  color: var(--text-medium);
+}
+
+@media (max-width: 960px) {
+  .diagnostic-grid {
+    grid-template-columns: 1fr;
+  }
+}

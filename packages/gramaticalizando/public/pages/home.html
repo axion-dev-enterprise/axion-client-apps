@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home — Gramaticalizando</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/home.css">
+  <script>
+    // Verificar se diagnóstico foi completado (apenas para alunos, não para professores)
+    const usuarioLogado = localStorage.getItem('usuarioLogado_v1');
+    const usuario = usuarioLogado ? JSON.parse(usuarioLogado) : null;
+    
+    // Professor não precisa fazer diagnóstico
+    if (usuario && usuario.tipo === 'professor') {
+      // Professor pode acessar normalmente
+    } else {
+      // Aluno precisa ter feito o diagnóstico
+      const diagnostico = localStorage.getItem('diagnostico_simples');
+      if (!diagnostico) {
+        window.location.href = './diagnostico.html';
+      }
+    }
+  </script>
+</head>
+<body class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="dashboard-container">
+      <a class='dashboard-brand' href='/pages/home.html'>
+        <img src="/assets/img/logo.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-right: 8px; border-radius: 4px;" />
+        <div>
+          <div class="dashboard-title">Gramaticalizando</div>
+          <div>Ambiente do aluno</div>
+        </div>
+      </a>
+
+      <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+
+      <nav class="nav-links" data-mobile-menu>
+        <a href='/pages/home.html'>Home</a>
+        <a href='/pages/portugues.html'>Português</a>
+        <a href='/pages/redacao.html'>Redação</a>
+        <a href='/pages/videoaulas.html'>Videoaulas</a>
+        <a href='/pages/simulados.html'>Simulados</a>
+        <a href='/pages/materiais.html'>Material</a>
+        <a href='/pages/cronograma.html'>Cronograma</a>
+        <a href='/pages/perfil.html'>Perfil</a>
+        <a href='/pages/configuracoes.html'>Configurações</a>
+      </nav>
+
+      <div class="dashboard-user">
+        <button type="button" class="dashboard-user-button" data-profile-button>
+          <span class="dashboard-user-avatar">U</span>
+          <span>Meu perfil</span>
+        </button>
+        <div class="user-menu" data-profile-menu>
+          <a href='/pages/perfil.html'>Meu Perfil</a>
+          <a href='/pages/configuracoes.html'>Configurações</a>
+          <a href='/pages/login.html'>Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="dashboard-hero">
+      <div class="welcome-panel">
+        <p class="dashboard-title">Bem-vindo de volta!</p>
+        <h1>Continue seus estudos com foco e clareza.</h1>
+        <p>Seu diagnóstico foi concluído. Agora você pode acessar redações, videoaulas, simulados e o cronograma personalizado para avançar com mais confiança.</p>
+        <div class="hero-actions">
+          <a class='btn btn-primary' href='/pages/simulados.html'>Ver simulados</a>
+          <a class='btn btn-secondary' href='/pages/cronograma.html'>Abrir cronograma</a>
+          <a class='btn btn-secondary' href='/professor/index.html'>Painel do professor</a>
+        </div>
+      </div>
+
+      <div class="welcome-illustration">
+        <svg viewBox="0 0 520 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="40" y="40" width="440" height="340" rx="36" fill="url(#paint0_linear)"/>
+          <circle cx="360" cy="140" r="44" fill="#fff" opacity="0.8"/>
+          <path d="M152 260C172 245 210 218 246 239C286 262 310 200 360 184" stroke="white" stroke-width="18" stroke-linecap="round"/>
+          <rect x="110" y="110" width="260" height="36" rx="18" fill="#fff" opacity="0.9"/>
+          <rect x="110" y="170" width="320" height="20" rx="10" fill="#fff" opacity="0.8"/>
+          <rect x="110" y="205" width="260" height="20" rx="10" fill="#fff" opacity="0.8"/>
+          <rect x="110" y="240" width="180" height="20" rx="10" fill="#fff" opacity="0.8"/>
+          <defs>
+            <linearGradient id="paint0_linear" x1="260" y1="40" x2="260" y2="380" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FFFFFF"/>
+              <stop offset="1" stop-color="#f7f0ff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <section class="dashboard-grid">
+      <article class="dashboard-card" onclick="location.href='./redacao.html'">
+        <div class="dashboard-card-icon">✍️</div>
+        <h3>Redação</h3>
+        <p>Escrever redações, acompanhar correções e rever o histórico.</p>
+        <ul class="dashboard-card-list">
+          <li>Escrever redações</li>
+          <li>Ver correções</li>
+          <li>Histórico completo</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" onclick="location.href='./videoaulas.html'">
+        <div class="dashboard-card-icon">🎥</div>
+        <h3>Videoaulas</h3>
+        <p>Assista aulas gravadas, continue de onde parou e salve favoritas.</p>
+        <ul class="dashboard-card-list">
+          <li>Aulas gravadas</li>
+          <li>Últimas assistidas</li>
+          <li>Favoritas</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" onclick="location.href='./simulados.html'">
+        <div class="dashboard-card-icon">📝</div>
+        <h3>Simulados</h3>
+        <p>Realize testes, veja resultados e compare seu desempenho.</p>
+        <ul class="dashboard-card-list">
+          <li>Fazer simulados</li>
+          <li>Ver resultados</li>
+          <li>Ranking</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" onclick="location.href='./materiais.html'">
+        <div class="dashboard-card-icon">📚</div>
+        <h3>Material de Apoio</h3>
+        <p>Acesse PDFs, apostilas e exercícios para reforçar seus estudos.</p>
+        <ul class="dashboard-card-list">
+          <li>PDFs</li>
+          <li>Apostilas</li>
+          <li>Exercícios</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" onclick="location.href='./cronograma.html'">
+        <div class="dashboard-card-icon">📅</div>
+        <h3>Cronograma</h3>
+        <p>Veja suas próximas atividades e organize a semana de estudos.</p>
+        <ul class="dashboard-card-list">
+          <li>Planejamento semanal</li>
+          <li>Próximas atividades</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" onclick="location.href='./perfil.html'">
+        <div class="dashboard-card-icon">🏆</div>
+        <h3>Desempenho</h3>
+        <p>Confira estatísticas, evolução e metas pessoais.</p>
+        <ul class="dashboard-card-list">
+          <li>Estatísticas</li>
+          <li>Evolução</li>
+          <li>Metas</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="dashboard-grid" style="margin-top: 0;">
+      <article class="dashboard-card" style="min-height: 170px;">
+        <div class="dashboard-card-icon">📖</div>
+        <h3>Matérias disponíveis</h3>
+        <p>Conteúdos para fortalecer leitura, redação, lógica e revisão.</p>
+        <ul class="dashboard-card-list">
+          <li>Português</li>
+          <li>Matemática</li>
+          <li>Redação</li>
+        </ul>
+      </article>
+
+      <article class="dashboard-card" style="min-height: 170px;">
+        <div class="dashboard-card-icon">🎯</div>
+        <h3>Foco do mês</h3>
+        <p>Português com análise de texto, gramática e redação.</p>
+        <ul class="dashboard-card-list">
+          <li>Interpretação</li>
+          <li>Gramática</li>
+          <li>Produção textual</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/home.js"></script>
+</body>
+</html>

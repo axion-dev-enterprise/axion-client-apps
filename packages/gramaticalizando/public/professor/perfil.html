@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor — Meu Perfil</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class='professor-brand' href='/professor/index.html'>
+        <div class="professor-brand-mark">P</div>
+        <div class="professor-brand-text">
+          <span>Gramaticalizando</span>
+          <small>Painel do professor</small>
+        </div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
+          <span class="professor-nav-icon">🏠</span>
+          Painel
+        </a>
+        <a class='professor-nav-item' data-nav-item='students' href='/professor/alunos.html'>
+          <span class="professor-nav-icon">👥</span>
+          Alunos
+        </a>
+        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
+          <span class="professor-nav-icon">📝</span>
+          Redações
+        </a>
+        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
+          <span class="professor-nav-icon">📖</span>
+          Português
+        </a>
+        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
+          <span class="professor-nav-icon">📊</span>
+          Diagnósticos
+        </a>
+        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
+          <span class="professor-nav-icon">✏️</span>
+          Correções
+        </a>
+        <a class='professor-nav-item' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
+          <span class="professor-nav-icon">🎥</span>
+          Videoaulas
+        </a>
+        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
+          <span class="professor-nav-icon">🧾</span>
+          Simulados
+        </a>
+        <a class='professor-nav-item' data-nav-item='materiais' href='/professor/materiais.html'>
+          <span class="professor-nav-icon">📚</span>
+          Material
+        </a>
+        <a class='professor-nav-item' data-nav-item='cronograma' href='/professor/cronograma.html'>
+          <span class="professor-nav-icon">📅</span>
+          Cronograma
+        </a>
+        <a class='professor-nav-item active' data-nav-item='profile' href='/professor/perfil.html'>
+          <span class="professor-nav-icon">👤</span>
+          Meu perfil
+        </a>
+        <a class='professor-nav-item' data-nav-item='settings' href='/professor/configuracoes.html'>
+          <span class="professor-nav-icon">⚙️</span>
+          Configurações
+        </a>
+      </nav>
+      <div class="professor-sidebar-footer">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
+      </div>
+    </aside>
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting">
+          <h1>Meu perfil</h1>
+          <p>Veja e edite os dados do seu perfil de acesso.</p>
+        </div>
+      </header>
+      <section class="professor-content">
+        <div class="page-heading">
+          <div>
+            <h1>Meu perfil</h1>
+            <p>Informações principais da sua conta de professor.</p>
+          </div>
+          <div class="page-actions">
+            <button class="btn btn-primary" type="button" id="editProfileBtn">Editar perfil</button>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-field">
+            <label>Nome</label>
+            <strong id="profName">—</strong>
+          </div>
+          <div class="profile-field">
+            <label>E-mail</label>
+            <strong id="profEmail">—</strong>
+          </div>
+          <div class="profile-field">
+            <label>Tipo de usuário</label>
+            <strong id="profType">—</strong>
+          </div>
+          <div class="profile-field">
+            <label>Data de cadastro</label>
+            <strong id="profCreatedAt">—</strong>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="../assets/js/professor/perfil.js"></script>
+</body>
+</html>

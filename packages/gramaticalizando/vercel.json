@@ -5,6 +5,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/pages/:page", "destination": "/pages/:page.html" },
+    { "source": "/professor/:page", "destination": "/professor/:page.html" },
+    { "source": "/pages", "destination": "/pages/index.html" },
+    { "source": "/professor", "destination": "/professor/index.html" },
     { "source": "/aluno", "destination": "/aluno.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/admin-login", "destination": "/admin-login.html" },

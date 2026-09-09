@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor — Alunos</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class='professor-brand' href='/professor/index.html'>
+        <div class="professor-brand-mark">P</div>
+        <div class="professor-brand-text">
+          <span>Gramaticalizando</span>
+          <small>Painel do professor</small>
+        </div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
+          <span class="professor-nav-icon">🏠</span>
+          Painel
+        </a>
+        <a class='professor-nav-item active' data-nav-item='students' href='/professor/alunos.html'>
+          <span class="professor-nav-icon">👥</span>
+          Alunos
+        </a>
+        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
+          <span class="professor-nav-icon">📝</span>
+          Redações
+        </a>
+        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
+          <span class="professor-nav-icon">📖</span>
+          Português
+        </a>
+        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
+          <span class="professor-nav-icon">📊</span>
+          Diagnósticos
+        </a>
+        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
+          <span class="professor-nav-icon">✏️</span>
+          Correções
+        </a>
+        <a class='professor-nav-item' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
+          <span class="professor-nav-icon">🎥</span>
+          Videoaulas
+        </a>
+        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
+          <span class="professor-nav-icon">🧾</span>
+          Simulados
+        </a>
+        <a class='professor-nav-item' data-nav-item='materiais' href='/professor/materiais.html'>
+          <span class="professor-nav-icon">📚</span>
+          Material
+        </a>
+        <a class='professor-nav-item' data-nav-item='cronograma' href='/professor/cronograma.html'>
+          <span class="professor-nav-icon">📅</span>
+          Cronograma
+        </a>
+        <a class='professor-nav-item' data-nav-item='profile' href='/professor/perfil.html'>
+          <span class="professor-nav-icon">👤</span>
+          Meu perfil
+        </a>
+        <a class='professor-nav-item' data-nav-item='settings' href='/professor/configuracoes.html'>
+          <span class="professor-nav-icon">⚙️</span>
+          Configurações
+        </a>
+      </nav>
+      <div class="professor-sidebar-footer">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
+      </div>
+    </aside>
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting">
+          <h1>Alunos</h1>
+          <p>Gerencie os alunos cadastrados na plataforma.</p>
+        </div>
+      </header>
+      <section class="professor-content">
+        <div class="page-heading">
+          <div>
+            <h1>Alunos</h1>
+            <p>Encontre, filtre e confira os dados dos alunos registrados.</p>
+          </div>
+          <div class="page-actions">
+            <div class="search-field">
+              <input id="studentSearch" type="search" placeholder="Pesquisar aluno..." />
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-group" role="tablist" aria-label="Filtros de alunos">
+          <button type="button" class="filter-pill active" data-filter="all">Todos</button>
+          <button type="button" class="filter-pill" data-filter="active">Ativos</button>
+          <button type="button" class="filter-pill" data-filter="inactive">Inativos</button>
+        </div>
+
+        <div class="table-panel">
+          <div class="table-wrapper">
+            <table class="table-list" id="studentTable">
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>E-mail</th>
+                  <th>Plano</th>
+                  <th>Diagnóstico</th>
+                  <th>Redações</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div id="noStudentsMessage" class="message-box" style="display:none;">Nenhum aluno corresponde aos filtros selecionados.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" data-student-modal>
+    <div class="modal-card modal-card--wide">
+      <button type="button" class="modal-close" data-modal-close aria-label="Fechar">×</button>
+      <div class="modal-header">
+        <p class="modal-eyebrow">Detalhes do aluno</p>
+        <h2 class="modal-title">Perfil do aluno</h2>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="detail-card">
+            <span class="detail-label">Nome</span>
+            <p id="studentModalName" class="detail-text">—</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">E-mail</span>
+            <p id="studentModalEmail" class="detail-text">—</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">Tipo</span>
+            <p id="studentModalType" class="detail-text">—</p>
+          </div>
+          <div class="detail-card">
+            <span class="detail-label">Diagnóstico</span>
+            <p id="studentModalDiagnosis" class="detail-text">—</p>
+          </div>
+        </div>
+        <div class="detail-card">
+          <span class="detail-label">Informações adicionais</span>
+          <p id="studentModalInfo" class="detail-text">—</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../assets/js/professor/alunos.js"></script>
+</body>
+</html>

@@ -1,648 +1,220 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gramaticalizando — Plataforma de Estudos</title>
+    <meta name="description" content="Uma plataforma de estudos com foco em videoaulas, trilhas e acompanhamento de progresso." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/global.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="container">
+          <a aria-label='Página inicial Gramaticalizando' class='brand' href='/index.html'>
+            <img src="/assets/img/logo.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-right: 8px; border-radius: 4px;" />
+            <span>Gramaticalizando</span>
+          </a>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gramaticalizando | Profª Wilma • Língua Portuguesa & Redação</title>
-    <meta name="description" content="Plataforma educacional da Profª Wilma com diagnóstico adaptativo, cronograma semanal personalizado e correção de redação para ENEM e Concursos.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
-</head>
+          <button class="menu-btn" aria-expanded="false" aria-label="Abrir menu">☰</button>
 
-<body>
+          <nav class="nav-links" aria-label="Navegação principal">
+            <a href="#cursos">Cursos</a>
+            <a href="#trilhas">Trilhas</a>
+            <a href="#beneficios">Benefícios</a>
+            <a href='/pages/diagnostico.html'>Diagnóstico</a>
+          </nav>
 
-    <!-- =====================================
-         NAVBAR
-    ====================================== -->
-
-    <header class="navbar">
-
-        <div class="logo">
-            <div class="logo-box">G</div>
-            <span>GRAMATICALIZANDO</span>
+          <a class='btn btn-secondary' href='/pages/login.html'>Entrar</a>
         </div>
+      </header>
 
-        <nav class="nav-links">
-            <a href="/aluno.html">Cursos</a>
-            <a href="/aluno.html">Trilhas</a>
-            <a href="#planos">Benefícios</a>
-            <a href="/diagnostico.html">Diagnóstico</a>
-            <a href="#planos">Planos</a>
-        </nav>
-
-        <button
-            class="btn-login"
-            id="abrir-login"
-            type="button"
-        >
-            Entrar
-        </button>
-
-    </header>
-
-
-    <!-- =====================================
-         CONTEÚDO PRINCIPAL (LAYOUT ORIGINAL PRESERVADO)
-    ====================================== -->
-
-    <main class="container-principal">
-
-        <!-- LADO ESQUERDO: TEXTO E 6 CARDS -->
-
-        <section class="bloco-texto">
-
-            <div class="conteudo-principal">
-
-                <span class="badge">
-                    <span class="badge-ponto"></span>
-                    Método Profª Wilma • Língua Portuguesa & Redação
-                </span>
-
-                <h1>
-                    Aprenda Português e Redação com método, diagnóstico e direcionamento.
-                </h1>
-
-                <p class="descricao">
-                    Mais que videoaulas: identifique suas lacunas gramaticais, receba seu cronograma semanal personalizado e envie redações com correções individuais para passar no ENEM e em Concursos Públicos.
-                </p>
-
-                <div class="botoes-grupo">
-
-                    <a
-                        href="/diagnostico.html"
-                        class="btn-azul"
-                    >
-                        <span>Fazer Diagnóstico Gratuito</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-
-                    <a
-                        href="#planos"
-                        class="btn-cinza"
-                    >
-                        Conhecer os Planos
-                    </a>
-
-                </div>
-
+      <main>
+        <section class="hero">
+          <div class="hero-wrapper">
+            <div class="hero-banner">
+              <img src="./assets/img/banner.png" alt="Plataforma de estudos" class="hero-image" />
             </div>
-
-
-            <!-- =====================================
-                 6 CARDS ORIGINAIS EM GRID
-            ====================================== -->
-
-            <div class="cards-grid">
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                    </div>
-                    <h3>Videoaulas</h3>
-                    <p>
-                        Aulas organizadas para aprender cada conteúdo passo a passo.
-                    </p>
-                    <a href="/aluno.html">
-                        <span>Explorar conteúdo</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                    </div>
-                    <h3>Exercícios</h3>
-                    <p>
-                        Pratique os assuntos aprendidos e fortaleça seu conhecimento.
-                    </p>
-                    <a href="/exercicios.html">
-                        <span>Começar exercícios</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-                    </div>
-                    <h3>Progresso</h3>
-                    <p>
-                        Veja sua evolução e identifique os conteúdos que precisam de atenção.
-                    </p>
-                    <a href="/aluno.html">
-                        <span>Ver progresso</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                    </div>
-                    <h3>Trilhas</h3>
-                    <p>
-                        Siga uma sequência de estudos preparada para o seu objetivo.
-                    </p>
-                    <a href="/aluno.html">
-                        <span>Ver trilhas</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-                    </div>
-                    <h3>Diagnóstico</h3>
-                    <p>
-                        Descubra seu nível atual e saiba por onde começar seus estudos.
-                    </p>
-                    <a href="/diagnostico.html">
-                        <span>Fazer diagnóstico</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-                <div class="card reveal-on-scroll">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    </div>
-                    <h3>Área do aluno</h3>
-                    <p>
-                        Tenha seus cursos, atividades e resultados em um único lugar.
-                    </p>
-                    <a href="/aluno.html">
-                        <span>Acessar área</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                    </a>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
-             LADO DIREITO: BANNER RECORTADO COM A PROFESSORA
-        ====================================== -->
-
-        <section class="bloco-imagem">
-
-            <div class="fundo-escuro-recortado"></div>
-
-            <span class="decoracao decoracao-1">
-                <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            </span>
-
-            <span class="decoracao decoracao-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            </span>
-
-            <span class="decoracao decoracao-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-            </span>
-
-            <img
-                src="./img/cfdeab34-1991-48cf-89fd-0baa84395f0b.png"
-                alt="Professora Wilma"
-                class="foto-usuario"
-            >
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================
-         SEÇÃO DE PLANOS & ASSINATURA
-    ====================================== -->
-
-    <section id="planos" class="secao-planos reveal-on-scroll">
-
-        <div class="planos-cabecalho">
-            <span class="badge-plano">PLANOS DE ESTUDO 2026</span>
-            <h2>Escolha o plano ideal para a sua aprovação</h2>
-            <p>
-                Metodologia testada e aprovada pela Profª Wilma com foco prático em Língua Portuguesa e Redação Nota 1000.
-            </p>
-        </div>
-
-        <div class="planos-grid">
-
-            <!-- PLANO BÁSICO -->
-            <div class="card-plano reveal-on-scroll">
-                <div>
-                    <span class="plano-tag">Básico</span>
-                    <div class="plano-preco">
-                        R$ 33 <span>/mês</span>
-                    </div>
-                    <p class="plano-descricao">
-                        Ideal para quem deseja estudar teoria e praticar questões no seu próprio ritmo.
-                    </p>
-                    <ul class="plano-lista">
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Acesso a todas as videoaulas</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Materiais de apoio em PDF</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Banco de exercícios por banca</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Acompanhamento de progresso</li>
-                    </ul>
-                </div>
-                <a
-                    href="https://wa.me/5575998470683?text=Ol%C3%A1%20Prof%C2%AA%20Wilma!%20Gostaria%20de%20assinar%20o%20Plano%20B%C3%A1sico%20de%20R$%2033"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-assinar btn-assinar-basico"
-                >
-                    <span>Assinar Plano Básico</span>
-                </a>
-            </div>
-
-            <!-- PLANO INTERMEDIÁRIO (MAIS RECOMENDADO) -->
-            <div class="card-plano card-plano-destaque reveal-on-scroll">
-                <div class="badge-recomendado">
-                    MAIS RECOMENDADO
-                </div>
-                <div>
-                    <span class="plano-tag tag-destaque">Intermediário</span>
-                    <div class="plano-preco preco-destaque">
-                        R$ 47 <span>/mês</span>
-                    </div>
-                    <p class="plano-descricao">
-                        Trilha personalizada com diagnóstico de lacunas e correções de redação da professora.
-                    </p>
-                    <ul class="plano-lista">
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Tudo do Plano Básico</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <strong>Teste Diagnóstico com IA da Wilma</strong></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <strong>Cronograma Semanal Personalizado</strong></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <strong>2 Correções de Redação por mês</strong></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Devolutiva detalhada por competência</li>
-                    </ul>
-                </div>
-                <a
-                    href="https://wa.me/5575998470683?text=Ol%C3%A1%20Prof%C2%AA%20Wilma!%20Gostaria%20de%20assinar%20o%20Plano%20Intermedi%C3%A1rio%20de%20R$%2047"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-assinar btn-assinar-destaque"
-                >
-                    <span>Assinar Intermediário</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </a>
-            </div>
-
-            <!-- PLANO MASTER -->
-            <div class="card-plano reveal-on-scroll">
-                <div>
-                    <span class="plano-tag">Master & Mentoria</span>
-                    <div class="plano-preco">
-                        R$ 120 <span>/mês</span>
-                    </div>
-                    <p class="plano-descricao">
-                        Acompanhamento exclusivo e correções ilimitadas para acelerar sua aprovação.
-                    </p>
-                    <ul class="plano-lista">
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Tudo do Plano Intermediário</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <strong>Correções ILIMITADAS de redação</strong></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> <strong>Canal VIP no WhatsApp da Professora</strong></li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Orientação direta para recursos de banca</li>
-                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg> Simulados temáticos inéditos</li>
-                    </ul>
-                </div>
-                <a
-                    href="https://wa.me/5575998470683?text=Ol%C3%A1%20Prof%C2%AA%20Wilma!%20Quero%20fazer%20parte%20da%20Turma%20Master%20(R$%20120)"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-assinar btn-assinar-master"
-                >
-                    <span>Garantir Vaga Master</span>
-                </a>
-            </div>
-
-        </div>
-
-        <!-- WHATSAPP BANNER -->
-        <div class="banner-whatsapp reveal-on-scroll">
-            <div>
-                <h3>Ficou com alguma dúvida sobre o método ou a plataforma?</h3>
+            <div class="container hero-content">
+              <div class="hero-text">
+                <div class="section-badge">Plataforma de estudos em construção</div>
+                <h1>Estude com foco, acompanhe sua evolução e avance com mais clareza.</h1>
                 <p>
-                    Converse diretamente com a Profª Wilma no WhatsApp. Tire suas dúvidas sobre os conteúdos, cronogramas e correções de redação.
+                  A ideia é transformar esse projeto em uma experiência completa de aprendizado com videoaulas, trilhas, exercícios e acompanhamento de progresso.
                 </p>
+
+                <div class="hero-actions">
+                  <a class='btn btn-primary' href='/pages/diagnostico.html'>Fazer diagnóstico</a>
+                  <a href="#cursos" class="btn btn-secondary">Conhecer o conteúdo</a>
+                </div>
+
+                <ul class="hero-highlights">
+                  <li>Videoaulas</li>
+                  <li>Trilhas de estudo</li>
+                  <li>Progresso</li>
+                  <li>Área do aluno</li>
+                </ul>
+              </div>
             </div>
-            <a
-                href="https://wa.me/5575998470683?text=Ol%C3%A1%20Prof%C2%AA%20Wilma!%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%20plataforma%20Gramaticalizando."
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-whatsapp"
-            >
-                <span>Falar no WhatsApp (75) 99847-0683</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-        </div>
+        </section>
 
-    </section>
+        <section class="container">
+          <div class="stats-bar">
+            <div class="stat-card">
+              <strong>+10k</strong>
+              <span>conteúdos assistidos</span>
+            </div>
+            <div class="stat-card">
+              <strong>24/7</strong>
+              <span>acesso ao material</span>
+            </div>
+            <div class="stat-card">
+              <strong>5 trilhas</strong>
+              <span>por objetivo e etapa</span>
+            </div>
+            <div class="stat-card">
+              <strong>100%</strong>
+              <span>foco em evolução</span>
+            </div>
+          </div>
+        </section>
 
-
-    <!-- =====================================
-         RODAPÉ OFICIAL (FOOTER)
-    ====================================== -->
-    <footer class="rodape-site" id="contato">
-        <div class="rodape-container">
-            <div class="rodape-grid">
-                
-                <!-- Coluna 1: Marca & Wilma -->
-                <div class="rodape-coluna rodape-coluna-marca">
-                    <div class="rodape-logo">
-                        <div class="rodape-logo-box">G</div>
-                        <span class="rodape-logo-texto">GRAMATICALIZANDO</span>
-                    </div>
-                    <p class="rodape-descricao">
-                        A metodologia definitiva de Língua Portuguesa e Redação com a Profª Wilma. Diagnóstico de nível, cronogramas individualizados e preparação direcionada para Concursos Públicos, ENEM e Vestibulares.
-                    </p>
-                    <div class="rodape-selo">
-                        <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        <span>Ambiente de Estudos Seguro e Certificado</span>
-                    </div>
-                </div>
-
-                <!-- Coluna 2: Navegação Rápida -->
-                <div class="rodape-coluna">
-                    <h3 class="rodape-titulo">Navegação</h3>
-                    <ul class="rodape-links">
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#sobre">Sobre a Profª Wilma</a></li>
-                        <li><a href="#cursos">Cursos & Módulos</a></li>
-                        <li><a href="#metodo">Metodologia</a></li>
-                        <li><a href="#planos">Planos de Assinatura</a></li>
-                        <li><a href="/diagnostico.html">Diagnóstico Gratuito</a></li>
-                    </ul>
-                </div>
-
-                <!-- Coluna 3: Áreas de Preparação -->
-                <div class="rodape-coluna">
-                    <h3 class="rodape-titulo">Preparação</h3>
-                    <ul class="rodape-links">
-                        <li><a href="/diagnostico.html">Concursos Públicos</a></li>
-                        <li><a href="/redacao.html">Laboratório de Redação</a></li>
-                        <li><a href="/diagnostico.html">ENEM & Redação Nota 1000</a></li>
-                        <li><a href="/diagnostico.html">Carreiras Policiais & Fiscais</a></li>
-                        <li><a href="/aluno.html">Área do Aluno</a></li>
-                    </ul>
-                </div>
-
-                <!-- Coluna 4: Contato & Suporte -->
-                <div class="rodape-coluna">
-                    <h3 class="rodape-titulo">Atendimento</h3>
-                    <p class="rodape-texto-suporte">
-                        Dúvidas pedagógicas, acesso ou suporte comercial?
-                    </p>
-                    <div class="rodape-contato-item">
-                        <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        <span>(75) 99847-0683</span>
-                    </div>
-                    <div class="rodape-contato-item">
-                        <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        <span>suporte@gramaticalizando.com.br</span>
-                    </div>
-                    <a href="https://wa.me/5575998470683?text=Ol%C3%A1%20Prof%C2%AA%20Wilma!%20Gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20a%20plataforma." target="_blank" rel="noopener noreferrer" class="btn-rodape-whats">
-                        <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-                        <span>Conversar no WhatsApp</span>
-                    </a>
-                </div>
-
+        <section class="section" id="cursos">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <h2>Estrutura pensada para aprender melhor</h2>
+                <p>Conteúdo organizado em blocos, aulas e trilhas para estudar com mais direção.</p>
+              </div>
             </div>
 
-            <!-- Linha Divisória e Sub-footer -->
-            <div class="rodape-bottom">
-                <p class="rodape-copyright">
-                    © 2026 Gramaticalizando com a Profª Wilma. Todos os direitos reservados.
-                </p>
-                <div class="rodape-legal">
-                    <a href="#">Termos de Uso</a>
-                    <span>•</span>
-                    <a href="#">Política de Privacidade</a>
-                    <span>•</span>
-                    <a href="/admin-login.html">Área do Professor</a>
-                </div>
+            <div class="card-grid">
+              <article class="feature-card">
+                <div class="feature-icon">▶</div>
+                <h3>Videoaulas</h3>
+                <p>Aulas curtas e objetivas, organizadas por tema.</p>
+              </article>
+              <article class="feature-card">
+                <div class="feature-icon">✓</div>
+                <h3>Exercícios</h3>
+                <p>Práticas para reforçar o que foi estudado.</p>
+              </article>
+              <article class="feature-card">
+                <div class="feature-icon">◎</div>
+                <h3>Planejamento</h3>
+                <p>Visão clara do caminho e do que falta concluir.</p>
+              </article>
             </div>
-        </div>
-    </footer>
+          </div>
+        </section>
 
-
-    <!-- =====================================
-         MODAL LOGIN
-    ====================================== -->
-
-    <div class="modal-auth" id="modal-login">
-
-        <div class="auth-box">
-
-            <button
-                class="fechar-modal"
-                id="fechar-login"
-                type="button"
-                aria-label="Fechar"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-
-            <div class="auth-logo">
-                G
+        <section class="section section-alt" id="trilhas">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <h2>Trilhas para cada etapa</h2>
+                <p>Organize o estudo por objetivo e avance com mais segurança.</p>
+              </div>
             </div>
 
-            <h2>
-                Bem-vindo de volta
-            </h2>
+            <div class="split-grid">
+              <div class="list-card">
+                <h3>Trilhas principais</h3>
+                <ul>
+                  <li>Português e gramática</li>
+                  <li>Redação e argumentação</li>
+                  <li>Revisão e recuperação</li>
+                </ul>
+              </div>
+              <div class="list-card">
+                <h3>Como a experiência será</h3>
+                <ul>
+                  <li>Você entra na trilha certa para o seu objetivo.</li>
+                  <li>As aulas aparecem em ordem e com foco em progresso.</li>
+                  <li>O painel mostra o que já foi concluído e o que falta.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
 
-            <p class="auth-subtitulo">
-                Entre na sua conta para continuar seus estudos.
+        <section class="section" id="beneficios">
+          <div class="container">
+            <div class="section-head">
+              <div>
+                <h2>Mais do que um site: uma plataforma em evolução</h2>
+                <p>A proposta é crescer com uma experiência cada vez mais completa.</p>
+              </div>
+            </div>
+
+            <div class="card-grid">
+              <article class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3>Mais identidade</h3>
+                <p>O projeto ganha uma proposta mais forte e profissional.</p>
+              </article>
+              <article class="feature-card">
+                <div class="feature-icon">⬢</div>
+                <h3>Mais clareza</h3>
+                <p>O usuário entende melhor o valor do conteúdo e da organização.</p>
+              </article>
+              <article class="feature-card">
+                <div class="feature-icon">↗</div>
+                <h3>Mais crescimento</h3>
+                <p>O caminho já está preparado para evoluir para área logada e banco.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer style="background: #181326; color: #b8b0cf; padding: 3.5rem 0 2rem; margin-top: 4rem; border-top: 1px solid rgba(124, 58, 237, 0.15);">
+        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2.5rem; margin-bottom: 2.5rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem;">
+              <img src="./assets/img/logo.png" alt="Gramaticalizando" style="height: 38px; width: auto; object-fit: contain; border-radius: 4px;" />
+              <span style="color: #ffffff; font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em;">Gramaticalizando</span>
+            </div>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: #a49bbd; margin: 0;">
+              Plataforma especializada em Língua Portuguesa, Gramática Aplicada e Redação Nota 1000 para ENEM e Concursos.
             </p>
-
-            <form class="form-auth" id="form-login">
-
-                <div class="campo-auth">
-                    <label for="login-email">E-mail</label>
-                    <input
-                        type="email"
-                        id="login-email"
-                        placeholder="seuemail@exemplo.com"
-                        required
-                    >
-                </div>
-
-                <div class="campo-auth">
-                    <label for="login-senha">Senha</label>
-                    <div class="senha-container">
-                        <input
-                            type="password"
-                            id="login-senha"
-                            placeholder="Digite sua senha"
-                            required
-                        >
-                        <button
-                            type="button"
-                            class="mostrar-senha"
-                            id="mostrar-senha-login"
-                            aria-label="Mostrar senha"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                        </button>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-auth-principal">
-                    Entrar
-                </button>
-
-            </form>
-
-            <div class="divisor-auth">
-                <span></span>
-                <p>ou</p>
-                <span></span>
-            </div>
-
-            <p class="texto-auth">
-                Ainda não possui uma conta?
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Navegação</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="#cursos" style="color: #b8b0cf; text-decoration: none;">Cursos & Módulos</a></li>
+              <li><a href="#trilhas" style="color: #b8b0cf; text-decoration: none;">Trilhas de Estudo</a></li>
+              <li><a href="/pages/diagnostico.html" style="color: #b8b0cf; text-decoration: none;">Diagnóstico Inicial</a></li>
+              <li><a href="/pages/login.html" style="color: #b8b0cf; text-decoration: none;">Ambiente do Aluno</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Ambientes</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.9rem;">
+              <li><a href="/pages/login.html" style="color: #b8b0cf; text-decoration: none;">Portal do Estudante</a></li>
+              <li><a href="/pages/login.html" style="color: #b8b0cf; text-decoration: none;">Portal do Professor</a></li>
+              <li><a href="/pages/registro.html" style="color: #b8b0cf; text-decoration: none;">Cadastrar-se</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin-bottom: 1rem; font-size: 1rem; font-weight: 700;">Segurança & Suporte</h4>
+            <p style="font-size: 0.85rem; line-height: 1.6; color: #a49bbd; margin-bottom: 0.8rem;">
+              Ambiente seguro com correção detalhada e acompanhamento pedagógico individual.
             </p>
-
-            <button
-                type="button"
-                class="btn-auth-secundario"
-                id="abrir-registro"
-            >
-                Inscreva-se
-            </button>
-
+            <span style="display: inline-block; padding: 6px 12px; background: rgba(124, 58, 237, 0.2); color: #c4b5fd; border-radius: 999px; font-size: 0.8rem; font-weight: 600;">ENEM & Concursos Públicos</span>
+          </div>
         </div>
-
+        <div class="container footer-row" style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.85rem; color: #8e84a8;">
+          <span>© 2026 Gramaticalizando. Todos os direitos reservados.</span>
+          <span>Excelência em Língua Portuguesa e Redação.</span>
+        </div>
+      </footer>
     </div>
 
-
-    <!-- =====================================
-         MODAL REGISTRO
-    ====================================== -->
-
-    <div class="modal-auth" id="modal-registro">
-
-        <div class="auth-box auth-box-registro">
-
-            <button
-                class="fechar-modal"
-                id="fechar-registro"
-                type="button"
-                aria-label="Fechar"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            </button>
-
-            <div class="auth-logo">
-                G
-            </div>
-
-            <h2>
-                Crie sua conta
-            </h2>
-
-            <p class="auth-subtitulo">
-                Cadastre-se para começar sua jornada de estudos.
-            </p>
-
-            <form class="form-auth" id="form-registro">
-
-                <div class="campo-auth">
-                    <label for="registro-nome">Nome</label>
-                    <input
-                        type="text"
-                        id="registro-nome"
-                        placeholder="Digite seu nome"
-                        required
-                    >
-                </div>
-
-                <div class="campo-auth">
-                    <label for="registro-email">E-mail</label>
-                    <input
-                        type="email"
-                        id="registro-email"
-                        placeholder="seuemail@exemplo.com"
-                        required
-                    >
-                </div>
-
-                <div class="campo-auth">
-                    <label for="registro-senha">Senha</label>
-                    <div class="senha-container">
-                        <input
-                            type="password"
-                            id="registro-senha"
-                            placeholder="Crie uma senha"
-                            required
-                        >
-                        <button
-                            type="button"
-                            class="mostrar-senha"
-                            id="mostrar-senha-registro"
-                            aria-label="Mostrar senha"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="campo-auth">
-                    <label for="registro-confirmar-senha">Confirmar senha</label>
-                    <div class="senha-container">
-                        <input
-                            type="password"
-                            id="registro-confirmar-senha"
-                            placeholder="Digite a senha novamente"
-                            required
-                        >
-                        <button
-                            type="button"
-                            class="mostrar-senha"
-                            id="mostrar-confirmar-senha"
-                            aria-label="Mostrar senha"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                        </button>
-                    </div>
-                </div>
-
-                <p class="mensagem-registro" id="mensagem-registro"></p>
-
-                <button type="submit" class="btn-auth-principal">
-                    Criar conta
-                </button>
-
-            </form>
-
-            <div class="divisor-auth">
-                <span></span>
-                <p>ou</p>
-                <span></span>
-            </div>
-
-            <p class="texto-auth">
-                Já possui uma conta?
-            </p>
-
-            <button
-                type="button"
-                class="btn-auth-secundario"
-                id="voltar-login"
-            >
-                Já tenho uma conta
-            </button>
-
-        </div>
-
-    </div>
-
-    <script type="module" src="./script.js"></script>
-
-</body>
-
+    <script type="module" src="./assets/js/app.js"></script>
+    <script type="module" src="./assets/js/auth.js"></script>
+  </body>
 </html>

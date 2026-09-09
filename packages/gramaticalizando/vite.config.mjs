@@ -1,8 +1,31 @@
 import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
+import fs from 'fs';
+import path from 'path';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+function getHtmlInputs(dir, baseDir) {
+  let inputs = {};
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      if (entry.name !== 'node_modules' && entry.name !== 'dist' && entry.name !== 'assets') {
+        Object.assign(inputs, getHtmlInputs(fullPath, baseDir));
+      }
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      const relPath = path.relative(baseDir, fullPath).replace(/\\/g, '/');
+      const key = relPath.replace(/\.html$/, '').replace(/\//g, '_');
+      inputs[key] = fullPath;
+    }
+  }
+  return inputs;
+}
+
+const publicRoot = resolve(__dirname, 'public');
+const htmlInputs = getHtmlInputs(publicRoot, publicRoot);
 
 export default defineConfig({
   root: 'public',
@@ -11,28 +34,10 @@ export default defineConfig({
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'public/index.html'),
-        aluno: resolve(__dirname, 'public/aluno.html'),
-        diagnostico: resolve(__dirname, 'public/diagnostico.html'),
-        redacao: resolve(__dirname, 'public/redacao.html'),
-        aula: resolve(__dirname, 'public/aula.html'),
-        exercicios: resolve(__dirname, 'public/exercicios.html'),
-        exercicio: resolve(__dirname, 'public/exercicio.html'),
-        admin: resolve(__dirname, 'public/admin.html'),
-        adminLogin: resolve(__dirname, 'public/admin-login.html'),
-        editorAula: resolve(__dirname, 'public/editor-aula.html'),
-        editorExercicio: resolve(__dirname, 'public/editor-exercicio.html'),
-      }
+      input: htmlInputs
     }
   },
   server: {
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      }
-    }
+    port: 5173
   }
 });

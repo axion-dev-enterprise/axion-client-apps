@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor — Videoaulas</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class='professor-brand' href='/professor/index.html'>
+        <div class="professor-brand-mark">P</div>
+        <div class="professor-brand-text">
+          <span>Gramaticalizando</span>
+          <small>Painel do professor</small>
+        </div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
+          <span class="professor-nav-icon">🏠</span>
+          Painel
+        </a>
+        <a class='professor-nav-item' data-nav-item='students' href='/professor/alunos.html'>
+          <span class="professor-nav-icon">👥</span>
+          Alunos
+        </a>
+        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
+          <span class="professor-nav-icon">📝</span>
+          Redações
+        </a>
+        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
+          <span class="professor-nav-icon">📖</span>
+          Português
+        </a>
+        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
+          <span class="professor-nav-icon">📊</span>
+          Diagnósticos
+        </a>
+        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
+          <span class="professor-nav-icon">✏️</span>
+          Correções
+        </a>
+        <a class='professor-nav-item active' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
+          <span class="professor-nav-icon">🎥</span>
+          Videoaulas
+        </a>
+        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
+          <span class="professor-nav-icon">🧾</span>
+          Simulados
+        </a>
+        <a class='professor-nav-item' data-nav-item='materiais' href='/professor/materiais.html'>
+          <span class="professor-nav-icon">📚</span>
+          Material
+        </a>
+        <a class='professor-nav-item' data-nav-item='cronograma' href='/professor/cronograma.html'>
+          <span class="professor-nav-icon">📅</span>
+          Cronograma
+        </a>
+        <a class='professor-nav-item' data-nav-item='profile' href='/professor/perfil.html'>
+          <span class="professor-nav-icon">👤</span>
+          Meu perfil
+        </a>
+        <a class='professor-nav-item' data-nav-item='settings' href='/professor/configuracoes.html'>
+          <span class="professor-nav-icon">⚙️</span>
+          Configurações
+        </a>
+      </nav>
+      <div class="professor-sidebar-footer">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
+      </div>
+    </aside>
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting">
+          <h1>Videoaulas</h1>
+          <p>Gerencie e organize as videoaulas disponíveis na plataforma.</p>
+        </div>
+      </header>
+      <section class="professor-content">
+        <div class="page-heading">
+          <div>
+            <h1>Videoaulas</h1>
+            <p>Adicione, edite e gerencie playlists e aulas em vídeo.</p>
+          </div>
+          <div class="page-actions">
+            <button id="openLessonModalBtn" type="button" class="btn btn-primary">+ Nova aula ao vivo</button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-card" data-open-video-modal>
+            <div class="dashboard-card-icon">➕</div>
+            <h3>Adicionar nova aula</h3>
+            <p>Crie uma nova aula ao vivo ou gravada e compartilhe o link com os alunos.</p>
+          </article>
+          <article class="dashboard-card" id="viewLessonsTrigger">
+            <div class="dashboard-card-icon">📂</div>
+            <h3>Minhas aulas</h3>
+            <p>Veja e gerencie todas as aulas publicadas.</p>
+          </article>
+        </div>
+
+        <div class="panel-card">
+          <div class="activities-header">
+            <h3>Lista de aulas</h3>
+            <span class="status-chip concluido">Ativas</span>
+          </div>
+          <div id="videoLessonsList" class="card-row"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" data-video-modal>
+    <div class="modal-card modal-card--wide">
+      <button type="button" class="modal-close" data-video-close aria-label="Fechar">×</button>
+      <div class="modal-header">
+        <p class="modal-eyebrow">Aula ao vivo</p>
+        <h2 class="modal-title">Enviar link da aula</h2>
+      </div>
+      <form id="videoLessonForm" class="modal-form">
+        <div class="modal-body">
+          <section class="modal-section">
+            <div class="input-group">
+              <label for="videoLessonTitle">Título da aula</label>
+              <input id="videoLessonTitle" name="titulo" type="text" placeholder="Ex.: Revisão de matemática" required>
+            </div>
+
+            <div class="input-group">
+              <label for="videoLessonTopic">Assunto</label>
+              <input id="videoLessonTopic" name="assunto" type="text" placeholder="Ex.: Geometria e álgebra">
+            </div>
+
+            <div class="modal-grid">
+              <div class="input-group">
+                <label for="videoLessonType">Tipo</label>
+                <select id="videoLessonType" name="tipo">
+                  <option value="ao_vivo">Ao vivo</option>
+                  <option value="gravada">Gravada</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="videoLessonDate">Data e horário</label>
+                <input id="videoLessonDate" name="data" type="datetime-local">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="videoLessonLink">Link da aula ao vivo</label>
+              <input id="videoLessonLink" name="link" type="url" placeholder="https://meet.google.com/..." required>
+            </div>
+
+            <div class="input-group">
+              <label for="videoLessonDescription">Descrição</label>
+              <textarea id="videoLessonDescription" name="descricao" class="textarea-large" placeholder="Resumo da aula, tema abordado ou instruções para os alunos..."></textarea>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-video-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="videoLessonSubmit">Salvar aula</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../assets/js/professor/base.js"></script>
+  <script type="module" src="../assets/js/professor/videoaulas.js"></script>
+</body>
+</html>

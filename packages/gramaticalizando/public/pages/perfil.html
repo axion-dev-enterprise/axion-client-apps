@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil — Gramaticalizando</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/perfil.css">
+</head>
+<body class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="dashboard-container">
+      <a class='dashboard-brand' href='/pages/home.html'>
+        <img src="/assets/img/logo.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-right: 8px; border-radius: 4px;" />
+        <div>
+          <div class="dashboard-title">Gramaticalizando</div>
+          <div>Ambiente do aluno</div>
+        </div>
+      </a>
+      <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+      <nav class="nav-links" data-mobile-menu>
+        <a href='/pages/home.html'>Home</a>
+        <a href='/pages/portugues.html'>Português</a>
+        <a href='/pages/redacao.html'>Redação</a>
+        <a href='/pages/videoaulas.html'>Videoaulas</a>
+        <a href='/pages/simulados.html'>Simulados</a>
+        <a href='/pages/materiais.html'>Material</a>
+        <a href='/pages/cronograma.html'>Cronograma</a>
+        <a class='active' href='/pages/perfil.html'>Perfil</a>
+        <a href='/pages/configuracoes.html'>Configurações</a>
+      </nav>
+      <div class="dashboard-user">
+        <button type="button" class="dashboard-user-button" data-profile-button>
+          <span class="dashboard-user-avatar">U</span>
+          <span>Meu perfil</span>
+        </button>
+        <div class="user-menu" data-profile-menu>
+          <a href='/pages/perfil.html'>Meu Perfil</a>
+          <a href='/pages/configuracoes.html'>Configurações</a>
+          <a href='/pages/login.html'>Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="page-section">
+      <div class="welcome-panel">
+        <div class="dashboard-title">Perfil do Aluno</div>
+        <h1>Gerencie seus dados e acompanhe sua jornada.</h1>
+        <p>Mantenha seus dados atualizados e monitore sua evolução no curso Gramaticalizando.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; margin-top: 1.5rem;">
+        <!-- Card Resumo do Usuário -->
+        <article class="dashboard-card" style="background: #ffffff; border: 1px solid rgba(124, 58, 237, 0.12); border-radius: 1.25rem; padding: 2rem; text-align: center; height: fit-content;">
+          <div id="profileAvatar" style="width: 84px; height: 84px; border-radius: 50%; background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; font-size: 2.2rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; box-shadow: 0 10px 25px rgba(124, 58, 237, 0.25);">
+            A
+          </div>
+          <h2 id="profileNameDisplay" style="margin: 0; font-size: 1.3rem; color: #1f1630;">Carregando...</h2>
+          <p id="profileEmailDisplay" style="margin: 0.35rem 0 1rem; font-size: 0.85rem; color: #6b607d;">aluno@email.com</p>
+          <span id="profileRoleBadge" style="display: inline-block; padding: 4px 12px; background: #f3f0ff; color: #7c3aed; font-size: 0.75rem; font-weight: 700; border-radius: 999px;">
+            Aluno Gramaticalizando
+          </span>
+
+          <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #f3f0ff; display: flex; justify-content: space-around; text-align: center;">
+            <div>
+              <div id="metricRedacoes" style="font-size: 1.4rem; font-weight: 800; color: #7c3aed;">0</div>
+              <div style="font-size: 0.75rem; color: #6b607d;">Redações</div>
+            </div>
+            <div>
+              <div id="metricMetas" style="font-size: 1.4rem; font-weight: 800; color: #10b981;">0</div>
+              <div style="font-size: 0.75rem; color: #6b607d;">Metas Concluídas</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Formulário de Edição -->
+        <article class="dashboard-card" style="background: #ffffff; border: 1px solid rgba(124, 58, 237, 0.12); border-radius: 1.25rem; padding: 2rem;">
+          <h3 style="margin: 0 0 1.25rem; font-size: 1.15rem; color: #1f1630;">Informações Pessoais</h3>
+          <form id="profileForm" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div>
+              <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #433e5c; margin-bottom: 5px;">Nome Completo</label>
+              <input type="text" id="profNome" required style="width: 100%; box-sizing: border-box; padding: 0.85rem 1rem; border: 1px solid #dcd7e8; border-radius: 0.75rem; font-family: inherit; font-size: 0.95rem;" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #433e5c; margin-bottom: 5px;">E-mail</label>
+                <input type="email" id="profEmail" required style="width: 100%; box-sizing: border-box; padding: 0.85rem 1rem; border: 1px solid #dcd7e8; border-radius: 0.75rem; font-family: inherit; font-size: 0.95rem;" />
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #433e5c; margin-bottom: 5px;">Telefone / WhatsApp</label>
+                <input type="text" id="profTelefone" placeholder="(11) 99999-9999" style="width: 100%; box-sizing: border-box; padding: 0.85rem 1rem; border: 1px solid #dcd7e8; border-radius: 0.75rem; font-family: inherit; font-size: 0.95rem;" />
+              </div>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #433e5c; margin-bottom: 5px;">Foco de Estudo Principal</label>
+              <select id="profObjetivo" style="width: 100%; padding: 0.85rem 1rem; border: 1px solid #dcd7e8; border-radius: 0.75rem; font-family: inherit; font-size: 0.95rem;">
+                <option value="ENEM - Redação Nota 1000 & Linguagens">ENEM - Redação Nota 1000 & Linguagens</option>
+                <option value="Concursos Públicos - Gramática Avançada & Interpretação">Concursos Públicos - Gramática Avançada & Interpretação</option>
+                <option value="Vestibulares Tradicionais (FUVEST, UNICAMP, UERJ)">Vestibulares Tradicionais (FUVEST, UNICAMP, UERJ)</option>
+                <option value="Reforço Escolar / Ensino Médio">Reforço Escolar / Ensino Médio</option>
+              </select>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; margin-top: 0.5rem;">
+              <button type="submit" id="btnSalvarPerfil" style="background: #7c3aed; color: #ffffff; border: none; padding: 0.85rem 1.75rem; border-radius: 0.75rem; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: background 0.15s ease;">
+                Salvar Alterações
+              </button>
+            </div>
+          </form>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/perfil.js"></script>
+</body>
+</html>

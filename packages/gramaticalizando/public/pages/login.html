@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Gramaticalizando</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <script type="module" src="../assets/js/init-seed.js"></script>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #f9f7ff 0%, #efe5ff 100%);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #1f1630;
+    }
+
+    .login-shell {
+      width: min(420px, calc(100% - 2rem));
+      background: #ffffff;
+      border: 1px solid rgba(124, 58, 237, 0.14);
+      border-radius: 1.5rem;
+      box-shadow: 0 30px 70px rgba(124, 58, 237, 0.12);
+      padding: 2rem;
+    }
+
+    .login-header h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.05;
+    }
+
+    .login-header p {
+      margin: 0.85rem 0 0;
+      color: #6b607d;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #433e5c;
+    }
+
+    .form-group input {
+      width: 100%;
+      border: 1px solid rgba(124, 58, 237, 0.15);
+      border-radius: 1rem;
+      padding: 0.95rem 1rem;
+      font: inherit;
+      transition: border-color 160ms ease, box-shadow 160ms ease;
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.08);
+    }
+
+    .actions {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1.25rem;
+    }
+
+    .login-footer {
+      margin-top: 1.4rem;
+      text-align: center;
+      color: #716c87;
+      font-size: 0.95rem;
+    }
+
+    .login-footer a {
+      color: #7c3aed;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .btn {
+      padding: 0.95rem 1rem;
+      border-radius: 1rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 160ms ease;
+      border: none;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .error-msg {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+
+    .error-msg.show {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .login-shell {
+        padding: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="login-shell">
+    <div class="login-header">
+      <h1>Bem-vindo</h1>
+      <p>Entre na sua conta para continuar.</p>
+    </div>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="seu@email.com" required>
+        <div class="error-msg" id="erro-email"></div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input id="password" name="password" type="password" placeholder="Sua senha" required>
+        <div class="error-msg" id="erro-password"></div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" id="submitBtn" class="btn btn-primary">Entrar</button>
+        <a class='btn btn-secondary' href='/pages/registro.html' style='justify-content: center; display: inline-flex; background: #f3f0ff; color: #7c3aed; text-decoration: none;'>Criar conta</a>
+      </div>
+    </form>
+
+    <div class="login-footer">
+      Não tem uma conta? <a href='/pages/registro.html'>Cadastre-se</a>
+    </div>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e8e0f0; font-size: 0.85rem; color: #6b607d;">
+      <strong style="display: block; margin-bottom: 0.5rem;">📌 Acessar Painel do Professor:</strong>
+      <p style="margin: 0.3rem 0;">Email: <code style="background: #f3f0ff; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">professor@plataforma.com</code></p>
+      <p style="margin: 0.3rem 0;">Senha: <code style="background: #f3f0ff; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">senha123</code></p>
+    </div>
+  </main>
+
+  <script>
+    // Utility functions
+    function isEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Storage
+    const LS_USERS = 'app_users_v1';
+    const LS_SESSION = 'usuarioLogado_v1';
+
+    function getUsers() {
+      try {
+        const raw = localStorage.getItem(LS_USERS);
+        return raw ? JSON.parse(raw) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function findUserByEmail(email) {
+      if (!email) return null;
+      const users = getUsers();
+      return users.find(u => String(u.email).toLowerCase() === String(email).toLowerCase()) || null;
+    }
+
+    function saveSession(user) {
+      localStorage.setItem(LS_SESSION, JSON.stringify(user));
+    }
+
+    // Clear errors
+    function clearErrors() {
+      document.querySelectorAll('.error-msg').forEach(el => {
+        el.classList.remove('show');
+        el.textContent = '';
+      });
+    }
+
+    function showError(fieldId, message) {
+      const errorEl = document.getElementById(`erro-${fieldId}`);
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+      }
+    }
+
+    // Form handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearErrors();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      console.log('🔐 Tentando login:', { email });
+      console.log('📊 Todos os usuários no localStorage:', getUsers());
+
+      // Validations
+      if (!isEmail(email)) {
+        showError('email', 'Email inválido');
+        return;
+      }
+
+      const user = findUserByEmail(email);
+      console.log('👤 Usuário encontrado:', user);
+
+      if (!user) {
+        showError('email', 'Usuário não encontrado');
+        return;
+      }
+
+      if (user.senha !== password) {
+        showError('password', 'Senha inválida');
+        return;
+      }
+
+      // Save session
+      saveSession(user);
+      console.log('✅ Sessão salva, redirecionando...');
+
+      if (user.tipo === 'professor') {
+        window.location.href = '../professor/index.html';
+      } else {
+        const diagnostico = localStorage.getItem('diagnostico_simples');
+        if (diagnostico) {
+          window.location.href = './home.html';
+        } else {
+          window.location.href = './diagnostico.html';
+        }
+      }
+    });
+
+    console.log('✅ login.html carregado e pronto');
+  </script>
+</body>
+</html>

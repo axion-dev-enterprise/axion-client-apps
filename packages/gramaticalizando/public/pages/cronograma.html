@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronograma — Gramaticalizando</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/cronograma.css">
+</head>
+<body class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="dashboard-container">
+      <a class='dashboard-brand' href='/pages/home.html'>
+        <img src="/assets/img/logo.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 34px; width: auto; max-width: 140px; object-fit: contain; margin-right: 8px; border-radius: 4px;" />
+        <div>
+          <div class="dashboard-title">Gramaticalizando</div>
+          <div>Ambiente do aluno</div>
+        </div>
+      </a>
+      <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+      <nav class="nav-links" data-mobile-menu>
+        <a href='/pages/home.html'>Home</a>
+        <a href='/pages/portugues.html'>Português</a>
+        <a href='/pages/redacao.html'>Redação</a>
+        <a href='/pages/videoaulas.html'>Videoaulas</a>
+        <a href='/pages/simulados.html'>Simulados</a>
+        <a href='/pages/materiais.html'>Material</a>
+        <a class='active' href='/pages/cronograma.html'>Cronograma</a>
+        <a href='/pages/perfil.html'>Perfil</a>
+        <a href='/pages/configuracoes.html'>Configurações</a>
+      </nav>
+      <div class="dashboard-user">
+        <button type="button" class="dashboard-user-button" data-profile-button>
+          <span class="dashboard-user-avatar">U</span>
+          <span>Meu perfil</span>
+        </button>
+        <div class="user-menu" data-profile-menu>
+          <a href='/pages/perfil.html'>Meu Perfil</a>
+          <a href='/pages/configuracoes.html'>Configurações</a>
+          <a href='/pages/login.html'>Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="page-section">
+      <div class="welcome-panel">
+        <div class="dashboard-title">Cronograma</div>
+        <h1>Planeje sua semana com clareza.</h1>
+        <p>Organize horários, atividades e metas para manter a rotina de estudos em Língua Portuguesa e Redação consistente.</p>
+      </div>
+
+      <div class="dashboard-card" style="margin-bottom: 2rem; background: #ffffff; padding: 1.5rem; border-radius: 1.25rem; border: 1px solid rgba(124, 58, 237, 0.12); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.05);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.15rem; color: #1f1630;">Progresso da Semana</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: #6b607d;" id="scheduleProgressText">Calculando metas...</p>
+          </div>
+          <button id="btnNovaMeta" class="btn btn-primary" style="background: #7c3aed; color: #fff; padding: 0.6rem 1.2rem; border-radius: 0.75rem; border: none; cursor: pointer; font-weight: 600; font-size: 0.9rem;">+ Adicionar Meta</button>
+        </div>
+        <div style="width: 100%; background: #f3f0ff; height: 10px; border-radius: 999px; overflow: hidden;">
+          <div id="scheduleProgressBar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #7c3aed, #a855f7); transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+        </div>
+      </div>
+
+      <div class="dashboard-card" style="background: #ffffff; padding: 1.5rem; border-radius: 1.25rem; border: 1px solid rgba(124, 58, 237, 0.12);">
+        <h3 style="margin: 0 0 1.2rem; font-size: 1.15rem; color: #1f1630;">Plano Semanal de Estudos</h3>
+        <div id="scheduleList" style="display: flex; flex-direction: column; gap: 0.85rem;">
+          <!-- Itens renderizados via cronograma.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal Customizado Nova Meta -->
+    <div id="metaModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 12, 25, 0.6); backdrop-filter: blur(4px); z-index: 999; align-items: center; justify-content: center; padding: 1rem;">
+      <div style="background: #ffffff; border-radius: 1.25rem; width: 100%; max-width: 440px; padding: 2rem; box-shadow: 0 25px 60px rgba(0,0,0,0.2); border: 1px solid rgba(124, 58, 237, 0.15);">
+        <h3 style="margin: 0 0 0.5rem; font-size: 1.25rem; color: #1f1630;">Nova Meta de Estudo</h3>
+        <p style="margin: 0 0 1.25rem; font-size: 0.85rem; color: #6b607d;">Defina uma atividade para compor seu cronograma.</p>
+        <form id="formNovaMeta" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 700; color: #433e5c; display: block; margin-bottom: 4px;">Dia da Semana</label>
+            <select id="metaDia" style="width: 100%; padding: 0.75rem; border-radius: 0.75rem; border: 1px solid #dcd7e8; font-family: inherit;">
+              <option value="Segunda-feira">Segunda-feira</option>
+              <option value="Terça-feira">Terça-feira</option>
+              <option value="Quarta-feira">Quarta-feira</option>
+              <option value="Quinta-feira">Quinta-feira</option>
+              <option value="Sexta-feira">Sexta-feira</option>
+              <option value="Sábado">Sábado</option>
+              <option value="Domingo">Domingo</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 700; color: #433e5c; display: block; margin-bottom: 4px;">Tema / Assunto</label>
+            <input type="text" id="metaTema" placeholder="Ex: Crase e Regência Verbal" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border-radius: 0.75rem; border: 1px solid #dcd7e8; font-family: inherit;" />
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; color: #433e5c; display: block; margin-bottom: 4px;">Categoria</label>
+              <select id="metaTipo" style="width: 100%; padding: 0.75rem; border-radius: 0.75rem; border: 1px solid #dcd7e8; font-family: inherit;">
+                <option value="Gramática">Gramática</option>
+                <option value="Redação">Redação</option>
+                <option value="Simulado">Simulado</option>
+                <option value="Revisão">Revisão</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; color: #433e5c; display: block; margin-bottom: 4px;">Tempo Estimado</label>
+              <input type="text" id="metaDuracao" value="50 min" required style="width: 100%; box-sizing: border-box; padding: 0.75rem; border-radius: 0.75rem; border: 1px solid #dcd7e8; font-family: inherit;" />
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
+            <button type="button" id="btnCancelarMeta" style="background: #f3f0ff; color: #6b607d; border: none; padding: 0.65rem 1.2rem; border-radius: 0.75rem; cursor: pointer; font-weight: 600;">Cancelar</button>
+            <button type="submit" style="background: #7c3aed; color: #ffffff; border: none; padding: 0.65rem 1.2rem; border-radius: 0.75rem; cursor: pointer; font-weight: 600;">Salvar Meta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/cronograma.js"></script>
+</body>
+</html>
