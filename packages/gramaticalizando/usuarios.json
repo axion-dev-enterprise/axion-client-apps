@@ -1,0 +1,73 @@
+[
+  {
+    "id": "4a6240f2-1416-423a-9962-9243184d084c",
+    "nome": "yurizim",
+    "email": "yurearaujo538@gmail.com",
+    "senha": "$2b$10$PuYezF75bPJHcIKnADVBfOuhDUX0h/5RV6kA83tvi0SW4QCEP/Twa",
+    "criadoEm": "2026-08-28T05:37:30.254Z",
+    "estudos": {
+      "aulasConcluidas": [],
+      "exercicios": [],
+      "cursosIniciados": [],
+      "trilhasAtivas": [],
+      "atividades": [],
+      "sequencia": 0,
+      "ultimoAcesso": "2026-08-28T19:44:13.198Z"
+    },
+    "tipo": "aluno"
+  },
+  {
+    "id": "46a2a144-9c97-443d-a9e7-edf4f8eaf6f7",
+    "nome": "hostuser",
+    "email": "hostuser@gmail.com",
+    "senha": "$2b$10$n4kYEMqi59jZpqQ19gqHX.jgqQx2kQ5lPWoQ/Yc9/F8gaKriMvo6O",
+    "tipo": "admin",
+    "criadoEm": "2026-08-28T05:54:01.152Z"
+  },
+  {
+    "id": "3727486b-e0b6-4274-be9c-1f57c0dd4d35",
+    "nome": "Michel",
+    "email": "michelmoreira468@gmail.com",
+    "senha": "$2b$10$yIfsz3rVqr41Ad88QX5rk.2.ztwTUFBdlY81ecSkAdsc5F2sp46X6",
+    "tipo": "aluno",
+    "criadoEm": "2026-09-08T23:59:27.242Z",
+    "estudos": {
+      "aulasConcluidas": [],
+      "exercicios": [
+        {
+          "id": "ed91aa59-f9d2-45b1-bfef-01c642aec794",
+          "exercicioId": "388365e8-ba78-4f91-9921-4b5496db97ba",
+          "materiaId": "95aa14e5-8687-42f7-ab38-c600348f7597",
+          "aulaId": "2c7d9608-e80e-479a-81a8-c4c7c61d0de7",
+          "titulo": "testeeee",
+          "total": 1,
+          "corretas": 1,
+          "erradas": 0,
+          "porcentagem": 100,
+          "respostas": [
+            {
+              "questaoId": "2b342aef-add8-49fe-8f10-1cc0bcbccef5",
+              "respostaAluno": "wwwww",
+              "correta": true
+            }
+          ],
+          "concluidoEm": "2026-09-09T00:07:11.904Z"
+        }
+      ],
+      "cursosIniciados": [],
+      "trilhasAtivas": [],
+      "atividades": [
+        {
+          "id": "e1c95a02-40ff-4598-9511-80a31267a798",
+          "tipo": "exercicio",
+          "titulo": "Exercício concluído: testeeee",
+          "descricao": "1 de 1 questões corretas (100%).",
+          "referenciaId": "388365e8-ba78-4f91-9921-4b5496db97ba",
+          "criadoEm": "2026-09-09T00:07:11.904Z"
+        }
+      ],
+      "sequencia": 0,
+      "ultimoAcesso": "2026-09-09T00:00:59.165Z"
+    }
+  }
+]

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editor de Aula | Gramaticalizando</title>
+
+    <link rel="stylesheet" href="./editor-aula.css">
+</head>
+
+<body>
+
+    <header class="editor-topbar">
+
+        <div class="topbar-left">
+            <button id="btn-voltar" class="btn-voltar" type="button">
+                ← Voltar
+            </button>
+
+            <div class="topbar-info">
+                <span class="topbar-label">Matéria</span>
+                <strong id="nome-materia">Carregando...</strong>
+            </div>
+        </div>
+
+        <div class="topbar-center">
+            <span id="estado-salvamento" class="estado-salvamento">
+                Pronto para editar
+            </span>
+        </div>
+
+        <div class="topbar-actions">
+
+            <button
+                id="btn-salvar-rascunho"
+                class="btn btn-secondary"
+                type="button"
+            >
+                Salvar rascunho
+            </button>
+
+            <button
+                id="btn-publicar"
+                class="btn btn-primary"
+                type="button"
+            >
+                Publicar aula
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="editor-page">
+
+        <section class="editor-header">
+
+            <div class="campo-titulo">
+
+                <label for="titulo-aula">
+                    Título da aula
+                </label>
+
+                <input
+                    id="titulo-aula"
+                    type="text"
+                    placeholder="Ex: Introdução à Gramática"
+                    autocomplete="off"
+                >
+
+            </div>
+
+            <div class="status-area">
+                <span id="status-aula" class="status-badge rascunho">
+                    Rascunho
+                </span>
+            </div>
+
+        </section>
+
+
+        <section class="word-container">
+
+            <div class="toolbar">
+
+                <div class="toolbar-group">
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="undo"
+                        title="Desfazer"
+                    >
+                        ↶
+                    </button>
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="redo"
+                        title="Refazer"
+                    >
+                        ↷
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-separator"></div>
+
+
+                <div class="toolbar-group">
+
+                    <select id="formato-texto" class="toolbar-select">
+
+                        <option value="p">
+                            Texto normal
+                        </option>
+
+                        <option value="h1">
+                            Título 1
+                        </option>
+
+                        <option value="h2">
+                            Título 2
+                        </option>
+
+                        <option value="h3">
+                            Título 3
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="toolbar-separator"></div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        class="toolbar-btn toolbar-text"
+                        type="button"
+                        data-command="bold"
+                        title="Negrito"
+                    >
+                        <strong>B</strong>
+                    </button>
+
+                    <button
+                        class="toolbar-btn toolbar-text"
+                        type="button"
+                        data-command="italic"
+                        title="Itálico"
+                    >
+                        <em>I</em>
+                    </button>
+
+                    <button
+                        class="toolbar-btn toolbar-text"
+                        type="button"
+                        data-command="underline"
+                        title="Sublinhado"
+                    >
+                        <u>U</u>
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-separator"></div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="insertUnorderedList"
+                        title="Lista com marcadores"
+                    >
+                        • Lista
+                    </button>
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="insertOrderedList"
+                        title="Lista numerada"
+                    >
+                        1. Lista
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-separator"></div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="justifyLeft"
+                        title="Alinhar à esquerda"
+                    >
+                        ≡
+                    </button>
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="justifyCenter"
+                        title="Centralizar"
+                    >
+                        ≣
+                    </button>
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="justifyRight"
+                        title="Alinhar à direita"
+                    >
+                        ≡
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-separator"></div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="btn-link"
+                        class="toolbar-btn"
+                        type="button"
+                        title="Adicionar link"
+                    >
+                        🔗
+                    </button>
+
+                    <button
+                        id="btn-citacao"
+                        class="toolbar-btn"
+                        type="button"
+                        title="Citação"
+                    >
+                        ❝
+                    </button>
+
+                    <button
+                        class="toolbar-btn"
+                        type="button"
+                        data-command="removeFormat"
+                        title="Remover formatação"
+                    >
+                        Limpar
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="area-papel">
+
+                <article
+                    id="conteudo-aula"
+                    class="papel-editor"
+                    contenteditable="true"
+                    spellcheck="true"
+                    data-placeholder="Comece a escrever sua aula aqui..."
+                ></article>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div id="toast" class="toast"></div>
+
+    <script src="./editor-aula.js"></script>
+</body>
+</html>

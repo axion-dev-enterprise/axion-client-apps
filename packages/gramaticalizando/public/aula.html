@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Aula | Gramaticalizando</title>
+
+    <link
+        rel="stylesheet"
+        href="./aula.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         CARREGAMENTO
+    ====================================================== -->
+
+    <div
+        class="tela-carregamento"
+        id="tela-carregamento"
+    >
+        <div class="loader"></div>
+
+        <p>
+            Carregando aula...
+        </p>
+    </div>
+
+
+    <!-- =====================================================
+         ERRO
+    ====================================================== -->
+
+    <div
+        class="tela-erro escondido"
+        id="tela-erro"
+    >
+        <div class="erro-card">
+
+            <div class="erro-icone">
+                !
+            </div>
+
+            <h1>
+                Não foi possível abrir a aula
+            </h1>
+
+            <p id="mensagem-erro">
+                Verifique se esta aula está disponível.
+            </p>
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="btn-erro-voltar"
+            >
+                Voltar para meus estudos
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <div
+        class="aula-app escondido"
+        id="aula-app"
+    >
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="aula-topbar">
+
+            <div class="topbar-container">
+
+                <div class="topbar-esquerda">
+
+                    <button
+                        type="button"
+                        class="btn-voltar"
+                        id="btn-voltar"
+                        aria-label="Voltar"
+                    >
+                        ←
+                    </button>
+
+
+                    <div class="topbar-identificacao">
+
+                        <span class="topbar-label">
+                            Gramaticalizando
+                        </span>
+
+                        <strong id="topbar-materia">
+                            Matéria
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-direita">
+
+                    <div class="progresso-topo">
+
+                        <span>
+                            Progresso da matéria
+                        </span>
+
+                        <strong id="progresso-topo-texto">
+                            0%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="barra-topo">
+
+                        <div
+                            class="barra-topo-preenchida"
+                            id="barra-topo-preenchida"
+                        ></div>
+
+                    </div>
+
+
+                    <div
+                        class="avatar-aluno"
+                        id="avatar-aluno"
+                    >
+                        A
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+
+        <main class="aula-main">
+
+            <!-- =============================================
+                 CABEÇALHO DA AULA
+            ============================================== -->
+
+            <section class="aula-cabecalho">
+
+                <div class="aula-cabecalho-conteudo">
+
+                    <div class="aula-breadcrumb">
+
+                        <span id="breadcrumb-materia">
+                            Matéria
+                        </span>
+
+                        <span class="breadcrumb-separador">
+                            /
+                        </span>
+
+                        <span>
+                            Aula
+                        </span>
+
+                    </div>
+
+
+                    <div class="aula-badge">
+                        Conteúdo da aula
+                    </div>
+
+
+                    <h1 id="aula-titulo">
+                        Carregando...
+                    </h1>
+
+
+                    <p id="aula-subtitulo">
+                        Estude o conteúdo abaixo e conclua a aula
+                        quando terminar.
+                    </p>
+
+
+                    <div class="aula-meta">
+
+                        <div class="meta-item">
+
+                            <span class="meta-icone">
+                                ◉
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Matéria
+                                </small>
+
+                                <strong id="meta-materia">
+                                    -
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="meta-item">
+
+                            <span class="meta-icone">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <small>
+                                    Status
+                                </small>
+
+                                <strong id="meta-status">
+                                    Em andamento
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="aula-cabecalho-decoracao">
+                    Aa
+                </div>
+
+            </section>
+
+
+            <!-- =============================================
+                 GRID
+            ============================================== -->
+
+            <div class="aula-grid">
+
+                <!-- =========================================
+                     CONTEÚDO PRINCIPAL
+                ========================================== -->
+
+                <section class="conteudo-coluna">
+
+                    <article class="conteudo-card">
+
+                        <div class="conteudo-card-topo">
+
+                            <div>
+
+                                <span class="section-label">
+                                    Material
+                                </span>
+
+                                <h2>
+                                    Conteúdo
+                                </h2>
+
+                            </div>
+
+
+                            <span
+                                class="status-aula"
+                                id="status-aula"
+                            >
+                                Em andamento
+                            </span>
+
+                        </div>
+
+
+                        <!--
+                            O HTML salvo pelo editor da professora
+                            será inserido aqui pelo aula.js.
+                        -->
+
+                        <div
+                            class="conteudo-aula"
+                            id="conteudo-aula"
+                        ></div>
+
+                    </article>
+
+
+                    <!-- =====================================
+                         EXERCÍCIOS DA AULA
+                    ====================================== -->
+
+                    <section class="exercicios-secao">
+
+                        <div class="section-header">
+
+                            <div>
+
+                                <span class="section-label">
+                                    Prática
+                                </span>
+
+                                <h2>
+                                    Exercícios desta aula
+                                </h2>
+
+                                <p>
+                                    Depois de estudar, pratique o conteúdo
+                                    com os exercícios preparados para esta aula.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SEM EXERCÍCIOS -->
+
+                        <article
+                            class="sem-exercicios"
+                            id="sem-exercicios"
+                        >
+
+                            <div class="sem-exercicios-icone">
+                                ?
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Nenhum exercício disponível
+                                </strong>
+
+                                <p>
+                                    Ainda não há exercícios publicados
+                                    para esta aula.
+                                </p>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- LISTA -->
+
+                        <div
+                            class="lista-exercicios escondido"
+                            id="lista-exercicios"
+                        ></div>
+
+                    </section>
+
+                </section>
+
+
+                <!-- =========================================
+                     SIDEBAR
+                ========================================== -->
+
+                <aside class="aula-sidebar">
+
+                    <!-- PROGRESSO -->
+
+                    <article class="sidebar-card">
+
+                        <span class="section-label">
+                            Seu progresso
+                        </span>
+
+                        <h3>
+                            Esta matéria
+                        </h3>
+
+
+                        <div class="progresso-circular">
+
+                            <div class="circulo-progresso">
+
+                                <strong id="progresso-percentual">
+                                    0%
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="progresso-detalhes">
+
+                            <div>
+
+                                <span>
+                                    Concluídas
+                                </span>
+
+                                <strong id="aulas-concluidas">
+                                    0
+                                </strong>
+
+                            </div>
+
+
+                            <div>
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong id="total-aulas">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- CONCLUSÃO -->
+
+                    <article class="sidebar-card conclusao-card">
+
+                        <span class="section-label">
+                            Finalizar
+                        </span>
+
+                        <h3>
+                            Terminou de estudar?
+                        </h3>
+
+                        <p>
+                            Marque esta aula como concluída para atualizar
+                            seu progresso.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-primary btn-concluir"
+                            id="btn-concluir-aula"
+                        >
+                            Concluir aula
+                        </button>
+
+
+                        <div
+                            class="aula-concluida-box escondido"
+                            id="aula-concluida-box"
+                        >
+
+                            <span>
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Aula concluída
+                                </strong>
+
+                                <small>
+                                    Seu progresso foi atualizado.
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- PRÓXIMOS PASSOS -->
+
+                    <article class="sidebar-card">
+
+                        <span class="section-label">
+                            Próximo passo
+                        </span>
+
+                        <h3>
+                            Pratique o conteúdo
+                        </h3>
+
+                        <p>
+                            Se houver exercícios publicados nesta aula,
+                            você poderá respondê-los depois de estudar.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary btn-praticar"
+                            id="btn-praticar"
+                            disabled
+                        >
+                            Nenhum exercício disponível
+                        </button>
+
+                    </article>
+
+                </aside>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         TEMPLATE DO EXERCÍCIO
+    ====================================================== -->
+
+    <template id="template-exercicio">
+
+        <article class="exercicio-card">
+
+            <div class="exercicio-icone">
+                ?
+            </div>
+
+
+            <div class="exercicio-conteudo">
+
+                <div class="exercicio-topo">
+
+                    <span class="exercicio-label">
+                        Exercício
+                    </span>
+
+                    <span class="exercicio-questoes">
+                        0 questões
+                    </span>
+
+                </div>
+
+
+                <h3 class="exercicio-titulo">
+                    Exercício
+                </h3>
+
+
+                <p class="exercicio-descricao">
+                    Pratique o conteúdo desta aula.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn btn-primary btn-abrir-exercicio"
+            >
+                Começar
+                <span>
+                    →
+                </span>
+            </button>
+
+        </article>
+
+    </template>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        class="toast escondido"
+        id="toast"
+    >
+        <span id="toast-mensagem"></span>
+    </div>
+
+
+    <script src="./aula.js"></script>
+
+</body>
+
+</html>

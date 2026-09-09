@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Exercício | GRAMATICALIZANDO
+    </title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="./exercicio.css"
+    >
+
+</head>
+
+<body>
+
+
+    <!-- =====================================================
+         CARREGAMENTO
+    ====================================================== -->
+
+    <section
+        id="tela-carregamento"
+        class="tela-central"
+    >
+
+        <div class="loading-spinner"></div>
+
+        <h2>
+            Carregando exercício...
+        </h2>
+
+        <p>
+            Preparando suas questões.
+        </p>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ERRO
+    ====================================================== -->
+
+    <section
+        id="tela-erro"
+        class="tela-central escondido"
+    >
+
+        <div class="erro-icone">
+            !
+        </div>
+
+        <h2>
+            Não foi possível abrir o exercício
+        </h2>
+
+        <p id="mensagem-erro">
+            Ocorreu um erro ao carregar esta atividade.
+        </p>
+
+        <button
+            id="btn-erro-voltar"
+            class="btn btn-primario"
+            type="button"
+        >
+            Voltar
+        </button>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         APLICAÇÃO
+    ====================================================== -->
+
+    <div
+        id="exercicio-app"
+        class="escondido"
+    >
+
+
+        <!-- =================================================
+             TOPO
+        ================================================== -->
+
+        <header class="topbar">
+
+            <div class="topbar-esquerda">
+
+                <button
+                    id="btn-voltar"
+                    class="btn-voltar"
+                    type="button"
+                    aria-label="Voltar"
+                >
+                    <span>
+                        ←
+                    </span>
+
+                    <span>
+                        Voltar para a aula
+                    </span>
+                </button>
+
+                <div class="topbar-divisor"></div>
+
+                <div class="topbar-info">
+
+                    <span class="topbar-label">
+                        Exercício
+                    </span>
+
+                    <strong id="topbar-materia">
+                        Matéria
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-direita">
+
+                <div class="contador-topo">
+
+                    <span>
+                        Questões respondidas
+                    </span>
+
+                    <strong id="questoes-respondidas">
+                        0 / 0
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="avatar-aluno"
+                    class="avatar-aluno"
+                >
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero-exercicio">
+
+            <div class="hero-conteudo">
+
+                <div class="breadcrumb">
+
+                    <span id="breadcrumb-materia">
+                        Matéria
+                    </span>
+
+                    <span>
+                        /
+                    </span>
+
+                    <span id="breadcrumb-aula">
+                        Aula
+                    </span>
+
+                </div>
+
+
+                <span class="hero-label">
+                    Hora de praticar
+                </span>
+
+
+                <h1 id="exercicio-titulo">
+                    Exercício
+                </h1>
+
+
+                <p id="exercicio-descricao">
+                    Responda às questões abaixo e finalize quando terminar.
+                </p>
+
+
+                <div class="hero-meta">
+
+                    <div class="meta-item">
+
+                        <span class="meta-label">
+                            Matéria
+                        </span>
+
+                        <strong id="meta-materia">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="meta-item">
+
+                        <span class="meta-label">
+                            Aula
+                        </span>
+
+                        <strong id="meta-aula">
+                            -
+                        </strong>
+
+                    </div>
+
+
+                    <div class="meta-item">
+
+                        <span class="meta-label">
+                            Questões
+                        </span>
+
+                        <strong id="meta-total-questoes">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+
+        <main class="pagina-exercicio">
+
+            <div class="conteudo-principal">
+
+
+                <!-- =============================================
+                     AVISO
+                ============================================== -->
+
+                <section
+                    id="aviso-exercicio"
+                    class="aviso-exercicio"
+                >
+
+                    <div class="aviso-icone">
+                        i
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Como funciona?
+                        </strong>
+
+                        <p>
+                            Responda todas as questões e clique em
+                            <b>Finalizar exercício</b>.
+                            As respostas corretas serão exibidas somente
+                            depois da correção.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- =============================================
+                     QUESTÕES
+                ============================================== -->
+
+                <section
+                    id="lista-questoes"
+                    class="lista-questoes"
+                ></section>
+
+
+
+                <!-- =============================================
+                     FINALIZAR
+                ============================================== -->
+
+                <section
+                    id="area-finalizar"
+                    class="area-finalizar"
+                >
+
+                    <div>
+
+                        <span class="finalizar-label">
+                            Terminou?
+                        </span>
+
+                        <h2>
+                            Confira suas respostas
+                        </h2>
+
+                        <p>
+                            Depois de finalizar, o exercício será corrigido.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        id="btn-finalizar"
+                        class="btn btn-primario btn-finalizar"
+                        type="button"
+                    >
+                        Finalizar exercício
+                    </button>
+
+                </section>
+
+
+
+                <!-- =============================================
+                     RESULTADO
+                ============================================== -->
+
+                <section
+                    id="resultado-exercicio"
+                    class="resultado-exercicio escondido"
+                >
+
+                    <div class="resultado-topo">
+
+                        <div>
+
+                            <span class="resultado-label">
+                                Resultado
+                            </span>
+
+                            <h2>
+                                Exercício concluído
+                            </h2>
+
+                            <p>
+                                Veja seu desempenho e confira cada questão.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            id="resultado-circulo"
+                            class="resultado-circulo"
+                        >
+
+                            <strong id="resultado-porcentagem">
+                                0%
+                            </strong>
+
+                            <span>
+                                acerto
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="resultado-estatisticas">
+
+                        <article class="resultado-stat">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="resultado-total">
+                                0
+                            </strong>
+
+                        </article>
+
+
+                        <article class="resultado-stat resultado-correto">
+
+                            <span>
+                                Corretas
+                            </span>
+
+                            <strong id="resultado-corretas">
+                                0
+                            </strong>
+
+                        </article>
+
+
+                        <article class="resultado-stat resultado-errado">
+
+                            <span>
+                                Erradas
+                            </span>
+
+                            <strong id="resultado-erradas">
+                                0
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+
+
+                    <div class="resultado-divisor"></div>
+
+
+
+                    <div class="resultado-detalhes-topo">
+
+                        <div>
+
+                            <span class="resultado-label">
+                                Correção
+                            </span>
+
+                            <h3>
+                                Confira suas respostas
+                            </h3>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="lista-correcao"
+                        class="lista-correcao"
+                    ></div>
+
+
+                    <div class="resultado-acoes">
+
+                        <button
+                            id="btn-voltar-aula-resultado"
+                            class="btn btn-secundario"
+                            type="button"
+                        >
+                            Voltar para a aula
+                        </button>
+
+
+                        <button
+                            id="btn-refazer"
+                            class="btn btn-primario"
+                            type="button"
+                        >
+                            Refazer exercício
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LATERAL
+            ================================================== -->
+
+            <aside class="barra-lateral">
+
+
+                <section class="card-lateral">
+
+                    <span class="card-lateral-label">
+                        Seu progresso
+                    </span>
+
+                    <div class="progresso-numero">
+
+                        <strong id="progresso-respondidas">
+                            0
+                        </strong>
+
+                        <span>
+                            de
+                        </span>
+
+                        <strong id="progresso-total">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <p>
+                        questões respondidas
+                    </p>
+
+
+                    <div class="barra-progresso">
+
+                        <div
+                            id="barra-progresso-preenchida"
+                            class="barra-progresso-preenchida"
+                        ></div>
+
+                    </div>
+
+
+                    <span
+                        id="progresso-percentual"
+                        class="progresso-percentual"
+                    >
+                        0%
+                    </span>
+
+                </section>
+
+
+
+                <section class="card-lateral card-dica">
+
+                    <span class="card-lateral-label">
+                        Dica
+                    </span>
+
+                    <h3>
+                        Responda com calma
+                    </h3>
+
+                    <p>
+                        Você só verá quais respostas acertou ou errou
+                        depois que finalizar o exercício.
+                    </p>
+
+                </section>
+
+
+                <button
+                    id="btn-finalizar-lateral"
+                    class="btn btn-primario btn-lateral"
+                    type="button"
+                >
+                    Finalizar exercício
+                </button>
+
+            </aside>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TEMPLATE — QUESTÃO
+    ====================================================== -->
+
+    <template id="template-questao">
+
+        <article class="questao-card">
+
+            <div class="questao-topo">
+
+                <span class="questao-numero">
+                    Questão 1
+                </span>
+
+                <span class="questao-tipo">
+                    Múltipla escolha
+                </span>
+
+            </div>
+
+
+            <h2 class="questao-enunciado">
+                Enunciado
+            </h2>
+
+
+            <div class="questao-resposta"></div>
+
+        </article>
+
+    </template>
+
+
+
+    <!-- =====================================================
+         TEMPLATE — ALTERNATIVA
+    ====================================================== -->
+
+    <template id="template-alternativa">
+
+        <label class="alternativa">
+
+            <input
+                class="alternativa-input"
+                type="radio"
+            >
+
+            <span class="alternativa-marcador"></span>
+
+            <span class="alternativa-letra">
+                A
+            </span>
+
+            <span class="alternativa-texto">
+                Alternativa
+            </span>
+
+        </label>
+
+    </template>
+
+
+
+    <!-- =====================================================
+         TEMPLATE — CORREÇÃO
+    ====================================================== -->
+
+    <template id="template-correcao">
+
+        <article class="correcao-card">
+
+            <div class="correcao-topo">
+
+                <span class="correcao-numero">
+                    Questão 1
+                </span>
+
+                <span class="correcao-status">
+                    Correta
+                </span>
+
+            </div>
+
+
+            <h4 class="correcao-enunciado">
+                Enunciado
+            </h4>
+
+
+            <div class="correcao-respostas">
+
+                <div class="correcao-resposta">
+
+                    <span>
+                        Sua resposta
+                    </span>
+
+                    <strong class="correcao-resposta-aluno">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="correcao-resposta">
+
+                    <span>
+                        Resposta correta
+                    </span>
+
+                    <strong class="correcao-resposta-correta">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+
+    <!-- =====================================================
+         MODAL CONFIRMAÇÃO
+    ====================================================== -->
+
+    <div
+        id="modal-finalizar"
+        class="modal-overlay escondido"
+    >
+
+        <div class="modal">
+
+            <div class="modal-icone">
+                ✓
+            </div>
+
+
+            <h2>
+                Finalizar exercício?
+            </h2>
+
+
+            <p id="modal-finalizar-texto">
+                Confira se respondeu todas as questões antes de enviar.
+            </p>
+
+
+            <div class="modal-acoes">
+
+                <button
+                    id="btn-cancelar-finalizacao"
+                    class="btn btn-secundario"
+                    type="button"
+                >
+                    Continuar respondendo
+                </button>
+
+
+                <button
+                    id="btn-confirmar-finalizacao"
+                    class="btn btn-primario"
+                    type="button"
+                >
+                    Sim, finalizar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast escondido"
+    >
+
+        <span id="toast-mensagem">
+            Mensagem
+        </span>
+
+    </div>
+
+
+
+    <script src="./exercicio.js"></script>
+
+</body>
+
+</html>

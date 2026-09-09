@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Área do Aluno | Gramaticalizando
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./aluno.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                G
+            </div>
+
+            <span>
+                GRAMATICALIZANDO
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <button
+                class="menu-item ativo"
+                data-pagina="inicio"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ⌂
+                </span>
+
+                <span>
+                    Início
+                </span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-pagina="cursos"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ▶
+                </span>
+
+                <span>
+                    Meus cursos
+                </span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-pagina="trilhas"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ◈
+                </span>
+
+                <span>
+                    Trilhas
+                </span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-pagina="exercicios"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ✓
+                </span>
+
+                <span>
+                    Exercícios
+                </span>
+            </button>
+
+
+            <button
+                class="menu-item"
+                data-pagina="progresso"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ↗
+                </span>
+
+                <span>
+                    Progresso
+                </span>
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-final">
+
+            <button
+                class="menu-item"
+                data-pagina="perfil"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ◎
+                </span>
+
+                <span>
+                    Meu perfil
+                </span>
+            </button>
+
+
+            <button
+                class="menu-item sair"
+                id="btn-sair"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ↪
+                </span>
+
+                <span>
+                    Sair
+                </span>
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <div class="app">
+
+        <!-- =================================
+             TOPBAR
+        ================================== -->
+
+        <header class="topbar">
+
+            <button
+                class="btn-menu-mobile"
+                id="btn-menu-mobile"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-titulo">
+
+                <p>
+                    Área do aluno
+                </p>
+
+                <h2>
+                    Seu aprendizado
+                </h2>
+
+            </div>
+
+
+            <div class="usuario-topo">
+
+                <div class="usuario-info">
+
+                    <strong id="nome-topo">
+                        Carregando...
+                    </strong>
+
+                    <span>
+                        Estudante
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="avatar"
+                    id="avatar-topo"
+                >
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================
+             CONTEÚDO
+        ================================== -->
+
+        <main class="conteudo">
+
+            <!-- =================================
+                 BOAS-VINDAS
+            ================================== -->
+
+            <section class="boas-vindas">
+
+                <div>
+
+                    <span class="mini-badge">
+                        Sua área de estudos
+                    </span>
+
+                    <h1>
+                        Olá,
+                        <span id="nome-aluno">
+                            ...
+                        </span>
+                        👋
+                    </h1>
+
+                    <p>
+                        Comece seus estudos e acompanhe
+                        seu progresso por aqui.
+                    </p>
+
+                </div>
+
+
+                <div class="sequencia">
+
+                    <span class="sequencia-icone">
+                        🔥
+                    </span>
+
+                    <div>
+
+                        <strong id="sequencia-estudos">
+                            0 dias
+                        </strong>
+
+                        <span>
+                            sequência de estudos
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 ESTATÍSTICAS REAIS
+            ================================== -->
+
+            <section class="stats-grid">
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ▶
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Aulas concluídas
+                        </span>
+
+                        <strong id="total-aulas">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Exercícios feitos
+                        </span>
+
+                        <strong id="total-exercicios">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ↗
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Taxa de acerto
+                        </span>
+
+                        <strong id="taxa-acerto">
+                            0%
+                        </strong>
+
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Trilhas ativas
+                        </span>
+
+                        <strong id="trilhas-ativas">
+                            0
+                        </strong>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- =================================
+                 CURSOS
+            ================================== -->
+
+            <section class="secao">
+
+                <div class="secao-topo">
+
+                    <div>
+
+                        <span class="section-label">
+                            Seus estudos
+                        </span>
+
+                        <h2>
+                            Meus cursos
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="area-cursos"
+                    style="margin-top: 14px;"
+                >
+
+                    <article
+                        class="continuar-card"
+                        id="sem-cursos"
+                    >
+
+                        <div class="card-cabecalho">
+
+                            <div>
+
+                                <span class="section-label">
+                                    Nenhum curso
+                                </span>
+
+                                <h2>
+                                    Você ainda não iniciou nenhum curso
+                                </h2>
+
+                            </div>
+
+                        </div>
+
+
+                        <p
+                            style="
+                                margin-top: 12px;
+                                color: #6b6b75;
+                                font-size: 11px;
+                                line-height: 1.6;
+                            "
+                        >
+                            Quando você iniciar seu primeiro curso,
+                            ele aparecerá aqui.
+                        </p>
+
+
+                        <button
+                            class="btn-continuar"
+                            id="btn-explorar-cursos"
+                            type="button"
+                        >
+                            Explorar cursos
+                            <span>→</span>
+                        </button>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 PARTE INFERIOR
+            ================================== -->
+
+            <section class="inferior-grid">
+
+                <!-- ATIVIDADES -->
+
+                <article class="atividade-card">
+
+                    <div class="secao-topo">
+
+                        <div>
+
+                            <span class="section-label">
+                                Histórico
+                            </span>
+
+                            <h2>
+                                Atividades recentes
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="lista-atividades"
+                        style="margin-top: 18px;"
+                    >
+
+                        <p
+                            id="sem-atividades"
+                            style="
+                                color: #6b6b75;
+                                font-size: 11px;
+                                line-height: 1.6;
+                            "
+                        >
+                            Nenhuma atividade realizada ainda.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- DESEMPENHO -->
+
+                <article class="desempenho-card">
+
+                    <div class="secao-topo">
+
+                        <div>
+
+                            <span class="section-label">
+                                Desempenho
+                            </span>
+
+                            <h2>
+                                Seus resultados
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="area-desempenho"
+                        style="
+                            margin-top: 18px;
+                            color: #6b6b75;
+                            font-size: 11px;
+                            line-height: 1.6;
+                        "
+                    >
+                        Você ainda não possui resultados.
+                        Faça exercícios para começar.
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================
+         OVERLAY MOBILE
+    ====================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebar-overlay"
+    ></div>
+
+
+    <script src="./aluno.js"></script>
+
+</body>
+
+</html>

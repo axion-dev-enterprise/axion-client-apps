@@ -1,0 +1,26 @@
+﻿{
+  "name": "@axion/gramaticalizando",
+  "version": "1.0.0",
+  "description": "Plataforma EAD de Língua Portuguesa e Aprendizagem Guiada",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "admin:create": "node scripts/criar-admin.js"
+  },
+  "keywords": [
+    "ead",
+    "lms",
+    "gramatica",
+    "educacao",
+    "axion"
+  ],
+  "author": "AXION Enterprise",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0"
+  }
+}
