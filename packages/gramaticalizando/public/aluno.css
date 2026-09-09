@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 /* Trava Rígida de SVGs */
 svg {
@@ -20,7 +21,7 @@ button svg, a svg {
    Design System & Rebranding v2.0
 ===================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
 
 /* =====================================
    DESIGN TOKENS & CSS VARIABLES

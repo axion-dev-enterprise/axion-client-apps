@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node src/server.js",
+    "dev": "vite",
+    "dev:server": "node src/server.js",
+    "build": "vite build",
     "admin:create": "node scripts/criar-admin.js"
   },
   "keywords": [
@@ -22,5 +24,8 @@
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
     "express-session": "^1.19.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
   }
 }
