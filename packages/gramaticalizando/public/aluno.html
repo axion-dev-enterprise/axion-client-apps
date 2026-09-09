@@ -119,6 +119,34 @@
                 </span>
             </button>
 
+            <button
+                class="menu-item"
+                id="btn-nav-diagnostico"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ◎
+                </span>
+
+                <span>
+                    Diagnóstico
+                </span>
+            </button>
+
+            <button
+                class="menu-item"
+                id="btn-nav-redacao"
+                type="button"
+            >
+                <span class="menu-icone">
+                    ✎
+                </span>
+
+                <span>
+                    Redações
+                </span>
+            </button>
+
         </nav>
 
 
@@ -200,9 +228,10 @@
                         Carregando...
                     </strong>
 
-                    <span>
-                        Estudante
-                    </span>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 0.8rem; color: #64748b;">Estudante</span>
+                        <span id="plano-aluno-topo" style="font-size: 0.7rem; background: #ede9fe; color: #6d28d9; padding: 0.1rem 0.5rem; border-radius: 9999px; font-weight: 700; text-transform: uppercase;">Gratuito</span>
+                    </div>
 
                 </div>
 
@@ -367,6 +396,12 @@
 
             </section>
 
+            <!-- =================================
+                 DIAGNÓSTICO E CRONOGRAMA DA SEMANA
+            ================================== -->
+            <section class="secao" id="secao-cronograma-area" style="margin-bottom: 2rem;">
+                <div id="card-cronograma-container"></div>
+            </section>
 
             <!-- =================================
                  CURSOS

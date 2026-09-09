@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+﻿const crypto = require("crypto");
 const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson } = require("../data/jsonStore");
 
@@ -155,6 +155,8 @@ async function criarAulaNaMateria(req, res) {
         const materiaId = req.params.materiaId;
         const titulo = String(req.body.titulo || "").trim();
         const conteudo = String(req.body.conteudo || "");
+        const videoUrl = String(req.body.videoUrl || "").trim();
+        const materialPdfUrl = String(req.body.materialPdfUrl || "").trim();
         const publicado = Boolean(req.body.publicado);
 
         if (titulo.length < 2) {
@@ -177,6 +179,8 @@ async function criarAulaNaMateria(req, res) {
             materiaId,
             titulo,
             conteudo,
+            videoUrl: videoUrl || null,
+            materialPdfUrl: materialPdfUrl || null,
             publicado,
             criadoEm: agora,
             atualizadoEm: agora

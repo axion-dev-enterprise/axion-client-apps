@@ -1,4 +1,4 @@
-const paths = require("../config/paths");
+﻿const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
@@ -26,6 +26,8 @@ async function atualizarAdmin(req, res) {
     try {
         const titulo = String(req.body.titulo || "").trim();
         const conteudo = String(req.body.conteudo || "");
+        const videoUrl = String(req.body.videoUrl || "").trim();
+        const materialPdfUrl = String(req.body.materialPdfUrl || "").trim();
         const publicado = Boolean(req.body.publicado);
 
         if (titulo.length < 2) {
@@ -40,6 +42,8 @@ async function atualizarAdmin(req, res) {
 
         aulas[indice].titulo = titulo;
         aulas[indice].conteudo = conteudo;
+        aulas[indice].videoUrl = videoUrl || null;
+        aulas[indice].materialPdfUrl = materialPdfUrl || null;
         aulas[indice].publicado = publicado;
         aulas[indice].atualizadoEm = new Date().toISOString();
 
@@ -131,6 +135,8 @@ async function obterAulaAluno(req, res) {
                 id: aula.id,
                 titulo: aula.titulo,
                 conteudo: aula.conteudo,
+                videoUrl: aula.videoUrl || null,
+                materialPdfUrl: aula.materialPdfUrl || null,
                 materiaId: aula.materiaId,
                 criadoEm: aula.criadoEm,
                 atualizadoEm: aula.atualizadoEm,

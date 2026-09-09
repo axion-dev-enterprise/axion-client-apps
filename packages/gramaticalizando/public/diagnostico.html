@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico de Nível e Trilha Personalizada | Gramaticalizando</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-light: #ede9fe;
+            --primary-subtle: #f5f3ff;
+            --bg-page: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Topbar */
+        .diag-topbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .diag-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-voltar:hover {
+            background: #f1f5f9;
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 860px;
+            margin: 2rem auto;
+            padding: 0 1.25rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        /* Progress Steps */
+        .steps-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .steps-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border);
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .step-item {
+            position: relative;
+            z-index: 2;
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 2px solid var(--border);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .step-item.active {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .step-item.completed {
+            border-color: var(--success);
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 2.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+
+        .card p.lead {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .option-radio {
+            display: none;
+        }
+
+        .option-card {
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            background: #ffffff;
+        }
+
+        .option-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-subtle);
+        }
+
+        .option-radio:checked + .option-card {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .option-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.85rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Quiz Section */
+        .quiz-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quiz-tag {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.3rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .question-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #ffffff;
+        }
+
+        .question-num {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            color: var(--text-main);
+            margin-bottom: 1.25rem;
+        }
+
+        .alt-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .alt-item:hover {
+            border-color: var(--primary);
+            background: var(--primary-subtle);
+        }
+
+        .alt-item.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .alt-letter {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            min-width: 20px;
+        }
+
+        .alt-text {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* Results / Report */
+        .result-badge-container {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid #ddd6fe;
+        }
+
+        .result-score {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-level {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e1b4b;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-sub {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .topic-stat-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .topic-stat-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-bar-bg {
+            background: #f1f5f9;
+            height: 8px;
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .topic-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 9999px;
+            transition: width 0.6s ease;
+        }
+
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .schedule-day-card {
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            background: #ffffff;
+        }
+
+        .schedule-day-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .schedule-act-item {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .schedule-act-item::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .escondido {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="diag-topbar">
+        <div class="diag-topbar-left">
+            <a href="/aluno.html" class="btn-voltar">
+                <span>←</span> Voltar ao Dashboard
+            </a>
+            <span class="brand-logo">Gramaticalizando</span>
+        </div>
+        <div id="diag-user-name" style="font-size: 0.85rem; font-weight: 600; color: #4b5563;"></div>
+    </header>
+
+    <div class="container">
+
+        <!-- Barra de Etapas -->
+        <div class="steps-bar">
+            <div id="step-nav-1" class="step-item active">
+                <span>1</span> Perfil & Foco
+            </div>
+            <div id="step-nav-2" class="step-item">
+                <span>2</span> Teste Diagnóstico
+            </div>
+            <div id="step-nav-3" class="step-item">
+                <span>3</span> Trilha Semanal
+            </div>
+        </div>
+
+        <!-- ETAPA 1: ONBOARDING / PERFIL -->
+        <section id="etapa-perfil" class="card">
+            <h1>Diagnóstico Inicial com a Profª Wilma</h1>
+            <p class="lead">
+                Vamos mapear exatamente seus objetivos, tempo de estudo e nível atual em Língua Portuguesa para montar uma trilha personalizada direcionada às suas maiores dificuldades.
+            </p>
+
+            <form id="form-perfil">
+                <div class="form-group">
+                    <label class="form-label">Qual é o seu foco principal de estudo?</label>
+                    <div class="options-grid">
+                        <label>
+                            <input type="radio" name="foco" value="concursos" class="option-radio" checked>
+                            <div class="option-card">
+                                <span class="option-title">Concursos Públicos</span>
+                                <span class="option-desc">Carreiras Administrativas, Tribunais, Policiais e Fiscais</span>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="foco" value="enem" class="option-radio">
+                            <div class="option-card">
+                                <span class="option-title">ENEM</span>
+                                <span class="option-desc">Linguagens, Códigos e foco na Redação Nota 1000</span>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="foco" value="vestibulares" class="option-radio">
+                            <div class="option-card">
+                                <span class="option-title">Vestibulares Tradicionais</span>
+                                <span class="option-desc">FUVEST, UNICAMP, UERJ e outras bancas regionais</span>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="foco" value="geral" class="option-radio">
+                            <div class="option-card">
+                                <span class="option-title">Gramática & Redação Geral</span>
+                                <span class="option-desc">Aperfeiçoamento da escrita formal e comunicação</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Quantas horas semanais você pode dedicar aos estudos?</label>
+                    <div class="options-grid">
+                        <label>
+                            <input type="radio" name="horas" value="4" class="option-radio">
+                            <div class="option-card">
+                                <span class="option-title">4 a 6 horas/semana</span>
+                                <span class="option-desc">Ritmo leve e constante (~1h por dia)</span>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="horas" value="8" class="option-radio" checked>
+                            <div class="option-card">
+                                <span class="option-title">8 a 10 horas/semana</span>
+                                <span class="option-desc">Ritmo ideal recomendado (~1h30 a 2h/dia)</span>
+                            </div>
+                        </label>
+                        <label>
+                            <input type="radio" name="horas" value="15" class="option-radio">
+                            <div class="option-card">
+                                <span class="option-title">15+ horas/semana</span>
+                                <span class="option-desc">Foco intensivo pós-edital ou reta final</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" id="btn-iniciar-teste" class="btn-primary" style="margin-top: 1rem;">
+                    Iniciar Teste Diagnóstico (10 Questões) →
+                </button>
+            </form>
+        </section>
+
+        <!-- ETAPA 2: QUESTÕES DO DIAGNÓSTICO -->
+        <section id="etapa-teste" class="card escondido">
+            <div class="quiz-header">
+                <div>
+                    <h2 style="font-size: 1.3rem;">Teste Rápido de Nivelamento</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Responda com calma. As questões cobrem os 5 pilares fundamentais da Língua Portuguesa.</p>
+                </div>
+                <div class="quiz-tag" id="quiz-contador">10 Questões</div>
+            </div>
+
+            <div id="questoes-container">
+                <!-- Injetado via javascript -->
+                <p style="text-align: center; color: var(--text-muted); padding: 2rem;">Carregando questões...</p>
+            </div>
+
+            <button type="button" id="btn-enviar-diagnostico" class="btn-primary" style="margin-top: 1.5rem;">
+                Concluir Diagnóstico e Gerar Trilha →
+            </button>
+        </section>
+
+        <!-- ETAPA 3: RESULTADO & TRILHA PERSONALIZADA -->
+        <section id="etapa-resultado" class="card escondido">
+            <h1>Seu Diagnóstico está Pronto!</h1>
+            <p class="lead">Confira sua nota geral, o diagnóstico por tópicos e o cronograma personalizado elaborado pela Profª Wilma.</p>
+
+            <div class="result-badge-container">
+                <div id="res-score" class="result-score">0%</div>
+                <div id="res-level" class="result-level">Nível Intermediário</div>
+                <div id="res-sub" class="result-sub">Você acertou 0 de 10 questões</div>
+            </div>
+
+            <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Desempenho por Tópico</h3>
+            <div id="res-topics-grid" class="topics-grid">
+                <!-- Preenchido via JS -->
+            </div>
+
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Meu Cronograma Semanal Personalizado</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+                Este plano prioriza as lacunas identificadas no seu diagnóstico e organiza suas videoaulas, materiais em PDF e redações semanais:
+            </p>
+            <div id="res-schedule-list" class="schedule-list">
+                <!-- Preenchido via JS -->
+            </div>
+
+            <button type="button" id="btn-ir-dashboard" class="btn-primary">
+                Acessar Meu Dashboard de Estudos →
+            </button>
+        </section>
+
+    </div>
+
+    <script src="./diagnostico.js"></script>
+</body>
+</html>

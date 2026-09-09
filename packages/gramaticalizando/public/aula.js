@@ -582,6 +582,46 @@ function renderizarExercicios(
 }
 
 
+function renderizarVideoEMaterial(aula) {
+    const videoContainer = document.getElementById("video-container");
+    const videoWrapper = document.getElementById("video-player-wrapper");
+    const pdfContainer = document.getElementById("material-pdf-container");
+    const linkPdf = document.getElementById("link-material-pdf");
+
+    if (aula?.videoUrl && videoContainer && videoWrapper) {
+        const url = String(aula.videoUrl).trim();
+        let iframeSrc = null;
+
+        const ytMatch = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        if (ytMatch) {
+            iframeSrc = `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0`;
+        } else {
+            const vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?([0-9]+)/);
+            if (vimeoMatch) {
+                iframeSrc = `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+            } else {
+                iframeSrc = url;
+            }
+        }
+
+        if (url.endsWith(".mp4") || url.endsWith(".webm")) {
+            videoWrapper.innerHTML = `<video src="${url}" controls style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain;"></video>`;
+        } else {
+            videoWrapper.innerHTML = `<iframe src="${iframeSrc}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>`;
+        }
+        videoContainer.classList.remove("escondido");
+    } else if (videoContainer) {
+        videoContainer.classList.add("escondido");
+    }
+
+    if (aula?.materialPdfUrl && pdfContainer && linkPdf) {
+        linkPdf.href = aula.materialPdfUrl;
+        pdfContainer.classList.remove("escondido");
+    } else if (pdfContainer) {
+        pdfContainer.classList.add("escondido");
+    }
+}
+
 /* =====================================================
    RENDERIZAR AULA
 ===================================================== */
@@ -679,6 +719,7 @@ function renderizarAula(
 
     }
 
+    renderizarVideoEMaterial(aula);
 
     renderizarProgresso(
         progresso

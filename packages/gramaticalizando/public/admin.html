@@ -106,6 +106,20 @@
                     </span>
                 </button>
 
+                <button
+                    class="menu-item"
+                    type="button"
+                    data-pagina="redacoes"
+                >
+                    <span class="menu-icone">
+                        ✎
+                    </span>
+
+                    <span>
+                        Redações
+                    </span>
+                </button>
+
             </nav>
 
         </div>
@@ -884,6 +898,63 @@
 
             </section>
 
+            <!-- =================================================
+                 REDAÇÕES
+            ================================================== -->
+            <section
+                class="pagina"
+                id="pagina-redacoes"
+            >
+
+                <div class="section-header">
+                    <div>
+                        <span class="mini-label">
+                            Laboratório
+                        </span>
+                        <h2>
+                            Correção de Redações
+                        </h2>
+                        <p>
+                            Gerencie e corrija as redações enviadas pelos alunos da Profª Wilma.
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <select id="filtro-status-redacao" style="padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.85rem;">
+                            <option value="">Todos os status</option>
+                            <option value="pendente">Pendentes de correção</option>
+                            <option value="corrigida">Corrigidas</option>
+                        </select>
+                        <button type="button" class="btn btn-secondary" id="btn-recarregar-redacoes" style="padding: 0.5rem 0.75rem; font-size: 0.85rem;">
+                            Atualizar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="painel-card tabela-card">
+                    <div class="tabela-wrapper">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Aluno</th>
+                                    <th>Tema</th>
+                                    <th>Data Envio</th>
+                                    <th>Status</th>
+                                    <th>Nota</th>
+                                    <th style="text-align: right;">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-redacoes-corpo">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: #64748b; padding: 2rem;">Carregando redações...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
         </main>
 
     </div>
@@ -996,6 +1067,48 @@
 
 </div>
 
+<!-- =====================================================
+     MODAL CORREÇÃO DE REDAÇÃO
+====================================================== -->
+<div class="modal-overlay escondido" id="modal-corrigir-redacao">
+    <div class="modal" style="max-width: 700px; width: 90%;">
+        <div class="modal-header">
+            <div>
+                <span class="mini-label">Profª Wilma</span>
+                <h3 id="modal-redacao-titulo">Corrigir Redação</h3>
+            </div>
+            <button type="button" class="btn-fechar" id="btn-fechar-modal-redacao" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        <div class="modal-corpo" style="padding: 1.25rem;">
+            <div style="margin-bottom: 1rem; padding: 0.75rem 1rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem;">Aluno: <strong id="modal-redacao-aluno" style="color: #0f172a;">-</strong></p>
+                <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 0.25rem;">Tema: <strong id="modal-redacao-tema" style="color: #0f172a;">-</strong></p>
+                <div id="modal-redacao-anexo" style="font-size: 0.85rem; margin-top: 0.25rem;"></div>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: #1e293b;">Texto Redigido pelo Aluno:</label>
+                <div id="modal-redacao-texto" style="max-height: 220px; overflow-y: auto; padding: 0.75rem 1rem; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; line-height: 1.5; white-space: pre-wrap;"></div>
+            </div>
+
+            <form id="form-corrigir-redacao">
+                <input type="hidden" id="corrigir-redacao-id">
+                <div style="margin-bottom: 1rem;">
+                    <label for="corrigir-nota" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: #1e293b;">Nota Geral (0 a 1000):</label>
+                    <input type="number" id="corrigir-nota" min="0" max="1000" placeholder="Ex: 920" required style="width: 100%; padding: 0.6rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.95rem; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 1.25rem;">
+                    <label for="corrigir-feedback" style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; color: #1e293b;">Devolutiva e Feedback da Professora:</label>
+                    <textarea id="corrigir-feedback" rows="5" placeholder="Escreva os pontos fortes, desvios gramaticais observados, coerência argumentativa e recomendações..." required style="width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; line-height: 1.4; resize: vertical; box-sizing: border-box;"></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                    <button type="button" class="btn btn-secondary" id="btn-cancelar-correcao">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-salvar-correcao">Salvar Avaliação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script src="./admin.js"></script>
 

@@ -72,6 +72,31 @@
 
             </div>
 
+            <div class="campo-extras" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; width: 100%;">
+                <div>
+                    <label for="video-url" style="font-size: 0.85rem; font-weight: 600; color: #4b5563; display: block; margin-bottom: 0.25rem;">
+                        Videoaula (YouTube, Vimeo ou link MP4)
+                    </label>
+                    <input
+                        id="video-url"
+                        type="url"
+                        placeholder="https://www.youtube.com/watch?v=... ou https://vimeo.com/..."
+                        style="width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box;"
+                    >
+                </div>
+                <div>
+                    <label for="pdf-url" style="font-size: 0.85rem; font-weight: 600; color: #4b5563; display: block; margin-bottom: 0.25rem;">
+                        Material de Apoio (Link do PDF / Drive)
+                    </label>
+                    <input
+                        id="pdf-url"
+                        type="url"
+                        placeholder="https://drive.google.com/... ou link direto para .pdf"
+                        style="width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.9rem; box-sizing: border-box;"
+                    >
+                </div>
+            </div>
+
             <div class="status-area">
                 <span id="status-aula" class="status-badge rascunho">
                     Rascunho

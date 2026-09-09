@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratório de Redação | Gramaticalizando</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-dark: #6d28d9;
+            --primary-light: #ede9fe;
+            --primary-subtle: #f5f3ff;
+            --bg-page: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 12px;
+            --shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .redacao-topbar {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .btn-voltar {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.9rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-voltar:hover {
+            background: #f1f5f9;
+        }
+
+        .brand-logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 2rem auto;
+            padding: 0 1.25rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Themes */
+        .temas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tema-card {
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tema-card:hover {
+            border-color: var(--primary);
+            background: var(--primary-subtle);
+        }
+
+        .tema-card.selected {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+
+        .tema-tag {
+            align-self: flex-start;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            background: #ede9fe;
+            color: #6d28d9;
+            margin-bottom: 0.5rem;
+        }
+
+        .tema-titulo {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .tema-instrucao {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Form Area */
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .input-text {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .input-text:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        .redacao-textarea {
+            width: 100%;
+            min-height: 280px;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            resize: vertical;
+            margin-bottom: 0.5rem;
+        }
+
+        .redacao-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+        }
+
+        .editor-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.85rem 1.75rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Submissions Table / Cards */
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.65rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pendente {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-corrigida {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .envio-card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            background: #ffffff;
+        }
+
+        .envio-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .envio-tema {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .envio-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .feedback-box {
+            background: #f5f3ff;
+            border: 1px solid #ddd6fe;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .feedback-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #4c1d95;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-text {
+            font-size: 0.9rem;
+            color: #2e1065;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .escondido {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="redacao-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <a href="/aluno.html" class="btn-voltar">
+                <span>←</span> Voltar ao Dashboard
+            </a>
+            <span class="brand-logo">Gramaticalizando</span>
+        </div>
+        <div id="redacao-user-info" style="font-size: 0.85rem; font-weight: 600; color: #4b5563;"></div>
+    </header>
+
+    <div class="container">
+
+        <!-- SEÇÃO: ENVIAR REDAÇÃO -->
+        <section class="card">
+            <h1 class="card-title">Laboratório de Redação & Correção</h1>
+            <p class="card-desc">
+                Envie seus textos para correção personalizada com a Profª Wilma. Receba notas detalhadas por competência e orientações pontuais para alcançar a nota máxima.
+            </p>
+
+            <div class="form-group">
+                <label class="form-label">1. Selecione a proposta ou tema de redação:</label>
+                <div id="temas-container" class="temas-grid">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando temas...</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Tema Selecionado:</label>
+                <input type="text" id="input-tema" class="input-text" placeholder="Clique em um tema acima ou digite o tema da sua redação..." autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">2. Digite ou cole seu texto dissertativo-argumentativo:</label>
+                <textarea id="texto-redacao" class="redacao-textarea" placeholder="Comece aqui a introdução da sua redação..."></textarea>
+                <div class="editor-footer">
+                    <span id="contador-caracteres">0 caracteres | ~0 palavras</span>
+                    <span>Mínimo: 50 caracteres</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Link opcional do arquivo (Google Drive ou PDF):</label>
+                <input type="url" id="input-arquivo-url" class="input-text" placeholder="https://drive.google.com/file/d/..." style="margin-bottom: 1.5rem;">
+            </div>
+
+            <button type="button" id="btn-enviar-redacao" class="btn-primary">
+                Enviar Redação para Correção →
+            </button>
+        </section>
+
+        <!-- SEÇÃO: MINHAS REDAÇÕES -->
+        <section class="card">
+            <h2 class="card-title">Minhas Redações Enviadas</h2>
+            <p class="card-desc">Acompanhe o status e confira os feedbacks das redações corrigidas.</p>
+
+            <div id="historico-redacoes">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Carregando suas redações...</p>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="./redacao.js"></script>
+</body>
+</html>

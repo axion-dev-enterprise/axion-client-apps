@@ -1,4 +1,4 @@
-﻿const paths = require("../config/paths");
+const paths = require("../config/paths");
 const { lerArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
@@ -76,8 +76,11 @@ async function obterDashboardAluno(req, res) {
                 usuario: {
                     id: usuario.id,
                     nome: usuario.nome,
-                    email: usuario.email
+                    email: usuario.email,
+                    plano: usuario.plano || "gratuito"
                 },
+                diagnostico: estudos.diagnostico || null,
+                cronogramaSemanal: estudos.cronogramaSemanal || null,
                 estatisticas: {
                     aulasConcluidas: (estudos.aulasConcluidas || []).length,
                     exerciciosFeitos: (estudos.exercicios || []).length,

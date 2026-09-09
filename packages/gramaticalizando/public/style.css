@@ -11,8 +11,9 @@
 html,
 body {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -137,13 +138,11 @@ input {
 .container-principal {
     width: 100%;
 
-    height: calc(100vh - 64px);
+    min-height: calc(100vh - 64px);
 
     display: grid;
 
     grid-template-columns: 56% 44%;
-
-    overflow: hidden;
 }
 
 

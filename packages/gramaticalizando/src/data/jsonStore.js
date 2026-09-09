@@ -24,10 +24,11 @@ async function runWithLock(filePath, asyncOp) {
 async function lerArquivoJson(caminho) {
     try {
         const conteudo = await fs.readFile(caminho, "utf8");
-        if (!conteudo.trim()) {
+        const conteudoLimpo = conteudo.replace(/^\uFEFF/, "").trim();
+        if (!conteudoLimpo) {
             return [];
         }
-        const dados = JSON.parse(conteudo);
+        const dados = JSON.parse(conteudoLimpo);
         return Array.isArray(dados) ? dados : [];
     } catch (erro) {
         if (erro.code === "ENOENT") {
@@ -52,7 +53,9 @@ function criarDadosEstudoPadrao() {
         trilhasAtivas: [],
         atividades: [],
         sequencia: 0,
-        ultimoAcesso: null
+        ultimoAcesso: null,
+        diagnostico: null,
+        cronogramaSemanal: null
     };
 }
 
@@ -66,6 +69,9 @@ function garantirDadosEstudo(usuario) {
             usuario.estudos[chave] = padrao[chave];
         }
     });
+    if (!usuario.plano) {
+        usuario.plano = "gratuito"; // gratuito, basico, intermediario, master
+    }
     return usuario.estudos;
 }
 
@@ -81,7 +87,11 @@ function limparQuestaoParaAluno(questao) {
     const base = {
         id: questao.id,
         tipo: questao.tipo,
-        enunciado: questao.enunciado
+        enunciado: questao.enunciado,
+        banca: questao.banca || null,
+        ano: questao.ano || null,
+        orgao: questao.orgao || null,
+        cargo: questao.cargo || null
     };
 
     if (questao.tipo === "multipla-escolha") {
@@ -119,7 +129,12 @@ function validarQuestoes(questoesRecebidas) {
         const questao = {
             id: String(recebida.id || crypto.randomUUID()),
             tipo,
-            enunciado
+            enunciado,
+            banca: String(recebida.banca || "").trim() || null,
+            ano: String(recebida.ano || "").trim() || null,
+            orgao: String(recebida.orgao || "").trim() || null,
+            cargo: String(recebida.cargo || "").trim() || null,
+            comentarioProfessora: String(recebida.comentarioProfessora || "").trim() || null
         };
 
         if (tipo === "multipla-escolha") {
@@ -180,7 +195,8 @@ function corrigirQuestao(questao, respostaAluno) {
         return {
             correta,
             respostaAluno: alternativaAluno ? alternativaAluno.texto : resposta,
-            respostaCorreta: alternativaCorreta ? alternativaCorreta.texto : ""
+            respostaCorreta: alternativaCorreta ? alternativaCorreta.texto : "",
+            comentarioProfessora: questao.comentarioProfessora || null
         };
     }
 
@@ -191,7 +207,8 @@ function corrigirQuestao(questao, respostaAluno) {
     return {
         correta,
         respostaAluno: String(respostaAluno ?? "").trim(),
-        respostaCorreta: aceitas[0] || ""
+        respostaCorreta: aceitas[0] || "",
+        comentarioProfessora: questao.comentarioProfessora || null
     };
 }
 
