@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Administração | Gramaticalizando
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./admin-login.css"
+    >
+
+</head>
+
+<body>
+
+
+    <main class="pagina-admin-login">
+
+
+        <section class="lado-marca">
+
+
+            <div class="marca-conteudo">
+
+
+                <div class="logo">
+
+                    <div class="logo-box">
+                        G
+                    </div>
+
+                    <span>
+                        GRAMATICALIZANDO
+                    </span>
+
+                </div>
+
+
+                <div class="texto-marca">
+
+                    <span class="badge">
+                        Área administrativa
+                    </span>
+
+
+                    <h1>
+                        Gerencie sua plataforma
+                        de estudos.
+                    </h1>
+
+
+                    <p>
+                        Cadastre matérias, cursos,
+                        aulas e conteúdos que serão
+                        disponibilizados aos alunos.
+                    </p>
+
+                </div>
+
+
+                <div class="seguranca">
+
+                    <div>
+                        ✓
+                    </div>
+
+                    <span>
+                        Acesso exclusivo para
+                        administradores autorizados.
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <section class="lado-login">
+
+
+            <div class="login-box">
+
+
+                <div class="login-logo">
+                    G
+                </div>
+
+
+                <span class="login-label">
+                    Painel administrativo
+                </span>
+
+
+                <h2>
+                    Bem-vinda
+                </h2>
+
+
+                <p class="login-descricao">
+                    Entre com sua conta administrativa
+                    para gerenciar a plataforma.
+                </p>
+
+
+                <form id="form-admin-login">
+
+
+                    <div class="campo">
+
+                        <label for="admin-email">
+                            E-mail
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="admin-email"
+                            placeholder="admin@exemplo.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="campo">
+
+                        <label for="admin-senha">
+                            Senha
+                        </label>
+
+
+                        <div class="senha-area">
+
+                            <input
+                                type="password"
+                                id="admin-senha"
+                                placeholder="Digite sua senha"
+                                autocomplete="current-password"
+                                required
+                            >
+
+
+                            <button
+                                type="button"
+                                id="mostrar-senha"
+                                class="mostrar-senha"
+                                aria-label="Mostrar senha"
+                            >
+                                👁
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <p
+                        class="mensagem"
+                        id="mensagem"
+                    ></p>
+
+
+                    <button
+                        type="submit"
+                        class="btn-entrar"
+                        id="btn-entrar"
+                    >
+                        Entrar no painel
+                    </button>
+
+
+                </form>
+
+
+                <a
+                    href="/"
+                    class="voltar-site"
+                >
+                    ← Voltar para o site
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="./admin-login.js"></script>
+
+</body>
+
+</html>

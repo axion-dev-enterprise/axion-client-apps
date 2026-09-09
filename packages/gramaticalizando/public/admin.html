@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Administração | Gramaticalizando</title>
+
+    <link
+        rel="stylesheet"
+        href="./admin.css"
+    >
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+    <aside
+        class="admin-sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-topo">
+
+            <div class="admin-logo">
+
+                <div class="admin-logo-marca">
+                    G
+                </div>
+
+                <div>
+                    <strong>GRAMATICALIZANDO</strong>
+                    <span>Administração</span>
+                </div>
+
+            </div>
+
+
+            <nav class="admin-menu">
+
+                <button
+                    class="menu-item ativo"
+                    type="button"
+                    data-pagina="dashboard"
+                >
+                    <span class="menu-icone">
+                        ⌂
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    type="button"
+                    data-pagina="materias"
+                >
+                    <span class="menu-icone">
+                        ▤
+                    </span>
+
+                    <span>
+                        Matérias
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    type="button"
+                    data-pagina="exercicios"
+                >
+                    <span class="menu-icone">
+                        ✓
+                    </span>
+
+                    <span>
+                        Exercícios
+                    </span>
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    type="button"
+                    data-pagina="alunos"
+                >
+                    <span class="menu-icone">
+                        ♙
+                    </span>
+
+                    <span>
+                        Alunos
+                    </span>
+                </button>
+
+            </nav>
+
+        </div>
+
+
+        <div class="sidebar-rodape">
+
+            <div class="admin-mini-perfil">
+
+                <div
+                    class="admin-avatar"
+                    id="admin-avatar-sidebar"
+                >
+                    A
+                </div>
+
+
+                <div class="admin-mini-info">
+
+                    <strong id="admin-nome-sidebar">
+                        Administrador
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn-sair"
+                type="button"
+                id="btn-sair"
+            >
+                Sair
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         ÁREA PRINCIPAL
+    ====================================================== -->
+    <div class="admin-main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+        <header class="admin-topbar">
+
+            <div class="topbar-esquerda">
+
+                <button
+                    class="btn-menu-mobile"
+                    type="button"
+                    id="btn-menu-mobile"
+                    aria-label="Abrir menu"
+                >
+                    ☰
+                </button>
+
+
+                <div>
+
+                    <span class="topbar-label">
+                        Painel administrativo
+                    </span>
+
+                    <h1 id="titulo-pagina">
+                        Dashboard
+                    </h1>
+
+                </div>
+
+            </div>
+
+
+            <div class="topbar-admin">
+
+                <div class="topbar-admin-texto">
+
+                    <strong id="admin-nome-topo">
+                        Administrador
+                    </strong>
+
+                    <span>
+                        Administrador
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="admin-avatar"
+                    id="admin-avatar-topo"
+                >
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             CONTEÚDO
+        ================================================== -->
+        <main class="admin-content">
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+            <section
+                class="pagina ativa"
+                id="pagina-dashboard"
+            >
+
+                <div class="dashboard-hero">
+
+                    <div class="dashboard-hero-conteudo">
+
+                        <span class="hero-badge">
+                            Painel de controle
+                        </span>
+
+                        <h2>
+                            Gerencie todo o conteúdo
+                            da plataforma.
+                        </h2>
+
+                        <p>
+                            Crie matérias, publique aulas,
+                            prepare exercícios e acompanhe
+                            os alunos.
+                        </p>
+
+
+                        <div class="hero-acoes">
+
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="btn-hero-nova-materia"
+                            >
+                                + Nova matéria
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                id="btn-hero-novo-exercicio"
+                            >
+                                + Novo exercício
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="hero-decoracao">
+                        Aa
+                    </div>
+
+                </div>
+
+
+                <!-- ESTATÍSTICAS -->
+                <div class="stats-grid">
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ♙
+                        </div>
+
+                        <div>
+                            <span>
+                                Alunos
+                            </span>
+
+                            <strong id="total-alunos">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ▤
+                        </div>
+
+                        <div>
+                            <span>
+                                Matérias
+                            </span>
+
+                            <strong id="total-materias">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ✓
+                        </div>
+
+                        <div>
+                            <span>
+                                Aulas publicadas
+                            </span>
+
+                            <strong id="aulas-publicadas">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ✎
+                        </div>
+
+                        <div>
+                            <span>
+                                Aulas em rascunho
+                            </span>
+
+                            <strong id="aulas-rascunho">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ?
+                        </div>
+
+                        <div>
+                            <span>
+                                Exercícios publicados
+                            </span>
+
+                            <strong id="exercicios-publicados">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+
+                    <article class="stat-card">
+
+                        <div class="stat-icone">
+                            ◌
+                        </div>
+
+                        <div>
+                            <span>
+                                Exercícios em rascunho
+                            </span>
+
+                            <strong id="exercicios-rascunho">
+                                0
+                            </strong>
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <!-- ATALHOS -->
+                <div class="dashboard-grid">
+
+                    <article class="painel-card">
+
+                        <div class="painel-card-cabecalho">
+
+                            <div>
+
+                                <span class="mini-label">
+                                    Conteúdo
+                                </span>
+
+                                <h3>
+                                    Matérias
+                                </h3>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary btn-small"
+                                id="btn-ver-materias"
+                            >
+                                Ver matérias
+                            </button>
+
+                        </div>
+
+
+                        <p class="painel-descricao">
+                            Organize o conteúdo da plataforma
+                            em matérias e aulas.
+                        </p>
+
+                    </article>
+
+
+                    <article class="painel-card">
+
+                        <div class="painel-card-cabecalho">
+
+                            <div>
+
+                                <span class="mini-label">
+                                    Prática
+                                </span>
+
+                                <h3>
+                                    Exercícios
+                                </h3>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="btn btn-secondary btn-small"
+                                id="btn-ver-exercicios"
+                            >
+                                Ver exercícios
+                            </button>
+
+                        </div>
+
+
+                        <p class="painel-descricao">
+                            Crie listas de questões ligadas
+                            diretamente às aulas.
+                        </p>
+
+                    </article>
+
+
+                    <article class="painel-card">
+
+                        <div class="painel-card-cabecalho">
+
+                            <div>
+
+                                <span class="mini-label">
+                                    Plataforma
+                                </span>
+
+                                <h3>
+                                    Conteúdo publicado
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="painel-descricao">
+                            Apenas aulas e exercícios publicados
+                            ficarão disponíveis para os alunos.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MATÉRIAS
+            ================================================== -->
+            <section
+                class="pagina"
+                id="pagina-materias"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Conteúdo
+                        </span>
+
+                        <h2>
+                            Matérias
+                        </h2>
+
+                        <p>
+                            Crie as matérias da plataforma
+                            e organize suas aulas.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="btn-nova-materia"
+                    >
+                        + Nova matéria
+                    </button>
+
+                </div>
+
+
+                <div class="painel-card">
+
+                    <div
+                        class="estado-vazio"
+                        id="estado-materias"
+                    >
+
+                        <div class="estado-vazio-icone">
+                            ▤
+                        </div>
+
+                        <strong>
+                            Nenhuma matéria cadastrada
+                        </strong>
+
+                        <p>
+                            Crie sua primeira matéria
+                            para começar a adicionar aulas.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="btn-primeira-materia"
+                        >
+                            Criar primeira matéria
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="lista-materias escondido"
+                        id="lista-materias"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 AULAS
+            ================================================== -->
+            <section
+                class="pagina"
+                id="pagina-aulas"
+            >
+
+                <button
+                    type="button"
+                    class="btn-voltar"
+                    id="btn-voltar-materias"
+                >
+                    ← Voltar para matérias
+                </button>
+
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Matéria
+                        </span>
+
+                        <h2 id="nome-materia-aulas">
+                            Matéria
+                        </h2>
+
+                        <p>
+                            Crie, edite e publique as aulas
+                            desta matéria.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        type="button"
+                        id="btn-nova-aula"
+                    >
+                        + Nova aula
+                    </button>
+
+                </div>
+
+
+                <div class="painel-card">
+
+                    <div
+                        class="estado-vazio"
+                        id="estado-aulas"
+                    >
+
+                        <div class="estado-vazio-icone">
+                            ✎
+                        </div>
+
+                        <strong>
+                            Nenhuma aula criada
+                        </strong>
+
+                        <p>
+                            Comece criando a primeira aula
+                            desta matéria.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="btn-primeira-aula"
+                        >
+                            Criar primeira aula
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="lista-aulas escondido"
+                        id="lista-aulas"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 EXERCÍCIOS
+            ================================================== -->
+            <section
+                class="pagina"
+                id="pagina-exercicios"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Prática
+                        </span>
+
+                        <h2>
+                            Exercícios
+                        </h2>
+
+                        <p>
+                            Crie exercícios ligados a uma
+                            matéria e a uma aula específica.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="btn-novo-exercicio"
+                    >
+                        + Novo exercício
+                    </button>
+
+                </div>
+
+
+                <div class="exercicios-resumo">
+
+                    <div class="resumo-chip">
+
+                        <span>
+                            Publicados
+                        </span>
+
+                        <strong id="resumo-exercicios-publicados">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumo-chip">
+
+                        <span>
+                            Rascunhos
+                        </span>
+
+                        <strong id="resumo-exercicios-rascunho">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumo-chip">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong id="resumo-exercicios-total">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="painel-card">
+
+                    <div
+                        class="estado-vazio"
+                        id="estado-exercicios"
+                    >
+
+                        <div class="estado-vazio-icone">
+                            ?
+                        </div>
+
+                        <strong>
+                            Nenhum exercício criado
+                        </strong>
+
+                        <p>
+                            Crie uma lista de exercícios
+                            para uma das aulas da plataforma.
+                        </p>
+
+
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            id="btn-primeiro-exercicio"
+                        >
+                            Criar primeiro exercício
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="lista-exercicios escondido"
+                        id="lista-exercicios"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ALUNOS
+            ================================================== -->
+            <section
+                class="pagina"
+                id="pagina-alunos"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Usuários
+                        </span>
+
+                        <h2>
+                            Alunos
+                        </h2>
+
+                        <p>
+                            Veja os alunos cadastrados
+                            na plataforma.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="painel-card tabela-card">
+
+                    <div class="tabela-wrapper">
+
+                        <table class="admin-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>
+                                        Aluno
+                                    </th>
+
+                                    <th>
+                                        E-mail
+                                    </th>
+
+                                    <th>
+                                        Cadastro
+                                    </th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody
+                                id="tabela-alunos"
+                            ></tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <div
+                        class="estado-vazio escondido"
+                        id="estado-alunos"
+                    >
+
+                        <strong>
+                            Nenhum aluno cadastrado
+                        </strong>
+
+                        <p>
+                            Os alunos aparecerão aqui
+                            quando criarem uma conta.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FUNDO MOBILE
+===================================================== -->
+<div
+    class="sidebar-overlay"
+    id="sidebar-overlay"
+></div>
+
+
+<!-- =====================================================
+     MODAL MATÉRIA
+===================================================== -->
+<div
+    class="modal-overlay escondido"
+    id="modal-materia"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="mini-label">
+                    Matéria
+                </span>
+
+                <h2 id="modal-materia-titulo">
+                    Nova matéria
+                </h2>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-fechar-modal"
+                id="btn-fechar-modal-materia"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="form-materia">
+
+            <input
+                type="hidden"
+                id="materia-id"
+            >
+
+
+            <div class="form-group">
+
+                <label for="materia-nome">
+                    Nome da matéria
+                </label>
+
+
+                <input
+                    type="text"
+                    id="materia-nome"
+                    maxlength="80"
+                    placeholder="Ex: Português"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <p
+                class="form-message"
+                id="mensagem-materia"
+            ></p>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="btn-cancelar-materia"
+                >
+                    Cancelar
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="btn-salvar-materia"
+                >
+                    Salvar matéria
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="./admin.js"></script>
+
+</body>
+
+</html>

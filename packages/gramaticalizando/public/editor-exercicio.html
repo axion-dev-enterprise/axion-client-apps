@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Editor de exercício | Gramaticalizando</title>
+
+    <link
+        rel="stylesheet"
+        href="./editor-exercicio.css"
+    >
+</head>
+
+<body>
+
+<div class="editor-app">
+
+
+    <!-- =====================================================
+         TOPO
+    ====================================================== -->
+    <header class="editor-topbar">
+
+        <div class="topbar-esquerda">
+
+            <button
+                type="button"
+                class="btn-voltar"
+                id="btn-voltar"
+            >
+                ←
+            </button>
+
+
+            <div>
+
+                <span class="topbar-label">
+                    Editor de exercício
+                </span>
+
+                <h1 id="titulo-topo">
+                    Novo exercício
+                </h1>
+
+            </div>
+
+        </div>
+
+
+        <div class="topbar-acoes">
+
+            <span
+                class="status-salvamento"
+                id="status-salvamento"
+            >
+                Não salvo
+            </span>
+
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                id="btn-salvar-rascunho"
+            >
+                Salvar rascunho
+            </button>
+
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="btn-publicar"
+            >
+                Publicar
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTEÚDO
+    ====================================================== -->
+    <main class="editor-main">
+
+
+        <!-- =================================================
+             COLUNA PRINCIPAL
+        ================================================== -->
+        <section class="editor-conteudo">
+
+
+            <!-- =============================================
+                 CONFIGURAÇÕES DO EXERCÍCIO
+            ============================================== -->
+            <article class="editor-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Informações
+                        </span>
+
+                        <h2>
+                            Configurações do exercício
+                        </h2>
+
+                        <p>
+                            Defina a matéria, a aula e o nome
+                            da lista de exercícios.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group form-group-full">
+
+                        <label for="exercicio-titulo">
+                            Título do exercício
+                        </label>
+
+                        <input
+                            type="text"
+                            id="exercicio-titulo"
+                            maxlength="150"
+                            placeholder="Ex: Exercícios — Introdução à Gramática"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="materia-select">
+                            Matéria
+                        </label>
+
+                        <select id="materia-select">
+
+                            <option value="">
+                                Selecione uma matéria
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="aula-select">
+                            Aula
+                        </label>
+
+                        <select
+                            id="aula-select"
+                            disabled
+                        >
+
+                            <option value="">
+                                Selecione uma matéria primeiro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group form-group-full">
+
+                        <label for="exercicio-descricao">
+                            Descrição
+                            <span class="opcional">
+                                opcional
+                            </span>
+                        </label>
+
+                        <textarea
+                            id="exercicio-descricao"
+                            maxlength="5000"
+                            placeholder="Explique brevemente o objetivo deste exercício..."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- =============================================
+                 QUESTÕES
+            ============================================== -->
+            <section class="questoes-section">
+
+                <div class="questoes-header">
+
+                    <div>
+
+                        <span class="mini-label">
+                            Questões
+                        </span>
+
+                        <h2>
+                            Lista de questões
+                        </h2>
+
+                        <p>
+                            A resposta correta só será mostrada
+                            ao aluno depois que ele finalizar
+                            o exercício.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="btn-adicionar-questao"
+                    >
+                        + Adicionar questão
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="questoes-vazio"
+                    id="questoes-vazio"
+                >
+
+                    <div class="vazio-icone">
+                        ?
+                    </div>
+
+                    <strong>
+                        Nenhuma questão adicionada
+                    </strong>
+
+                    <p>
+                        Adicione a primeira questão
+                        deste exercício.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary"
+                        id="btn-primeira-questao"
+                    >
+                        Criar primeira questão
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="lista-questoes escondido"
+                    id="lista-questoes"
+                ></div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             COLUNA LATERAL
+        ================================================== -->
+        <aside class="editor-sidebar">
+
+
+            <article class="sidebar-card">
+
+                <span class="mini-label">
+                    Resumo
+                </span>
+
+                <h3>
+                    Exercício
+                </h3>
+
+
+                <div class="resumo-lista">
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Questões
+                        </span>
+
+                        <strong id="resumo-total-questoes">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Múltipla escolha
+                        </span>
+
+                        <strong id="resumo-multipla">
+                            0
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumo-item">
+
+                        <span>
+                            Resposta escrita
+                        </span>
+
+                        <strong id="resumo-escrita">
+                            0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <article class="sidebar-card sidebar-dica">
+
+                <span class="mini-label">
+                    Como funciona
+                </span>
+
+                <h3>
+                    Correção automática
+                </h3>
+
+                <p>
+                    O aluno responde todas as questões
+                    e só depois clica em finalizar.
+                </p>
+
+                <p>
+                    O servidor confere as respostas e mostra
+                    o resultado completo apenas no final.
+                </p>
+
+            </article>
+
+
+            <article class="sidebar-card">
+
+                <span class="mini-label">
+                    Publicação
+                </span>
+
+                <h3>
+                    Status
+                </h3>
+
+
+                <div
+                    class="status-box status-rascunho"
+                    id="status-exercicio"
+                >
+                    Rascunho
+                </div>
+
+
+                <p class="status-ajuda">
+                    Exercícios em rascunho não aparecem
+                    para os alunos.
+                </p>
+
+            </article>
+
+        </aside>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     TEMPLATE DE QUESTÃO
+===================================================== -->
+<template id="template-questao">
+
+    <article class="questao-card">
+
+        <div class="questao-topo">
+
+            <div class="questao-identificacao">
+
+                <div class="questao-numero">
+                    01
+                </div>
+
+
+                <div>
+
+                    <span class="mini-label">
+                        Questão
+                    </span>
+
+                    <h3>
+                        Questão 1
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="questao-acoes">
+
+                <button
+                    type="button"
+                    class="btn-icone btn-subir"
+                    title="Mover para cima"
+                >
+                    ↑
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-icone btn-descer"
+                    title="Mover para baixo"
+                >
+                    ↓
+                </button>
+
+
+                <button
+                    type="button"
+                    class="btn-icone btn-remover"
+                    title="Remover questão"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="questao-corpo">
+
+
+            <!-- TIPO -->
+            <div class="form-group">
+
+                <label>
+                    Tipo da questão
+                </label>
+
+                <select class="questao-tipo">
+
+                    <option value="multipla-escolha">
+                        Múltipla escolha
+                    </option>
+
+                    <option value="resposta-escrita">
+                        Resposta escrita
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ENUNCIADO -->
+            <div class="form-group">
+
+                <label>
+                    Enunciado
+                </label>
+
+                <textarea
+                    class="questao-enunciado"
+                    maxlength="5000"
+                    placeholder="Digite a pergunta da questão..."
+                ></textarea>
+
+            </div>
+
+
+            <!-- =================================================
+                 MÚLTIPLA ESCOLHA
+            ================================================== -->
+            <div class="area-multipla-escolha">
+
+                <div class="alternativas-cabecalho">
+
+                    <div>
+
+                        <strong>
+                            Alternativas
+                        </strong>
+
+                        <span>
+                            Marque qual é a resposta correta.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-small btn-adicionar-alternativa"
+                    >
+                        + Alternativa
+                    </button>
+
+                </div>
+
+
+                <div class="lista-alternativas"></div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RESPOSTA ESCRITA
+            ================================================== -->
+            <div class="area-resposta-escrita escondido">
+
+                <div class="respostas-cabecalho">
+
+                    <div>
+
+                        <strong>
+                            Respostas aceitas
+                        </strong>
+
+                        <span>
+                            Você pode adicionar mais de uma forma
+                            considerada correta.
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn btn-secondary btn-small btn-adicionar-resposta"
+                    >
+                        + Resposta aceita
+                    </button>
+
+                </div>
+
+
+                <div class="lista-respostas-aceitas"></div>
+
+            </div>
+
+        </div>
+
+    </article>
+
+</template>
+
+
+<!-- =====================================================
+     TEMPLATE ALTERNATIVA
+===================================================== -->
+<template id="template-alternativa">
+
+    <div class="alternativa-item">
+
+        <label class="alternativa-radio">
+
+            <input
+                type="radio"
+                class="alternativa-correta"
+            >
+
+            <span class="radio-custom"></span>
+
+        </label>
+
+
+        <span class="alternativa-letra">
+            A
+        </span>
+
+
+        <input
+            type="text"
+            class="alternativa-texto"
+            maxlength="1000"
+            placeholder="Digite a alternativa..."
+            autocomplete="off"
+        >
+
+
+        <button
+            type="button"
+            class="btn-remover-campo btn-remover-alternativa"
+            title="Remover alternativa"
+        >
+            ×
+        </button>
+
+    </div>
+
+</template>
+
+
+<!-- =====================================================
+     TEMPLATE RESPOSTA ACEITA
+===================================================== -->
+<template id="template-resposta-aceita">
+
+    <div class="resposta-aceita-item">
+
+        <span class="resposta-aceita-icone">
+            ✓
+        </span>
+
+
+        <input
+            type="text"
+            class="resposta-aceita-texto"
+            maxlength="500"
+            placeholder="Ex: substantivo"
+            autocomplete="off"
+        >
+
+
+        <button
+            type="button"
+            class="btn-remover-campo btn-remover-resposta"
+            title="Remover resposta"
+        >
+            ×
+        </button>
+
+    </div>
+
+</template>
+
+
+<!-- =====================================================
+     MENSAGEM FLUTUANTE
+===================================================== -->
+<div
+    class="toast escondido"
+    id="toast"
+>
+
+    <span id="toast-mensagem"></span>
+
+</div>
+
+
+<script src="./editor-exercicio.js"></script>
+
+</body>
+
+</html>

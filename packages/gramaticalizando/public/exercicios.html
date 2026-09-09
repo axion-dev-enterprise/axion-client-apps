@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Exercícios | Gramaticalizando
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="./exercicios.css"
+    >
+
+</head>
+
+<body>
+
+
+    <!-- =====================================
+         SIDEBAR
+    ====================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                G
+            </div>
+
+            <span>
+                GRAMATICALIZANDO
+            </span>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <button
+                class="menu-item"
+                id="btn-inicio"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ⌂
+                </span>
+
+                <span>
+                    Início
+                </span>
+
+            </button>
+
+
+            <button
+                class="menu-item"
+                id="btn-cursos"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ▶
+                </span>
+
+                <span>
+                    Meus cursos
+                </span>
+
+            </button>
+
+
+            <button
+                class="menu-item"
+                id="btn-trilhas"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ◈
+                </span>
+
+                <span>
+                    Trilhas
+                </span>
+
+            </button>
+
+
+            <button
+                class="menu-item ativo"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ✓
+                </span>
+
+                <span>
+                    Exercícios
+                </span>
+
+            </button>
+
+
+            <button
+                class="menu-item"
+                id="btn-progresso"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ↗
+                </span>
+
+                <span>
+                    Progresso
+                </span>
+
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-final">
+
+            <button
+                class="menu-item"
+                id="btn-perfil"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ◎
+                </span>
+
+                <span>
+                    Meu perfil
+                </span>
+
+            </button>
+
+
+            <button
+                class="menu-item sair"
+                id="btn-sair"
+                type="button"
+            >
+
+                <span class="menu-icone">
+                    ↪
+                </span>
+
+                <span>
+                    Sair
+                </span>
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================
+         APP
+    ====================================== -->
+
+    <div class="app">
+
+
+        <!-- =================================
+             TOPBAR
+        ================================== -->
+
+        <header class="topbar">
+
+            <button
+                class="btn-menu-mobile"
+                id="btn-menu-mobile"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="topbar-titulo">
+
+                <p>
+                    Área do aluno
+                </p>
+
+                <h2>
+                    Exercícios
+                </h2>
+
+            </div>
+
+
+            <div class="usuario-topo">
+
+                <div class="usuario-info">
+
+                    <strong id="nome-topo">
+                        Carregando...
+                    </strong>
+
+                    <span>
+                        Estudante
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="avatar"
+                    id="avatar-topo"
+                >
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================
+             CONTEÚDO
+        ================================== -->
+
+        <main class="conteudo">
+
+
+            <!-- =================================
+                 HERO
+            ================================== -->
+
+            <section class="hero">
+
+                <div>
+
+                    <span class="hero-badge">
+                        Pratique seus conhecimentos
+                    </span>
+
+                    <h1>
+                        Exercícios
+                    </h1>
+
+                    <p>
+                        Resolva atividades publicadas pelos professores
+                        e acompanhe seu desempenho.
+                    </p>
+
+                </div>
+
+
+                <div class="hero-icone">
+
+                    ✓
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================
+                 FILTROS
+            ================================== -->
+
+            <section class="filtros">
+
+                <div class="campo-filtro">
+
+                    <label for="filtro-materia">
+                        Matéria
+                    </label>
+
+                    <select id="filtro-materia">
+
+                        <option value="">
+                            Todas as matérias
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo-filtro">
+
+                    <label for="filtro-aula">
+                        Aula
+                    </label>
+
+                    <select id="filtro-aula">
+
+                        <option value="">
+                            Todas as aulas
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <button
+                    id="btn-limpar-filtros"
+                    class="btn-limpar"
+                    type="button"
+                >
+                    Limpar filtros
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 CARREGAMENTO
+            ================================== -->
+
+            <section
+                id="estado-carregando"
+                class="estado"
+            >
+
+                <div class="spinner"></div>
+
+                <h2>
+                    Carregando exercícios...
+                </h2>
+
+                <p>
+                    Buscando as atividades disponíveis.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 ERRO
+            ================================== -->
+
+            <section
+                id="estado-erro"
+                class="estado escondido"
+            >
+
+                <div class="erro-icone">
+                    !
+                </div>
+
+                <h2>
+                    Não foi possível carregar
+                </h2>
+
+                <p id="mensagem-erro">
+                    Ocorreu um erro ao buscar os exercícios.
+                </p>
+
+                <button
+                    id="btn-tentar-novamente"
+                    class="btn-primario"
+                    type="button"
+                >
+                    Tentar novamente
+                </button>
+
+            </section>
+
+
+
+            <!-- =================================
+                 VAZIO
+            ================================== -->
+
+            <section
+                id="estado-vazio"
+                class="estado escondido"
+            >
+
+                <div class="vazio-icone">
+                    ✓
+                </div>
+
+                <h2>
+                    Nenhum exercício disponível
+                </h2>
+
+                <p>
+                    Quando um exercício for publicado,
+                    ele aparecerá aqui.
+                </p>
+
+            </section>
+
+
+
+            <!-- =================================
+                 LISTA
+            ================================== -->
+
+            <section
+                id="area-exercicios"
+                class="area-exercicios escondido"
+            >
+
+                <div class="secao-topo">
+
+                    <div>
+
+                        <span class="section-label">
+                            Atividades disponíveis
+                        </span>
+
+                        <h2>
+                            Lista de exercícios
+                        </h2>
+
+                    </div>
+
+
+                    <span
+                        id="total-exercicios"
+                        class="contador"
+                    >
+                        0 exercícios
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="lista-exercicios"
+                    class="lista-exercicios"
+                ></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TEMPLATE EXERCÍCIO
+    ====================================== -->
+
+    <template id="template-exercicio">
+
+        <article class="exercicio-card">
+
+            <div class="exercicio-topo">
+
+                <div class="exercicio-icone">
+                    ✓
+                </div>
+
+
+                <div class="exercicio-info">
+
+                    <span class="exercicio-materia">
+                        Matéria
+                    </span>
+
+                    <h3 class="exercicio-titulo">
+                        Exercício
+                    </h3>
+
+                    <p class="exercicio-aula">
+                        Aula
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <p class="exercicio-descricao">
+                Descrição do exercício.
+            </p>
+
+
+            <div class="exercicio-rodape">
+
+                <span class="exercicio-questoes">
+                    0 questões
+                </span>
+
+
+                <button
+                    class="btn-abrir-exercicio"
+                    type="button"
+                >
+                    Resolver
+                    <span>
+                        →
+                    </span>
+                </button>
+
+            </div>
+
+        </article>
+
+    </template>
+
+
+
+    <!-- =====================================
+         OVERLAY MOBILE
+    ====================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebar-overlay"
+    ></div>
+
+
+
+    <script src="./exercicios.js"></script>
+
+</body>
+
+</html>

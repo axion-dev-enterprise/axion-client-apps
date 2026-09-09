@@ -1,0 +1,38 @@
+[
+  {
+    "id": "388365e8-ba78-4f91-9921-4b5496db97ba",
+    "materiaId": "95aa14e5-8687-42f7-ab38-c600348f7597",
+    "aulaId": "2c7d9608-e80e-479a-81a8-c4c7c61d0de7",
+    "titulo": "testeeee",
+    "descricao": "dwadawddwadsad",
+    "publicado": true,
+    "questoes": [
+      {
+        "id": "2b342aef-add8-49fe-8f10-1cc0bcbccef5",
+        "tipo": "multipla-escolha",
+        "enunciado": "dwadsadwa",
+        "alternativas": [
+          {
+            "id": "2d97766b-3a75-4bd6-9f06-cccdc3016bbd",
+            "texto": "wwwww"
+          },
+          {
+            "id": "274ee6e7-ce65-4385-9aad-c7e5431ee421",
+            "texto": "sssss"
+          },
+          {
+            "id": "53991ae8-f75b-456c-8c27-46cda6e8b2b0",
+            "texto": "dwadsad"
+          },
+          {
+            "id": "ccaaafdd-7ef2-471d-9a6f-1b02d3f51fa5",
+            "texto": "wadwadawdsad"
+          }
+        ],
+        "respostaCorreta": "2d97766b-3a75-4bd6-9f06-cccdc3016bbd"
+      }
+    ],
+    "criadoEm": "2026-08-28T08:03:38.012Z",
+    "atualizadoEm": "2026-08-28T08:03:38.012Z"
+  }
+]

@@ -1,0 +1,1453 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+
+/* =====================================================
+   VARIÁVEIS
+===================================================== */
+
+:root {
+    --purple: #5147e8;
+    --purple-dark: #443bd0;
+    --purple-soft: #efeeff;
+
+    --bg: #f6f7fb;
+    --card: #ffffff;
+
+    --text: #1d1c23;
+    --muted: #74727d;
+    --border: #e7e7ee;
+
+    --success: #198754;
+    --success-soft: #ebf8f1;
+
+    --warning: #8b6800;
+    --warning-soft: #fff8dc;
+
+    --danger: #dc3545;
+    --danger-soft: #fff0f1;
+
+    --radius: 18px;
+    --shadow: 0 10px 35px rgba(23, 20, 34, 0.05);
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        "Inter",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+    background: var(--bg);
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid rgba(81, 71, 232, 0.18);
+    outline-offset: 2px;
+}
+
+
+/* =====================================================
+   UTILITÁRIOS
+===================================================== */
+
+.escondido {
+    display: none !important;
+}
+
+.section-label {
+    display: inline-block;
+
+    margin-bottom: 6px;
+
+    color: var(--purple);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+
+/* =====================================================
+   CARREGAMENTO
+===================================================== */
+
+.tela-carregamento {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    color: var(--muted);
+    background: var(--bg);
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.loader {
+    width: 42px;
+    height: 42px;
+
+    border: 4px solid #e3e1ef;
+    border-top-color: var(--purple);
+    border-radius: 50%;
+
+    animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =====================================================
+   ERRO
+===================================================== */
+
+.tela-erro {
+    min-height: 100vh;
+
+    padding: 20px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--bg);
+}
+
+.erro-card {
+    width: min(100%, 480px);
+
+    padding: 40px 30px;
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    background: white;
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+}
+
+.erro-icone {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 18px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 17px;
+
+    color: var(--danger);
+    background: var(--danger-soft);
+
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.erro-card h1 {
+    margin-bottom: 10px;
+
+    font-size: 23px;
+}
+
+.erro-card p {
+    margin-bottom: 22px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   TOPBAR
+===================================================== */
+
+.aula-topbar {
+    position: sticky;
+
+    z-index: 100;
+
+    top: 0;
+
+    min-height: 78px;
+
+    border-bottom: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.94);
+
+    backdrop-filter: blur(14px);
+}
+
+.topbar-container {
+    width: 100%;
+    max-width: 1500px;
+
+    min-height: 78px;
+
+    margin: 0 auto;
+
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+}
+
+.topbar-esquerda {
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.btn-voltar {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    color: var(--text);
+    background: white;
+
+    font-size: 18px;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.btn-voltar:hover {
+    border-color: #ceccd7;
+
+    background: #fafafd;
+
+    transform: translateX(-1px);
+}
+
+.topbar-identificacao {
+    min-width: 0;
+}
+
+.topbar-label {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.topbar-identificacao strong {
+    display: block;
+
+    max-width: 400px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    font-size: 14px;
+}
+
+.topbar-direita {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.progresso-topo {
+    min-width: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    font-size: 10px;
+}
+
+.progresso-topo span {
+    color: var(--muted);
+}
+
+.progresso-topo strong {
+    color: var(--purple);
+
+    font-size: 11px;
+}
+
+.barra-topo {
+    width: 130px;
+    height: 6px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+
+    background: #ecebf1;
+}
+
+.barra-topo-preenchida {
+    width: 0%;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--purple);
+
+    transition: width 0.35s ease;
+}
+
+.avatar-aluno {
+    width: 39px;
+    height: 39px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    color: var(--purple);
+    background: var(--purple-soft);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.aula-main {
+    width: 100%;
+    max-width: 1500px;
+
+    margin: 0 auto;
+
+    padding: 30px 32px 70px;
+}
+
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.aula-cabecalho {
+    min-height: 310px;
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 42px;
+
+    display: flex;
+    align-items: center;
+
+    border-radius: 25px;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 84% 18%,
+            rgba(150, 126, 255, 0.36),
+            transparent 28%
+        ),
+        linear-gradient(
+            135deg,
+            #171422,
+            #30276e
+        );
+}
+
+.aula-cabecalho::after {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    right: -130px;
+    bottom: -220px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.aula-cabecalho-conteudo {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 760px;
+}
+
+.aula-breadcrumb {
+    margin-bottom: 19px;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    color: rgba(255, 255, 255, 0.52);
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.breadcrumb-separador {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.aula-badge {
+    display: inline-block;
+
+    margin-bottom: 13px;
+
+    padding: 6px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    background: rgba(255, 255, 255, 0.08);
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.aula-cabecalho h1 {
+    max-width: 700px;
+
+    margin-bottom: 13px;
+
+    font-size: clamp(29px, 4vw, 46px);
+    line-height: 1.08;
+}
+
+.aula-cabecalho p {
+    max-width: 650px;
+
+    color: rgba(255, 255, 255, 0.66);
+
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.aula-meta {
+    margin-top: 25px;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 14px;
+}
+
+.meta-item {
+    min-width: 150px;
+
+    padding: 10px 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.meta-icone {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    font-size: 11px;
+}
+
+.meta-item small {
+    display: block;
+
+    margin-bottom: 2px;
+
+    color: rgba(255, 255, 255, 0.48);
+
+    font-size: 8px;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meta-item strong {
+    display: block;
+
+    max-width: 220px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    font-size: 11px;
+}
+
+.aula-cabecalho-decoracao {
+    position: absolute;
+
+    right: 8%;
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        rotate(-8deg);
+
+    color: rgba(255, 255, 255, 0.055);
+
+    font-size: 150px;
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   GRID DA AULA
+===================================================== */
+
+.aula-grid {
+    margin-top: 24px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        300px;
+
+    gap: 22px;
+
+    align-items: start;
+}
+
+.conteudo-coluna {
+    min-width: 0;
+}
+
+
+/* =====================================================
+   CONTEÚDO DA AULA
+===================================================== */
+
+.conteudo-card,
+.sidebar-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: white;
+
+    box-shadow: var(--shadow);
+}
+
+.conteudo-card {
+    padding: 30px;
+}
+
+.conteudo-card-topo {
+    margin-bottom: 27px;
+
+    padding-bottom: 20px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.conteudo-card-topo h2 {
+    font-size: 23px;
+}
+
+.status-aula {
+    padding: 6px 10px;
+
+    flex-shrink: 0;
+
+    border-radius: 999px;
+
+    color: var(--warning);
+    background: var(--warning-soft);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.status-aula.concluida {
+    color: var(--success);
+    background: var(--success-soft);
+}
+
+
+/* =====================================================
+   HTML DA AULA
+===================================================== */
+
+.conteudo-aula {
+    min-height: 200px;
+
+    color: #303038;
+
+    font-size: 15px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+.conteudo-aula h1,
+.conteudo-aula h2,
+.conteudo-aula h3,
+.conteudo-aula h4 {
+    margin-top: 28px;
+    margin-bottom: 12px;
+
+    color: var(--text);
+
+    line-height: 1.3;
+}
+
+.conteudo-aula h1:first-child,
+.conteudo-aula h2:first-child,
+.conteudo-aula h3:first-child {
+    margin-top: 0;
+}
+
+.conteudo-aula h1 {
+    font-size: 28px;
+}
+
+.conteudo-aula h2 {
+    font-size: 23px;
+}
+
+.conteudo-aula h3 {
+    font-size: 19px;
+}
+
+.conteudo-aula p {
+    margin-bottom: 16px;
+}
+
+.conteudo-aula ul,
+.conteudo-aula ol {
+    margin: 12px 0 20px 25px;
+}
+
+.conteudo-aula li {
+    margin-bottom: 7px;
+}
+
+.conteudo-aula blockquote {
+    margin: 20px 0;
+
+    padding: 16px 18px;
+
+    border-left: 4px solid var(--purple);
+    border-radius: 0 12px 12px 0;
+
+    color: #555360;
+    background: #f8f7ff;
+}
+
+.conteudo-aula a {
+    color: var(--purple);
+
+    font-weight: 600;
+
+    text-decoration: underline;
+}
+
+.conteudo-aula strong {
+    color: #222128;
+}
+
+.conteudo-aula img {
+    max-width: 100%;
+    height: auto;
+
+    margin: 15px 0;
+
+    border-radius: 12px;
+}
+
+
+/* =====================================================
+   EXERCÍCIOS
+===================================================== */
+
+.exercicios-secao {
+    margin-top: 24px;
+}
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+.section-header h2 {
+    margin-bottom: 7px;
+
+    font-size: 22px;
+}
+
+.section-header p {
+    max-width: 650px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sem-exercicios {
+    min-height: 115px;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    border: 1px dashed #d9d7e1;
+    border-radius: var(--radius);
+
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.sem-exercicios-icone {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    color: var(--purple);
+    background: var(--purple-soft);
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.sem-exercicios strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 13px;
+}
+
+.sem-exercicios p {
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.lista-exercicios {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.exercicio-card {
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    background: white;
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.exercicio-card:hover {
+    border-color: #d7d4ee;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 14px 40px
+        rgba(23, 20, 34, 0.08);
+}
+
+.exercicio-icone {
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    color: var(--purple);
+    background: var(--purple-soft);
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.exercicio-conteudo {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.exercicio-topo {
+    margin-bottom: 5px;
+
+    display: flex;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.exercicio-label {
+    color: var(--purple);
+
+    font-size: 9px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.exercicio-questoes {
+    padding: 4px 7px;
+
+    border-radius: 999px;
+
+    color: var(--muted);
+    background: #f4f4f7;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.exercicio-titulo {
+    margin-bottom: 5px;
+
+    overflow-wrap: anywhere;
+
+    font-size: 14px;
+}
+
+.exercicio-descricao {
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.btn-abrir-exercicio {
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.aula-sidebar {
+    position: sticky;
+
+    top: 102px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.sidebar-card {
+    padding: 20px;
+}
+
+.sidebar-card h3 {
+    margin-bottom: 11px;
+
+    font-size: 16px;
+}
+
+.sidebar-card p {
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   PROGRESSO
+===================================================== */
+
+.progresso-circular {
+    margin: 20px 0;
+
+    display: grid;
+    place-items: center;
+}
+
+.circulo-progresso {
+    width: 112px;
+    height: 112px;
+
+    display: grid;
+    place-items: center;
+
+    border: 10px solid var(--purple-soft);
+    border-radius: 50%;
+
+    color: var(--purple);
+
+    background: white;
+}
+
+.circulo-progresso strong {
+    font-size: 22px;
+}
+
+.progresso-detalhes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    border-top: 1px solid var(--border);
+}
+
+.progresso-detalhes div {
+    padding: 14px 8px 0;
+
+    text-align: center;
+}
+
+.progresso-detalhes div + div {
+    border-left: 1px solid var(--border);
+}
+
+.progresso-detalhes span {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.progresso-detalhes strong {
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   CONCLUSÃO
+===================================================== */
+
+.conclusao-card p {
+    margin-bottom: 16px;
+}
+
+.btn-concluir,
+.btn-praticar {
+    width: 100%;
+}
+
+.aula-concluida-box {
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    border-radius: 12px;
+
+    color: var(--success);
+    background: var(--success-soft);
+}
+
+.aula-concluida-box > span {
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    background: rgba(25, 135, 84, 0.1);
+
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.aula-concluida-box strong {
+    display: block;
+
+    margin-bottom: 2px;
+
+    font-size: 11px;
+}
+
+.aula-concluida-box small {
+    display: block;
+
+    color: #50846b;
+
+    font-size: 9px;
+}
+
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.btn {
+    min-height: 42px;
+
+    padding: 10px 15px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    border-color: var(--purple);
+
+    color: white;
+    background: var(--purple);
+}
+
+.btn-primary:hover:not(:disabled) {
+    border-color: var(--purple-dark);
+
+    background: var(--purple-dark);
+
+    box-shadow:
+        0 7px 18px
+        rgba(81, 71, 232, 0.18);
+}
+
+.btn-secondary {
+    border-color: var(--border);
+
+    color: var(--text);
+    background: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    border-color: #cfccd9;
+
+    background: #fafafd;
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast {
+    position: fixed;
+
+    z-index: 5000;
+
+    right: 24px;
+    bottom: 24px;
+
+    max-width: min(390px, calc(100vw - 30px));
+
+    padding: 13px 17px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    color: var(--text);
+    background: white;
+
+    box-shadow:
+        0 16px 50px
+        rgba(23, 20, 34, 0.16);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    animation: toastEntrada 0.2s ease;
+}
+
+.toast.sucesso {
+    border-color: #cdebdc;
+
+    color: var(--success);
+    background: #f5fcf8;
+}
+
+.toast.erro {
+    border-color: #ffd3d7;
+
+    color: var(--danger);
+    background: #fff8f8;
+}
+
+@keyframes toastEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 999px;
+
+    background: #d4d2dc;
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #bbb8c5;
+    background-clip: padding-box;
+}
+
+
+/* =====================================================
+   RESPONSIVO
+===================================================== */
+
+@media (max-width: 1050px) {
+    .aula-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .aula-sidebar {
+        position: static;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 800px) {
+    .progresso-topo,
+    .barra-topo {
+        display: none;
+    }
+
+    .aula-main {
+        padding:
+            22px
+            18px
+            55px;
+    }
+
+    .topbar-container {
+        padding:
+            0
+            18px;
+    }
+
+    .aula-cabecalho {
+        min-height: auto;
+
+        padding:
+            32px
+            25px;
+    }
+
+    .aula-cabecalho-decoracao {
+        display: none;
+    }
+
+    .aula-sidebar {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .aula-topbar,
+    .topbar-container {
+        min-height: 70px;
+    }
+
+    .topbar-container {
+        padding:
+            0
+            13px;
+    }
+
+    .btn-voltar {
+        width: 39px;
+        height: 39px;
+    }
+
+    .avatar-aluno {
+        width: 36px;
+        height: 36px;
+    }
+
+    .aula-main {
+        padding:
+            16px
+            12px
+            45px;
+    }
+
+    .aula-cabecalho {
+        padding:
+            27px
+            20px;
+
+        border-radius: 19px;
+    }
+
+    .aula-cabecalho h1 {
+        font-size: 28px;
+    }
+
+    .aula-meta {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .meta-item {
+        width: 100%;
+    }
+
+    .conteudo-card {
+        padding: 20px;
+
+        border-radius: 15px;
+    }
+
+    .conteudo-card-topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .conteudo-aula {
+        font-size: 14px;
+        line-height: 1.75;
+    }
+
+    .conteudo-aula h1 {
+        font-size: 24px;
+    }
+
+    .conteudo-aula h2 {
+        font-size: 20px;
+    }
+
+    .conteudo-aula h3 {
+        font-size: 17px;
+    }
+
+    .exercicio-card {
+        padding: 17px;
+
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .exercicio-card .btn {
+        width: 100%;
+    }
+
+    .exercicio-icone {
+        width: 40px;
+        height: 40px;
+    }
+
+    .sidebar-card {
+        border-radius: 15px;
+    }
+
+    .toast {
+        right: 15px;
+        bottom: 15px;
+        left: 15px;
+
+        max-width: none;
+    }
+}
+
+
+@media (max-width: 390px) {
+    .topbar-identificacao strong {
+        max-width: 180px;
+    }
+
+    .aula-cabecalho {
+        padding:
+            24px
+            17px;
+    }
+
+    .aula-cabecalho h1 {
+        font-size: 25px;
+    }
+
+    .conteudo-card {
+        padding: 17px;
+    }
+}

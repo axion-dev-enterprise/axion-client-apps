@@ -1,0 +1,960 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+:root {
+
+    --roxo: #5147e8;
+
+    --roxo-escuro: #4037c8;
+
+    --roxo-claro: #f0efff;
+
+    --texto: #17171c;
+
+    --secundario: #70707a;
+
+    --borda: #e5e5ec;
+
+    --branco: #ffffff;
+
+}
+
+
+html,
+body {
+
+    width: 100%;
+
+    min-height: 100%;
+
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color:
+        var(--texto);
+
+    background:
+        #ffffff;
+
+}
+
+
+button,
+input {
+
+    font-family:
+        inherit;
+
+}
+
+
+/* =====================================
+   PÁGINA
+===================================== */
+
+.pagina-admin-login {
+
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(380px, 0.95fr)
+        minmax(420px, 1.05fr);
+
+}
+
+
+/* =====================================
+   LADO DA MARCA
+===================================== */
+
+.lado-marca {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding:
+        45px;
+
+    display: flex;
+
+    background:
+
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(116, 93, 255, 0.35),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 15% 85%,
+            rgba(89, 72, 219, 0.25),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            145deg,
+            #100b20,
+            #24134c
+        );
+
+    color:
+        white;
+
+}
+
+
+.lado-marca::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 380px;
+
+    height: 380px;
+
+    right: -180px;
+
+    bottom: -180px;
+
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    border-radius:
+        50%;
+
+}
+
+
+.marca-conteudo {
+
+    width: 100%;
+
+    max-width:
+        610px;
+
+    margin:
+        0 auto;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+}
+
+
+/* =====================================
+   LOGO
+===================================== */
+
+.logo {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        11px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+}
+
+
+.logo-box {
+
+    width:
+        36px;
+
+    height:
+        36px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        10px;
+
+    background:
+        #6257f2;
+
+    color:
+        white;
+
+    font-size:
+        16px;
+
+}
+
+
+/* =====================================
+   TEXTO
+===================================== */
+
+.texto-marca {
+
+    margin:
+        auto 0;
+
+    padding:
+        70px 0;
+
+}
+
+
+.badge {
+
+    display:
+        inline-flex;
+
+    padding:
+        7px
+        11px;
+
+    margin-bottom:
+        18px;
+
+    border:
+
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.13
+        );
+
+    border-radius:
+        50px;
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.07
+        );
+
+    color:
+        #d9d4ff;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.6px;
+
+}
+
+
+.texto-marca h1 {
+
+    max-width:
+        570px;
+
+    margin-bottom:
+        18px;
+
+    font-size:
+        clamp(
+            38px,
+            5vw,
+            67px
+        );
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -3px;
+
+}
+
+
+.texto-marca p {
+
+    max-width:
+        510px;
+
+    color:
+        #c9c5d5;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.7;
+
+}
+
+
+/* =====================================
+   SEGURANÇA
+===================================== */
+
+.seguranca {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    color:
+        #c9c5d5;
+
+    font-size:
+        10px;
+
+}
+
+
+.seguranca div {
+
+    width:
+        29px;
+
+    height:
+        29px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        8px;
+
+    background:
+
+        rgba(
+            255,
+            255,
+            255,
+            0.08
+        );
+
+    color:
+        #bcb5ff;
+
+}
+
+
+/* =====================================
+   LOGIN
+===================================== */
+
+.lado-login {
+
+    padding:
+        35px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    background:
+        #ffffff;
+
+}
+
+
+.login-box {
+
+    width:
+        100%;
+
+    max-width:
+        420px;
+
+}
+
+
+.login-logo {
+
+    width:
+        44px;
+
+    height:
+        44px;
+
+    margin-bottom:
+        25px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        12px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #5147e8,
+            #756cff
+        );
+
+    color:
+        white;
+
+    font-size:
+        18px;
+
+    font-weight:
+        800;
+
+}
+
+
+.login-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--roxo);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.7px;
+
+}
+
+
+.login-box h2 {
+
+    margin-bottom:
+        9px;
+
+    font-size:
+        34px;
+
+    letter-spacing:
+        -1.2px;
+
+}
+
+
+.login-descricao {
+
+    margin-bottom:
+        30px;
+
+    color:
+        var(--secundario);
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+
+}
+
+
+/* =====================================
+   CAMPOS
+===================================== */
+
+.campo {
+
+    margin-bottom:
+        17px;
+
+}
+
+
+.campo label {
+
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+}
+
+
+.campo input {
+
+    width:
+        100%;
+
+    height:
+        48px;
+
+    padding:
+        0
+        14px;
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:
+        11px;
+
+    background:
+        #fafafa;
+
+    outline:
+        none;
+
+    color:
+        var(--texto);
+
+    font-size:
+        13px;
+
+    transition:
+        0.2s;
+
+}
+
+
+.campo input:focus {
+
+    border-color:
+        var(--roxo);
+
+    background:
+        white;
+
+    box-shadow:
+
+        0 0 0 3px
+        rgba(
+            81,
+            71,
+            232,
+            0.09
+        );
+
+}
+
+
+/* =====================================
+   SENHA
+===================================== */
+
+.senha-area {
+
+    position:
+        relative;
+
+}
+
+
+.senha-area input {
+
+    padding-right:
+        50px;
+
+}
+
+
+.mostrar-senha {
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    right:
+        6px;
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    transform:
+        translateY(-50%);
+
+    border:
+        none;
+
+    border-radius:
+        9px;
+
+    background:
+        transparent;
+
+    cursor:
+        pointer;
+
+}
+
+
+/* =====================================
+   MENSAGEM
+===================================== */
+
+.mensagem {
+
+    display:
+        none;
+
+    margin-bottom:
+        15px;
+
+    padding:
+        11px
+        13px;
+
+    border-radius:
+        10px;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.45;
+
+}
+
+
+.mensagem.erro {
+
+    display:
+        block;
+
+    background:
+
+        rgba(
+            239,
+            68,
+            68,
+            0.08
+        );
+
+    color:
+        #dc2626;
+
+}
+
+
+.mensagem.sucesso {
+
+    display:
+        block;
+
+    background:
+
+        rgba(
+            34,
+            197,
+            94,
+            0.1
+        );
+
+    color:
+        #15803d;
+
+}
+
+
+/* =====================================
+   BOTÃO
+===================================== */
+
+.btn-entrar {
+
+    width:
+        100%;
+
+    height:
+        49px;
+
+    border:
+        none;
+
+    border-radius:
+        11px;
+
+    background:
+        var(--roxo);
+
+    color:
+        white;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+
+}
+
+
+.btn-entrar:hover {
+
+    background:
+        var(--roxo-escuro);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+.btn-entrar:disabled {
+
+    opacity:
+        0.6;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
+}
+
+
+/* =====================================
+   VOLTAR
+===================================== */
+
+.voltar-site {
+
+    display:
+        inline-block;
+
+    margin-top:
+        20px;
+
+    color:
+        var(--secundario);
+
+    text-decoration:
+        none;
+
+    font-size:
+        10px;
+
+    font-weight:
+        600;
+
+}
+
+
+.voltar-site:hover {
+
+    color:
+        var(--roxo);
+
+}
+
+
+/* =====================================
+   RESPONSIVO
+===================================== */
+
+@media (
+    max-width: 850px
+) {
+
+    .pagina-admin-login {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .lado-marca {
+
+        min-height:
+            290px;
+
+        padding:
+            30px;
+
+    }
+
+
+    .texto-marca {
+
+        padding:
+            50px 0;
+
+    }
+
+
+    .texto-marca h1 {
+
+        max-width:
+            500px;
+
+        font-size:
+            40px;
+
+        letter-spacing:
+            -2px;
+
+    }
+
+
+    .lado-login {
+
+        min-height:
+            600px;
+
+        padding:
+            50px 25px;
+
+    }
+
+}
+
+
+@media (
+    max-width: 500px
+) {
+
+    .lado-marca {
+
+        min-height:
+            250px;
+
+        padding:
+            22px;
+
+    }
+
+
+    .texto-marca {
+
+        padding:
+            35px 0;
+
+    }
+
+
+    .texto-marca h1 {
+
+        font-size:
+            32px;
+
+        letter-spacing:
+            -1.5px;
+
+    }
+
+
+    .texto-marca p {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .seguranca {
+
+        display:
+            none;
+
+    }
+
+
+    .lado-login {
+
+        min-height:
+            auto;
+
+        padding:
+            45px 18px;
+
+    }
+
+}
