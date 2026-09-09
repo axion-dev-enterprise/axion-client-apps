@@ -336,6 +336,52 @@
         .escondido {
             display: none !important;
         }
+    
+        /* Trava Rígida de SVGs e Ícones */
+        svg {
+            max-width: 100%;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+        svg:not([width]) {
+            width: 16px !important;
+            height: 16px !important;
+        }
+        .axion-icon,
+        svg.axion-icon {
+            width: 18px !important;
+            height: 18px !important;
+            min-width: 18px !important;
+            min-height: 18px !important;
+            max-width: 18px !important;
+            max-height: 18px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            flex-shrink: 0 !important;
+        }
+        .axion-icon-sm,
+        svg.axion-icon-sm {
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            min-height: 16px !important;
+            max-width: 16px !important;
+            max-height: 16px !important;
+            flex-shrink: 0 !important;
+        }
+        .btn-primary svg,
+        .btn-voltar svg {
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            min-height: 16px !important;
+            max-width: 16px !important;
+            max-height: 16px !important;
+            flex-shrink: 0 !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+        }
+
     </style>
 </head>
 <body>
@@ -343,7 +389,7 @@
     <header class="redacao-topbar">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <a href="/aluno.html" class="btn-voltar">
-                <svg class="axion-icon axion-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg class="axion-icon axion-icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
                 </svg>
                 <span>Voltar ao Dashboard</span>
@@ -390,7 +436,7 @@
 
             <button type="button" id="btn-enviar-redacao" class="btn-primary">
                 <span>Enviar Redação para Correção</span>
-                <svg class="axion-icon axion-icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg class="axion-icon axion-icon-sm" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
                 </svg>
             </button>

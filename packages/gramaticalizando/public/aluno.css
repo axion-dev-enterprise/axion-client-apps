@@ -1,3 +1,20 @@
+
+/* Trava Rígida de SVGs */
+svg {
+    max-width: 100%;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+.menu-icone svg {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+}
+button svg, a svg {
+    flex-shrink: 0;
+}
+
 /* =====================================
    GRAMATICALIZANDO - ÁREA DO ALUNO
    Design System & Rebranding v2.0
