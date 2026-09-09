@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "gramaticalizando",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/aluno", "destination": "/aluno.html" },
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/cadastro", "destination": "/cadastro.html" },
+    { "source": "/diagnostico", "destination": "/diagnostico.html" },
+    { "source": "/redacao", "destination": "/redacao.html" },
+    { "source": "/aula", "destination": "/aula.html" },
+    { "source": "/curso", "destination": "/curso.html" },
+    { "source": "/exercicios", "destination": "/exercicios.html" }
+  ]
+}
