@@ -33,3 +33,4 @@ module.exports = async function handler(req, res) {
     await collectBody(req);
     return app(req, res);
 };
+

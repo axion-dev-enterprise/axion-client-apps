@@ -62,8 +62,9 @@ app.get("/editor-exercicio.html", protegerPaginaAdmin, (req, res) => {
 // Arquivos estáticos da pasta public (sem index automático para respeitar a raiz)
 app.use(express.static(paths.PUBLIC_DIR, { index: false }));
 
-// Rotas de API
+// Rotas de API (suporta com e sem prefixo /api em serverless)
 app.use("/api", routes);
+app.use(routes);
 
 // Rota raiz serve a landing page
 app.get("/", (req, res) => {
