@@ -2,6 +2,10 @@
    ÁREA DO ALUNO
 ========================================= */
 
+const SVG_ARROW_RIGHT = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+const SVG_CHEVRON_UP = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>';
+const SVG_REFRESH = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>';
+const SVG_PEN = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>';
 
 /* =========================================
    USUÁRIO SALVO
@@ -645,29 +649,6 @@ function renderizarCursos(
             );
 
 
-            btnVerAulas.addEventListener(
-                "click",
-                function () {
-
-                    const aberto =
-                        listaAulas.style.display !==
-                        "none";
-
-
-                    listaAulas.style.display =
-                        aberto
-                            ? "none"
-                            : "block";
-
-
-                    btnVerAulas.innerHTML =
-                        aberto
-                            ? "Ver aulas <span>→</span>"
-                            : "Fechar aulas <span>↑</span>";
-                }
-            );
-
-
             areaCursos.appendChild(
                 card
             );
@@ -684,77 +665,52 @@ function renderizarAtividades(
     atividades
 ) {
 
+    listaAtividades.innerHTML = "";
+
+
     if (
-        !Array.isArray(atividades) ||
+        !atividades ||
         atividades.length === 0
     ) {
+
+        listaAtividades.appendChild(
+            semAtividades
+        );
 
         return;
 
     }
 
 
-    listaAtividades.innerHTML =
-        "";
-
-
     atividades.forEach(
-        atividade => {
+        function (atividade) {
 
             const item =
                 document.createElement(
                     "div"
                 );
 
-
             item.className =
                 "atividade-item";
 
 
-            const titulo =
-                escaparHTML(
-                    atividade.titulo ||
-                    "Atividade"
-                );
-
-
-            const descricao =
-                escaparHTML(
-                    atividade.descricao ||
-                    ""
-                );
-
-
-            const data =
-                escaparHTML(
-                    atividade.data ||
-                    ""
-                );
-
-
             item.innerHTML = `
 
-                <div class="atividade-icone">
-                    ✓
-                </div>
+                <div class="atividade-ponto"></div>
 
+                <div class="atividade-texto">
 
-                <div>
-
-                    <strong>
-                        ${titulo}
-                    </strong>
+                    <p>
+                        ${atividade.descricao}
+                    </p>
 
                     <span>
-                        ${descricao}
+                        ${formatarData(
+                            atividade.data
+                        )}
                     </span>
 
                 </div>
-
-
-                <small>
-                    ${data}
-                </small>
 
             `;
 
@@ -790,11 +746,13 @@ function renderizarCronogramaEDiagnostico(dashboard) {
                         <p style="font-size: 0.85rem; color: #64748b;">Nível ${nivel} (${score}% no diagnóstico) • Prioridade nas suas maiores lacunas</p>
                     </div>
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                        <a href="/diagnostico.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
-                            Refazer Diagnóstico ↻
+                        <a href="/diagnostico.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem;">
+                            <span>Refazer Diagnóstico</span>
+                            ${SVG_REFRESH}
                         </a>
-                        <a href="/redacao.html" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; background: #7c3aed; color: #fff; border-radius: 6px;">
-                            Laboratório de Redação ✎
+                        <a href="/redacao.html" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; background: #7c3aed; color: #fff; border-radius: 6px;">
+                            <span>Laboratório de Redação</span>
+                            ${SVG_PEN}
                         </a>
                     </div>
                 </div>
@@ -827,10 +785,12 @@ function renderizarCronogramaEDiagnostico(dashboard) {
                 </div>
                 <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                     <a href="/diagnostico.html" style="background: #7c3aed; color: #ffffff; font-weight: 600; padding: 0.75rem 1.4rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(124,58,237,0.3);">
-                        Iniciar Diagnóstico Gratuito →
+                        <span>Iniciar Diagnóstico Gratuito</span>
+                        ${SVG_ARROW_RIGHT}
                     </a>
                     <a href="/redacao.html" style="background: #ffffff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 600; padding: 0.75rem 1.2rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                        Laboratório de Redação ✎
+                        <span>Laboratório de Redação</span>
+                        ${SVG_PEN}
                     </a>
                 </div>
             </div>
