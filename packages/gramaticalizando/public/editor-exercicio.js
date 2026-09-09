@@ -1,3 +1,5 @@
+import { confirmModal } from '../src/frontend/components/Modal.js';
+
 /* =====================================================
    PARÂMETROS DA URL
 ===================================================== */
@@ -1252,13 +1254,13 @@ function adicionarQuestao(
 
     btnRemover.addEventListener(
         "click",
-        () => {
+        async () => {
 
             const confirmar =
-                window.confirm(
-                    "Remover esta questão?"
+                await confirmModal(
+                    "Deseja realmente remover esta questão da lista?",
+                    "Remover Questão"
                 );
-
 
             if (!confirmar) {
 

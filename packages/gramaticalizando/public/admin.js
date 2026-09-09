@@ -1,3 +1,5 @@
+import { confirmModal } from '../src/frontend/components/Modal.js';
+
 /* =====================================================
    SISTEMA DE TOAST (SUBSTITUIÇÃO DE ALERT NATIVO)
 ===================================================== */
@@ -1522,8 +1524,9 @@ async function excluirMateria(
 ) {
 
     const confirmar =
-        window.confirm(
-            `Excluir a matéria "${materia.nome}"?\n\nEssa ação não pode ser desfeita.`
+        await confirmModal(
+            `Excluir a matéria "${materia.nome}"?\n\nEssa ação não pode ser desfeita.`,
+            "Excluir Matéria"
         );
 
 
@@ -1984,8 +1987,9 @@ async function excluirAula(
 ) {
 
     const confirmar =
-        window.confirm(
-            `Excluir a aula "${aula.titulo}"?\n\nEssa ação não pode ser desfeita.`
+        await confirmModal(
+            `Excluir a aula "${aula.titulo}"?\n\nEssa ação não pode ser desfeita.`,
+            "Excluir Aula"
         );
 
 
@@ -2404,8 +2408,9 @@ async function excluirExercicio(
 ) {
 
     const confirmar =
-        window.confirm(
-            `Excluir o exercício "${exercicio.titulo}"?\n\nTodas as questões desta lista serão removidas. Essa ação não pode ser desfeita.`
+        await confirmModal(
+            `Excluir o exercício "${exercicio.titulo}"?\n\nTodas as questões desta lista serão removidas. Essa ação não pode ser desfeita.`,
+            "Excluir Lista de Exercícios"
         );
 
 

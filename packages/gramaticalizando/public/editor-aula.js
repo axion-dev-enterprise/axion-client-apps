@@ -1,3 +1,5 @@
+import { confirmModal, promptModal } from '../src/frontend/components/Modal.js';
+
 const params = new URLSearchParams(window.location.search);
 
 let materiaAtualId = params.get("materia");
@@ -276,14 +278,16 @@ formatoTexto.addEventListener(
 
 btnLink.addEventListener(
     "mousedown",
-    evento => {
+    async evento => {
 
         evento.preventDefault();
 
         editor.focus();
 
-        const url = prompt(
-            "Digite o endereço do link:"
+        const url = await promptModal(
+            "Digite o endereço completo do link (ex: https://...):",
+            "https://",
+            "Inserir Link na Aula"
         );
 
         if (!url) {
@@ -531,12 +535,13 @@ btnPublicar.addEventListener(
 
 btnVoltar.addEventListener(
     "click",
-    () => {
+    async () => {
 
         if (houveAlteracao) {
 
-            const desejaSair = confirm(
-                "Existem alterações que ainda não foram salvas. Deseja sair mesmo assim?"
+            const desejaSair = await confirmModal(
+                "Existem alterações que ainda não foram salvas. Deseja sair mesmo assim?",
+                "Alterações não salvas"
             );
 
             if (!desejaSair) {
