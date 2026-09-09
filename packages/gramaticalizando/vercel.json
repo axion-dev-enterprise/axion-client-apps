@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "gramaticalizando",
-  "buildCommand": "vite build",
+  "buildCommand": "npx --yes vite build",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
