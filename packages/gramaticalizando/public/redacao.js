@@ -5,9 +5,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (raw) usuario = JSON.parse(raw);
     } catch (e) {}
 
+    const toastEl = document.getElementById("redacao-toast");
+    let toastTimeout = null;
+    function mostrarToast(mensagem, tipo = "info") {
+        if (!toastEl) return;
+        clearTimeout(toastTimeout);
+        toastEl.textContent = mensagem;
+        toastEl.className = `redacao-toast ativo ${tipo}`;
+        toastTimeout = setTimeout(() => {
+            toastEl.classList.remove("ativo");
+        }, 3800);
+    }
+
     if (!usuario || !usuario.id) {
-        alert("Faça login para acessar o laboratório de redação.");
-        window.location.href = "/";
+        window.location.replace("/?login=true&msg=auth");
         return;
     }
 
@@ -144,13 +155,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const arquivoUrl = inputArquivoUrl.value.trim();
 
         if (tema.length < 3) {
-            alert("Por favor, selecione ou informe o tema da sua redação.");
+            mostrarToast("Por favor, selecione ou informe o tema da sua redação.", "erro");
             inputTema.focus();
             return;
         }
 
         if (texto.length < 50 && !arquivoUrl) {
-            alert("Digite o texto da sua redação (mínimo 50 caracteres) ou informe o link do arquivo.");
+            mostrarToast("Digite o texto da sua redação (mínimo 50 caracteres) ou informe o link do arquivo.", "erro");
             textoRedacao.focus();
             return;
         }
@@ -170,7 +181,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 throw new Error(data.erro || "Erro ao enviar redação.");
             }
 
-            alert("Redação enviada com sucesso para a Profª Wilma!");
+            mostrarToast("Redação enviada com sucesso para a Profª Wilma!", "sucesso");
             inputTema.value = "";
             textoRedacao.value = "";
             inputArquivoUrl.value = "";
@@ -180,7 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             await carregarHistorico();
 
         } catch (err) {
-            alert(err.message);
+            mostrarToast(err.message, "erro");
         } finally {
             btnEnviar.disabled = false;
             btnEnviar.innerHTML = '<span>Enviar Redação para Correção</span> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';

@@ -11,6 +11,28 @@
 
     <title>Aula | Gramaticalizando</title>
 
+    <script>
+        (function() {
+            try {
+                var u = localStorage.getItem("usuarioGramaticalizando");
+                if (!u) {
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                    return;
+                }
+                var p = JSON.parse(u);
+                if (!p || !p.id) {
+                    localStorage.removeItem("usuarioGramaticalizando");
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                }
+            } catch(e) {
+                document.documentElement.style.display = "none";
+                window.location.replace("/?login=true&msg=auth");
+            }
+        })();
+    </script>
+
     <link
         rel="stylesheet"
         href="./aula.css"

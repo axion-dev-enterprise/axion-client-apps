@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratório de Redação | Gramaticalizando</title>
+    <script>
+        (function() {
+            try {
+                var u = localStorage.getItem("usuarioGramaticalizando");
+                if (!u) {
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                    return;
+                }
+                var p = JSON.parse(u);
+                if (!p || !p.id) {
+                    localStorage.removeItem("usuarioGramaticalizando");
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                }
+            } catch(e) {
+                document.documentElement.style.display = "none";
+                window.location.replace("/?login=true&msg=auth");
+            }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -386,6 +407,43 @@
         </section>
 
     </div>
+
+    <!-- Toast de Notificação -->
+    <div id="redacao-toast" class="redacao-toast" role="status" aria-live="polite"></div>
+
+    <style>
+        .redacao-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .redacao-toast.ativo {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .redacao-toast.erro {
+            background: #dc2626;
+        }
+        .redacao-toast.sucesso {
+            background: #16a34a;
+        }
+    </style>
 
     <script src="./redacao.js"></script>
 </body>

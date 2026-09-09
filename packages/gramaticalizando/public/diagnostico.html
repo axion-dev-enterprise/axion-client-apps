@@ -440,6 +440,188 @@
         .escondido {
             display: none !important;
         }
+
+        /* Topo Login Button */
+        .btn-topo-entrar {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 0.45rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-topo-entrar:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Modal Auth no Diagnóstico */
+        .modal-diag-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 1rem;
+        }
+        .modal-diag-overlay.ativo {
+            opacity: 1;
+            visibility: visible;
+        }
+        .diag-auth-card {
+            background: #ffffff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 440px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            transform: translateY(20px) scale(0.97);
+            transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-diag-overlay.ativo .diag-auth-card {
+            transform: translateY(0) scale(1);
+        }
+        .diag-fechar-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .diag-fechar-modal:hover {
+            color: #0f172a;
+            background: #f1f5f9;
+        }
+        .diag-auth-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+            gap: 4px;
+        }
+        .diag-tab-btn {
+            flex: 1;
+            padding: 0.6rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: none;
+            background: transparent;
+            color: #64748b;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .diag-tab-btn.ativo {
+            background: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .diag-auth-input {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 0.9rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .diag-auth-input:focus {
+            border-color: var(--primary);
+        }
+        .diag-auth-btn-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .diag-auth-btn-submit:hover {
+            background: var(--primary-dark);
+        }
+        .diag-auth-msg {
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .diag-auth-msg.erro {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+            display: block;
+        }
+        .diag-auth-msg.sucesso {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+            display: block;
+        }
+
+        /* Toast flutuante */
+        .diag-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+        }
+        .diag-toast.ativo {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .diag-toast.erro {
+            background: #dc2626;
+        }
+        .diag-toast.sucesso {
+            background: #16a34a;
+        }
     </style>
 </head>
 <body>
@@ -606,6 +788,52 @@
         </section>
 
     </div>
+
+    <!-- MODAL DE LOGIN / CADASTRO DIRETO NO DIAGNÓSTICO -->
+    <div id="modal-diag-auth" class="modal-diag-overlay">
+        <div class="diag-auth-card">
+            <button type="button" id="fechar-modal-diag" class="diag-fechar-modal" aria-label="Fechar">
+                <svg class="axion-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <div style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: var(--primary); color: #fff; border-radius: 10px; font-weight: 800; font-size: 1.25rem; margin-bottom: 0.5rem;">G</div>
+                <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main);">Acesse para Realizar o Diagnóstico</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Entre ou cadastre-se para salvar suas respostas e gerar seu cronograma personalizado com a Profª Wilma.</p>
+            </div>
+
+            <div class="diag-auth-tabs">
+                <button type="button" id="tab-login" class="diag-tab-btn ativo">Já sou Aluno (Entrar)</button>
+                <button type="button" id="tab-registro" class="diag-tab-btn">Novo Cadastro</button>
+            </div>
+
+            <div id="diag-msg" class="diag-auth-msg"></div>
+
+            <!-- FORM ENTRAR -->
+            <form id="form-diag-login">
+                <input type="email" id="diag-login-email" class="diag-auth-input" placeholder="Seu e-mail cadastrado" required autocomplete="email">
+                <input type="password" id="diag-login-senha" class="diag-auth-input" placeholder="Sua senha" required autocomplete="current-password">
+                <button type="submit" class="diag-auth-btn-submit" id="btn-submit-diag-login">
+                    <span>Entrar e Continuar Diagnóstico</span>
+                    <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </form>
+
+            <!-- FORM REGISTRAR -->
+            <form id="form-diag-registro" class="escondido">
+                <input type="text" id="diag-reg-nome" class="diag-auth-input" placeholder="Seu nome completo" required autocomplete="name">
+                <input type="email" id="diag-reg-email" class="diag-auth-input" placeholder="Seu melhor e-mail" required autocomplete="email">
+                <input type="password" id="diag-reg-senha" class="diag-auth-input" placeholder="Crie uma senha de acesso (mínimo 6 caracteres)" required minlength="6" autocomplete="new-password">
+                <button type="submit" class="diag-auth-btn-submit" id="btn-submit-diag-registro">
+                    <span>Criar Conta e Iniciar Teste</span>
+                    <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO SEM POPUPS NATIVOS -->
+    <div id="diag-toast" class="diag-toast" role="status" aria-live="polite"></div>
 
     <script src="./diagnostico.js"></script>
 </body>

@@ -5,6 +5,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercícios | Gramaticalizando</title>
+    <script>
+        (function() {
+            try {
+                var u = localStorage.getItem("usuarioGramaticalizando");
+                if (!u) {
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                    return;
+                }
+                var p = JSON.parse(u);
+                if (!p || !p.id) {
+                    localStorage.removeItem("usuarioGramaticalizando");
+                    document.documentElement.style.display = "none";
+                    window.location.replace("/?login=true&msg=auth");
+                }
+            } catch(e) {
+                document.documentElement.style.display = "none";
+                window.location.replace("/?login=true&msg=auth");
+            }
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">

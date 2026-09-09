@@ -769,4 +769,59 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         revealElements.forEach(el => el.classList.add("is-visible"));
     }
+
+    /* =========================================
+       VERIFICAÇÃO DE SESSÃO / BOTÃO NAVBAR
+    ========================================= */
+    try {
+        const usuarioLogado = localStorage.getItem("usuarioGramaticalizando");
+        if (usuarioLogado) {
+            const userObj = JSON.parse(usuarioLogado);
+            if (userObj && userObj.id && abrirLogin) {
+                abrirLogin.innerHTML = `
+                    <svg class="axion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+                    <span>Minha Área (${userObj.nome ? userObj.nome.split(" ")[0] : "Aluno"})</span>
+                `;
+                abrirLogin.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.href = "/aluno.html";
+                };
+            }
+        }
+    } catch (e) {}
+
+    /* =========================================
+       LOGIN DIRETO VIA QUERY PARAM (?login=true)
+    ========================================= */
+    const urlParams = new URLSearchParams(window.location.search);
+    const querLogin = urlParams.get("login");
+    const querRegistro = urlParams.get("registro");
+
+    if (querLogin === "true" || querLogin === "1") {
+        esconderMensagemLogin();
+        abrirModal(modalLogin);
+        if (urlParams.get("msg") === "auth" || urlParams.get("redirect")) {
+            mostrarMensagemLogin("Faça login na sua conta para acessar esta área.", false);
+        }
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (querRegistro === "true" || querRegistro === "1") {
+        limparMensagemRegistro();
+        abrirModal(modalRegistro);
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    /* =========================================
+       INTERCEPTAÇÃO SUAVE DE LINKS PROTEGIDOS
+    ========================================= */
+    document.querySelectorAll('a[href="/aluno.html"], a[href="/redacao.html"]').forEach(link => {
+        link.addEventListener("click", (e) => {
+            const sessao = localStorage.getItem("usuarioGramaticalizando");
+            if (!sessao) {
+                e.preventDefault();
+                esconderMensagemLogin();
+                mostrarMensagemLogin("Faça login ou cadastre-se para acessar esta área.", false);
+                abrirModal(modalLogin);
+            }
+        });
+    });
 });

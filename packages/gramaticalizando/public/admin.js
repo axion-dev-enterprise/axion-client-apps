@@ -1,4 +1,27 @@
 /* =====================================================
+   SISTEMA DE TOAST (SUBSTITUIÇÃO DE ALERT NATIVO)
+===================================================== */
+function alert(mensagem) {
+    let toast = document.getElementById("admin-toast");
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "admin-toast";
+        toast.style.cssText = "position:fixed; bottom:24px; right:24px; background:#0f172a; color:#f8fafc; padding:12px 20px; border-radius:10px; border:1px solid #334155; box-shadow:0 10px 25px rgba(0,0,0,0.3); font-size:13.5px; font-weight:500; z-index:99999; transition:all 0.25s ease; max-width:420px; line-height:1.4; opacity:0; transform:translateY(12px);";
+        document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+        toast.style.transform = "translateY(0)";
+    });
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateY(12px)";
+    }, 4000);
+}
+
+/* =====================================================
    ELEMENTOS GERAIS
 ===================================================== */
 
