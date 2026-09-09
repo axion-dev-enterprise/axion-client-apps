@@ -279,6 +279,11 @@ function mostrarUsuario(
             dadosUsuario.nome
         );
 
+    const planoEl = document.getElementById("plano-aluno-topo");
+    if (planoEl) {
+        planoEl.textContent = dadosUsuario.plano || "Gratuito";
+    }
+
 }
 
 
@@ -764,6 +769,75 @@ function renderizarAtividades(
 }
 
 
+function renderizarCronogramaEDiagnostico(dashboard) {
+    const container = document.getElementById("card-cronograma-container");
+    if (!container) return;
+
+    const cronograma = dashboard.cronogramaSemanal;
+    const diagnostico = dashboard.diagnostico;
+
+    if (cronograma && Array.isArray(cronograma) && cronograma.length > 0) {
+        const nivel = diagnostico?.nivel || "Intermediário";
+        const score = diagnostico?.percentualGeral || 0;
+        const foco = diagnostico?.foco ? diagnostico.foco.toUpperCase() : "GERAL";
+
+        container.innerHTML = `
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.75rem; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div>
+                        <span style="font-size: 0.75rem; background: #ede9fe; color: #6d28d9; padding: 0.2rem 0.6rem; border-radius: 9999px; font-weight: 700;">TRILHA PERSONALIZADA • ${foco}</span>
+                        <h2 style="font-size: 1.25rem; font-weight: 700; color: #0f172a; margin-top: 0.4rem;">Meu Cronograma da Semana</h2>
+                        <p style="font-size: 0.85rem; color: #64748b;">Nível ${nivel} (${score}% no diagnóstico) • Prioridade nas suas maiores lacunas</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="/diagnostico.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">
+                            Refazer Diagnóstico ↻
+                        </a>
+                        <a href="/redacao.html" class="btn btn-primary" style="font-size: 0.8rem; padding: 0.5rem 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; background: #7c3aed; color: #fff; border-radius: 6px;">
+                            Laboratório de Redação ✎
+                        </a>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                    ${cronograma.map(dia => `
+                        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #7c3aed; border-radius: 8px; padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                <strong style="font-size: 0.85rem; color: #0f172a;">${dia.dia}</strong>
+                                <small style="font-size: 0.75rem; color: #6d28d9; font-weight: 600;">~${dia.tempoEstimadoMin} min</small>
+                            </div>
+                            <div style="font-size: 0.8rem; font-weight: 600; color: #4c1d95; margin-bottom: 0.5rem;">${dia.foco}</div>
+                            <ul style="padding-left: 1.1rem; margin: 0; font-size: 0.75rem; color: #64748b; line-height: 1.4;">
+                                ${(dia.atividades || []).map(act => `<li>${act}</li>`).join("")}
+                            </ul>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+        `;
+    } else {
+        container.innerHTML = `
+            <div style="background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%); border: 1px solid #ddd6fe; border-radius: 12px; padding: 1.75rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.25rem; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.08); margin-bottom: 1.5rem;">
+                <div style="max-width: 580px;">
+                    <span style="font-size: 0.75rem; background: #7c3aed; color: #ffffff; padding: 0.2rem 0.6rem; border-radius: 9999px; font-weight: 700;">ONBOARDING RECOMENDADO</span>
+                    <h2 style="font-size: 1.3rem; font-weight: 700; color: #2e1065; margin-top: 0.4rem;">Diagnóstico e Trilha Personalizada com a Profª Wilma</h2>
+                    <p style="font-size: 0.9rem; color: #5b21b6; margin-top: 0.25rem; line-height: 1.5;">
+                        Responda ao teste rápido de nivelamento (10 questões) para identificarmos seus pontos fortes, lacunas em sintaxe e interpretação, e montarmos sua grade semanal sob medida.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <a href="/diagnostico.html" style="background: #7c3aed; color: #ffffff; font-weight: 600; padding: 0.75rem 1.4rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 2px 6px rgba(124,58,237,0.3);">
+                        Iniciar Diagnóstico Gratuito →
+                    </a>
+                    <a href="/redacao.html" style="background: #ffffff; color: #6d28d9; border: 1px solid #ddd6fe; font-weight: 600; padding: 0.75rem 1.2rem; border-radius: 8px; text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                        Laboratório de Redação ✎
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+}
+
 /* =========================================
    CARREGAR DADOS REAIS DO SERVIDOR
 ========================================= */
@@ -915,6 +989,10 @@ async function carregarDashboard() {
 
         renderizarAtividades(
             dashboard.atividades
+        );
+
+        renderizarCronogramaEDiagnostico(
+            dashboard
         );
 
 
@@ -1090,6 +1168,20 @@ menuItems.forEach(
 
     }
 );
+
+const btnNavDiag = document.getElementById("btn-nav-diagnostico");
+if (btnNavDiag) {
+    btnNavDiag.addEventListener("click", () => {
+        window.location.href = "/diagnostico.html";
+    });
+}
+
+const btnNavRed = document.getElementById("btn-nav-redacao");
+if (btnNavRed) {
+    btnNavRed.addEventListener("click", () => {
+        window.location.href = "/redacao.html";
+    });
+}
 
 /* =========================================
    EXPLORAR CURSOS

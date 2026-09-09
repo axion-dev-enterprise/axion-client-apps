@@ -409,7 +409,10 @@ function abrirPagina(
             "Exercícios",
 
         alunos:
-            "Alunos"
+            "Alunos",
+
+        redacoes:
+            "Redações"
     };
 
 
@@ -517,6 +520,16 @@ menuItens.forEach(
                 ) {
 
                     carregarAlunos();
+
+                }
+
+
+                if (
+                    pagina ===
+                    "redacoes"
+                ) {
+
+                    carregarRedacoesAdmin();
 
                 }
 
@@ -2588,6 +2601,189 @@ document.addEventListener(
     }
 );
 
+
+/* =====================================================
+   REDAÇÕES ADMIN
+===================================================== */
+let redacoesListaAdmin = [];
+
+async function carregarRedacoesAdmin() {
+    const corpoTabela = document.getElementById("tabela-redacoes-corpo");
+    const filtroStatus = document.getElementById("filtro-status-redacao");
+    if (!corpoTabela) return;
+
+    corpoTabela.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align: center; color: #64748b; padding: 2rem;">
+                Carregando redações...
+            </td>
+        </tr>
+    `;
+
+    try {
+        const status = filtroStatus ? filtroStatus.value : "";
+        const url = status ? `/api/admin/redacoes?status=${encodeURIComponent(status)}` : "/api/admin/redacoes";
+        const resposta = await fetch(url);
+        if (!resposta.ok) throw new Error("Erro ao carregar redações.");
+
+        const dados = await resposta.json();
+        redacoesListaAdmin = dados.redacoes || [];
+
+        if (!redacoesListaAdmin.length) {
+            corpoTabela.innerHTML = `
+                <tr>
+                    <td colspan="6" style="text-align: center; color: #64748b; padding: 2rem;">
+                        Nenhuma redação encontrada com os filtros selecionados.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        corpoTabela.innerHTML = redacoesListaAdmin.map(r => {
+            const dataEnvio = new Date(r.criadoEm).toLocaleDateString("pt-BR", {
+                day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"
+            });
+            const isCorrigida = r.status === "corrigida";
+            const statusBadge = isCorrigida
+                ? '<span style="background: #dcfce7; color: #166534; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Corrigida</span>'
+                : '<span style="background: #fef3c7; color: #92400e; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 600;">Pendente</span>';
+
+            const notaTexto = isCorrigida ? `<strong>${r.notaGeral}</strong> / 1000` : "-";
+
+            return `
+                <tr>
+                    <td>
+                        <strong>${r.alunoNome || "Aluno"}</strong><br>
+                        <small style="color: #64748b;">${r.alunoEmail || ""}</small>
+                    </td>
+                    <td><strong>${r.tema}</strong></td>
+                    <td><small>${dataEnvio}</small></td>
+                    <td>${statusBadge}</td>
+                    <td>${notaTexto}</td>
+                    <td style="text-align: right;">
+                        <button type="button" class="btn btn-secondary btn-abrir-correcao" data-id="${r.id}" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">
+                            ${isCorrigida ? "Editar Correção" : "Corrigir Redação"}
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join("");
+
+        corpoTabela.querySelectorAll(".btn-abrir-correcao").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.dataset.id;
+                abrirModalCorrigirRedacao(id);
+            });
+        });
+
+    } catch (erro) {
+        console.error(erro);
+        corpoTabela.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; color: #ef4444; padding: 2rem;">
+                    Falha ao carregar as redações.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+const filtroStatusRedacao = document.getElementById("filtro-status-redacao");
+if (filtroStatusRedacao) {
+    filtroStatusRedacao.addEventListener("change", carregarRedacoesAdmin);
+}
+
+const btnRecarregarRedacoes = document.getElementById("btn-recarregar-redacoes");
+if (btnRecarregarRedacoes) {
+    btnRecarregarRedacoes.addEventListener("click", carregarRedacoesAdmin);
+}
+
+const modalCorrigirRedacao = document.getElementById("modal-corrigir-redacao");
+const btnFecharModalRedacao = document.getElementById("btn-fechar-modal-redacao");
+const btnCancelarCorrecao = document.getElementById("btn-cancelar-correcao");
+const formCorrigirRedacao = document.getElementById("form-corrigir-redacao");
+
+function abrirModalCorrigirRedacao(id) {
+    const redacao = redacoesListaAdmin.find(r => r.id === id);
+    if (!redacao || !modalCorrigirRedacao) return;
+
+    document.getElementById("modal-redacao-aluno").textContent = `${redacao.alunoNome || "Aluno"} (${redacao.alunoEmail || ""})`;
+    document.getElementById("modal-redacao-tema").textContent = redacao.tema;
+    document.getElementById("corrigir-redacao-id").value = redacao.id;
+
+    const anexoEl = document.getElementById("modal-redacao-anexo");
+    if (redacao.arquivoUrl) {
+        anexoEl.innerHTML = `Arquivo anexo: <a href="${redacao.arquivoUrl}" target="_blank" style="color: #7c3aed; font-weight: 600;">Abrir link do arquivo/PDF ↗</a>`;
+    } else {
+        anexoEl.innerHTML = "";
+    }
+
+    document.getElementById("modal-redacao-texto").textContent = redacao.texto || "(Nenhum texto digitado diretamente. Verifique o arquivo anexo acima).";
+    document.getElementById("corrigir-nota").value = redacao.notaGeral !== null ? redacao.notaGeral : "";
+    document.getElementById("corrigir-feedback").value = redacao.feedbackProfessora || "";
+
+    modalCorrigirRedacao.classList.remove("escondido");
+}
+
+function fecharModalCorrigirRedacao() {
+    if (modalCorrigirRedacao) {
+        modalCorrigirRedacao.classList.add("escondido");
+    }
+}
+
+if (btnFecharModalRedacao) {
+    btnFecharModalRedacao.addEventListener("click", fecharModalCorrigirRedacao);
+}
+
+if (btnCancelarCorrecao) {
+    btnCancelarCorrecao.addEventListener("click", fecharModalCorrigirRedacao);
+}
+
+if (formCorrigirRedacao) {
+    formCorrigirRedacao.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = document.getElementById("corrigir-redacao-id").value;
+        const notaGeral = Number(document.getElementById("corrigir-nota").value);
+        const feedbackProfessora = document.getElementById("corrigir-feedback").value.trim();
+        const btnSalvar = document.getElementById("btn-salvar-correcao");
+
+        if (isNaN(notaGeral) || notaGeral < 0 || notaGeral > 1000) {
+            alert("A nota geral deve ser um valor de 0 a 1000.");
+            return;
+        }
+
+        if (feedbackProfessora.length < 5) {
+            alert("Por favor, escreva um feedback construtivo com pelo menos 5 caracteres.");
+            return;
+        }
+
+        btnSalvar.disabled = true;
+        btnSalvar.textContent = "Salvando...";
+
+        try {
+            const resposta = await fetch(`/api/admin/redacoes/${encodeURIComponent(id)}/corrigir`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ notaGeral, feedbackProfessora })
+            });
+
+            const resultado = await resposta.json();
+            if (!resposta.ok || !resultado.sucesso) {
+                throw new Error(resultado.erro || "Erro ao salvar correção.");
+            }
+
+            fecharModalCorrigirRedacao();
+            await carregarRedacoesAdmin();
+            alert("Correção registrada com sucesso!");
+        } catch (erro) {
+            alert(erro.message);
+        } finally {
+            btnSalvar.disabled = false;
+            btnSalvar.textContent = "Salvar Avaliação";
+        }
+    });
+}
 
 /* =====================================================
    INICIAR

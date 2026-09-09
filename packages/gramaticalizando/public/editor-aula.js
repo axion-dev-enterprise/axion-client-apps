@@ -13,6 +13,8 @@ let salvando = false;
 const nomeMateria = document.getElementById("nome-materia");
 
 const tituloAula = document.getElementById("titulo-aula");
+const videoUrlInput = document.getElementById("video-url");
+const pdfUrlInput = document.getElementById("pdf-url");
 const editor = document.getElementById("conteudo-aula");
 
 const statusAula = document.getElementById("status-aula");
@@ -185,6 +187,8 @@ async function carregarAula() {
         aulaAtual = await resposta.json();
 
         tituloAula.value = aulaAtual.titulo || "";
+        if (videoUrlInput) videoUrlInput.value = aulaAtual.videoUrl || "";
+        if (pdfUrlInput) pdfUrlInput.value = aulaAtual.materialPdfUrl || "";
 
         editor.innerHTML = aulaAtual.conteudo || "";
 
@@ -324,6 +328,14 @@ tituloAula.addEventListener(
     marcarAlteracao
 );
 
+if (videoUrlInput) {
+    videoUrlInput.addEventListener("input", marcarAlteracao);
+}
+
+if (pdfUrlInput) {
+    pdfUrlInput.addEventListener("input", marcarAlteracao);
+}
+
 editor.addEventListener(
     "input",
     marcarAlteracao
@@ -395,6 +407,8 @@ async function salvarAula(publicado) {
 
     const dados = {
         titulo: tituloAula.value.trim(),
+        videoUrl: videoUrlInput ? videoUrlInput.value.trim() : null,
+        materialPdfUrl: pdfUrlInput ? pdfUrlInput.value.trim() : null,
         conteudo: editor.innerHTML.trim(),
         publicado
     };
