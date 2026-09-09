@@ -332,6 +332,17 @@ input {
     box-shadow: 0 4px 14px var(--roxo-brilho);
 }
 
+.btn-azul svg,
+.btn-cinza svg,
+.btn-assinar svg {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-azul:hover svg,
+.btn-assinar:hover svg {
+    transform: translateX(3px);
+}
+
 .btn-azul:hover {
     background: var(--roxo-escuro);
     transform: translateY(-2px);
@@ -415,7 +426,7 @@ input {
 }
 
 .card h3 {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
     color: var(--texto);
@@ -424,8 +435,8 @@ input {
 
 .card p {
     color: var(--texto-secundario);
-    font-size: 13.5px;
-    line-height: 1.55;
+    font-size: 14px;
+    line-height: 1.6;
     margin-bottom: 12px;
 }
 
@@ -433,17 +444,25 @@ input {
     margin-top: auto;
     text-decoration: none;
     color: var(--roxo);
-    font-size: 13.5px;
+    font-size: 14px;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
     transition: var(--transicao);
+}
+
+.card a svg {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .card a:hover {
     color: var(--roxo-escuro);
     gap: 0.55rem;
+}
+
+.card a:hover svg {
+    transform: translateX(4px);
 }
 
 /* =====================================
@@ -1342,4 +1361,87 @@ input {
         justify-content: center;
     }
 }
+
+/* =====================================
+   SCROLL REVEAL & ANIMAÇÕES DE ENTRADA
+===================================== */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 0.08s);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+/* =====================================
+   SKELETON LOADING COM SHIMMER
+===================================== */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: #f1f5f9;
+    border-radius: 6px;
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.75) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.skeleton-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.skeleton-text {
+    height: 14px;
+    border-radius: 4px;
+}
+
+.skeleton-title {
+    height: 22px;
+    width: 65%;
+    border-radius: 6px;
+}
+
+.skeleton-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
 

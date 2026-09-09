@@ -806,6 +806,20 @@ async function carregarDashboard() {
 
     zerarDashboard();
 
+    if (areaCursos) {
+        areaCursos.innerHTML = `
+            <div class="skeleton-card" style="margin-bottom: 16px;">
+                <div class="skeleton skeleton-text" style="width: 25%; height: 14px;"></div>
+                <div class="skeleton skeleton-text" style="width: 65%; height: 22px;"></div>
+                <div class="skeleton skeleton-text" style="width: 100%; height: 8px; border-radius: 99px;"></div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton skeleton-text" style="width: 30%; height: 14px;"></div>
+                <div class="skeleton skeleton-text" style="width: 50%; height: 22px;"></div>
+                <div class="skeleton skeleton-text" style="width: 100%; height: 8px; border-radius: 99px;"></div>
+            </div>
+        `;
+    }
 
     try {
 

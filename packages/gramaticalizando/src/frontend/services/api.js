@@ -34,37 +34,33 @@ export async function apiRequest(endpoint, options = {}) {
 
 export const authApi = {
   login: (email, senha) => apiRequest('/api/login', { method: 'POST', body: { email, senha } }),
-  cadastrar: (nome, email, senha) => apiRequest('/api/cadastrar', { method: 'POST', body: { nome, email, senha } }),
-  me: () => apiRequest('/api/sessao'),
+  cadastrar: (nome, email, senha) => apiRequest('/api/registro', { method: 'POST', body: { nome, email, senha } }),
+  me: () => apiRequest('/api/me'),
   logout: () => apiRequest('/api/logout', { method: 'POST' }),
   adminLogin: (usuario, senha) => apiRequest('/api/admin/login', { method: 'POST', body: { usuario, senha } })
 };
 
 export const diagnosticoApi = {
-  obterPerguntas: () => apiRequest('/api/diagnostico/perguntas'),
-  submeter: (respostas) => apiRequest('/api/diagnostico/submeter', { method: 'POST', body: { respostas } }),
-  salvarResultado: (resultado) => apiRequest('/api/diagnostico/resultado', { method: 'POST', body: resultado })
-};
-
-export const alunoApi = {
-  dados: () => apiRequest('/api/aluno/dados'),
-  materias: () => apiRequest('/api/materias'),
-  aulas: (materiaId) => apiRequest(`/api/aulas${materiaId ? `?materia=${materiaId}` : ''}`),
-  exercicios: (materiaId) => apiRequest(`/api/exercicios${materiaId ? `?materia=${materiaId}` : ''}`),
-  responderExercicio: (exercicioId, resposta) => apiRequest('/api/exercicio/responder', {
+  obterQuestoes: () => apiRequest('/api/aluno/diagnostico/questoes'),
+  processar: (respostas) => apiRequest('/api/aluno/diagnostico/processar', {
     method: 'POST',
-    body: { exercicioId, resposta }
-  }),
-  concluirAula: (aulaId) => apiRequest('/api/aula/concluir', {
-    method: 'POST',
-    body: { aulaId }
+    body: { respostas }
   })
 };
 
-export const redacaoApi = {
-  enviar: (tema, texto) => apiRequest('/api/redacao/enviar', {
-    method: 'POST',
-    body: { tema, texto }
-  }),
-  historico: () => apiRequest('/api/redacao/historico')
+export const alunoApi = {
+  obterDashboard: (alunoId) => apiRequest(`/api/dashboard/${encodeURIComponent(alunoId)}`),
+  materias: () => apiRequest('/api/materias'),
+  aulas: (materiaId) => apiRequest(`/api/aulas${materiaId ? `?materia=${materiaId}` : ''}`),
+  exercicios: (materiaId) => apiRequest(`/api/exercicios${materiaId ? `?materia=${materiaId}` : ''}`)
 };
+
+export const redacaoApi = {
+  obterTemas: () => apiRequest('/api/aluno/redacoes/temas'),
+  obterRedacoes: () => apiRequest('/api/aluno/redacoes'),
+  enviar: (dados) => apiRequest('/api/aluno/redacoes', {
+    method: 'POST',
+    body: dados
+  })
+};
+
