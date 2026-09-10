@@ -37,4 +37,30 @@ window.addEventListener('DOMContentLoaded', () => {
   if (session && session.tipo !== 'professor' && !hasDiagnostic && needsDiagnostic.includes(path)) {
     window.location.href = '/pages/diagnostico.html';
   }
+
+  // Interatividade do Menu Mobile (Drawer)
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
 });
+
