@@ -1,4 +1,4 @@
-const app = require("../src/app");
+const app = require("../server/app");
 
 function collectBody(req) {
     return new Promise(resolve => {

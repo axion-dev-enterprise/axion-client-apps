@@ -5,15 +5,10 @@
   "trailingSlash": false,
   "buildCommand": "vite build",
   "outputDirectory": "dist",
-  "redirects": [
-    { "source": "/pages/:page(.html)?", "destination": "/:page", "permanent": true },
-    { "source": "/professor/index(.html)?", "destination": "/professor", "permanent": true },
-    { "source": "/professor/:page.html", "destination": "/professor/:page", "permanent": true },
-    { "source": "/:page.html", "destination": "/:page", "permanent": true }
-  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
     { "source": "/aluno", "destination": "/home" },
-    { "source": "/cadastro", "destination": "/registro" }
+    { "source": "/cadastro", "destination": "/registro" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
