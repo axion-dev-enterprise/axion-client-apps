@@ -15,6 +15,42 @@
   margin-top: 1.5rem;
 }
 
+.simulado-study-shell {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.simulado-study-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1.5rem;
+}
+
+.simulado-study-main {
+  min-width: 0;
+}
+
+.simulado-study-header {
+  margin-bottom: 1rem;
+}
+
+.simulado-study-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(1.45rem, 2.5vw, 2.2rem);
+}
+
+.simulado-study-header .study-header-meta {
+  margin-top: 1rem;
+}
+
+.simulado-study-sidebar {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
 .hidden {
   display: none !important;
 }
@@ -90,6 +126,14 @@
   gap: 1rem;
 }
 
+.simulado-question-panel {
+  margin: 0;
+}
+
+.simulado-question-panel .study-question-copy h3 {
+  white-space: pre-line;
+}
+
 .question-text {
   font-size: 1.2rem;
   font-weight: 700;
@@ -114,6 +158,19 @@
   text-align: left;
   cursor: pointer;
   font: inherit;
+}
+
+.question-option span {
+  line-height: 1.5;
+}
+
+.simulado-timer-metric strong {
+  color: #7c3aed;
+  font-variant-numeric: tabular-nums;
+}
+
+.simulado-timer-metric strong.is-expired {
+  color: #dc2626;
 }
 
 .question-option.selected {
@@ -151,6 +208,14 @@
 }
 
 @media (max-width: 720px) {
+  .simulado-study-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .simulado-study-sidebar {
+    position: static;
+  }
+
   .simulado-controls {
     flex-direction: column-reverse;
   }

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar conteúdo — Português</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class="professor-brand" href="/professor/index.html">
+        <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;">
+        <div class="professor-brand-text"><span>Gramaticalizando</span><small>Painel do professor</small></div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class="professor-nav-item" data-nav-item="dashboard" href="/professor/index.html"><span class="professor-nav-icon">🏠</span>Painel</a>
+        <a class="professor-nav-item" data-nav-item="students" href="/professor/alunos.html"><span class="professor-nav-icon">👥</span>Alunos</a>
+        <a class="professor-nav-item" data-nav-item="essays" href="/professor/redacoes.html"><span class="professor-nav-icon">📝</span>Redações</a>
+        <a class="professor-nav-item active" data-nav-item="portugues" href="/professor/portugues.html"><span class="professor-nav-icon">📖</span>Português</a>
+        <a class="professor-nav-item" data-nav-item="diagnostics" href="/professor/diagnosticos.html"><span class="professor-nav-icon">📊</span>Diagnósticos</a>
+        <a class="professor-nav-item" data-nav-item="corrections" href="/professor/correcoes.html"><span class="professor-nav-icon">✏️</span>Correções</a>
+        <a class="professor-nav-item" data-nav-item="videoaulas" href="/professor/videoaulas.html"><span class="professor-nav-icon">🎥</span>Videoaulas</a>
+        <a class="professor-nav-item" data-nav-item="simulados" href="/professor/simulados.html"><span class="professor-nav-icon">🧾</span>Simulados</a>
+        <a class="professor-nav-item" data-nav-item="materiais" href="/professor/materiais.html"><span class="professor-nav-icon">📚</span>Material</a>
+        <a class="professor-nav-item" data-nav-item="cronograma" href="/professor/cronograma.html"><span class="professor-nav-icon">📅</span>Cronograma</a>
+      </nav>
+      <div class="professor-sidebar-footer"><button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button></div>
+    </aside>
+
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting"><h1 id="pageTitle">Novo conteúdo</h1><p>Monte uma aula organizada para os alunos de Português.</p></div>
+      </header>
+
+      <section class="professor-content">
+        <div class="page-heading">
+          <div><h1>Conteúdo de Português</h1><p>Preencha os dados e organize os blocos na ordem em que serão apresentados.</p></div>
+          <div class="page-actions"><a class="btn btn-secondary" href="./portugues.html">Voltar</a></div>
+        </div>
+
+        <form id="contentForm" class="wizard-grid" novalidate>
+          <div class="wizard-panel">
+            <article class="wizard-card">
+              <div class="wizard-card-header"><div><h2>Identificação</h2><p>Defina o tema e o público desta aula.</p></div></div>
+              <div class="block-setup-grid">
+                <div class="input-group"><label for="contentTitle">Título *</label><input id="contentTitle" name="titulo" type="text" required maxlength="120" placeholder="Ex.: Concordância verbal"></div>
+                <div class="input-group"><label for="contentTheme">Tema *</label><input id="contentTheme" name="tema" type="text" required maxlength="80" placeholder="Ex.: Gramática"></div>
+                <div class="input-group"><label for="contentType">Tipo *</label><select id="contentType" name="tipo"><option value="aula" selected>Aula</option><option value="exercicio">Exercício</option><option value="material">Material</option></select></div>
+                <div class="input-group"><label for="contentLevel">Nível</label><select id="contentLevel" name="nivel"><option value="Fundamental">Fundamental</option><option value="Médio" selected>Médio</option><option value="ENEM">ENEM</option><option value="Revisão">Revisão</option></select></div>
+                <div class="input-group"><label for="contentDescription">Descrição curta</label><textarea id="contentDescription" name="descricao" rows="3" maxlength="240" placeholder="Explique o que o aluno aprenderá."></textarea></div>
+              </div>
+            </article>
+
+            <article class="wizard-card block-editor-card">
+              <div class="block-editor-header"><div><h2>Blocos da aula</h2><p>Combine explicações, vídeos, links e PDFs em uma sequência.</p></div><button id="addBlockBtn" class="btn btn-secondary" type="button">+ Adicionar bloco</button></div>
+              <div id="blocksList" class="block-fields-panel"></div>
+              <div id="emptyBlocks" class="message-box">Ainda não há blocos. Adicione pelo menos um bloco para salvar o conteúdo.</div>
+            </article>
+
+            <div class="wizard-footer"><a class="btn btn-secondary" href="./portugues.html">Cancelar</a><div class="wizard-form-actions"><button class="btn btn-secondary" type="submit" name="status" value="rascunho">Salvar rascunho</button><button class="btn btn-primary" type="submit" name="status" value="publicado">Publicar conteúdo</button></div></div>
+          </div>
+
+          <aside class="wizard-summary">
+            <article class="summary-card"><div class="summary-card-header"><h2>Resumo</h2><span id="summaryStatus" class="status-chip">Rascunho</span></div><dl class="summary-details"><div><dt>Título</dt><dd id="summaryTitle">Sem título</dd></div><div><dt>Tema</dt><dd id="summaryTheme">Sem tema</dd></div><div><dt>Blocos</dt><dd id="summaryBlocks">0</dd></div></dl></article>
+            <article class="summary-card"><h3>Tipos disponíveis</h3><ul class="review-options"><li>Texto para explicações e exemplos.</li><li>Vídeo, PDF ou link externo.</li><li>Os alunos verão apenas conteúdos publicados.</li></ul></article>
+          </aside>
+        </form>
+      </section>
+    </main>
+  </div>
+  <script type="module" src="../assets/js/professor/base.js"></script>
+  <script type="module" src="../assets/js/professor/portugues-criar.js"></script>
+</body>
+</html>

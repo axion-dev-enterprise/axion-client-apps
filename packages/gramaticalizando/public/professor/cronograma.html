@@ -10,138 +10,102 @@
 <body class="professor-shell">
   <div class="professor-layout">
     <aside class="professor-sidebar" data-mobile-menu>
-      <a class='professor-brand' href='/professor/index.html'>
-        <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;" />
-        <div class="professor-brand-text">
-          <span>Gramaticalizando</span>
-          <small>Painel do professor</small>
-        </div>
-      </a>
+      <a class="professor-brand" href="/professor/index.html"><img src="/assets/img/logo-icon.png" alt="Gramaticalizando" style="height:36px;width:36px;object-fit:contain;border-radius:8px;margin-right:8px"><div class="professor-brand-text"><span>Gramaticalizando</span><small>Painel do professor</small></div></a>
       <nav class="professor-sidebar-nav">
-        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
-          <span class="professor-nav-icon">🏠</span>
-          Painel
-        </a>
-        <a class='professor-nav-item' data-nav-item='students' href='/professor/alunos.html'>
-          <span class="professor-nav-icon">👥</span>
-          Alunos
-        </a>
-        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
-          <span class="professor-nav-icon">📝</span>
-          Redações
-        </a>
-        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
-          <span class="professor-nav-icon">📖</span>
-          Português
-        </a>
-        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
-          <span class="professor-nav-icon">📊</span>
-          Diagnósticos
-        </a>
-        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
-          <span class="professor-nav-icon">✏️</span>
-          Correções
-        </a>
-        <a class='professor-nav-item' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
-          <span class="professor-nav-icon">🎥</span>
-          Videoaulas
-        </a>
-        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
-          <span class="professor-nav-icon">🧾</span>
-          Simulados
-        </a>
-        <a class='professor-nav-item' data-nav-item='materiais' href='/professor/materiais.html'>
-          <span class="professor-nav-icon">📚</span>
-          Material
-        </a>
-        <a class='professor-nav-item active' data-nav-item='cronograma' href='/professor/cronograma.html'>
-          <span class="professor-nav-icon">📅</span>
-          Cronograma
-        </a>
-        <a class='professor-nav-item' data-nav-item='profile' href='/professor/perfil.html'>
-          <span class="professor-nav-icon">👤</span>
-          Meu perfil
-        </a>
-        <a class='professor-nav-item' data-nav-item='settings' href='/professor/configuracoes.html'>
-          <span class="professor-nav-icon">⚙️</span>
-          Configurações
-        </a>
+        <a class="professor-nav-item" href="/professor/index.html"><span class="professor-nav-icon">🏠</span>Painel</a>
+        <a class="professor-nav-item" href="/professor/alunos.html"><span class="professor-nav-icon">👥</span>Alunos</a>
+        <a class="professor-nav-item" href="/professor/redacoes.html"><span class="professor-nav-icon">📝</span>Redações</a>
+        <a class="professor-nav-item" href="/professor/portugues.html"><span class="professor-nav-icon">📖</span>Português</a>
+        <a class="professor-nav-item" href="/professor/diagnosticos.html"><span class="professor-nav-icon">📊</span>Diagnósticos</a>
+        <a class="professor-nav-item" href="/professor/correcoes.html"><span class="professor-nav-icon">✏️</span>Correções</a>
+        <a class="professor-nav-item" href="/professor/videoaulas.html"><span class="professor-nav-icon">🎥</span>Videoaulas</a>
+        <a class="professor-nav-item" href="/professor/simulados.html"><span class="professor-nav-icon">🧾</span>Simulados</a>
+        <a class="professor-nav-item" href="/professor/materiais.html"><span class="professor-nav-icon">📚</span>Material</a>
+        <a class="professor-nav-item active" href="/professor/cronograma.html"><span class="professor-nav-icon">📅</span>Cronograma</a>
       </nav>
-      <div class="professor-sidebar-footer">
-        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
-      </div>
+      <div class="professor-sidebar-footer"><button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button></div>
     </aside>
     <main class="professor-main">
       <header class="professor-topbar">
         <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
         <div class="professor-greeting">
+          <p class="professor-breadcrumb">Painel / Cronograma</p>
           <h1>Cronograma</h1>
-          <p>Planeje trilhas de estudo e cronogramas personalizados.</p>
+          <p>Monte uma trilha completa de estudos para seus alunos.</p>
+        </div>
+        <div class="professor-topbar-tools">
+          <button class="icon-action" type="button" aria-label="Notificações">🔔</button>
+          <div class="professor-profile-pill">
+            <span class="professor-profile-avatar">P</span>
+            <div>
+              <strong>Professor</strong>
+              <small>Online</small>
+            </div>
+          </div>
         </div>
       </header>
+
       <section class="professor-content">
-        <div class="page-heading">
+        <div class="students-summary-grid">
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Cronogramas</span>
+              <span class="summary-trend positive">Total</span>
+            </div>
+            <strong id="summaryPlansTotal">0</strong>
+            <span>Planos de estudo</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Etapas</span>
+              <span class="summary-trend positive">Ativas</span>
+            </div>
+            <strong id="summaryStagesTotal">0</strong>
+            <span>Etapas criadas</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Alunos</span>
+              <span class="summary-trend warning">Acompanhados</span>
+            </div>
+            <strong id="summaryStudentsTracked">0</strong>
+            <span>Em acompanhamento</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Conclusão</span>
+              <span class="summary-trend neutral">Progresso</span>
+            </div>
+            <strong id="summaryProgressAverage">0%</strong>
+            <span>Progresso médio</span>
+          </article>
+        </div>
+
+        <div class="page-heading" style="margin-top: 1.5rem;">
           <div>
-            <h1>Cronograma</h1>
-            <p>Crie e ajuste cronogramas semanais para os seus alunos.</p>
+            <h1>Plano de estudos</h1>
+            <p>Exemplo: prepare uma turma para a UERJ com matérias, aulas, materiais e etapas concluíveis.</p>
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; margin-top: 1.5rem;">
-          <article class="panel-card">
-            <h3>Adicionar Bloco ao Cronograma</h3>
-            <p style="font-size: 0.85rem; color: #6b607d; margin-bottom: 1rem;">Disponibilize atividades recomendadas aos alunos.</p>
-            <form id="formAddSchedule" style="display: flex; flex-direction: column; gap: 0.85rem;">
-              <div>
-                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Dia da Semana</label>
-                <select id="schDia" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;">
-                  <option value="Segunda-feira">Segunda-feira</option>
-                  <option value="Terça-feira">Terça-feira</option>
-                  <option value="Quarta-feira">Quarta-feira</option>
-                  <option value="Quinta-feira">Quinta-feira</option>
-                  <option value="Sexta-feira">Sexta-feira</option>
-                  <option value="Sábado">Sábado</option>
-                </select>
-              </div>
-              <div>
-                <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Tema / Assunto</label>
-                <input type="text" id="schTema" required placeholder="Ex: Crase e Regência Verbal" style="width: 100%; box-sizing: border-box; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;" />
-              </div>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <div>
-                  <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Tipo</label>
-                  <select id="schTipo" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;">
-                    <option value="Gramática">Gramática</option>
-                    <option value="Redação">Redação</option>
-                    <option value="Simulado">Simulado</option>
-                    <option value="Revisão">Revisão</option>
-                  </select>
-                </div>
-                <div>
-                  <label style="display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 4px;">Duração</label>
-                  <input type="text" id="schDuracao" value="50 min" required style="width: 100%; box-sizing: border-box; padding: 0.65rem; border-radius: 8px; border: 1px solid #dcd7e8; font-family: inherit;" />
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary" style="background: #7c3aed; color: #fff; margin-top: 0.5rem; padding: 0.7rem; border-radius: 8px; border: none; font-weight: 700; cursor: pointer;">
-                + Publicar no Cronograma
-              </button>
-            </form>
-          </article>
-
-          <section class="activities-card">
-            <div class="activities-header">
-              <div>
-                <h2>Blocos Ativos no Cronograma</h2>
-                <p>Grade semanal visualizada por todos os alunos matriculados.</p>
-              </div>
-            </div>
-            <div id="professorScheduleList" class="activities-list"></div>
-          </section>
-        </div>
+        <form id="planForm" class="wizard-grid" novalidate>
+          <div class="wizard-panel">
+            <article class="wizard-card"><div class="wizard-card-header"><div><h2>Dados do cronograma</h2><p>Defina o objetivo e o período do plano.</p></div></div><div class="block-setup-grid">
+              <div class="input-group"><label for="planName">Nome do cronograma *</label><input id="planName" name="nome" required maxlength="120" placeholder="Ex.: Preparação UERJ 2027"></div>
+              <div class="input-group"><label for="planTitle">Título do cronograma *</label><input id="planTitle" name="titulo" required maxlength="160" placeholder="Ex.: Trilha completa de Português"></div>
+              <div class="input-group"><label for="planObjective">Objetivo</label><input id="planObjective" name="objetivo" maxlength="180" placeholder="Ex.: 1ª fase, Linguagens e Redação"></div>
+              <div class="input-group"><label for="planStart">Começa em *</label><input id="planStart" name="inicio" type="date" required></div>
+              <div class="input-group"><label for="planEnd">Termina em *</label><input id="planEnd" name="fim" type="date" required></div>
+            </div></article>
+            <article class="wizard-card block-editor-card"><div class="block-editor-header"><div><h2>Blocos do cronograma</h2><p>Adicione questões, PDFs, materiais, links, imagens e videoaulas.</p></div><button id="addStageBtn" class="btn btn-secondary" type="button">+ Adicionar bloco</button></div><div id="stagesList" class="block-fields-panel"></div><div id="emptyStages" class="message-box">Adicione os blocos que o aluno deverá cumprir.</div></article>
+            <div class="wizard-footer"><button class="btn btn-primary" type="submit">Salvar cronograma</button></div>
+          </div>
+          <aside class="wizard-summary"><article class="summary-card"><div class="summary-card-header"><h2>Resumo</h2><span class="status-chip concluido">Ativo</span></div><dl class="summary-details"><div><dt>Nome</dt><dd id="summaryName">Sem nome</dd></div><div><dt>Título</dt><dd id="summaryTitle">Sem título</dd></div><div><dt>Blocos</dt><dd id="summaryStages">0</dd></div></dl></article></aside>
+        </form>
       </section>
     </main>
   </div>
-
+  <script type="module" src="../assets/js/professor/base.js"></script>
   <script type="module" src="../assets/js/professor/cronograma.js"></script>
 </body>
 </html>

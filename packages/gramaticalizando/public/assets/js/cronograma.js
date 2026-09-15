@@ -1,129 +1,39 @@
 import { initPage } from './page-base.js';
-import { getSchedule, toggleScheduleItem, createScheduleItem, deleteScheduleItem } from './storage.js';
+import { getStudyPlan, toggleStudyStage } from './storage.js';
 
 initPage();
+const list = document.getElementById('scheduleList');
+const escapeHtml = (value = '') => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+const formatDate = (value) => { if (!value) return 'Data não definida'; return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(`${value}T00:00:00`)); };
+const resourceButton = (stage) => {
+  const link = String(stage.recursoLink || '').trim();
+  const type = stage.recursoTipo === 'Questão' ? 'PDF' : (stage.recursoTipo || 'Recurso');
+  const name = stage.recursoNome || type;
+  if (!link) return `<span class="schedule-resource-missing">${escapeHtml(type)} sem endereço</span>`;
+  if (type === 'Imagem' && /^(data:image\/|https?:\/\/)/i.test(link)) return `<a class="schedule-resource-button" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">Ver imagem</a>`;
+  if (!/^https?:\/\//i.test(link) && !/^data:application\/pdf/i.test(link)) return `<span class="schedule-resource-missing">Endereço inválido</span>`;
+  const labels = { PDF: 'Abrir PDF', Link: 'Abrir link', Videoaula: 'Assistir videoaula' };
+  return `<a class="schedule-resource-button" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${labels[type] || `Abrir ${escapeHtml(name)}`}</a>`;
+};
 
-const scheduleListEl = document.getElementById('scheduleList');
-const progressBarEl = document.getElementById('scheduleProgressBar');
-const progressTextEl = document.getElementById('scheduleProgressText');
-const btnNovaMeta = document.getElementById('btnNovaMeta');
-const metaModal = document.getElementById('metaModal');
-const btnCancelarMeta = document.getElementById('btnCancelarMeta');
-const formNovaMeta = document.getElementById('formNovaMeta');
+const questionMarkup = (stage) => {
+  if (stage.recursoTipo !== 'Questão' || !stage.questao?.enunciado) return '';
+  return `<div class="schedule-question"><strong>Questão</strong><p>${escapeHtml(stage.questao.enunciado)}</p><ol>${(stage.questao.alternativas || []).map((option) => `<li>${escapeHtml(option)}</li>`).join('')}</ol></div>`;
+};
 
-function renderSchedule() {
-  const items = getSchedule();
-  if (!scheduleListEl) return;
+const render = () => {
+  const plan = getStudyPlan();
+  const stages = Array.isArray(plan.etapas) ? plan.etapas : [];
+  const completed = stages.filter((stage) => stage.concluido).length;
+  document.getElementById('planTitle').textContent = plan.nome || 'Meu plano de estudos';
+  document.getElementById('planObjective').textContent = plan.objetivo || 'Acompanhe suas etapas e marque cada estudo concluído.';
+  document.getElementById('planPeriod').textContent = plan.inicio && plan.fim ? `${formatDate(plan.inicio)} até ${formatDate(plan.fim)}` : 'Não definido';
+  document.getElementById('planProgressText').textContent = `${completed} de ${stages.length} etapas concluídas`;
+  document.getElementById('stageCount').textContent = String(stages.length);
+  document.getElementById('planProgressBar').style.width = `${stages.length ? Math.round((completed / stages.length) * 100) : 0}%`;
+  if (!stages.length) { list.innerHTML = '<div class="schedule-empty"><strong>Nenhum cronograma publicado ainda.</strong><p>Quando o professor criar um plano, suas etapas aparecerão aqui.</p></div>'; return; }
+  list.innerHTML = stages.map((stage, index) => `<article class="schedule-stage ${stage.concluido ? 'is-complete' : ''}"><label class="schedule-stage-check"><input type="checkbox" data-stage-id="${escapeHtml(stage.id)}" ${stage.concluido ? 'checked' : ''}><span aria-hidden="true"></span></label><div class="schedule-stage-body"><div class="schedule-stage-top"><span class="schedule-stage-number">Etapa ${index + 1}</span><span class="schedule-stage-matter">${escapeHtml(stage.materia || 'Estudo')}</span>${stage.data ? `<time datetime="${escapeHtml(stage.data)}">${formatDate(stage.data)}</time>` : ''}</div><h3>${escapeHtml(stage.titulo || 'Etapa de estudo')}</h3>${stage.descricao ? `<p>${escapeHtml(stage.descricao)}</p>` : ''}${questionMarkup(stage)}<div class="schedule-stage-meta">${stage.recursoTipo && stage.recursoTipo !== 'Questão' ? `<span>📎 ${escapeHtml(stage.recursoTipo)}${stage.recursoNome ? `: ${escapeHtml(stage.recursoNome)}` : ''}</span>` : ''}${stage.recursoTipo !== 'Questão' ? resourceButton(stage) : ''}</div></div><strong class="schedule-stage-status">${stage.concluido ? 'Feito' : 'Marcar como feito'}</strong></article>`).join('');
+};
 
-  if (items.length === 0) {
-    scheduleListEl.innerHTML = `
-      <div style="text-align: center; padding: 2rem; color: #6b607d;">
-        <p>Nenhuma meta cadastrada no cronograma.</p>
-      </div>
-    `;
-    updateProgress(0, 0);
-    return;
-  }
-
-  const completedCount = items.filter(i => i.concluido).length;
-  updateProgress(completedCount, items.length);
-
-  scheduleListEl.innerHTML = items.map(item => `
-    <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; background: ${item.concluido ? '#faf8ff' : '#ffffff'}; border: 1px solid ${item.concluido ? 'rgba(124, 58, 237, 0.2)' : 'rgba(0,0,0,0.06)'}; border-radius: 0.85rem; transition: all 0.2s ease;">
-      <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
-        <input 
-          type="checkbox" 
-          id="chk-${item.id}" 
-          data-id="${item.id}" 
-          class="schedule-chk"
-          ${item.concluido ? 'checked' : ''} 
-          style="width: 20px; height: 20px; cursor: pointer; accent-color: #7c3aed;" 
-        />
-        <div style="flex: 1;">
-          <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-            <span style="font-size: 0.8rem; font-weight: 700; color: #7c3aed; background: #f3f0ff; padding: 2px 8px; border-radius: 6px;">${item.dia}</span>
-            <span style="font-size: 0.75rem; color: #6b607d; background: #f4f4f5; padding: 2px 6px; border-radius: 4px;">${item.tipo}</span>
-            <span style="font-size: 0.75rem; color: #a1a1aa;">⏱️ ${item.duracao}</span>
-          </div>
-          <p style="margin: 0.35rem 0 0; font-size: 0.95rem; font-weight: 600; color: ${item.concluido ? '#8e84a8' : '#1f1630'}; text-decoration: ${item.concluido ? 'line-through' : 'none'};">
-            ${item.tema}
-          </p>
-        </div>
-      </div>
-      <button 
-        data-del-id="${item.id}" 
-        class="schedule-del-btn"
-        title="Remover meta"
-        style="background: transparent; border: none; color: #a1a1aa; cursor: pointer; font-size: 1.1rem; padding: 4px 8px; border-radius: 6px; transition: color 0.15s ease;"
-      >
-        ✕
-      </button>
-    </div>
-  `).join('');
-
-  // Listeners para checkboxes
-  scheduleListEl.querySelectorAll('.schedule-chk').forEach(chk => {
-    chk.addEventListener('change', (e) => {
-      const id = e.target.getAttribute('data-id');
-      toggleScheduleItem(id);
-      renderSchedule();
-    });
-  });
-
-  // Listeners para deletar
-  scheduleListEl.querySelectorAll('.schedule-del-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = e.currentTarget.getAttribute('data-del-id');
-      deleteScheduleItem(id);
-      renderSchedule();
-    });
-  });
-}
-
-function updateProgress(completed, total) {
-  if (!progressBarEl || !progressTextEl) return;
-  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-  progressBarEl.style.width = `${pct}%`;
-  progressTextEl.textContent = `${completed} de ${total} atividades concluídas (${pct}%)`;
-}
-
-// Modal logic
-if (btnNovaMeta && metaModal) {
-  btnNovaMeta.addEventListener('click', () => {
-    metaModal.style.display = 'flex';
-  });
-}
-
-if (btnCancelarMeta && metaModal) {
-  btnCancelarMeta.addEventListener('click', () => {
-    metaModal.style.display = 'none';
-  });
-}
-
-if (formNovaMeta) {
-  formNovaMeta.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const dia = document.getElementById('metaDia').value;
-    const tema = document.getElementById('metaTema').value.trim();
-    const tipo = document.getElementById('metaTipo').value;
-    const duracao = document.getElementById('metaDuracao').value.trim();
-
-    if (!tema) return;
-
-    createScheduleItem({
-      id: 'sch-' + Date.now(),
-      dia,
-      tema,
-      tipo,
-      duracao: duracao || '50 min',
-      concluido: false
-    });
-
-    formNovaMeta.reset();
-    metaModal.style.display = 'none';
-    renderSchedule();
-  });
-}
-
-document.addEventListener('DOMContentLoaded', renderSchedule);
-renderSchedule();
+list.addEventListener('change', (event) => { const checkbox = event.target.closest('[data-stage-id]'); if (!checkbox) return; toggleStudyStage(checkbox.dataset.stageId); render(); });
+render();

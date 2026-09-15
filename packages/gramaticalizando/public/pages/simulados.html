@@ -4,8 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simulados — Gramaticalizando</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/home.css">
   <link rel="stylesheet" href="../assets/css/simulados.css">
+  <link rel="stylesheet" href="../assets/css/redacao.css">
 </head>
 <body class="dashboard-shell">
   <header class="dashboard-topbar">
@@ -27,8 +32,6 @@
         <a class='active' href='/pages/simulados.html'>Simulados</a>
         <a href='/pages/materiais.html'>Material</a>
         <a href='/pages/cronograma.html'>Cronograma</a>
-        <a href='/pages/perfil.html'>Perfil</a>
-        <a href='/pages/configuracoes.html'>Configurações</a>
       </nav>
 
       <div class="dashboard-user">
@@ -37,8 +40,6 @@
           <span>Meu perfil</span>
         </button>
         <div class="user-menu" data-profile-menu>
-          <a href='/pages/perfil.html'>Meu Perfil</a>
-          <a href='/pages/configuracoes.html'>Configurações</a>
           <a href='/pages/login.html'>Sair</a>
         </div>
       </div>
@@ -46,32 +47,105 @@
   </header>
 
   <main class="dashboard-main">
-    <section class="page-section">
+    <section class="dashboard-hero redacao-hero">
       <div class="welcome-panel">
-        <div class="dashboard-title">Simulados</div>
+        <p class="dashboard-title">SIMULADOS</p>
         <h1>Tire o pulso do seu desempenho com simulados inteligentes.</h1>
-        <p>Faça provas completas, acompanhe resultados e compare sua evolução com o ranking.</p>
+        <p>Faça provas completas, acompanhe resultados e acompanhe sua evolução.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#simuladosList">Fazer simulados</a>
+          <a class="btn btn-secondary" href="#simuladoResults">Ver resultados</a>
+        </div>
       </div>
 
-      <div class="dashboard-grid">
-        <article class="dashboard-card">
-          <div class="dashboard-card-icon">📋</div>
+      <div class="welcome-illustration redacao-hero-visual">
+        <div class="hero-photo-frame">
+          <img src="/assets/img/home.png" alt="Pessoa estudando" class="welcome-illustration-image" />
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section redacao-start-section">
+      <h2>Começar a praticar</h2>
+      <p>Escolha como você quer testar seus conhecimentos hoje.</p>
+
+      <div class="redacao-start-grid">
+        <article class="redacao-option-card">
+          <div class="redacao-option-icon">📋</div>
           <h3>Fazer simulados</h3>
           <p>Inicie uma prova para avaliar seu nível atual.</p>
+          <span class="redacao-arrow">›</span>
         </article>
-        <article class="dashboard-card">
-          <div class="dashboard-card-icon">📊</div>
+
+        <article class="redacao-option-card">
+          <div class="redacao-option-icon">📊</div>
           <h3>Ver resultados</h3>
           <p>Veja seu desempenho por assunto e pontos fortes.</p>
+          <span class="redacao-arrow">›</span>
         </article>
-        <article class="dashboard-card">
-          <div class="dashboard-card-icon">🏅</div>
-          <h3>Ranking</h3>
-          <p>Compare sua posição com outros alunos da plataforma.</p>
-        </article>
+
+      </div>
+    </section>
+
+    <section class="page-section redacao-progress-section">
+      <div class="section-heading">
+        <div>
+          <p class="dashboard-title">Seu progresso</p>
+          <h2>Acompanhe seu desempenho</h2>
+        </div>
+        <a href="#" class="section-link">Ver detalhes</a>
       </div>
 
-      <div class="panel-card">
+      <div class="progress-grid">
+        <article class="progress-stat">
+          <div class="progress-icon pink">0</div>
+          <div class="progress-copy">
+            <h3>Simulados feitos</h3>
+            <p>Continue praticando</p>
+          </div>
+        </article>
+
+        <article class="progress-stat">
+          <div class="progress-icon purple">—</div>
+          <div class="progress-copy">
+            <h3>Nota média</h3>
+            <p>Ainda sem avaliações</p>
+          </div>
+        </article>
+
+        <article class="progress-stat">
+          <div class="progress-icon green">0</div>
+          <div class="progress-copy">
+            <h3>Acertos</h3>
+            <p>Em breve você verá</p>
+          </div>
+        </article>
+
+        <article class="progress-stat">
+          <div class="progress-icon orange">0 dias</div>
+          <div class="progress-copy">
+            <h3>Sequência</h3>
+            <p>sua rotina de estudos</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page-section redacao-history-section">
+      <div class="section-heading history-header">
+        <div>
+          <p class="dashboard-title">Simulados disponíveis</p>
+          <h2>Teste seu conhecimento</h2>
+        </div>
+
+        <div class="essay-tabs" aria-label="Filtros de simulados">
+          <button type="button" class="essay-tab is-active">Todos</button>
+          <button type="button" class="essay-tab">Recentes</button>
+          <button type="button" class="essay-tab">Revisão</button>
+        </div>
+      </div>
+
+      <div class="panel-card" style="margin-top:1rem;">
         <div class="panel-header">
           <h2>Simulados disponíveis</h2>
           <span id="simuladoCountBadge" class="status-badge">0</span>
@@ -79,19 +153,7 @@
         <div id="simuladosList" class="simulado-list"></div>
       </div>
 
-      <div id="simuladoQuiz" class="panel-card hidden">
-        <div class="panel-header quiz-header">
-          <h2 id="simuladoQuizTitle">Simulado</h2>
-          <span id="simuladoProgress" class="status-badge">1/1</span>
-        </div>
-        <div id="simuladoQuestion" class="simulado-question"></div>
-        <div class="simulado-controls">
-          <button id="prevQuestionBtn" type="button" class="btn btn-secondary">Anterior</button>
-          <button id="nextQuestionBtn" type="button" class="btn btn-primary">Próxima</button>
-        </div>
-      </div>
-
-      <div id="simuladoResults" class="panel-card hidden">
+      <div id="simuladoResults" class="panel-card hidden" style="margin-top:1rem;">
         <div class="panel-header">
           <h2>Resultado do simulado</h2>
         </div>

@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professor — Planos</title>
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/professor.css">
+</head>
+<body class="professor-shell">
+  <div class="professor-layout">
+    <aside class="professor-sidebar" data-mobile-menu>
+      <a class='professor-brand' href='/professor/index.html'>
+        <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;" />
+        <div class="professor-brand-text">
+          <span>Gramaticalizando</span>
+          <small>Painel do professor</small>
+        </div>
+      </a>
+      <nav class="professor-sidebar-nav">
+        <a class='professor-nav-item' data-nav-item='dashboard' href='/professor/index.html'>
+          <span class="professor-nav-icon">🏠</span>
+          Painel
+        </a>
+        <a class='professor-nav-item' data-nav-item='students' href='/professor/alunos.html'>
+          <span class="professor-nav-icon">👥</span>
+          Alunos
+        </a>
+        <a class='professor-nav-item' data-nav-item='essays' href='/professor/redacoes.html'>
+          <span class="professor-nav-icon">📝</span>
+          Redações
+        </a>
+        <a class='professor-nav-item' data-nav-item='portugues' href='/professor/portugues.html'>
+          <span class="professor-nav-icon">📖</span>
+          Português
+        </a>
+        <a class='professor-nav-item' data-nav-item='diagnostics' href='/professor/diagnosticos.html'>
+          <span class="professor-nav-icon">📊</span>
+          Diagnósticos
+        </a>
+        <a class='professor-nav-item' data-nav-item='corrections' href='/professor/correcoes.html'>
+          <span class="professor-nav-icon">✏️</span>
+          Correções
+        </a>
+        <a class='professor-nav-item' data-nav-item='videoaulas' href='/professor/videoaulas.html'>
+          <span class="professor-nav-icon">🎥</span>
+          Videoaulas
+        </a>
+        <a class='professor-nav-item' data-nav-item='simulados' href='/professor/simulados.html'>
+          <span class="professor-nav-icon">🧾</span>
+          Simulados
+        </a>
+        <a class='professor-nav-item' data-nav-item='materiais' href='/professor/materiais.html'>
+          <span class="professor-nav-icon">📚</span>
+          Material
+        </a>
+        <a class='professor-nav-item' data-nav-item='cronograma' href='/professor/cronograma.html'>
+          <span class="professor-nav-icon">📅</span>
+          Cronograma
+        </a>
+        <a class='professor-nav-item active' data-nav-item='planos' href='/professor/planos.html'>
+          <span class="professor-nav-icon">🧩</span>
+          Planos
+        </a>
+      </nav>
+      <div class="professor-sidebar-footer">
+        <button id="logoutBtn" class="btn btn-secondary" type="button">Sair</button>
+      </div>
+    </aside>
+
+    <main class="professor-main">
+      <header class="professor-topbar">
+        <button class="professor-menu-toggle" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+        <div class="professor-greeting">
+          <p class="professor-breadcrumb">Painel / Planos</p>
+          <h1>Planos</h1>
+          <p>Crie, edite e gerencie os acessos dos alunos por plano.</p>
+        </div>
+        <div class="professor-topbar-tools">
+          <label class="topbar-search" aria-label="Buscar plano">
+            <span>⌕</span>
+            <input id="planSearch" type="search" placeholder="Buscar plano..." />
+          </label>
+          <div class="professor-profile-pill">
+            <span class="professor-profile-avatar">P</span>
+            <div>
+              <strong>Professor</strong>
+              <small>Online</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="professor-content">
+        <div class="students-summary-grid">
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Total</span>
+              <span class="summary-trend positive">Geral</span>
+            </div>
+            <strong id="summaryTotalPlans">0</strong>
+            <span>Planos cadastrados</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Ativos</span>
+              <span class="summary-trend positive">+0%</span>
+            </div>
+            <strong id="summaryActivePlans">0</strong>
+            <span>Planos em vigor</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Inativos</span>
+              <span class="summary-trend warning">-0%</span>
+            </div>
+            <strong id="summaryInactivePlans">0</strong>
+            <span>Planos pausados</span>
+          </article>
+          <article class="summary-card students-summary-card">
+            <div class="summary-card-top">
+              <span class="summary-label">Alunos</span>
+              <span class="summary-trend neutral">Cobertura</span>
+            </div>
+            <strong id="summaryAssignedPlans">0</strong>
+            <span>Com plano vinculado</span>
+          </article>
+        </div>
+
+        <div class="students-toolbar">
+          <div class="filter-group" role="tablist" aria-label="Filtros de planos">
+            <button type="button" class="filter-pill active" data-filter="all">Todos</button>
+            <button type="button" class="filter-pill" data-filter="active">Ativos</button>
+            <button type="button" class="filter-pill" data-filter="inactive">Inativos</button>
+          </div>
+          <div class="students-toolbar-actions">
+            <button id="openCreatePlanBtn" type="button" class="btn btn-primary">+ Criar plano</button>
+          </div>
+        </div>
+
+        <section class="panel-card students-list-panel">
+          <div class="students-list-header">
+            <div>
+              <p class="panel-kicker">Gestão</p>
+              <h2>Planos disponíveis</h2>
+            </div>
+            <small>Gerencie permissões, preços e disponibilização de conteúdos.</small>
+          </div>
+
+          <div id="plansGrid" class="plans-grid"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay hidden" data-plan-modal>
+    <div class="modal-card modal-card--wide">
+      <button type="button" class="modal-close" data-modal-close aria-label="Fechar">×</button>
+      <div class="modal-header">
+        <p class="modal-eyebrow">Plano</p>
+        <h2 class="modal-title" id="planModalTitle">Criar plano</h2>
+      </div>
+
+      <form id="planForm">
+        <div class="modal-body">
+          <div class="modal-grid">
+            <div class="detail-card">
+              <span class="detail-label">Nome do plano</span>
+              <input id="planName" name="name" type="text" class="input-text" placeholder="Ex.: Plano Completo" required>
+            </div>
+            <div class="detail-card">
+              <span class="detail-label">Preço</span>
+              <input id="planPrice" name="price" type="number" min="0" step="0.01" class="input-text" placeholder="0.00">
+            </div>
+          </div>
+
+          <div class="detail-card">
+            <span class="detail-label">Descrição</span>
+            <textarea id="planDescription" name="description" rows="3" class="input-textarea" placeholder="Descreva o que esse plano inclui..."></textarea>
+          </div>
+
+          <div class="detail-card">
+            <span class="detail-label">Status</span>
+            <select id="planStatus" name="status" class="input-select">
+              <option value="active">Ativo</option>
+              <option value="inactive">Inativo</option>
+            </select>
+          </div>
+
+          <div class="detail-card">
+            <span class="detail-label">Permissões</span>
+            <div class="permissions-grid">
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="portugues"> Português</label>
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="redacao"> Redação</label>
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="videoaulas"> Videoaulas</label>
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="simulados"> Simulados</label>
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="material"> Material</label>
+              <label class="checkbox-row"><input type="checkbox" name="permission" value="cronograma"> Cronograma</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="savePlanBtn">Salvar plano</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="../assets/js/professor/planos.js"></script>
+</body>
+</html>

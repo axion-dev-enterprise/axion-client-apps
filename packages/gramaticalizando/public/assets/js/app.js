@@ -1,4 +1,4 @@
-import { getSession } from './storage.js';
+import { getSession, getStudentPermissions } from './storage.js';
 
 const path = window.location.pathname.split('/').pop() || 'index.html';
 
@@ -6,12 +6,22 @@ window.addEventListener('DOMContentLoaded', () => {
   const session = getSession();
   const protectedPages = [
     'home.html', 'redacao.html', 'portugues.html', 'videoaulas.html',
-    'simulados.html', 'materiais.html', 'cronograma.html', 'perfil.html', 'configuracoes.html'
+    'simulados.html', 'simulado-conteudo.html', 'materiais.html', 'cronograma.html', 'diagnostico.html', 'portugues-conteudo.html'
   ];
   const needsDiagnostic = [
     'home.html', 'redacao.html', 'portugues.html', 'videoaulas.html',
-    'simulados.html', 'materiais.html', 'cronograma.html', 'perfil.html', 'configuracoes.html'
+    'simulados.html', 'materiais.html', 'cronograma.html'
   ];
+  const pagePermissions = {
+    'portugues.html': 'portugues',
+    'redacao.html': 'redacao',
+    'videoaulas.html': 'videoaulas',
+    'simulados.html': 'simulados',
+    'simulado-conteudo.html': 'simulados',
+    'materiais.html': 'material',
+    'cronograma.html': 'cronograma',
+    'portugues-conteudo.html': 'portugues'
+  };
 
   if (session && (path === 'login.html' || path === 'registro.html')) {
     if (session.tipo === 'professor') {
@@ -36,6 +46,15 @@ window.addEventListener('DOMContentLoaded', () => {
   // Professores nunca são redirecionados para diagnóstico
   if (session && session.tipo !== 'professor' && !hasDiagnostic && needsDiagnostic.includes(path)) {
     window.location.href = '/pages/diagnostico.html';
+  }
+
+  // Restringir acesso às páginas do aluno de acordo com o plano vinculado
+  if (session && session.tipo !== 'professor') {
+    const requiredPermission = pagePermissions[path];
+    if (requiredPermission && !getStudentPermissions(session.id || session.email)[requiredPermission]) {
+      window.location.href = '/pages/home.html';
+      return;
+    }
   }
 
   // Interatividade do Menu Mobile (Drawer)

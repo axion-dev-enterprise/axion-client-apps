@@ -1,0 +1,267 @@
+==================================================
+REVISAO GERAL DO PROJETO - GRAMATICALIZANDO
+==================================================
+
+Data da análise: 2026-09-14
+Projeto: grammaticalizando
+Base da análise: estrutura real do workspace, código atual em src/, páginas em public/, arquivos JSON e scripts legados.
+
+
+==================================================
+1. RESUMO EXECUTIVO
+==================================================
+
+O Gramaticalizando já possui uma base funcional sólida, com um back-end em Express organizado, controle de usuários, CRUD de conteúdo e fluxo de estudo para alunos e professores.
+
+O principal problema atual não é falta de funcionalidade, mas a coexistência de duas arquiteturas distintas:
+- Back-end moderno em src/ com Express, rotas, controllers, middlewares e persistência em JSON.
+- Front-end legado em public/assets/js/ com localStorage, autenticação separada, seed e lógica de planos/permissões fora do servidor.
+
+Resultado: o sistema parece funcional, mas está em estado híbrido, com risco de inconsistência de dados, permissões frágeis e manutenção mais difícil.
+
+
+==================================================
+2. ARQUITETURA OBSERVADA
+==================================================
+
+Back-end atual:
+- src/server.js
+- src/app.js
+- src/routes/*
+- src/controllers/*
+- src/data/jsonStore.js
+- src/middlewares/auth.js
+- src/config/paths.js
+- src/config/env.js
+
+Front-end atual:
+- public/pages/*
+- public/professor/*
+- public/assets/js/*
+- public/assets/css/*
+
+Persistência:
+- JSONs em raiz do projeto: usuarios.json, materias.json, aulas.json, exercicios.json, redacoes.json, cursos.json e categorias.json
+- src/config/paths.js já faz o mapeamento para caminhos locais ou para /tmp/gramaticalizando_data no ambiente Vercel
+
+Observação importante:
+- O projeto tem uma camada moderna de API/JSON e outra camada legada de navegador.
+- Isso pode esconder erros reais e gerar divergência entre dados do back-end e do front-end.
+
+
+==================================================
+3. FUNCIONALIDADES JÁ IMPLEMENTADAS
+==================================================
+
+[OK] Registro e login de aluno
+[OK] Login e sessão de admin
+[OK] Proteção de páginas administrativas
+[OK] CRUD de matérias
+[OK] CRUD de aulas
+[OK] CRUD de exercícios
+[OK] Listagem de alunos e métricas gerais
+[OK] Diagnóstico inicial com geração de cronograma
+[OK] Envio, listagem e correção de redações
+[OK] Marcação de aulas concluídas por aluno
+[OK] Persistência de progresso no objeto estudos do usuário
+[OK] Validação de questões e estrutura de dados em jsonStore.js
+[OK] Lock de escrita para reduzir conflitos em JSON
+[PARCIAL] Fluxo de planos e permissões no front-end legado
+[PARCIAL] Painel do professor com páginas e estrutura base
+[PARCIAL] Fluxo do aluno em páginas públicas e professor
+
+
+==================================================
+4. PRINCIPAIS PROBLEMAS IDENTIFICADOS
+==================================================
+
+ERRO 1 - Autenticação duplicada
+- Existe autenticação de sessão no back-end e outra lógica em localStorage no front-end.
+- Isso cria duas fontes de verdade e pode deixar o sistema inconsistente.
+
+ERRO 2 - Rotas duplicadas em src/app.js
+- Há montagem simultânea de rotas via app.use('/api', routes) e app.use(routes).
+- Isso precisa ser padronizado para evitar ambiguidades e comportamentos inesperados.
+
+ERRO 3 - Planos e permissões não estão reforçados no servidor
+- A lógica de planos/permissões está majoritariamente no cliente.
+- O back-end não valida de forma robusta se o aluno pode acessar conteúdo restrito.
+
+ERRO 4 - Tipos de usuário inconsistentes
+- No back-end há aluno/admin.
+- No front-end legado há cliente/professor.
+- Isso aumenta a chance de bugs e incompatibilidades.
+
+ERRO 5 - Duas fontes de dados ao mesmo tempo
+- O servidor grava em JSON.
+- O front-end legado grava dados em localStorage e chaves como app_users_v1, app_plans_v1, app_essays_v1.
+- Isso cria risco de divergência entre ambiente real e navegador.
+
+ERRO 6 - Seed de dados demo pode mascarar o estado real
+- public/assets/js/init-seed.js cria dados demo automaticamente.
+- Em produção isso pode gerar confusão sobre o que é real e o que é apenas exemplo.
+
+ERRO 7 - Middleware de autenticação com fallback frágil
+- src/middlewares/auth.js tenta recuperar usuário por query/body/params além da sessão.
+- Isso enfraquece o controle de acesso e pode abrir brechas.
+
+
+==================================================
+5. O QUE AINDA FALTA OU ESTÁ INCOMPLETO
+==================================================
+
+CRÍTICO
+- Unificar autenticação em uma única fonte de verdade.
+- Reforçar permissões por plano no back-end.
+- Padronizar tipos de usuário e contratos de dados.
+- Eliminar ou desacoplar o fluxo legado em localStorage.
+- Resolver duplicidade de rotas em src/app.js.
+
+ALTA
+- Finalizar integração do painel do professor com a API real.
+- Padronizar nomes de campos entre JSON, APIs e front-end.
+- Revisar criação/edição/exclusão de conteúdos e vínculos.
+- Melhorar tratamento de erros e estados vazios.
+
+MÉDIA
+- Implementar testes automatizados.
+- Revisar responsividade em mobile/tablet.
+- Padronizar feedback visual e mensagens.
+
+BAIXA
+- Ajustar consistência visual e textos da interface.
+- Revisar pequenos inconsistências entre páginas.
+
+
+==================================================
+6. PÁGINAS E FLUXOS QUE MERECEM ATENÇÃO
+==================================================
+
+Aluno
+- public/pages/home.html
+- public/pages/diagnostico.html
+- public/pages/portugues.html
+- public/pages/redacao.html
+- public/pages/videoaulas.html
+- public/pages/simulados.html
+- public/pages/materiais.html
+- public/pages/cronograma.html
+- public/pages/perfil.html
+- public/pages/login.html
+- public/pages/registro.html
+
+Professor/Admin
+- public/professor/index.html
+- public/professor/alunos.html
+- public/professor/redacoes.html
+- public/professor/portugues.html
+- public/professor/diagnosticos.html
+- public/professor/correcoes.html
+- public/professor/videoaulas.html
+- public/professor/simulados.html
+- public/professor/materiais.html
+- public/professor/cronograma.html
+- public/professor/planos.html
+- public/professor/configuracoes.html
+
+Arquivos críticos de manutenção
+- src/app.js
+- src/data/jsonStore.js
+- src/middlewares/auth.js
+- src/controllers/auth.controller.js
+- src/controllers/admin.controller.js
+- src/controllers/materias.controller.js
+- src/controllers/aulas.controller.js
+- src/controllers/exercicios.controller.js
+- src/controllers/redacoes.controller.js
+- public/assets/js/storage.js
+- public/assets/js/init-seed.js
+- public/assets/js/app.js
+
+
+==================================================
+7. ESTRUTURA DE DADOS E RISCOS
+==================================================
+
+O back-end usa JSON como fonte principal e centraliza grande parte da lógica em jsonStore.js.
+
+Em paralelo, o front-end legado persiste dados em localStorage com nomes como:
+- app_users_v1
+- app_plans_v1
+- app_essays_v1
+- app_videoaulas_v1
+- app_simulados_v1
+- app_contents_v1
+- app_cronograma_v1
+- app_materiais_v1
+- app_diagnosticos_v1
+
+Riscos identificados:
+- divergência entre dados no navegador e no servidor;
+- plano inválido ou ausente pode continuar sendo aceito no cliente;
+- dados de demonstração podem aparecer misturados com dados reais;
+- campos e termos diferentes entre front e back podem quebrar filtros e renderização.
+
+
+==================================================
+8. SEGURANÇA E AUTORIZAÇÃO
+==================================================
+
+Pontos positivos:
+- sessão HTTP com express-session
+- hash de senhas com bcryptjs
+- proteção de páginas administrativas por middleware
+
+Pontos de atenção:
+- permissões por plano não estão reforçadas no servidor
+- autenticação legado em localStorage expõe dados no navegador
+- middleware auth aceita fallback por query/body/params, reduzindo rigor da autenticação
+
+Conclusão:
+- o projeto já está em uma base razoavelmente segura para nível inicial, mas ainda necessita revisão de autorização e remoção do fluxo legada para reduzir riscos.
+
+
+==================================================
+9. CONCLUSÃO
+==================================================
+
+O projeto Gramaticalizando está avançado em estrutura e funcionalidade, mas sua arquitetura atual está em transição e ainda apresenta inconsistências importantes.
+
+O maior risco atual é a mistura entre back-end moderno e front-end legado. Se isso não for resolvido, o sistema continuará sujeito a:
+- divergência de dados;
+- permissões frágeis;
+- autenticação inconsistente;
+- dificuldades de manutenção;
+- bugs difíceis de rastrear.
+
+Os próximos passos recomendados são:
+1. unificar autenticação e persistência;
+2. reforçar autorização no servidor;
+3. remover duplicidade de rotas;
+4. padronizar tipos de usuário e contratos de dados;
+5. finalizar integração do painel professor com a API real.
+
+
+==================================================
+10. ARQUIVOS PRINCIPAIS REFERENCIADOS
+==================================================
+
+- README.md
+- package.json
+- src/app.js
+- src/server.js
+- src/config/paths.js
+- src/data/jsonStore.js
+- src/middlewares/auth.js
+- src/controllers/auth.controller.js
+- src/controllers/admin.controller.js
+- src/controllers/materias.controller.js
+- src/controllers/aulas.controller.js
+- src/controllers/exercicios.controller.js
+- src/controllers/diagnostico.controller.js
+- src/controllers/redacoes.controller.js
+- public/assets/js/storage.js
+- public/assets/js/auth.js
+- public/assets/js/app.js
+- public/assets/js/init-seed.js
+- public/professor/planos.html

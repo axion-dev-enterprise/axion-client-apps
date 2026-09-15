@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Português — Conteúdo do aluno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/global.css">
+  <link rel="stylesheet" href="../assets/css/home.css">
+  <link rel="stylesheet" href="../assets/css/videoaulas.css">
+  <link rel="stylesheet" href="../assets/css/redacao.css">
+</head>
+<body class="dashboard-shell">
+  <header class="dashboard-topbar">
+    <div class="dashboard-container">
+      <a class='dashboard-brand' href='/pages/home.html'>
+        <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;" />
+        <div>
+          <div class="dashboard-title">Gramaticalizando</div>
+          <div>Ambiente do aluno</div>
+        </div>
+      </a>
+
+      <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
+      <nav class="nav-links" data-mobile-menu>
+        <a href='/pages/home.html'>Home</a>
+        <a class='active' href='/pages/portugues.html'>Português</a>
+        <a href='/pages/redacao.html'>Redação</a>
+        <a href='/pages/videoaulas.html'>Videoaulas</a>
+        <a href='/pages/simulados.html'>Simulados</a>
+        <a href='/pages/materiais.html'>Material</a>
+        <a href='/pages/cronograma.html'>Cronograma</a>
+      </nav>
+
+      <div class="dashboard-user">
+        <button type="button" class="dashboard-user-button" data-profile-button>
+          <span class="dashboard-user-avatar">U</span>
+          <span>Meu perfil</span>
+        </button>
+        <div class="user-menu" data-profile-menu>
+          <a href='/pages/login.html'>Sair</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-main">
+    <section class="page-section study-page-section">
+      <div class="study-layout">
+        <div class="study-main">
+          <button type="button" class="btn btn-secondary study-back-button" data-back-button>← Voltar para Português</button>
+          <div id="studyHeader" class="study-header"></div>
+          <div id="studyBlocks" class="study-blocks"></div>
+        </div>
+
+        <aside class="study-sidebar">
+          <div class="study-sidebar-card">
+            <p class="dashboard-title">Seu progresso</p>
+            <div class="study-sidebar-metrics">
+              <div class="study-metric-item">
+                <span>Tempo</span>
+                <strong id="studyTimeValue">15 min</strong>
+              </div>
+              <div class="study-metric-item">
+                <span>Blocos</span>
+                <strong id="studyBlocksCount">0</strong>
+              </div>
+              <div class="study-metric-item">
+                <span>Foco</span>
+                <strong id="studyFocusLabel">Português</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="study-sidebar-card study-sidebar-highlight">
+            <p class="dashboard-title">Você está indo muito bem!</p>
+            <p>Continue assim: tire um momento para revisar os conceitos principais antes de responder às questões.</p>
+          </div>
+
+          <div class="study-sidebar-card">
+            <p class="dashboard-title">Próximos tópicos</p>
+            <ul id="studyNextTopics" class="study-next-topics"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../assets/js/app.js"></script>
+  <script type="module" src="../assets/js/portugues-conteudo.js"></script>
+</body>
+</html>
