@@ -71,7 +71,7 @@ const renderList = () => {
 listElement?.addEventListener('click', (event) => {
   const button = event.target.closest('[data-simulado-id]');
   if (!button || button.disabled) return;
-  window.location.href = `./simulado-conteudo.html?id=${encodeURIComponent(button.dataset.simuladoId)}`;
+  window.location.href = `/simulado-conteudo?id=${encodeURIComponent(button.dataset.simuladoId)}`;
 });
 
 ensureSimulations();
