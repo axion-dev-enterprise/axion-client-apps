@@ -64,8 +64,8 @@ app.use(express.static(paths.PUBLIC_DIR, { index: false }));
 app.use("/api", routes);
 app.use(routes);
 
-// Fallback SPA: serve dist/index.html para qualquer rota não-API
-app.get("*", (req, res, next) => {
+// Fallback SPA: serve dist/index.html para qualquer rota não-API (Express 5 safe)
+app.use((req, res, next) => {
     if (req.path.startsWith("/api")) {
         return next();
     }
