@@ -1,13 +1,8 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "buildCommand": "vite build",
-  "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/aluno", "destination": "/home" },
-    { "source": "/cadastro", "destination": "/registro" },
+    { "source": "/aluno", "destination": "/index.html" },
+    { "source": "/cadastro", "destination": "/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

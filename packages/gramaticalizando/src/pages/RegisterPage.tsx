@@ -48,7 +48,7 @@ export const RegisterPage: React.FC = () => {
   return (
     <Card variant="elevated" padding="lg">
       <div style={{ marginBottom: '1.75rem', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', marginBottom: '0.375rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.375rem' }}>
           Criar Nova Conta
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>

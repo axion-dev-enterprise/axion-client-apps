@@ -35,7 +35,7 @@ export const ProfessorExercicios: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
             Banco de Questões & Exercícios
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -60,7 +60,7 @@ export const ProfessorExercicios: React.FC = () => {
               <Badge variant="purple" size="sm">{q.modulo}</Badge>
               <Badge variant="neutral" size="sm">{q.banca}</Badge>
             </div>
-            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', lineHeight: 1.5, marginBottom: '0.75rem' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '0.75rem' }}>
               {q.enunciado}
             </h3>
             <div style={{ padding: '0.75rem 1rem', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--bg-surface-2)', border: '1px solid var(--border-subtle)', color: 'var(--success)', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

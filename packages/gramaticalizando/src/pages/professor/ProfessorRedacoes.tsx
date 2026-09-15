@@ -61,7 +61,7 @@ export const ProfessorRedacoes: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
           Correção de Redações
         </h2>
         <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -75,9 +75,9 @@ export const ProfessorRedacoes: React.FC = () => {
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', marginBottom: '1rem' }}>
               <div>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                  Data de Envio: {item.data} • Aluno(a): <strong style={{ color: '#fff' }}>{item.aluno}</strong>
+                  Data de Envio: {item.data} • Aluno(a): <strong style={{ color: 'var(--text-primary)' }}>{item.aluno}</strong>
                 </span>
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff', marginTop: '0.25rem' }}>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', marginTop: '0.25rem' }}>
                   {item.tema}
                 </h3>
               </div>
@@ -125,7 +125,7 @@ export const ProfessorRedacoes: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Tema da Proposta:</span>
-              <h4 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff' }}>{selectedRedacao.tema}</h4>
+              <h4 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>{selectedRedacao.tema}</h4>
             </div>
 
             <div
@@ -134,7 +134,7 @@ export const ProfessorRedacoes: React.FC = () => {
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: 'var(--bg-surface-2)',
                 border: '1px solid var(--border-subtle)',
-                color: '#ffffff',
+                color: 'var(--text-primary)',
                 fontSize: '0.9375rem',
                 lineHeight: 1.7,
                 maxHeight: '260px',
@@ -165,7 +165,7 @@ export const ProfessorRedacoes: React.FC = () => {
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--bg-surface-2)',
                     border: '1px solid var(--border-subtle)',
-                    color: '#fff',
+                    color: 'var(--text-primary)',
                     outline: 'none',
                     fontSize: '0.875rem',
                     fontFamily: 'var(--font-sans)',

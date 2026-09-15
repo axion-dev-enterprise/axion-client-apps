@@ -80,7 +80,7 @@ export const StudentPortugues: React.FC = () => {
         }}
       >
         <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
             Língua Portuguesa & Gramática
           </h1>
           <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>
@@ -154,7 +154,7 @@ export const StudentPortugues: React.FC = () => {
                         {completedCount} de {mod.aulas.length} concluídas ({progress}%)
                       </span>
                     </div>
-                    <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                       {mod.titulo}
                     </h3>
                   </div>
@@ -233,7 +233,7 @@ export const StudentPortugues: React.FC = () => {
                               )}
                             </div>
 
-                            <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#ffffff', marginBottom: '0.25rem' }}>
+                            <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
                               {aula.titulo}
                             </h4>
 
@@ -306,8 +306,8 @@ export const StudentPortugues: React.FC = () => {
                 fontSize: '0.9375rem'
               }}
             >
-              <h4 style={{ color: '#fff', fontSize: '1rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Sparkles size={16} color="var(--accent-hover)" />
+              <h4 style={{ color: 'var(--text-primary)', fontSize: '1rem', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Sparkles size={16} color="var(--accent)" />
                 Resumo Teórico & Aplicação
               </h4>
               <p>{selectedAula.conteudo}</p>

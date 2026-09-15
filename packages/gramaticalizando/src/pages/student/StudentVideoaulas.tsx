@@ -42,7 +42,7 @@ export const StudentVideoaulas: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
           Videoteca & Transmissões Gravadas
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>
@@ -101,7 +101,7 @@ export const StudentVideoaulas: React.FC = () => {
                 <Badge variant="purple" size="sm" style={{ marginBottom: '0.5rem' }}>
                   {vid.modulo}
                 </Badge>
-                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff', lineHeight: 1.4 }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>
                   {vid.titulo}
                 </h3>
               </div>

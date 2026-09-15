@@ -5,7 +5,7 @@ export const Footer: React.FC = () => {
   return (
     <footer
       style={{
-        backgroundColor: '#070709',
+        backgroundColor: 'var(--bg-surface-2)',
         borderTop: '1px solid var(--border-subtle)',
         paddingTop: '4rem',
         paddingBottom: '3rem',
@@ -23,21 +23,17 @@ export const Footer: React.FC = () => {
         >
           {/* Coluna 1: Sobre */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-              <div
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <img
+                src="/assets/img/logo.png"
+                alt="Gramaticalizando"
                 style={{
-                  width: '2rem',
-                  height: '2rem',
-                  borderRadius: 'var(--radius-sm)',
-                  backgroundColor: 'var(--accent)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  height: '2.25rem',
+                  width: 'auto',
+                  objectFit: 'contain'
                 }}
-              >
-                <BookOpen size={16} color="#fff" />
-              </div>
-              <span style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff' }}>
+              />
+              <span style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                 Gramaticalizando
               </span>
             </div>
@@ -52,7 +48,7 @@ export const Footer: React.FC = () => {
 
           {/* Coluna 2: Conteúdo Programático */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-            <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Conteúdo
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.625rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -66,16 +62,16 @@ export const Footer: React.FC = () => {
 
           {/* Coluna 3: Atendimento */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-            <h4 style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#fff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <h4 style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Atendimento & Matrículas
             </h4>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Phone size={16} color="var(--accent-hover)" />
-                <span>WhatsApp: (21) 99201-3060</span>
+                <Phone size={16} color="var(--accent)" />
+                <span style={{ fontWeight: 600 }}>WhatsApp: (21) 99201-3060</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Mail size={16} color="var(--accent-hover)" />
+                <Mail size={16} color="var(--accent)" />
                 <span>suporte@gramaticalizando.com.br</span>
               </div>
               <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>

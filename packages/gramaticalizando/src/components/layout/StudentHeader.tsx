@@ -44,9 +44,9 @@ export const StudentHeader: React.FC = () => {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        backgroundColor: 'rgba(18, 18, 23, 0.95)',
-        backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-subtle)'
+        backgroundColor: '#ffffff',
+        borderBottom: '1px solid var(--border-subtle)',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)'
       }}
     >
       <div className="container">
@@ -57,7 +57,7 @@ export const StudentHeader: React.FC = () => {
             alignItems: 'center',
             justifyContent: 'space-between',
             height: '4rem',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.05)'
+            borderBottom: '1px solid var(--border-subtle)'
           }}
         >
           {/* Brand */}
@@ -66,24 +66,19 @@ export const StudentHeader: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.625rem',
+              gap: '0.75rem',
               textDecoration: 'none'
             }}
           >
-            <div
+            <img
+              src="/assets/img/logo.png"
+              alt="Gramaticalizando"
               style={{
-                width: '2rem',
-                height: '2rem',
-                borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--accent)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: 'var(--shadow-glow)'
+                height: '2.25rem',
+                width: 'auto',
+                objectFit: 'contain'
               }}
-            >
-              <BookOpen size={16} color="#ffffff" />
-            </div>
+            />
             <span
               style={{
                 fontSize: '1.125rem',
@@ -99,10 +94,10 @@ export const StudentHeader: React.FC = () => {
                 fontWeight: 600,
                 textTransform: 'uppercase',
                 padding: '0.15rem 0.5rem',
-                backgroundColor: 'rgba(147, 51, 234, 0.15)',
-                color: '#c084fc',
+                backgroundColor: 'var(--accent-light)',
+                color: 'var(--accent)',
                 borderRadius: 'var(--radius-full)',
-                border: '1px solid rgba(168, 85, 247, 0.3)'
+                border: '1px solid var(--accent-border)'
               }}
             >
               Portal do Aluno
@@ -119,16 +114,18 @@ export const StudentHeader: React.FC = () => {
                 gap: '0.625rem',
                 padding: '0.375rem 0.625rem',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: profileDropdownOpen ? 'var(--bg-surface-hover)' : 'transparent',
-                transition: 'background-color var(--transition-fast)'
+                backgroundColor: profileDropdownOpen ? 'var(--bg-surface-2)' : 'transparent',
+                transition: 'background-color var(--transition-fast)',
+                cursor: 'pointer',
+                border: '1px solid transparent'
               }}
             >
               <div
                 style={{
-                  width: '2rem',
-                  height: '2rem',
+                  width: '2.25rem',
+                  height: '2.25rem',
                   borderRadius: '50%',
-                  backgroundColor: 'var(--accent-hover)',
+                  backgroundColor: 'var(--accent)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -158,8 +155,8 @@ export const StudentHeader: React.FC = () => {
                   right: 0,
                   top: 'calc(100% + 0.5rem)',
                   width: '220px',
-                  backgroundColor: 'var(--bg-surface-1)',
-                  border: '1px solid var(--border-muted)',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid var(--border-subtle)',
                   borderRadius: 'var(--radius-md)',
                   boxShadow: 'var(--shadow-lg)',
                   padding: '0.5rem',
@@ -170,7 +167,7 @@ export const StudentHeader: React.FC = () => {
                 }}
               >
                 <div style={{ padding: '0.5rem', borderBottom: '1px solid var(--border-subtle)', marginBottom: '0.25rem' }}>
-                  <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#fff' }}>{user?.nome}</p>
+                  <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)' }}>{user?.nome}</p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</p>
                 </div>
                 <button
@@ -186,18 +183,20 @@ export const StudentHeader: React.FC = () => {
                     fontSize: '0.875rem',
                     color: 'var(--text-secondary)',
                     borderRadius: 'var(--radius-sm)',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    width: '100%'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--bg-surface-hover)';
-                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)';
+                    e.currentTarget.style.color = 'var(--accent)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = 'transparent';
                     e.currentTarget.style.color = 'var(--text-secondary)';
                   }}
                 >
-                  <Shield size={16} color="#c084fc" />
+                  <Shield size={16} color="var(--accent)" />
                   <span>Painel do Professor</span>
                 </button>
                 <button
@@ -214,7 +213,9 @@ export const StudentHeader: React.FC = () => {
                     fontSize: '0.875rem',
                     color: 'var(--danger)',
                     borderRadius: 'var(--radius-sm)',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    cursor: 'pointer',
+                    width: '100%'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = 'var(--danger-bg)';
@@ -256,19 +257,19 @@ export const StudentHeader: React.FC = () => {
                   padding: '0.625rem 0.875rem',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#ffffff' : 'var(--text-secondary)',
+                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
                   borderBottom: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
                   whiteSpace: 'nowrap',
                   transition: 'all var(--transition-fast)'
                 }}
                 onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.color = '#ffffff';
+                  if (!isActive) e.currentTarget.style.color = 'var(--accent)';
                 }}
                 onMouseLeave={(e) => {
                   if (!isActive) e.currentTarget.style.color = 'var(--text-secondary)';
                 }}
               >
-                <span style={{ color: isActive ? 'var(--accent-hover)' : 'inherit' }}>
+                <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                   {tab.icon}
                 </span>
                 <span>{tab.label}</span>

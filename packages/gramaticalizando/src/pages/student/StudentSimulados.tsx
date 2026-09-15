@@ -96,7 +96,7 @@ export const StudentSimulados: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
           Simulados & Treinamento
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>
@@ -118,7 +118,7 @@ export const StudentSimulados: React.FC = () => {
                 </div>
               </div>
 
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff', marginBottom: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                 Gramática Geral & Acordo Ortográfico
               </h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.5, marginBottom: '1rem' }}>
@@ -153,7 +153,7 @@ export const StudentSimulados: React.FC = () => {
             </span>
           </div>
 
-          <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: '#ffffff', lineHeight: 1.5, marginBottom: '1.5rem' }}>
+          <h3 style={{ fontSize: '1.125rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '1.5rem' }}>
             {currentQuestion.enunciado}
           </h3>
 
@@ -164,7 +164,7 @@ export const StudentSimulados: React.FC = () => {
               const isWrong = isAnswered && isSelected && index !== currentQuestion.respostaCorreta;
 
               let borderColor = isSelected ? 'var(--accent)' : 'var(--border-subtle)';
-              let bgColor = isSelected ? 'rgba(147, 51, 234, 0.1)' : 'var(--bg-surface-2)';
+              let bgColor = isSelected ? 'var(--accent-light)' : 'var(--bg-surface-2)';
 
               if (isCorrect) {
                 borderColor = 'var(--success)';
@@ -183,7 +183,7 @@ export const StudentSimulados: React.FC = () => {
                     borderRadius: 'var(--radius-md)',
                     border: `1px solid ${borderColor}`,
                     backgroundColor: bgColor,
-                    color: '#ffffff',
+                    color: 'var(--text-primary)',
                     fontSize: '0.9375rem',
                     cursor: isAnswered ? 'default' : 'pointer',
                     display: 'flex',
@@ -199,8 +199,8 @@ export const StudentSimulados: React.FC = () => {
                         width: '1.75rem',
                         height: '1.75rem',
                         borderRadius: '50%',
-                        backgroundColor: isSelected ? 'var(--accent)' : 'rgba(255, 255, 255, 0.08)',
-                        color: '#fff',
+                        backgroundColor: isSelected ? 'var(--accent)' : 'var(--bg-surface-3)',
+                        color: isSelected ? '#ffffff' : 'var(--text-primary)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -210,7 +210,7 @@ export const StudentSimulados: React.FC = () => {
                     >
                       {String.fromCharCode(65 + index)}
                     </span>
-                    <span>{alt}</span>
+                    <span style={{ color: 'var(--text-primary)' }}>{alt}</span>
                   </div>
 
                   {isCorrect && <CheckCircle size={20} color="var(--success)" />}
@@ -225,16 +225,16 @@ export const StudentSimulados: React.FC = () => {
               style={{
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'rgba(147, 51, 234, 0.08)',
-                border: '1px solid rgba(168, 85, 247, 0.25)',
+                backgroundColor: 'var(--accent-light)',
+                border: '1px solid var(--accent-border)',
                 marginBottom: '1.5rem',
                 color: 'var(--text-secondary)',
                 fontSize: '0.875rem',
                 lineHeight: 1.6
               }}
             >
-              <h4 style={{ color: '#fff', fontWeight: 600, marginBottom: '0.375rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <AlertCircle size={16} color="var(--accent-hover)" />
+              <h4 style={{ color: 'var(--accent)', fontWeight: 600, marginBottom: '0.375rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <AlertCircle size={16} color="var(--accent)" />
                 Gabarito Comentado
               </h4>
               <p>{currentQuestion.explicacao}</p>

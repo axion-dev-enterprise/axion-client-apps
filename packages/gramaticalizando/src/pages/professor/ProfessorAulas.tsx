@@ -10,7 +10,7 @@ export const ProfessorAulas: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
             Módulos & Aulas Cadastradas
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -27,7 +27,7 @@ export const ProfessorAulas: React.FC = () => {
                 <span style={{ fontSize: '0.75rem', color: 'var(--accent-text)', fontWeight: 600 }}>
                   MÓDULO 0{mod.ordem}
                 </span>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                   {mod.titulo}
                 </h3>
               </div>
@@ -57,7 +57,7 @@ export const ProfessorAulas: React.FC = () => {
                 >
                   <div>
                     <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Aula #{aula.ordem}</span>
-                    <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#fff' }}>{aula.titulo}</h4>
+                    <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>{aula.titulo}</h4>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                     <Clock size={12} />

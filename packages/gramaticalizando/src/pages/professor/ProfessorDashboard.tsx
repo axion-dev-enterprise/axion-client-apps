@@ -35,7 +35,7 @@ export const ProfessorDashboard: React.FC = () => {
                 {s.icon}
               </div>
             </div>
-            <div style={{ fontSize: '1.875rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+            <div style={{ fontSize: '1.875rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
               {s.value}
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
@@ -49,7 +49,7 @@ export const ProfessorDashboard: React.FC = () => {
       <Card padding="lg">
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           <div>
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff' }}>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
               Fila de Redações para Correção
             </h3>
             <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)' }}>
@@ -84,7 +84,7 @@ export const ProfessorDashboard: React.FC = () => {
             >
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                  <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#fff' }}>
+                  <span style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                     {r.aluno}
                   </span>
                   <Badge variant={r.prioridade === 'Alta' ? 'warning' : 'neutral'} size="sm">

@@ -15,8 +15,9 @@ export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSideba
     <header
       style={{
         height: '4rem',
-        backgroundColor: '#0e0e12',
+        backgroundColor: '#ffffff',
         borderBottom: '1px solid var(--border-subtle)',
+        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -34,14 +35,16 @@ export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSideba
             padding: '6px',
             borderRadius: 'var(--radius-sm)',
             color: 'var(--text-primary)',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            border: 'none',
+            background: 'none'
           }}
           className="sidebar-toggle-btn"
           aria-label="Alternar Menu Lateral"
         >
           <Menu size={20} />
         </button>
-        <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#ffffff' }}>
+        <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
           {title}
         </h1>
       </div>

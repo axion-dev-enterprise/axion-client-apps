@@ -67,7 +67,7 @@ export const StudentRedacao: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
           Laboratório de Redação
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>
@@ -79,8 +79,8 @@ export const StudentRedacao: React.FC = () => {
         {/* Editor de Envio */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <Card variant="elevated" padding="lg">
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <PenTool size={18} color="var(--accent-hover)" />
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <PenTool size={18} color="var(--accent)" />
               Redigir Novo Texto
             </h3>
 
@@ -96,7 +96,7 @@ export const StudentRedacao: React.FC = () => {
                   borderRadius: 'var(--radius-md)',
                   backgroundColor: 'var(--bg-surface-2)',
                   border: '1px solid var(--border-subtle)',
-                  color: '#ffffff',
+                  color: 'var(--text-primary)',
                   outline: 'none',
                   fontSize: '0.875rem'
                 }}
@@ -147,7 +147,7 @@ export const StudentRedacao: React.FC = () => {
                     borderRadius: 'var(--radius-md)',
                     backgroundColor: 'var(--bg-surface-2)',
                     border: '1px solid var(--border-subtle)',
-                    color: '#ffffff',
+                    color: 'var(--text-primary)',
                     fontSize: '0.9375rem',
                     lineHeight: 1.6,
                     outline: 'none',
@@ -182,8 +182,8 @@ export const StudentRedacao: React.FC = () => {
         {/* Histórico de Redações */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <Card padding="lg">
-            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#fff', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <FileText size={18} color="var(--accent-hover)" />
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <FileText size={18} color="var(--accent)" />
               Minhas Redações Enviadas
             </h3>
 
@@ -221,7 +221,7 @@ export const StudentRedacao: React.FC = () => {
                       </Badge>
                     </div>
 
-                    <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#fff' }}>
+                    <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                       {r.temaTitulo}
                     </h4>
 

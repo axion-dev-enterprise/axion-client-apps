@@ -25,7 +25,7 @@ export const ProfessorAlunos: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#fff', marginBottom: '0.25rem' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
             Alunos Matriculados
           </h2>
           <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -60,11 +60,11 @@ export const ProfessorAlunos: React.FC = () => {
                 <tr
                   key={aluno.id}
                   style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background-color var(--transition-fast)' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.02)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
                 >
                   <td style={{ padding: '1rem 1.25rem' }}>
-                    <div style={{ fontWeight: 600, color: '#fff' }}>{aluno.nome}</div>
+                    <div style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{aluno.nome}</div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{aluno.email}</div>
                   </td>
                   <td style={{ padding: '1rem 1.25rem' }}>

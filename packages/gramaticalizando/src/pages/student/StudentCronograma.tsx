@@ -16,7 +16,7 @@ export const StudentCronograma: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       <div>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.25rem' }}>
+        <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
           Cronograma Semanal de Estudos
         </h1>
         <p style={{ fontSize: '0.9375rem', color: 'var(--text-secondary)' }}>
@@ -61,7 +61,7 @@ export const StudentCronograma: React.FC = () => {
                   <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
                     {item.dia}
                   </span>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 600, color: '#fff' }}>
+                  <h4 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                     {item.modulo}
                   </h4>
                 </div>

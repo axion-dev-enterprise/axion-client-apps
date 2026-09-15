@@ -59,8 +59,9 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
       <aside
         style={{
           width: '260px',
-          backgroundColor: '#0e0e12',
+          backgroundColor: '#ffffff',
           borderRight: '1px solid var(--border-subtle)',
+          boxShadow: '1px 0 3px 0 rgba(0, 0, 0, 0.05)',
           display: 'flex',
           flexDirection: 'column',
           position: 'fixed',
@@ -84,21 +85,17 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <div
+            <img
+              src="/assets/img/logo.png"
+              alt="Gramaticalizando"
               style={{
-                width: '2rem',
                 height: '2rem',
-                borderRadius: 'var(--radius-sm)',
-                backgroundColor: 'var(--accent)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                width: 'auto',
+                objectFit: 'contain'
               }}
-            >
-              <GraduationCap size={18} color="#fff" />
-            </div>
+            />
             <div>
-              <h2 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', lineHeight: 1.2 }}>
+              <h2 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.2 }}>
                 Docência
               </h2>
               <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -111,7 +108,10 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
             style={{
               color: 'var(--text-muted)',
               display: 'flex',
-              padding: '4px'
+              padding: '4px',
+              border: 'none',
+              background: 'none',
+              cursor: 'pointer'
             }}
             className="mobile-close"
             aria-label="Fechar Sidebar"
@@ -148,17 +148,17 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
                   borderRadius: 'var(--radius-md)',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 600 : 500,
-                  color: isActive ? '#ffffff' : 'var(--text-secondary)',
-                  backgroundColor: isActive ? 'rgba(147, 51, 234, 0.15)' : 'transparent',
-                  border: isActive ? '1px solid rgba(168, 85, 247, 0.3)' : '1px solid transparent',
+                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
+                  backgroundColor: isActive ? 'var(--accent-light)' : 'transparent',
+                  border: isActive ? '1px solid var(--accent-border)' : '1px solid transparent',
                   textAlign: 'left',
                   transition: 'all var(--transition-fast)',
                   cursor: 'pointer'
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.backgroundColor = 'var(--bg-surface-hover)';
-                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)';
+                    e.currentTarget.style.color = 'var(--accent)';
                   }
                 }}
                 onMouseLeave={(e) => {
@@ -168,7 +168,7 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
                   }
                 }}
               >
-                <span style={{ color: isActive ? 'var(--accent-hover)' : 'var(--text-muted)' }}>
+                <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                   {item.icon}
                 </span>
                 <span>{item.label}</span>
@@ -198,9 +198,11 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
               fontSize: '0.8125rem',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
+              border: 'none',
+              background: 'none',
               transition: 'color var(--transition-fast)'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
             onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
           >
             <ArrowLeft size={16} />
