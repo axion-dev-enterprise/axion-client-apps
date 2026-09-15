@@ -115,7 +115,7 @@ async function verificarSessao() {
         ) {
 
             window.location.href =
-                "/admin.html";
+                "/admin";
 
         }
 
@@ -238,7 +238,7 @@ form.addEventListener(
                 function () {
 
                     window.location.href =
-                        "/admin.html";
+                        "/admin";
 
                 },
                 350

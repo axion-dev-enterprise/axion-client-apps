@@ -135,5 +135,50 @@
     console.log('✅ Redações de teste criadas');
   }
 
+  // Inicializar Planos Oficiais se necessário
+  const LS_PLANS = 'app_plans_v1';
+  try {
+    const rawPlans = localStorage.getItem(LS_PLANS);
+    if (!rawPlans) {
+      const defaultPlans = [
+        {
+          id: 'plan_iniciante',
+          name: 'Iniciante',
+          description: 'Acesso essencial a Língua Portuguesa, Fonética, Ortografia, Semântica e Morfologia.',
+          price: 29.00,
+          periodo: 'mensal',
+          status: 'active',
+          permissions: { portugues: true, redacao: false, videoaulas: true, simulados: false, material: true, cronograma: false },
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        },
+        {
+          id: 'plan_medio',
+          name: 'Médio',
+          description: 'Acesso completo a Gramática, Aulas, Simulados com gabarito e Cronograma de estudos.',
+          price: 47.90,
+          periodo: 'mensal',
+          status: 'active',
+          permissions: { portugues: true, redacao: false, videoaulas: true, simulados: true, material: true, cronograma: true },
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        },
+        {
+          id: 'plan_pro',
+          name: 'Pro',
+          description: 'Experiência VIP com todas as matérias liberadas, Redação Nota 1000 com correções e mentoria.',
+          price: 120.00,
+          periodo: 'mensal',
+          status: 'active',
+          permissions: { portugues: true, redacao: true, videoaulas: true, simulados: true, material: true, cronograma: true },
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }
+      ];
+      localStorage.setItem(LS_PLANS, JSON.stringify(defaultPlans));
+      console.log('✅ Planos de teste criados');
+    }
+  } catch (e) {}
+
   console.log('📦 Dados de teste inicializados');
 })();

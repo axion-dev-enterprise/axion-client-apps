@@ -10,7 +10,7 @@
 <body class="dashboard-shell">
   <header class="dashboard-topbar">
     <div class="dashboard-container">
-      <a class='dashboard-brand' href='/pages/home.html'>
+      <a class='dashboard-brand' href='/home'>
         <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;" />
         <div>
           <div class="dashboard-title">Gramaticalizando</div>
@@ -20,15 +20,15 @@
 
       <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
       <nav class="nav-links" data-mobile-menu>
-        <a href='/pages/home.html'>Home</a>
-        <a class='active' href='/pages/portugues.html'>Português</a>
-        <a href='/pages/redacao.html'>Redação</a>
-        <a href='/pages/videoaulas.html'>Videoaulas</a>
-        <a href='/pages/simulados.html'>Simulados</a>
-        <a href='/pages/materiais.html'>Material</a>
-        <a href='/pages/cronograma.html'>Cronograma</a>
-        <a href='/pages/perfil.html'>Perfil</a>
-        <a href='/pages/configuracoes.html'>Configurações</a>
+        <a href='/home'>Home</a>
+        <a class='active' href='/portugues'>Português</a>
+        <a href='/redacao'>Redação</a>
+        <a href='/videoaulas'>Videoaulas</a>
+        <a href='/simulados'>Simulados</a>
+        <a href='/materiais'>Material</a>
+        <a href='/cronograma'>Cronograma</a>
+        <a href='/perfil'>Perfil</a>
+        <a href='/configuracoes'>Configurações</a>
       </nav>
 
       <div class="dashboard-user">
@@ -37,9 +37,9 @@
           <span>Meu perfil</span>
         </button>
         <div class="user-menu" data-profile-menu>
-          <a href='/pages/perfil.html'>Meu Perfil</a>
-          <a href='/pages/configuracoes.html'>Configurações</a>
-          <a href='/pages/login.html'>Sair</a>
+          <a href='/perfil'>Meu Perfil</a>
+          <a href='/configuracoes'>Configurações</a>
+          <a href='/login'>Sair</a>
         </div>
       </div>
     </div>
@@ -70,12 +70,31 @@
           <p>Melhore sua organização, clareza e argumentação.</p>
         </article>
       </div>
-      <div class="panel-card" style="margin-top:1.25rem;">
-        <div class="panel-header">
-          <h2>Conteúdos disponíveis</h2>
-          <span class="status-badge" id="contentsCount">0</span>
+      <div class="panel-card" style="margin-top:1.5rem;">
+        <div class="panel-header" style="flex-wrap:wrap; gap:1rem; align-items:center; justify-content:space-between;">
+          <div>
+            <h2 style="font-size:1.35rem; font-weight:800; letter-spacing:-0.02em; margin:0;">Módulos & Aulas</h2>
+            <p style="font-size:0.875rem; color:var(--text-muted, #94a3b8); margin:4px 0 0;">Selecione o módulo para praticar teoria e exercícios de fixação</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <input type="search" id="portuguesSearch" placeholder="Buscar aula ou assunto..." style="padding:0.5rem 1rem; border-radius:10px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.05); color:#fff; font-size:0.875rem; outline:none; min-width:220px;" />
+            <span class="status-badge" id="contentsCount" style="padding:4px 12px; border-radius:20px; font-weight:700;">0 aulas</span>
+          </div>
         </div>
-        <div id="studentContentList" class="video-lessons-list"></div>
+
+        <!-- Filtros dos 7 Módulos Oficiais -->
+        <div id="moduleFilterPills" style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(255,255,255,0.08);">
+          <button type="button" class="filter-pill active" data-modulo="todos" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(124,58,237,0.4); background:#7c3aed; color:#fff; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Todos</button>
+          <button type="button" class="filter-pill" data-modulo="Fonética e Fonologia" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Fonética e Fonologia</button>
+          <button type="button" class="filter-pill" data-modulo="Ortografia" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Ortografia</button>
+          <button type="button" class="filter-pill" data-modulo="Semântica e Significação das Palavras" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Semântica</button>
+          <button type="button" class="filter-pill" data-modulo="Morfologia" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Morfologia</button>
+          <button type="button" class="filter-pill" data-modulo="Classes de Palavras" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Classes de Palavras</button>
+          <button type="button" class="filter-pill" data-modulo="Análise Sintática" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Análise Sintática</button>
+          <button type="button" class="filter-pill" data-modulo="Interpretação de Texto" style="padding:6px 14px; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:#cbd5e1; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s;">Interpretação de Texto</button>
+        </div>
+
+        <div id="studentContentList" class="video-lessons-list" style="margin-top:1.5rem; display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:1.25rem;"></div>
       </div>
       <div id="contentViewer" aria-hidden="true"></div>
     </section>

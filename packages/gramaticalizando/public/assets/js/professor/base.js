@@ -39,7 +39,7 @@ export function initProfessorPage(activeNavKey = '') {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       clearSession();
-      window.location.href = '/pages/login.html';
+      window.location.href = '/login';
     });
   }
 

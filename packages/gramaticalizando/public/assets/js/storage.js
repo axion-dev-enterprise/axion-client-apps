@@ -1,3 +1,7 @@
+import { DEFAULT_PORTUGUESE_CONTENTS, PORTUGUESE_MODULES } from './data/portugues-modules.js';
+
+export { PORTUGUESE_MODULES };
+
 const LS_USERS = 'app_users_v1';
 const LS_SESSION = 'usuarioLogado_v1';
 
@@ -152,9 +156,22 @@ const LS_CONTENTS = 'app_contents_v1';
 export const getContents = () => {
   try {
     const raw = localStorage.getItem(LS_CONTENTS);
-    return raw ? JSON.parse(raw) : [];
+    const stored = raw ? JSON.parse(raw) : [];
+    if (!stored || stored.length === 0) {
+      localStorage.setItem(LS_CONTENTS, JSON.stringify(DEFAULT_PORTUGUESE_CONTENTS));
+      return DEFAULT_PORTUGUESE_CONTENTS;
+    }
+    // Se houver menos aulas que o default, mesclar para não perder as novas 41 aulas
+    if (stored.length < DEFAULT_PORTUGUESE_CONTENTS.length) {
+      const existingIds = new Set(stored.map(c => c.id));
+      const missing = DEFAULT_PORTUGUESE_CONTENTS.filter(c => !existingIds.has(c.id));
+      const merged = [...stored, ...missing];
+      localStorage.setItem(LS_CONTENTS, JSON.stringify(merged));
+      return merged;
+    }
+    return stored;
   } catch (e) {
-    return [];
+    return DEFAULT_PORTUGUESE_CONTENTS;
   }
 };
 
@@ -279,12 +296,92 @@ export const clearSession = () => {
 
 const LS_PLANS = 'app_plans_v1';
 
+export const getDefaultPlans = () => [
+  {
+    id: 'plan_iniciante',
+    name: 'Iniciante',
+    description: 'Acesso essencial a Língua Portuguesa, Fonética, Ortografia, Semântica e Morfologia.',
+    price: 29.00,
+    periodo: 'mensal',
+    status: 'active',
+    permissions: {
+      portugues: true,
+      redacao: false,
+      videoaulas: true,
+      simulados: false,
+      material: true,
+      cronograma: false
+    },
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'plan_medio',
+    name: 'Médio',
+    description: 'Acesso completo a Gramática, Aulas, Simulados com gabarito e Cronograma de estudos.',
+    price: 47.90,
+    periodo: 'mensal',
+    status: 'active',
+    permissions: {
+      portugues: true,
+      redacao: false,
+      videoaulas: true,
+      simulados: true,
+      material: true,
+      cronograma: true
+    },
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  },
+  {
+    id: 'plan_pro',
+    name: 'Pro',
+    description: 'Experiência VIP com todas as matérias liberadas, Redação Nota 1000 com correções e mentoria.',
+    price: 120.00,
+    periodo: 'mensal',
+    status: 'active',
+    permissions: {
+      portugues: true,
+      redacao: true,
+      videoaulas: true,
+      simulados: true,
+      material: true,
+      cronograma: true
+    },
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString()
+  }
+];
+
 export const getPlans = () => {
   try {
     const raw = localStorage.getItem(LS_PLANS);
-    return raw ? JSON.parse(raw) : [];
+    let plans = raw ? JSON.parse(raw) : [];
+    if (!plans || plans.length === 0) {
+      plans = getDefaultPlans();
+      localStorage.setItem(LS_PLANS, JSON.stringify(plans));
+      return plans;
+    }
+    const defaults = getDefaultPlans();
+    let updated = false;
+    for (const def of defaults) {
+      const idx = plans.findIndex(p => p.id === def.id || p.name.toLowerCase() === def.name.toLowerCase());
+      if (idx === -1) {
+        plans.push(def);
+        updated = true;
+      } else {
+        if (plans[idx].price !== def.price) {
+          plans[idx].price = def.price;
+          updated = true;
+        }
+      }
+    }
+    if (updated) {
+      localStorage.setItem(LS_PLANS, JSON.stringify(plans));
+    }
+    return plans;
   } catch (e) {
-    return [];
+    return getDefaultPlans();
   }
 };
 

@@ -100,7 +100,7 @@ const loginHandler = (e) => {
 
 const logout = () => {
   clearSession();
-  window.location.href = '/pages/login.html';
+  window.location.href = '/login';
 };
 
 const setupPasswordToggle = () => {

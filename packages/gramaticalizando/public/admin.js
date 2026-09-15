@@ -621,7 +621,7 @@ async function verificarSessao() {
         if (!resposta.ok) {
 
             window.location.href =
-                "/admin-login.html";
+                "/admin-login";
 
             return;
 
@@ -638,7 +638,7 @@ async function verificarSessao() {
         ) {
 
             window.location.href =
-                "/admin-login.html";
+                "/admin-login";
 
             return;
 
@@ -704,7 +704,7 @@ async function verificarSessao() {
 
 
         window.location.href =
-            "/admin-login.html";
+            "/admin-login";
 
     }
 
@@ -737,7 +737,7 @@ if (btnSair) {
             } finally {
 
                 window.location.href =
-                    "/admin-login.html";
+                    "/admin-login";
 
             }
 
@@ -1658,7 +1658,7 @@ if (btnVoltarMaterias) {
             history.replaceState(
                 {},
                 "",
-                "/admin.html"
+                "/admin"
             );
 
         }

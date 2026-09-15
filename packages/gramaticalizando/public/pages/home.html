@@ -18,7 +18,7 @@
       // Aluno precisa ter feito o diagnóstico
       const diagnostico = localStorage.getItem('diagnostico_simples');
       if (!diagnostico) {
-        window.location.href = './diagnostico.html';
+        window.location.href = '/diagnostico';
       }
     }
   </script>
@@ -26,7 +26,7 @@
 <body class="dashboard-shell">
   <header class="dashboard-topbar">
     <div class="dashboard-container">
-      <a class='dashboard-brand' href='/pages/home.html'>
+      <a class='dashboard-brand' href='/home'>
         <img src="/assets/img/logo-icon.png" alt="Gramaticalizando" class="dashboard-brand-logo" style="height: 36px; width: 36px; object-fit: contain; border-radius: 8px; margin-right: 8px; vertical-align: middle;" />
         <div>
           <div class="dashboard-title">Gramaticalizando</div>
@@ -37,15 +37,15 @@
       <button class="menu-btn btn" type="button" data-mobile-menu-button aria-expanded="false">☰</button>
 
       <nav class="nav-links" data-mobile-menu>
-        <a href='/pages/home.html'>Home</a>
-        <a href='/pages/portugues.html'>Português</a>
-        <a href='/pages/redacao.html'>Redação</a>
-        <a href='/pages/videoaulas.html'>Videoaulas</a>
-        <a href='/pages/simulados.html'>Simulados</a>
-        <a href='/pages/materiais.html'>Material</a>
-        <a href='/pages/cronograma.html'>Cronograma</a>
-        <a href='/pages/perfil.html'>Perfil</a>
-        <a href='/pages/configuracoes.html'>Configurações</a>
+        <a href='/home'>Home</a>
+        <a href='/portugues'>Português</a>
+        <a href='/redacao'>Redação</a>
+        <a href='/videoaulas'>Videoaulas</a>
+        <a href='/simulados'>Simulados</a>
+        <a href='/materiais'>Material</a>
+        <a href='/cronograma'>Cronograma</a>
+        <a href='/perfil'>Perfil</a>
+        <a href='/configuracoes'>Configurações</a>
       </nav>
 
       <div class="dashboard-user">
@@ -54,9 +54,9 @@
           <span>Meu perfil</span>
         </button>
         <div class="user-menu" data-profile-menu>
-          <a href='/pages/perfil.html'>Meu Perfil</a>
-          <a href='/pages/configuracoes.html'>Configurações</a>
-          <a href='/pages/login.html'>Sair</a>
+          <a href='/perfil'>Meu Perfil</a>
+          <a href='/configuracoes'>Configurações</a>
+          <a href='/login'>Sair</a>
         </div>
       </div>
     </div>
@@ -69,9 +69,9 @@
         <h1>Continue seus estudos com foco e clareza.</h1>
         <p>Seu diagnóstico foi concluído. Agora você pode acessar redações, videoaulas, simulados e o cronograma personalizado para avançar com mais confiança.</p>
         <div class="hero-actions">
-          <a class='btn btn-primary' href='/pages/simulados.html'>Ver simulados</a>
-          <a class='btn btn-secondary' href='/pages/cronograma.html'>Abrir cronograma</a>
-          <a class='btn btn-secondary' href='/professor/index.html'>Painel do professor</a>
+          <a class='btn btn-primary' href='/simulados'>Ver simulados</a>
+          <a class='btn btn-secondary' href='/cronograma'>Abrir cronograma</a>
+          <a class='btn btn-secondary' href='/professor'>Painel do professor</a>
         </div>
       </div>
 
@@ -95,7 +95,7 @@
     </section>
 
     <section class="dashboard-grid">
-      <article class="dashboard-card" onclick="location.href='./redacao.html'">
+      <article class="dashboard-card" onclick="location.href='/redacao'">
         <div class="dashboard-card-icon">✍️</div>
         <h3>Redação</h3>
         <p>Escrever redações, acompanhar correções e rever o histórico.</p>
@@ -106,7 +106,7 @@
         </ul>
       </article>
 
-      <article class="dashboard-card" onclick="location.href='./videoaulas.html'">
+      <article class="dashboard-card" onclick="location.href='/videoaulas'">
         <div class="dashboard-card-icon">🎥</div>
         <h3>Videoaulas</h3>
         <p>Assista aulas gravadas, continue de onde parou e salve favoritas.</p>
@@ -117,7 +117,7 @@
         </ul>
       </article>
 
-      <article class="dashboard-card" onclick="location.href='./simulados.html'">
+      <article class="dashboard-card" onclick="location.href='/simulados'">
         <div class="dashboard-card-icon">📝</div>
         <h3>Simulados</h3>
         <p>Realize testes, veja resultados e compare seu desempenho.</p>
@@ -128,7 +128,7 @@
         </ul>
       </article>
 
-      <article class="dashboard-card" onclick="location.href='./materiais.html'">
+      <article class="dashboard-card" onclick="location.href='/materiais'">
         <div class="dashboard-card-icon">📚</div>
         <h3>Material de Apoio</h3>
         <p>Acesse PDFs, apostilas e exercícios para reforçar seus estudos.</p>
@@ -139,7 +139,7 @@
         </ul>
       </article>
 
-      <article class="dashboard-card" onclick="location.href='./cronograma.html'">
+      <article class="dashboard-card" onclick="location.href='/cronograma'">
         <div class="dashboard-card-icon">📅</div>
         <h3>Cronograma</h3>
         <p>Veja suas próximas atividades e organize a semana de estudos.</p>
@@ -149,7 +149,7 @@
         </ul>
       </article>
 
-      <article class="dashboard-card" onclick="location.href='./perfil.html'">
+      <article class="dashboard-card" onclick="location.href='/perfil'">
         <div class="dashboard-card-icon">🏆</div>
         <h3>Desempenho</h3>
         <p>Confira estatísticas, evolução e metas pessoais.</p>

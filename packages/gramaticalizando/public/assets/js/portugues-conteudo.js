@@ -236,7 +236,7 @@ const renderContent = () => {
 };
 
 backButton?.addEventListener('click', () => {
-  window.location.href = '/pages/portugues.html';
+  window.location.href = '/portugues';
 });
 
 studyBlocks?.addEventListener('click', (event) => {

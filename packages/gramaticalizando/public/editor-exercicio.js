@@ -298,7 +298,7 @@ btnVoltar.addEventListener(
     () => {
 
         window.location.href =
-            "/admin.html";
+            "/admin";
 
     }
 );

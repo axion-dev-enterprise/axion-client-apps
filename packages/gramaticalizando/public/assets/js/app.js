@@ -1,6 +1,7 @@
 import { getSession, getStudentPermissions } from './storage.js';
 import { showToast } from './components/Toast.js';
 import { confirmModal, customAlertModal, showModalDialog } from './components/Modal.js';
+import { initSpaRouter, navigateTo, normalizeCleanUrl } from './components/spa-router.js';
 
 // Global zero-alert guardrail: route any lingering window.alert to sleek modern toast
 if (typeof window !== 'undefined') {
@@ -11,61 +12,73 @@ if (typeof window !== 'undefined') {
   window.alert = (mensagem) => {
     showToast(String(mensagem || ''), 'info', 4000);
   };
+  window.navigateTo = navigateTo;
 }
 
-const path = window.location.pathname.split('/').pop() || 'index.html';
+// Inicializar SPA Router instantâneo
+if (typeof window !== 'undefined') {
+  initSpaRouter();
+}
+
+const getNormalizedRoute = () => {
+  const p = window.location.pathname.split('/').pop() || 'index';
+  return p.replace(/\.html$/, '');
+};
+
+const route = getNormalizedRoute();
 
 window.addEventListener('DOMContentLoaded', () => {
   const session = getSession();
   const protectedPages = [
-    'home.html', 'redacao.html', 'portugues.html', 'videoaulas.html',
-    'simulados.html', 'simulado-conteudo.html', 'materiais.html', 'cronograma.html', 'diagnostico.html', 'portugues-conteudo.html'
+    'home', 'redacao', 'portugues', 'videoaulas',
+    'simulados', 'simulado-conteudo', 'materiais', 'cronograma', 'diagnostico', 'portugues-conteudo', 'perfil', 'configuracoes'
   ];
   const needsDiagnostic = [
-    'home.html', 'redacao.html', 'portugues.html', 'videoaulas.html',
-    'simulados.html', 'materiais.html', 'cronograma.html'
+    'home', 'redacao', 'portugues', 'videoaulas',
+    'simulados', 'materiais', 'cronograma'
   ];
   const pagePermissions = {
-    'portugues.html': 'portugues',
-    'redacao.html': 'redacao',
-    'videoaulas.html': 'videoaulas',
-    'simulados.html': 'simulados',
-    'simulado-conteudo.html': 'simulados',
-    'materiais.html': 'material',
-    'cronograma.html': 'cronograma',
-    'portugues-conteudo.html': 'portugues'
+    'portugues': 'portugues',
+    'redacao': 'redacao',
+    'videoaulas': 'videoaulas',
+    'simulados': 'simulados',
+    'simulado-conteudo': 'simulados',
+    'materiais': 'material',
+    'cronograma': 'cronograma',
+    'portugues-conteudo': 'portugues'
   };
 
-  if (session && (path === 'login.html' || path === 'registro.html')) {
+  if (session && (route === 'login' || route === 'registro')) {
     if (session.tipo === 'professor') {
-      window.location.href = '/professor/index.html';
+      window.location.href = '/professor';
     } else {
-      window.location.href = '/pages/home.html';
+      window.location.href = '/home';
     }
     return;
   }
 
-  if (!session && protectedPages.includes(path)) {
-    window.location.href = '/pages/login.html';
+  if (!session && protectedPages.includes(route)) {
+    window.location.href = '/login';
     return;
   }
 
-  // Verificar se o diagnóstico foi preenchido (seja em session.diagnostico ou localStorage 'diagnostico_simples')
+  // Verificar se o diagnóstico foi preenchido
   const hasDiagnostic = Boolean(
     (session && session.diagnostico) ||
     localStorage.getItem('diagnostico_simples')
   );
 
   // Professores nunca são redirecionados para diagnóstico
-  if (session && session.tipo !== 'professor' && !hasDiagnostic && needsDiagnostic.includes(path)) {
-    window.location.href = '/pages/diagnostico.html';
+  if (session && session.tipo !== 'professor' && !hasDiagnostic && needsDiagnostic.includes(route)) {
+    window.location.href = '/diagnostico';
+    return;
   }
 
   // Restringir acesso às páginas do aluno de acordo com o plano vinculado
   if (session && session.tipo !== 'professor') {
-    const requiredPermission = pagePermissions[path];
+    const requiredPermission = pagePermissions[route];
     if (requiredPermission && !getStudentPermissions(session.id || session.email)[requiredPermission]) {
-      window.location.href = '/pages/home.html';
+      window.location.href = '/home';
       return;
     }
   }
@@ -95,4 +108,3 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-

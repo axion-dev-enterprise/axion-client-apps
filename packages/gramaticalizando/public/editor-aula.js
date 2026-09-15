@@ -99,7 +99,7 @@ async function verificarSessao() {
 
         if (!resposta.ok) {
 
-            window.location.href = "/admin-login.html";
+            window.location.href = "/admin-login";
             return false;
         }
 
@@ -559,7 +559,7 @@ btnVoltar.addEventListener(
         } else {
 
             window.location.href =
-                "/admin.html";
+                "/admin";
         }
     }
 );

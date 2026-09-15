@@ -157,12 +157,12 @@
 
       <div class="actions">
         <button type="submit" id="submitBtn" class="btn btn-primary">Entrar</button>
-        <a class='btn btn-secondary' href='/pages/registro.html' style='justify-content: center; display: inline-flex; background: #f3f0ff; color: #7c3aed; text-decoration: none;'>Criar conta</a>
+        <a class='btn btn-secondary' href='/registro' style='justify-content: center; display: inline-flex; background: #f3f0ff; color: #7c3aed; text-decoration: none;'>Criar conta</a>
       </div>
     </form>
 
     <div class="login-footer">
-      Não tem uma conta? <a href='/pages/registro.html'>Cadastre-se</a>
+      Não tem uma conta? <a href='/registro'>Cadastre-se</a>
     </div>
 
     <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e8e0f0; font-size: 0.85rem; color: #6b607d;">
@@ -260,9 +260,9 @@
         } else {
           const diagnostico = localStorage.getItem('diagnostico_simples');
           if (diagnostico) {
-            window.location.href = './home.html';
+            window.location.href = '/home';
           } else {
-            window.location.href = './diagnostico.html';
+            window.location.href = '/diagnostico';
           }
         }
       }, 500);
