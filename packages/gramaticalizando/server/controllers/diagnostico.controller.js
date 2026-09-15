@@ -145,21 +145,154 @@ const QUESTOES_DIAGNOSTICO = [
     }
 ];
 
-async function obterQuestoes(req, res) {
-    // Retorna as questões sem o gabarito nem explicação
-    const questoesSemGabarito = QUESTOES_DIAGNOSTICO.map(q => ({
-        id: q.id,
-        topico: q.topico,
-        nomeTopico: q.nomeTopico,
-        enunciado: q.enunciado,
-        alternativas: q.alternativas
-    }));
+async function obterQuestoesPersistidas() {
+    let dados = await lerArquivoJson(paths.DIAGNOSTICO);
+    if (!Array.isArray(dados) || dados.length === 0) {
+        dados = QUESTOES_DIAGNOSTICO;
+        await salvarArquivoJson(paths.DIAGNOSTICO, dados);
+    }
+    return dados;
+}
 
-    return res.json({
-        sucesso: true,
-        totalQuestoes: questoesSemGabarito.length,
-        questoes: questoesSemGabarito
-    });
+async function obterQuestoes(req, res) {
+    try {
+        const questoes = await obterQuestoesPersistidas();
+        // Retorna as questões sem o gabarito nem explicação
+        const questoesSemGabarito = questoes.map(q => ({
+            id: q.id,
+            topico: q.topico,
+            nomeTopico: q.nomeTopico,
+            enunciado: q.enunciado,
+            alternativas: q.alternativas
+        }));
+
+        return res.json({
+            sucesso: true,
+            totalQuestoes: questoesSemGabarito.length,
+            questoes: questoesSemGabarito
+        });
+    } catch (erro) {
+        console.error("Erro ao obter questões do diagnóstico:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao carregar diagnóstico." });
+    }
+}
+
+// ADMIN: Obter todas as questões completas com gabaritos
+async function obterDiagnosticoAdmin(req, res) {
+    try {
+        const questoes = await obterQuestoesPersistidas();
+        return res.json({
+            sucesso: true,
+            totalQuestoes: questoes.length,
+            questoes,
+            topicosDisponiveis: [
+                { chave: "interpretacao", nome: "Interpretação de Texto" },
+                { chave: "sintaxe", nome: "Análise Sintática" },
+                { chave: "concordancia", nome: "Concordância Verbal e Nominal" },
+                { chave: "crase", nome: "Emprego do Acento Indicativo de Crase" },
+                { chave: "pontuacao", nome: "Pontuação e Emprego da Vírgula" },
+                { chave: "morfologia", nome: "Morfologia e Classes Gramaticais" }
+            ],
+            criteriosNivel: {
+                iniciante: "Abaixo de 50%",
+                intermediario: "50% a 79%",
+                avancado: "80% ou mais"
+            }
+        });
+    } catch (erro) {
+        console.error("Erro obter diagnostico admin:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao obter diagnóstico admin." });
+    }
+}
+
+async function criarQuestaoAdmin(req, res) {
+    try {
+        const crypto = require("crypto");
+        const enunciado = String(req.body.enunciado || "").trim();
+        const topico = String(req.body.topico || "sintaxe").trim();
+        const nomeTopico = String(req.body.nomeTopico || "Análise Sintática").trim();
+        const respostaCorreta = String(req.body.respostaCorreta || "a").trim().toLowerCase();
+        const explicacao = String(req.body.explicacao || "").trim();
+        const alternativas = Array.isArray(req.body.alternativas) ? req.body.alternativas : [];
+
+        if (enunciado.length < 5) {
+            return res.status(400).json({ sucesso: false, mensagem: "Digite um enunciado válido para a questão." });
+        }
+
+        const questoes = await obterQuestoesPersistidas();
+        const nova = {
+            id: `diag-${topico}-${crypto.randomUUID().slice(0, 6)}`,
+            topico,
+            nomeTopico,
+            enunciado,
+            alternativas: alternativas.length > 0 ? alternativas : [
+                { id: "a", texto: "Alternativa A" },
+                { id: "b", texto: "Alternativa B" },
+                { id: "c", texto: "Alternativa C" },
+                { id: "d", texto: "Alternativa D" }
+            ],
+            respostaCorreta,
+            explicacao
+        };
+
+        questoes.push(nova);
+        await salvarArquivoJson(paths.DIAGNOSTICO, questoes);
+
+        return res.status(201).json({ sucesso: true, questao: nova });
+    } catch (erro) {
+        console.error("Erro criar questão diagnóstico:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao criar questão do diagnóstico." });
+    }
+}
+
+async function atualizarQuestaoAdmin(req, res) {
+    try {
+        const id = req.params.id;
+        const questoes = await obterQuestoesPersistidas();
+        const idx = questoes.findIndex(q => q.id === id);
+
+        if (idx === -1) {
+            return res.status(404).json({ sucesso: false, mensagem: "Questão não encontrada." });
+        }
+
+        const enunciado = String(req.body.enunciado || "").trim();
+        if (enunciado.length < 5) {
+            return res.status(400).json({ sucesso: false, mensagem: "Digite um enunciado válido." });
+        }
+
+        questoes[idx].enunciado = enunciado;
+        if (req.body.topico) questoes[idx].topico = String(req.body.topico).trim();
+        if (req.body.nomeTopico) questoes[idx].nomeTopico = String(req.body.nomeTopico).trim();
+        if (req.body.respostaCorreta) questoes[idx].respostaCorreta = String(req.body.respostaCorreta).trim().toLowerCase();
+        if (req.body.explicacao !== undefined) questoes[idx].explicacao = String(req.body.explicacao).trim();
+        if (Array.isArray(req.body.alternativas)) questoes[idx].alternativas = req.body.alternativas;
+
+        await salvarArquivoJson(paths.DIAGNOSTICO, questoes);
+        return res.json({ sucesso: true, questao: questoes[idx] });
+    } catch (erro) {
+        console.error("Erro atualizar questão diagnóstico:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao atualizar questão." });
+    }
+}
+
+async function excluirQuestaoAdmin(req, res) {
+    try {
+        const id = req.params.id;
+        const questoes = await obterQuestoesPersistidas();
+        const idx = questoes.findIndex(q => q.id === id);
+
+        if (idx === -1) {
+            return res.status(404).json({ sucesso: false, mensagem: "Questão não encontrada." });
+        }
+
+        questoes.splice(idx, 1);
+        await salvarArquivoJson(paths.DIAGNOSTICO, questoes);
+
+        return res.json({ sucesso: true, mensagem: "Questão excluída com sucesso." });
+    } catch (erro) {
+        console.error("Erro excluir questão diagnóstico:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao excluir questão." });
+    }
 }
 
 function gerarCronogramaPersonalizado(foco, horasSemanais, lacunas) {
@@ -337,5 +470,9 @@ async function processar(req, res) {
 module.exports = {
     QUESTOES_DIAGNOSTICO,
     obterQuestoes,
-    processar
+    processar,
+    obterDiagnosticoAdmin,
+    criarQuestaoAdmin,
+    atualizarQuestaoAdmin,
+    excluirQuestaoAdmin
 };

@@ -1,14 +1,65 @@
 [
   {
-    "id": "95aa14e5-8687-42f7-ab38-c600348f7597",
-    "nome": "portugues",
-    "criadoEm": "2026-08-28T06:25:05.723Z",
-    "atualizadoEm": "2026-08-28T06:53:59.841Z"
+    "id": "fonetica-fonologia",
+    "nome": "Fonética e Fonologia",
+    "descricao": "Estudo detalhado dos sons da fala, fonemas, divisão silábica e encontros na língua portuguesa.",
+    "ordem": 1,
+    "icone": "Mic",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
   },
   {
-    "id": "0e5e58fb-1b06-4d95-8a15-7776b07c2f5f",
-    "nome": "matematica",
-    "criadoEm": "2026-08-28T19:58:04.382Z",
-    "atualizadoEm": "2026-08-28T19:58:04.382Z"
+    "id": "ortografia",
+    "nome": "Ortografia e Acentuação",
+    "descricao": "Normas do Novo Acordo Ortográfico, regras gerais e especiais de acentuação gráfica e uso do hífen.",
+    "ordem": 2,
+    "icone": "Edit3",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
+  },
+  {
+    "id": "semantica",
+    "nome": "Semântica e Significação das Palavras",
+    "descricao": "Sentido literal e figurado, relações de significação, ambiguidade e interpretação textual profunda.",
+    "ordem": 3,
+    "icone": "Compass",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
+  },
+  {
+    "id": "morfologia",
+    "nome": "Morfologia — Estrutura e Formação",
+    "descricao": "Elementos mórficos, radical, afixos, desinências e todos os processos de formação de novas palavras.",
+    "ordem": 4,
+    "icone": "Layers",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
+  },
+  {
+    "id": "classes-palavras",
+    "nome": "Classes de Palavras (Morfossintaxe)",
+    "descricao": "As 10 classes gramaticais completas: flexões, valores sintáticos e semânticos em provas e redações.",
+    "ordem": 5,
+    "icone": "BookOpen",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
+  },
+  {
+    "id": "analise-sintatica",
+    "nome": "Análise Sintática e Sintaxe Oracional",
+    "descricao": "Termos da oração, subordinação, coordenação, crase, concordância, regência e colocação pronominal.",
+    "ordem": 6,
+    "icone": "GitCommit",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
+  },
+  {
+    "id": "pontuacao-estilistica",
+    "nome": "Pontuação e Estilística",
+    "descricao": "Uso da vírgula, pontuação expressiva, figuras de linguagem e eliminação de vícios de linguagem.",
+    "ordem": 7,
+    "icone": "Feather",
+    "criadoEm": "2026-09-15T22:32:33.258Z",
+    "atualizadoEm": "2026-09-15T22:32:33.258Z"
   }
 ]

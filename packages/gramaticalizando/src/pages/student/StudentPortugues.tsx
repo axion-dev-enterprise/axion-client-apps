@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
   CheckCircle2,
@@ -17,10 +17,12 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
 import { CANONICAL_MODULES } from '../../data/canonical-modules';
-import { Aula } from '../../types/courses';
+import { Aula, Modulo } from '../../types/courses';
 import { useToast } from '../../context/ToastContext';
+import { adminApi } from '../../api/admin';
 
 export const StudentPortugues: React.FC = () => {
+  const [modules, setModules] = useState<Modulo[]>(CANONICAL_MODULES);
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedModule, setExpandedModule] = useState<string | null>('fonetica-fonologia');
   const [selectedAula, setSelectedAula] = useState<Aula | null>(null);
@@ -30,6 +32,50 @@ export const StudentPortugues: React.FC = () => {
   });
 
   const { showToast } = useToast();
+
+  useEffect(() => {
+    const fetchLiveContent = async () => {
+      try {
+        const [mats, lsns] = await Promise.all([
+          adminApi.getMaterias().catch(() => []),
+          adminApi.getAulas().catch(() => [])
+        ]);
+
+        if (mats && mats.length > 0 && lsns && lsns.length > 0) {
+          const grouped: Modulo[] = mats.map(m => {
+            const modAulas = lsns
+              .filter(a => a.materiaId === m.id)
+              .map(a => ({
+                id: a.id,
+                moduloId: m.id,
+                titulo: a.titulo,
+                subtitulo: a.subtitulo || undefined,
+                conteudo: a.conteudo || '',
+                duracao: a.duracao || '25 min',
+                ordem: a.ordem || 1,
+                videoUrl: a.videoUrl || undefined,
+                materialPdfUrl: a.materialPdfUrl || undefined
+              }));
+
+            return {
+              id: m.id,
+              titulo: m.nome,
+              descricao: m.descricao || '',
+              ordem: m.ordem || 1,
+              icone: m.icone || 'BookOpen',
+              aulas: modAulas
+            };
+          });
+
+          if (grouped.length > 0) {
+            setModules(grouped);
+          }
+        }
+      } catch {}
+    };
+
+    fetchLiveContent();
+  }, []);
 
   const handleToggleModule = (moduleId: string) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
@@ -49,7 +95,7 @@ export const StudentPortugues: React.FC = () => {
     }
   };
 
-  const filteredModules = CANONICAL_MODULES.map((mod) => {
+  const filteredModules = modules.map((mod) => {
     const matchesModule = mod.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
       mod.descricao.toLowerCase().includes(searchTerm.toLowerCase());
 

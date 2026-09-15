@@ -1,4 +1,4 @@
-﻿const crypto = require("crypto");
+const crypto = require("crypto");
 const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson } = require("../data/jsonStore");
 
@@ -12,6 +12,9 @@ async function listar(req, res) {
         const formatadas = materias.map(m => ({
             id: m.id,
             nome: m.nome,
+            descricao: m.descricao || "",
+            ordem: m.ordem || 1,
+            icone: m.icone || "BookOpen",
             criadoEm: m.criadoEm,
             atualizadoEm: m.atualizadoEm,
             totalAulas: aulas.filter(a => a.materiaId === m.id).length
@@ -41,6 +44,10 @@ async function obterPorId(req, res) {
 async function criar(req, res) {
     try {
         const nome = String(req.body.nome || "").trim();
+        const descricao = String(req.body.descricao || "").trim();
+        const ordem = Number(req.body.ordem) || 1;
+        const icone = String(req.body.icone || "BookOpen").trim();
+
         if (nome.length < 2) {
             return res.status(400).json({ sucesso: false, mensagem: "Digite um nome válido para a matéria." });
         }
@@ -55,6 +62,9 @@ async function criar(req, res) {
         const nova = {
             id: crypto.randomUUID(),
             nome,
+            descricao,
+            ordem,
+            icone,
             criadoEm: agora,
             atualizadoEm: agora
         };
@@ -72,6 +82,10 @@ async function criar(req, res) {
 async function atualizar(req, res) {
     try {
         const nome = String(req.body.nome || "").trim();
+        const descricao = req.body.descricao !== undefined ? String(req.body.descricao).trim() : undefined;
+        const ordem = req.body.ordem !== undefined ? Number(req.body.ordem) : undefined;
+        const icone = req.body.icone !== undefined ? String(req.body.icone).trim() : undefined;
+
         if (nome.length < 2) {
             return res.status(400).json({ sucesso: false, mensagem: "Digite um nome válido para a matéria." });
         }
@@ -88,6 +102,9 @@ async function atualizar(req, res) {
         }
 
         materias[indice].nome = nome;
+        if (descricao !== undefined) materias[indice].descricao = descricao;
+        if (ordem !== undefined) materias[indice].ordem = ordem;
+        if (icone !== undefined) materias[indice].icone = icone;
         materias[indice].atualizadoEm = new Date().toISOString();
 
         await salvarArquivoJson(paths.MATERIAS, materias);

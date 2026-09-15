@@ -23,6 +23,20 @@ export async function request<T>(endpoint: string, options: RequestInit = {}): P
     headers.set('Content-Type', 'application/json');
   }
 
+  try {
+    const saved = localStorage.getItem('gramaticalizando_user');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed?.perfil === 'professor' || parsed?.tipo === 'admin') {
+        if (!headers.has('x-user-role')) headers.set('x-user-role', 'admin');
+        if (!headers.has('x-user-id')) headers.set('x-user-id', parsed.id || 'prof-wilma-admin');
+      } else if (parsed?.id) {
+        if (!headers.has('x-user-role')) headers.set('x-user-role', 'aluno');
+        if (!headers.has('x-user-id')) headers.set('x-user-id', parsed.id);
+      }
+    }
+  } catch {}
+
   const config: RequestInit = {
     ...options,
     headers,

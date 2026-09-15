@@ -21,7 +21,10 @@ if (isVercel) {
             "exercicios.json",
             "categorias.json",
             "redacoes.json",
-            "cronogramas.json"
+            "cronogramas.json",
+            "simulados.json",
+            "diagnostico.json",
+            "materiais_apoio.json"
         ];
         for (const file of jsonFiles) {
             const destPath = path.join(DATA_DIR, file);
@@ -46,6 +49,10 @@ module.exports = {
     EXERCICIOS: path.join(DATA_DIR, "exercicios.json"),
     CATEGORIAS: path.join(DATA_DIR, "categorias.json"),
     REDACOES: path.join(DATA_DIR, "redacoes.json"),
-    CRONOGRAMAS: path.join(DATA_DIR, "cronogramas.json")
+    CRONOGRAMAS: path.join(DATA_DIR, "cronogramas.json"),
+    SIMULADOS: path.join(DATA_DIR, "simulados.json"),
+    DIAGNOSTICO: path.join(DATA_DIR, "diagnostico.json"),
+    MATERIAIS_APOIO: path.join(DATA_DIR, "materiais_apoio.json"),
+    TEMAS_REDACAO: path.join(DATA_DIR, "temas_redacao.json")
 };
 

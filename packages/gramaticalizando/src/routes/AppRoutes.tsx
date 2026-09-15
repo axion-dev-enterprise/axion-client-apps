@@ -22,6 +22,9 @@ import { ProfessorAlunos } from '../pages/professor/ProfessorAlunos';
 import { ProfessorRedacoes } from '../pages/professor/ProfessorRedacoes';
 import { ProfessorAulas } from '../pages/professor/ProfessorAulas';
 import { ProfessorExercicios } from '../pages/professor/ProfessorExercicios';
+import { ProfessorSimulados } from '../pages/professor/ProfessorSimulados';
+import { ProfessorDiagnostico } from '../pages/professor/ProfessorDiagnostico';
+import { ProfessorMateriais } from '../pages/professor/ProfessorMateriais';
 
 import { NotFoundPage } from '../pages/NotFoundPage';
 
@@ -52,15 +55,17 @@ export const AppRoutes: React.FC = () => {
         <Route path="/videoaulas" element={<StudentVideoaulas />} />
       </Route>
 
-      {/* Rotas do Portal do Professor */}
+      {/* Rotas do Portal do Professor (CMS Administrativo Completo) */}
       <Route element={<ProfessorLayout />}>
         <Route path="/professor" element={<ProfessorDashboard />} />
         <Route path="/admin" element={<Navigate to="/professor" replace />} />
         <Route path="/professor/alunos" element={<ProfessorAlunos />} />
-        <Route path="/professor/redacoes" element={<ProfessorRedacoes />} />
         <Route path="/professor/aulas" element={<ProfessorAulas />} />
         <Route path="/professor/exercicios" element={<ProfessorExercicios />} />
-        <Route path="/professor/simulados" element={<ProfessorExercicios />} />
+        <Route path="/professor/simulados" element={<ProfessorSimulados />} />
+        <Route path="/professor/diagnostico" element={<ProfessorDiagnostico />} />
+        <Route path="/professor/redacoes" element={<ProfessorRedacoes />} />
+        <Route path="/professor/materiais" element={<ProfessorMateriais />} />
       </Route>
 
       {/* Rota 404 */}

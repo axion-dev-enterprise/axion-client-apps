@@ -1,38 +1,200 @@
 [
   {
-    "id": "388365e8-ba78-4f91-9921-4b5496db97ba",
-    "materiaId": "95aa14e5-8687-42f7-ab38-c600348f7597",
-    "aulaId": "2c7d9608-e80e-479a-81a8-c4c7c61d0de7",
-    "titulo": "testeeee",
-    "descricao": "dwadawddwadsad",
+    "id": "ex-fonetica-1",
+    "materiaId": "fonetica-fonologia",
+    "aulaId": "divisao-silabica",
+    "titulo": "Exercícios de Fixação — Fonética e Fonologia",
+    "descricao": "Bateria de questões oficiais cobrando encontros vocálicos, consonantais e dígrafos.",
     "publicado": true,
+    "criadoEm": "2026-09-15T22:32:48.307Z",
+    "atualizadoEm": "2026-09-15T22:32:48.312Z",
     "questoes": [
       {
-        "id": "2b342aef-add8-49fe-8f10-1cc0bcbccef5",
+        "id": "q-fon-1",
         "tipo": "multipla-escolha",
-        "enunciado": "dwadsadwa",
+        "enunciado": "Assinale a alternativa em que todas as palavras apresentam dígrafo consonantal:",
+        "banca": "FGV",
+        "ano": "2025",
         "alternativas": [
           {
-            "id": "2d97766b-3a75-4bd6-9f06-cccdc3016bbd",
-            "texto": "wwwww"
+            "id": "a",
+            "texto": "Chave, ninho, terra, piscina."
           },
           {
-            "id": "274ee6e7-ce65-4385-9aad-c7e5431ee421",
-            "texto": "sssss"
+            "id": "b",
+            "texto": "Prato, livro, pedra, cravo."
           },
           {
-            "id": "53991ae8-f75b-456c-8c27-46cda6e8b2b0",
-            "texto": "dwadsad"
+            "id": "c",
+            "texto": "Pai, caixa, quase, água."
           },
           {
-            "id": "ccaaafdd-7ef2-471d-9a6f-1b02d3f51fa5",
-            "texto": "wadwadawdsad"
+            "id": "d",
+            "texto": "Ritmo, digno, pacto, apto."
           }
         ],
-        "respostaCorreta": "2d97766b-3a75-4bd6-9f06-cccdc3016bbd"
+        "respostaCorreta": "a",
+        "comentarioProfessora": "Chave (ch), ninho (nh), terra (rr) e piscina (sc) representam apenas um fonema consonantal cada."
+      },
+      {
+        "id": "q-fon-2",
+        "tipo": "multipla-escolha",
+        "enunciado": "Em relação aos encontros vocálicos, assinale o vocábulo que contém um HIATO:",
+        "banca": "Cebraspe",
+        "ano": "2026",
+        "alternativas": [
+          {
+            "id": "a",
+            "texto": "Saúde."
+          },
+          {
+            "id": "b",
+            "texto": "Noite."
+          },
+          {
+            "id": "c",
+            "texto": "Caixa."
+          },
+          {
+            "id": "d",
+            "texto": "Uruguai."
+          }
+        ],
+        "respostaCorreta": "a",
+        "comentarioProfessora": "Em sa-ú-de, as duas vogais ficam em sílabas vizinhas separadas, caracterizando o hiato."
       }
-    ],
-    "criadoEm": "2026-08-28T08:03:38.012Z",
-    "atualizadoEm": "2026-08-28T08:03:38.012Z"
+    ]
+  },
+  {
+    "id": "ex-ortografia-1",
+    "materiaId": "ortografia",
+    "aulaId": "regras-gerais-acentuacao",
+    "titulo": "Exercícios Oficiais — Ortografia e Acentuação",
+    "descricao": "Questões comentadas sobre as regras gerais de oxítonas, paroxítonas e o Novo Acordo.",
+    "publicado": true,
+    "criadoEm": "2026-09-15T22:32:48.312Z",
+    "atualizadoEm": "2026-09-15T22:32:48.312Z",
+    "questoes": [
+      {
+        "id": "q-ort-1",
+        "tipo": "multipla-escolha",
+        "enunciado": "Segundo o Acordo Ortográfico vigente, assinale a opção com a grafia correta do hífen:",
+        "banca": "Vunesp",
+        "ano": "2025",
+        "alternativas": [
+          {
+            "id": "a",
+            "texto": "Auto-escola e micro-ondas."
+          },
+          {
+            "id": "b",
+            "texto": "Autoescola e micro-ondas."
+          },
+          {
+            "id": "c",
+            "texto": "Auto-escola e microondas."
+          },
+          {
+            "id": "d",
+            "texto": "Autoescola e microondas."
+          }
+        ],
+        "respostaCorreta": "b",
+        "comentarioProfessora": "Vogais diferentes juntam-se sem hífen (autoescola). Vogais iguais separam-se com hífen (micro-ondas)."
+      },
+      {
+        "id": "q-ort-2",
+        "tipo": "multipla-escolha",
+        "enunciado": "Indique a opção em que todas as paroxítonas perderam o acento segundo o Acordo Ortográfico:",
+        "banca": "FCC",
+        "ano": "2025",
+        "alternativas": [
+          {
+            "id": "a",
+            "texto": "Ideia, assembleia, jiboia, heroico."
+          },
+          {
+            "id": "b",
+            "texto": "Herói, troféu, papéis, chapéu."
+          },
+          {
+            "id": "c",
+            "texto": "Saída, saúde, baú, faísca."
+          },
+          {
+            "id": "d",
+            "texto": "Fácil, tórax, júri, lápis."
+          }
+        ],
+        "respostaCorreta": "a",
+        "comentarioProfessora": "Ditongos abertos éi e ói em posição paroxítona não são mais acentuados na norma culta."
+      }
+    ]
+  },
+  {
+    "id": "ex-sintaxe-1",
+    "materiaId": "analise-sintatica",
+    "aulaId": "crase",
+    "titulo": "Exercícios de Concursos — Sintaxe, Concordância e Crase",
+    "descricao": "Domínio de regência, transitividade e casos facultativos e obrigatórios de crase.",
+    "publicado": true,
+    "criadoEm": "2026-09-15T22:32:48.312Z",
+    "atualizadoEm": "2026-09-15T22:32:48.312Z",
+    "questoes": [
+      {
+        "id": "q-sin-1",
+        "tipo": "multipla-escolha",
+        "enunciado": "Em 'Havia muitas pessoas aguardando o resultado', o termo 'muitas pessoas' exerce a função sintática de:",
+        "banca": "FGV",
+        "ano": "2026",
+        "alternativas": [
+          {
+            "id": "a",
+            "texto": "Sujeito simples."
+          },
+          {
+            "id": "b",
+            "texto": "Objeto direto."
+          },
+          {
+            "id": "c",
+            "texto": "Predicativo do sujeito."
+          },
+          {
+            "id": "d",
+            "texto": "Adjunto adverbial."
+          }
+        ],
+        "respostaCorreta": "b",
+        "comentarioProfessora": "O verbo HAVER com sentido de existir é impessoal e não possui sujeito. O termo é objeto direto."
+      },
+      {
+        "id": "q-sin-2",
+        "tipo": "multipla-escolha",
+        "enunciado": "O uso do acento indicativo de crase é facultativo em:",
+        "banca": "Cebraspe",
+        "ano": "2025",
+        "alternativas": [
+          {
+            "id": "a",
+            "texto": "Chegamos à meia-noite em ponto."
+          },
+          {
+            "id": "b",
+            "texto": "Entreguei o relatório à minha professora."
+          },
+          {
+            "id": "c",
+            "texto": "Ele começou à falar compulsivamente."
+          },
+          {
+            "id": "d",
+            "texto": "Fui à cidade vizinha ontem."
+          }
+        ],
+        "respostaCorreta": "b",
+        "comentarioProfessora": "Antes de pronomes possessivos femininos singulares, o artigo é facultativo, tornando a crase facultativa."
+      }
+    ]
   }
 ]

@@ -17,11 +17,13 @@ export const ProfessorLayout: React.FC = () => {
 
   const getPageTitle = () => {
     if (location.pathname.includes('/alunos')) return 'Alunos Matriculados';
-    if (location.pathname.includes('/redacoes')) return 'Correção de Redações';
-    if (location.pathname.includes('/aulas')) return 'Gerenciamento de Aulas';
-    if (location.pathname.includes('/exercicios')) return 'Banco de Questões';
-    if (location.pathname.includes('/simulados')) return 'Simulados & Avaliações';
-    return 'Painel de Controle do Professor';
+    if (location.pathname.includes('/aulas')) return 'Gerenciamento de Módulos & Aulas';
+    if (location.pathname.includes('/exercicios')) return 'Banco de Questões & Exercícios';
+    if (location.pathname.includes('/simulados')) return 'Simulados & Provas Avaliativas';
+    if (location.pathname.includes('/diagnostico')) return 'Diagnóstico Inicial & Nivelamento';
+    if (location.pathname.includes('/redacoes')) return 'Correção de Redações & Temas';
+    if (location.pathname.includes('/materiais')) return 'Materiais de Apoio & Apostilas';
+    return 'Painel de Controle da Professora';
   };
 
   return (

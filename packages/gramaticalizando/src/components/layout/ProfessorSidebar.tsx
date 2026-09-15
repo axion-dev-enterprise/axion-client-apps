@@ -7,6 +7,8 @@ import {
   BookOpen,
   HelpCircle,
   FileCheck,
+  Sparkles,
+  Download,
   ArrowLeft,
   LogOut,
   X,
@@ -27,10 +29,12 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
   const menuItems = [
     { path: '/professor', label: 'Visão Geral', icon: <LayoutDashboard size={18} />, exact: true },
     { path: '/professor/alunos', label: 'Alunos Matriculados', icon: <Users size={18} /> },
-    { path: '/professor/redacoes', label: 'Correção de Redações', icon: <PenTool size={18} /> },
     { path: '/professor/aulas', label: 'Módulos & Aulas', icon: <BookOpen size={18} /> },
     { path: '/professor/exercicios', label: 'Banco de Questões', icon: <HelpCircle size={18} /> },
-    { path: '/professor/simulados', label: 'Simulados & Provas', icon: <FileCheck size={18} /> }
+    { path: '/professor/simulados', label: 'Simulados & Provas', icon: <FileCheck size={18} /> },
+    { path: '/professor/diagnostico', label: 'Diagnóstico & Nivelamento', icon: <Sparkles size={18} /> },
+    { path: '/professor/redacoes', label: 'Correção de Redações', icon: <PenTool size={18} /> },
+    { path: '/professor/materiais', label: 'Materiais de Apoio', icon: <Download size={18} /> }
   ];
 
   const handleNav = (path: string) => {

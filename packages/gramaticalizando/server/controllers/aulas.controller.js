@@ -1,6 +1,29 @@
-﻿const paths = require("../config/paths");
+const crypto = require("crypto");
+const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
+
+async function listarAdmin(req, res) {
+    try {
+        const [aulas, materias] = await Promise.all([
+            lerArquivoJson(paths.AULAS),
+            lerArquivoJson(paths.MATERIAS)
+        ]);
+
+        const formatadas = aulas.map(aula => {
+            const mat = materias.find(m => m.id === aula.materiaId);
+            return {
+                ...aula,
+                nomeMateria: mat ? mat.nome : "Geral"
+            };
+        });
+
+        return res.json({ sucesso: true, aulas: formatadas });
+    } catch (erro) {
+        console.error("Erro listar aulas admin:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao carregar lista de aulas." });
+    }
+}
 
 async function obterPorIdAdmin(req, res) {
     try {
@@ -22,13 +45,72 @@ async function obterPorIdAdmin(req, res) {
     }
 }
 
-async function atualizarAdmin(req, res) {
+async function criarAdmin(req, res) {
     try {
+        const materiaId = String(req.body.materiaId || "").trim();
         const titulo = String(req.body.titulo || "").trim();
+        const subtitulo = String(req.body.subtitulo || "").trim();
         const conteudo = String(req.body.conteudo || "");
         const videoUrl = String(req.body.videoUrl || "").trim();
         const materialPdfUrl = String(req.body.materialPdfUrl || "").trim();
-        const publicado = Boolean(req.body.publicado);
+        const duracao = String(req.body.duracao || "25 min").trim();
+        const ordem = Number(req.body.ordem) || 1;
+        const publicado = req.body.publicado !== undefined ? Boolean(req.body.publicado) : true;
+
+        if (!titulo || titulo.length < 2) {
+            return res.status(400).json({ sucesso: false, mensagem: "Digite um título válido para a aula." });
+        }
+        if (!materiaId) {
+            return res.status(400).json({ sucesso: false, mensagem: "Selecione o módulo ou matéria da aula." });
+        }
+
+        const [aulas, materias] = await Promise.all([
+            lerArquivoJson(paths.AULAS),
+            lerArquivoJson(paths.MATERIAS)
+        ]);
+
+        const materia = materias.find(m => m.id === materiaId);
+        if (!materia) {
+            return res.status(404).json({ sucesso: false, mensagem: "Módulo ou matéria não encontrado." });
+        }
+
+        const agora = new Date().toISOString();
+        const novaAula = {
+            id: crypto.randomUUID(),
+            materiaId,
+            titulo,
+            subtitulo: subtitulo || null,
+            conteudo,
+            videoUrl: videoUrl || null,
+            materialPdfUrl: materialPdfUrl || null,
+            duracao,
+            ordem,
+            publicado,
+            criadoEm: agora,
+            atualizadoEm: agora
+        };
+
+        aulas.push(novaAula);
+        await salvarArquivoJson(paths.AULAS, aulas);
+
+        return res.status(201).json({ sucesso: true, aula: novaAula });
+    } catch (erro) {
+        console.error("Erro criar aula admin:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao cadastrar nova aula." });
+    }
+}
+
+async function atualizarAdmin(req, res) {
+    try {
+        const titulo = String(req.body.titulo || "").trim();
+        const subtitulo = String(req.body.subtitulo || "").trim();
+        const conteudo = String(req.body.conteudo || "");
+        const videoUrl = String(req.body.videoUrl || "").trim();
+        const materialPdfUrl = String(req.body.materialPdfUrl || "").trim();
+        const duracao = String(req.body.duracao || "").trim();
+        const ordem = req.body.ordem !== undefined ? Number(req.body.ordem) : undefined;
+        const publicado = req.body.publicado !== undefined ? Boolean(req.body.publicado) : undefined;
+        const materiaId = req.body.materiaId ? String(req.body.materiaId).trim() : undefined;
 
         if (titulo.length < 2) {
             return res.status(400).json({ sucesso: false, mensagem: "Digite um título válido para a aula." });
@@ -41,10 +123,14 @@ async function atualizarAdmin(req, res) {
         }
 
         aulas[indice].titulo = titulo;
-        aulas[indice].conteudo = conteudo;
-        aulas[indice].videoUrl = videoUrl || null;
-        aulas[indice].materialPdfUrl = materialPdfUrl || null;
-        aulas[indice].publicado = publicado;
+        if (subtitulo !== undefined) aulas[indice].subtitulo = subtitulo;
+        if (conteudo !== undefined) aulas[indice].conteudo = conteudo;
+        if (videoUrl !== undefined) aulas[indice].videoUrl = videoUrl || null;
+        if (materialPdfUrl !== undefined) aulas[indice].materialPdfUrl = materialPdfUrl || null;
+        if (duracao) aulas[indice].duracao = duracao;
+        if (ordem !== undefined) aulas[indice].ordem = ordem;
+        if (publicado !== undefined) aulas[indice].publicado = publicado;
+        if (materiaId) aulas[indice].materiaId = materiaId;
         aulas[indice].atualizadoEm = new Date().toISOString();
 
         await salvarArquivoJson(paths.AULAS, aulas);
@@ -218,7 +304,9 @@ async function concluirAulaAluno(req, res) {
 }
 
 module.exports = {
+    listarAdmin,
     obterPorIdAdmin,
+    criarAdmin,
     atualizarAdmin,
     excluirAdmin,
     obterAulaAluno,

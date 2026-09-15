@@ -48,7 +48,7 @@ export const Card: React.FC<CardProps> = ({
         if (isInteractive) {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.borderColor = 'var(--border-subtle)';
-          e.currentTarget.style.boxShadow = variant === 'elevated' ? 'var(--shadow-md)' : 'var(--shadow-sm)';
+          e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
         }
       }}
       className={className}

@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FolderDown, FileText, Download, Bookmark } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { useToast } from '../../context/ToastContext';
+import { request } from '../../api/client';
 
 export const StudentMateriais: React.FC = () => {
   const { showToast } = useToast();
-
-  const materiais = [
+  const [materiais, setMateriais] = useState<any[]>([
     {
       id: 'mat-1',
       titulo: 'Guia Definitivo do Novo Acordo Ortográfico (PDF)',
       categoria: 'Ortografia & Hífen',
       tamanho: '2.4 MB',
       formato: 'PDF',
+      arquivoUrl: 'https://gramaticalizando.com.br/docs/guia-ortografia.pdf',
       descricao: 'Tabela comparativa completa das regras de hífen, queda de acentos diferenciais e regras de paroxítonas.'
     },
     {
@@ -23,6 +24,7 @@ export const StudentMateriais: React.FC = () => {
       categoria: 'Análise Sintática',
       tamanho: '1.8 MB',
       formato: 'PDF',
+      arquivoUrl: 'https://gramaticalizando.com.br/docs/mapa-sintaxe.pdf',
       descricao: 'Esquema visual colorido com macetes para diferenciar Adjunto Adnominal de Complemento Nominal.'
     },
     {
@@ -31,6 +33,7 @@ export const StudentMateriais: React.FC = () => {
       categoria: 'Regência & Crase',
       tamanho: '3.1 MB',
       formato: 'PDF',
+      arquivoUrl: 'https://gramaticalizando.com.br/docs/manual-fonetica.pdf',
       descricao: 'Verbos que mudam de sentido conforme a preposição exigida (assistir, aspirar, visar, agradar, implicar).'
     },
     {
@@ -39,12 +42,36 @@ export const StudentMateriais: React.FC = () => {
       categoria: 'Redação Dissertativa',
       tamanho: '1.2 MB',
       formato: 'PDF',
+      arquivoUrl: 'https://gramaticalizando.com.br/docs/checklist-redacao.pdf',
       descricao: 'Lista completa de repertórios e conectivos de coesão interparágrafo para alcançar nota 200 na Competência 4.'
     }
-  ];
+  ]);
 
-  const handleDownload = (titulo: string) => {
-    showToast(`Iniciando download do material: "${titulo}"`, 'success');
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await request<{ sucesso: boolean; materiais: any[] }>('/api/materiais-apoio');
+        if (res.sucesso && Array.isArray(res.materiais) && res.materiais.length > 0) {
+          setMateriais(res.materiais.map(m => ({
+            id: m.id,
+            titulo: m.titulo,
+            categoria: m.nomeModulo || 'Geral',
+            tamanho: m.tamanho || '2.5 MB',
+            formato: (m.tipo || 'PDF').toUpperCase(),
+            arquivoUrl: m.arquivoUrl,
+            descricao: m.descricao
+          })));
+        }
+      } catch {}
+    };
+    load();
+  }, []);
+
+  const handleDownload = (item: any) => {
+    showToast(`Iniciando download do material: "${item.titulo}"`, 'success');
+    if (item.arquivoUrl) {
+      window.open(item.arquivoUrl, '_blank');
+    }
   };
 
   return (
@@ -89,7 +116,7 @@ export const StudentMateriais: React.FC = () => {
               variant="secondary"
               size="md"
               icon={<Download size={16} />}
-              onClick={() => handleDownload(mat.titulo)}
+              onClick={() => handleDownload(mat)}
               style={{ width: '100%' }}
             >
               Baixar Material em PDF

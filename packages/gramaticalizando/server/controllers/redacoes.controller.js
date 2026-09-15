@@ -30,11 +30,111 @@ const TEMAS_PADRAO = [
     }
 ];
 
+async function obterTemasPersistidos() {
+    let temas = await lerArquivoJson(paths.TEMAS_REDACAO);
+    if (!Array.isArray(temas) || temas.length === 0) {
+        temas = TEMAS_PADRAO;
+        await salvarArquivoJson(paths.TEMAS_REDACAO, temas);
+    }
+    return temas;
+}
+
 async function obterTemas(req, res) {
-    return res.json({
-        sucesso: true,
-        temas: TEMAS_PADRAO
-    });
+    try {
+        const temas = await obterTemasPersistidos();
+        return res.json({
+            sucesso: true,
+            temas
+        });
+    } catch (erro) {
+        return res.json({ sucesso: true, temas: TEMAS_PADRAO });
+    }
+}
+
+async function listarTemasAdmin(req, res) {
+    try {
+        const temas = await obterTemasPersistidos();
+        return res.json({ sucesso: true, temas });
+    } catch (erro) {
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao listar temas." });
+    }
+}
+
+async function criarTemaAdmin(req, res) {
+    try {
+        const titulo = String(req.body.titulo || "").trim();
+        const foco = String(req.body.foco || "Geral").trim();
+        const instrucoes = String(req.body.instrucoes || "").trim();
+        const prazo = String(req.body.prazo || "").trim();
+
+        if (titulo.length < 3) {
+            return res.status(400).json({ sucesso: false, mensagem: "Digite um título válido para o tema." });
+        }
+
+        const temas = await obterTemasPersistidos();
+        const novo = {
+            id: `tema-${crypto.randomUUID().slice(0, 8)}`,
+            titulo,
+            foco,
+            instrucoes: instrucoes || "Redija um texto dissertativo-argumentativo sobre a temática proposta.",
+            prazo: prazo || null,
+            criadoEm: new Date().toISOString()
+        };
+
+        temas.unshift(novo);
+        await salvarArquivoJson(paths.TEMAS_REDACAO, temas);
+
+        return res.status(201).json({ sucesso: true, tema: novo });
+    } catch (erro) {
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao criar tema de redação." });
+    }
+}
+
+async function atualizarTemaAdmin(req, res) {
+    try {
+        const id = req.params.id;
+        const temas = await obterTemasPersistidos();
+        const idx = temas.findIndex(t => t.id === id);
+
+        if (idx === -1) {
+            return res.status(404).json({ sucesso: false, mensagem: "Tema não encontrado." });
+        }
+
+        const titulo = String(req.body.titulo || "").trim();
+        if (titulo.length < 3) {
+            return res.status(400).json({ sucesso: false, mensagem: "Digite um título válido." });
+        }
+
+        temas[idx].titulo = titulo;
+        if (req.body.foco !== undefined) temas[idx].foco = String(req.body.foco).trim();
+        if (req.body.instrucoes !== undefined) temas[idx].instrucoes = String(req.body.instrucoes).trim();
+        if (req.body.prazo !== undefined) temas[idx].prazo = String(req.body.prazo).trim();
+        temas[idx].atualizadoEm = new Date().toISOString();
+
+        await salvarArquivoJson(paths.TEMAS_REDACAO, temas);
+        return res.json({ sucesso: true, tema: temas[idx] });
+    } catch (erro) {
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao atualizar tema de redação." });
+    }
+}
+
+async function excluirTemaAdmin(req, res) {
+    try {
+        const id = req.params.id;
+        const temas = await obterTemasPersistidos();
+        const idx = temas.findIndex(t => t.id === id);
+
+        if (idx === -1) {
+            return res.status(404).json({ sucesso: false, mensagem: "Tema não encontrado." });
+        }
+
+        temas.splice(idx, 1);
+        await salvarArquivoJson(paths.TEMAS_REDACAO, temas);
+
+        return res.json({ sucesso: true, mensagem: "Tema excluído com sucesso." });
+    } catch (erro) {
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao excluir tema de redação." });
+    }
 }
 
 async function listarAluno(req, res) {
@@ -203,5 +303,9 @@ module.exports = {
     listarAluno,
     enviar,
     listarAdmin,
-    corrigir
+    corrigir,
+    listarTemasAdmin,
+    criarTemaAdmin,
+    atualizarTemaAdmin,
+    excluirTemaAdmin
 };
