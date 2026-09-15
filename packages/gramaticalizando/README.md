@@ -29,52 +29,51 @@ O projeto **Gramaticalizando** foi concebido para entregar uma experiência flui
 
 ---
 
-## 📂 Estrutura de Diretórios
+## 📂 Estrutura Canônica de Diretórios
 
 ```text
-plat/
-├── aulas.json             # Base de dados de aulas cadastradas
-├── categorias.json        # Base de categorias auxiliares
-├── cursos.json            # Base de cursos cadastrados
-├── exercicios.json        # Base de exercícios com questões e gabaritos
-├── materias.json          # Base de matérias cadastradas
-├── usuarios.json          # Base de alunos e administradores com senhas em hash
-├── criar-admin.js         # Utilitário CLI interativo para criar contas de admin
-├── server.js              # Servidor Express, regras de negócio e rotas de API
-├── package.json           # Manifesto de dependências e scripts npm
-├── package-lock.json      # Trava de versões das dependências
-├── .env.example           # Exemplo de variáveis de ambiente
-├── .gitignore             # Regras de exclusão do Git
-├── public/                # Assets e páginas estáticas servidas pelo Express
-│   ├── index.html         # Landing page com modais de login e registro
-│   ├── script.js          # Lógica da landing page e autenticação do aluno
-│   ├── style.css          # Estilos da landing page
-│   ├── aluno.html         # Dashboard principal da área do aluno
-│   ├── aluno.js           # Lógica de renderização do dashboard do aluno
-│   ├── aluno.css          # Estilos da área do aluno
-│   ├── aula.html          # Interface de leitura e estudo de aulas publicadas
-│   ├── aula.js            # Lógica de carregamento de conteúdo e conclusão de aula
-│   ├── aula.css           # Estilos da página de aula
-│   ├── exercicios.html    # Catálogo de listas de exercícios por matéria
-│   ├── exercicios.js      # Lógica de filtragem e exibição de exercícios
-│   ├── exercicios.css     # Estilos da listagem de exercícios
-│   ├── exercicio.html     # Runner interativo de resolução de exercícios
-│   ├── exercicio.js       # Lógica do quiz, submissão e feedback de notas
-│   ├── exercicio.css      # Estilos do quiz
-│   ├── admin-login.html   # Tela de autenticação exclusiva para administradores
-│   ├── admin-login.js     # Lógica de login com validação de sessão admin
-│   ├── admin-login.css    # Estilos do login administrativo
-│   ├── admin.html         # Painel administrativo com abas e estatísticas
-│   ├── admin.js           # Lógica operacional do painel administrativo
-│   ├── admin.css          # Estilos do painel administrativo
-│   ├── editor-aula.html   # Editor WYSIWYG de aulas estilo Word
-│   ├── editor-aula.js     # Lógica da barra de ferramentas e salvamento de aula
-│   ├── editor-aula.css    # Estilos do editor de aula
-│   ├── editor-exercicio.html # Construtor de questionários e gabaritos
-│   ├── editor-exercicio.js   # Lógica dinâmica de adicionar/remover alternativas
-│   ├── editor-exercicio.css  # Estilos do construtor de exercícios
-│   └── img/               # Imagens e banners da aplicação
-└── README.md              # Documentação oficial do projeto
+packages/gramaticalizando/
+├── api/                       # Vercel Serverless Function entrypoint (Express runtime)
+│   └── index.js
+├── data/                      # Persistência de dados JSON desacoplada e modular
+│   ├── aulas.json             # Base de aulas cadastradas
+│   ├── categorias.json        # Categorias de conteúdo
+│   ├── cronogramas.json       # Cronogramas de estudo
+│   ├── cursos.json            # Cursos cadastrados
+│   ├── exercicios.json        # Questões e simulados com gabaritos
+│   ├── materias.json          # Módulos e matérias
+│   ├── redacoes.json          # Redações e correções
+│   └── usuarios.json          # Usuários (alunos/admins) com senhas em bcrypt
+├── docs/                      # Auditorias técnicas e notas de arquitetura
+│   └── revisao-geral.txt      # Relatório completo de transição de arquitetura
+├── scripts/                   # Utilitários de linha de comando
+│   ├── criar-admin.js         # Script interativo para provisionar administradores
+│   ├── generate_modules.py    # Gerador canônico dos 7 módulos e 41 aulas
+│   └── update_clean_urls.py   # Utilitário de auditoria de links canônicos
+├── src/                       # Back-end modular Node.js / Express
+│   ├── app.js                 # Configuração do Express, sessões e middlewares
+│   ├── server.js              # Inicialização local do servidor HTTP
+│   ├── config/                # paths.js (DATA_DIR, PUBLIC_DIR), env.js
+│   ├── controllers/           # auth, admin, materias, aulas, exercicios, etc.
+│   ├── data/                  # jsonStore.js (operações atômicas com locks)
+│   ├── middlewares/           # auth.js, errorHandler.js
+│   ├── routes/                # Definição modular de rotas RESTful
+│   └── frontend/              # Componentes universais (Toast, Modal, AuthModal)
+├── public/                    # Front-end estático compilado pelo Vite
+│   ├── assets/                # Design System: css/, js/ (SPA Router, storage), images/
+│   ├── pages/                 # Portal do Aluno (Clean URLs: /home, /portugues, etc.)
+│   ├── professor/             # Painel do Professor (/professor, /professor/alunos, etc.)
+│   ├── legacy/                # Arquivos legados isolados para compatibilidade
+│   ├── img/                   # Imagens e marcas visuais
+│   ├── favicon.png
+│   └── index.html             # Landing page principal
+├── .env.example
+├── .env.local
+├── .gitignore
+├── package.json
+├── README.md
+├── vercel.json                # Configuração de Clean URLs e Serverless na Vercel
+└── vite.config.mjs            # Vite multi-página com plugin clean-urls-mirror
 ```
 
 ---
@@ -90,12 +89,14 @@ npm install
 ```
 
 ### 2. Criação do Primeiro Administrador
-Para acessar as páginas `/admin.html`, `/editor-aula.html` e `/editor-exercicio.html`, é necessário criar um perfil com privilégio administrativo:
+Para acessar o painel do professor (`/professor`), utilize o script CLI oficial:
 ```bash
-node criar-admin.js
+npm run seed:admin
+# ou diretamente:
+node scripts/criar-admin.js
 ```
 O terminal solicitará:
-- **Nome**: Ex: `Administradora`
+- **Nome**: Ex: `Professora Wilma`
 - **E-mail**: Ex: `admin@gramaticalizando.com.br`
 - **Senha**: Mínimo 6 caracteres
 

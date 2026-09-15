@@ -12,7 +12,7 @@ function getHtmlInputs(dir, baseDir) {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name !== 'node_modules' && entry.name !== 'dist' && entry.name !== 'assets') {
+      if (entry.name !== 'node_modules' && entry.name !== 'dist' && entry.name !== 'assets' && entry.name !== 'legacy') {
         Object.assign(inputs, getHtmlInputs(fullPath, baseDir));
       }
     } else if (entry.isFile() && entry.name.endsWith('.html')) {

@@ -8,7 +8,9 @@
     "dev": "vite",
     "dev:server": "node src/server.js",
     "build": "vite build",
-    "admin:create": "node scripts/criar-admin.js"
+    "preview": "vite preview",
+    "admin:create": "node scripts/criar-admin.js",
+    "seed:admin": "node scripts/criar-admin.js"
   },
   "keywords": [
     "ead",

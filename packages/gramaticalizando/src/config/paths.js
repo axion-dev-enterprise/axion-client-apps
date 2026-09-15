@@ -5,7 +5,8 @@ const ROOT_DIR = path.resolve(__dirname, "../../");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 
 const isVercel = Boolean(process.env.VERCEL);
-const DATA_DIR = isVercel ? "/tmp/gramaticalizando_data" : ROOT_DIR;
+const LOCAL_DATA_DIR = path.join(ROOT_DIR, "data");
+const DATA_DIR = isVercel ? "/tmp/gramaticalizando_data" : LOCAL_DATA_DIR;
 
 if (isVercel) {
     try {
@@ -19,11 +20,12 @@ if (isVercel) {
             "cursos.json",
             "exercicios.json",
             "categorias.json",
-            "redacoes.json"
+            "redacoes.json",
+            "cronogramas.json"
         ];
         for (const file of jsonFiles) {
             const destPath = path.join(DATA_DIR, file);
-            const srcPath = path.join(ROOT_DIR, file);
+            const srcPath = path.join(LOCAL_DATA_DIR, file);
             if (!fs.existsSync(destPath) && fs.existsSync(srcPath)) {
                 fs.copyFileSync(srcPath, destPath);
             }
@@ -43,5 +45,7 @@ module.exports = {
     CURSOS: path.join(DATA_DIR, "cursos.json"),
     EXERCICIOS: path.join(DATA_DIR, "exercicios.json"),
     CATEGORIAS: path.join(DATA_DIR, "categorias.json"),
-    REDACOES: path.join(DATA_DIR, "redacoes.json")
+    REDACOES: path.join(DATA_DIR, "redacoes.json"),
+    CRONOGRAMAS: path.join(DATA_DIR, "cronogramas.json")
 };
+

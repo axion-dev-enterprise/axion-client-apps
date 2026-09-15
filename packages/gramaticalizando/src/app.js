@@ -48,15 +48,18 @@ app.use(
     })
 );
 
-// Páginas administrativas protegidas
-app.get("/admin.html", protegerPaginaAdmin, (req, res) => {
-    res.sendFile(path.join(paths.PUBLIC_DIR, "admin.html"));
+// Redirecionamento canônico do painel admin legado para o portal moderno do professor
+app.get(["/admin", "/admin.html"], (req, res) => {
+    res.redirect("/professor");
 });
+
+// Suporte de compatibilidade para editores legados
+const LEGACY_DIR = path.join(paths.PUBLIC_DIR, "legacy");
 app.get("/editor-aula.html", protegerPaginaAdmin, (req, res) => {
-    res.sendFile(path.join(paths.PUBLIC_DIR, "editor-aula.html"));
+    res.sendFile(path.join(LEGACY_DIR, "editor-aula.html"));
 });
 app.get("/editor-exercicio.html", protegerPaginaAdmin, (req, res) => {
-    res.sendFile(path.join(paths.PUBLIC_DIR, "editor-exercicio.html"));
+    res.sendFile(path.join(LEGACY_DIR, "editor-exercicio.html"));
 });
 
 // Arquivos estáticos da pasta public (sem index automático para respeitar a raiz)

@@ -10,7 +10,7 @@ function somenteAdmin(req, res, next) {
 
 function protegerPaginaAdmin(req, res, next) {
     if (!req.session?.usuario || req.session.usuario.tipo !== "admin") {
-        return res.redirect("/admin-login.html");
+        return res.redirect("/login");
     }
     next();
 }
