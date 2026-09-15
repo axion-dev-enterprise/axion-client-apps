@@ -12,7 +12,9 @@ router.delete("/admin/exercicios/:id", somenteAdmin, exerciciosController.exclui
 
 // Aluno
 router.get("/aluno/exercicios", exerciciosController.listarAluno);
+router.get("/exercicios", exerciciosController.listarAluno);
 router.get("/aluno/exercicios/:id", exerciciosController.obterPorIdAluno);
+router.get("/exercicios/:id", exerciciosController.obterPorIdAluno);
 router.post("/aluno/exercicios/:id/finalizar", somenteAluno, exerciciosController.finalizarAluno);
 
 module.exports = router;

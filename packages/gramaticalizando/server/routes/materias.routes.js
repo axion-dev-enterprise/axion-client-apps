@@ -3,6 +3,10 @@ const router = express.Router();
 const materiasController = require("../controllers/materias.controller");
 const { somenteAdmin } = require("../middlewares/auth");
 
+// Rotas Públicas / Aluno
+router.get("/materias", materiasController.listar);
+router.get("/materias/:id", materiasController.obterPorId);
+
 // Rotas Administrativas
 router.get("/admin/materias", somenteAdmin, materiasController.listar);
 router.get("/admin/materias/:id", somenteAdmin, materiasController.obterPorId);
