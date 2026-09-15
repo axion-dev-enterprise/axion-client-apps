@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "name": "gramaticalizando",
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "vite build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/aluno", "destination": "/home" },
     { "source": "/cadastro", "destination": "/registro" },
     { "source": "/(.*)", "destination": "/index.html" }

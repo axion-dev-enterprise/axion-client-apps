@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       style={{
-        backgroundColor: 'var(--bg-surface-1)',
+        backgroundColor: '#ffffff',
         border: '1px solid var(--border-subtle)',
         borderRadius: 'var(--radius-lg)',
         padding: getPadding(),
@@ -40,15 +40,15 @@ export const Card: React.FC<CardProps> = ({
       onMouseEnter={(e) => {
         if (isInteractive) {
           e.currentTarget.style.transform = 'translateY(-2px)';
-          e.currentTarget.style.borderColor = 'var(--border-muted)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-md)';
+          e.currentTarget.style.borderColor = 'var(--accent-border)';
+          e.currentTarget.style.boxShadow = 'var(--shadow-purple)';
         }
       }}
       onMouseLeave={(e) => {
         if (isInteractive) {
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.borderColor = 'var(--border-subtle)';
-          e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+          e.currentTarget.style.boxShadow = variant === 'elevated' ? 'var(--shadow-md)' : 'var(--shadow-sm)';
         }
       }}
       className={className}

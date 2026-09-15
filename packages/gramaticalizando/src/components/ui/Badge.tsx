@@ -16,40 +16,40 @@ export const Badge: React.FC<BadgeProps> = ({
     switch (variant) {
       case 'purple':
         return {
-          backgroundColor: 'rgba(147, 51, 234, 0.15)',
-          color: '#c084fc',
-          border: '1px solid rgba(168, 85, 247, 0.3)'
+          backgroundColor: '#f3e8ff',
+          color: '#6b21a8',
+          border: '1px solid #d8b4fe'
         };
       case 'success':
         return {
-          backgroundColor: 'var(--success-bg)',
-          color: '#34d399',
-          border: `1px solid var(--success-border)`
+          backgroundColor: '#dcfce7',
+          color: '#15803d',
+          border: '1px solid #bbf7d0'
         };
       case 'warning':
         return {
-          backgroundColor: 'var(--warning-bg)',
-          color: '#fbbf24',
-          border: `1px solid var(--warning-border)`
+          backgroundColor: '#fef3c7',
+          color: '#b45309',
+          border: '1px solid #fde68a'
         };
       case 'danger':
         return {
-          backgroundColor: 'var(--danger-bg)',
-          color: '#f87171',
-          border: `1px solid var(--danger-border)`
+          backgroundColor: '#fee2e2',
+          color: '#b91c1c',
+          border: '1px solid #fecaca'
         };
       case 'info':
         return {
-          backgroundColor: 'var(--info-bg)',
-          color: '#60a5fa',
-          border: `1px solid var(--info-border)`
+          backgroundColor: '#dbeafe',
+          color: '#1d4ed8',
+          border: '1px solid #bfdbfe'
         };
       case 'neutral':
       default:
         return {
-          backgroundColor: 'var(--bg-surface-2)',
-          color: 'var(--text-secondary)',
-          border: '1px solid var(--border-subtle)'
+          backgroundColor: '#f1f5f9',
+          color: '#475569',
+          border: '1px solid #e2e8f0'
         };
     }
   };
@@ -60,7 +60,7 @@ export const Badge: React.FC<BadgeProps> = ({
         display: 'inline-flex',
         alignItems: 'center',
         gap: '0.375rem',
-        padding: size === 'sm' ? '0.2rem 0.55rem' : '0.25rem 0.75rem',
+        padding: size === 'sm' ? '0.2rem 0.6rem' : '0.25rem 0.75rem',
         fontSize: size === 'sm' ? '0.75rem' : '0.8125rem',
         fontWeight: 600,
         borderRadius: 'var(--radius-full)',

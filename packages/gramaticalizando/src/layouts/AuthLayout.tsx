@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet, Link } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
 
 export const AuthLayout: React.FC = () => {
   return (
@@ -12,7 +11,7 @@ export const AuthLayout: React.FC = () => {
         alignItems: 'center',
         justifyContent: 'center',
         padding: '3rem 1.25rem',
-        backgroundColor: 'var(--bg-canvas)'
+        backgroundColor: '#f8fafc'
       }}
     >
       <div style={{ marginBottom: '2rem', textAlign: 'center' }}>
@@ -21,34 +20,30 @@ export const AuthLayout: React.FC = () => {
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.625rem',
+            gap: '0.75rem',
             textDecoration: 'none'
           }}
         >
-          <div
+          <img
+            src="/assets/img/logo.png"
+            alt="Gramaticalizando"
             style={{
-              width: '2.5rem',
-              height: '2.5rem',
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: 'var(--shadow-glow)'
+              width: '44px',
+              height: '44px',
+              objectFit: 'contain',
+              borderRadius: '10px'
             }}
-          >
-            <BookOpen size={22} color="#ffffff" />
-          </div>
+          />
           <span
             style={{
-              fontSize: '1.5rem',
+              fontSize: '1.625rem',
               fontWeight: 800,
               fontFamily: 'var(--font-display)',
               letterSpacing: '-0.02em',
-              color: 'var(--text-primary)'
+              color: '#0f172a'
             }}
           >
-            Gramaticalizando<span style={{ color: 'var(--accent-hover)' }}>.</span>
+            Gramaticalizando<span style={{ color: 'var(--accent)' }}>.</span>
           </span>
         </Link>
       </div>
@@ -57,7 +52,7 @@ export const AuthLayout: React.FC = () => {
         <Outlet />
       </div>
 
-      <div style={{ marginTop: '2.5rem', fontSize: '0.8125rem', color: 'var(--text-muted)', textAlign: 'center' }}>
+      <div style={{ marginTop: '2.5rem', fontSize: '0.8125rem', color: '#64748b', textAlign: 'center' }}>
         <p>© 2026 Gramaticalizando • Todos os direitos reservados.</p>
       </div>
     </div>

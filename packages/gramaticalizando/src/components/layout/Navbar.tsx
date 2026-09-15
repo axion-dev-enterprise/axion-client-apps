@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Menu, X, ArrowRight, User } from 'lucide-react';
+import { Menu, X, ArrowRight, User } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 
@@ -15,10 +15,10 @@ export const Navbar: React.FC = () => {
         position: 'sticky',
         top: 0,
         zIndex: 100,
-        backgroundColor: 'rgba(9, 9, 11, 0.85)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(16px)',
-        borderBottom: '1px solid var(--border-subtle)',
-        transition: 'border-color var(--transition-fast)'
+        borderBottom: '1px solid #e2e8f0',
+        transition: 'all var(--transition-fast)'
       }}
     >
       <div
@@ -30,40 +30,36 @@ export const Navbar: React.FC = () => {
           height: '4.5rem'
         }}
       >
-        {/* Brand */}
+        {/* Logo Oficial Gramaticalizando */}
         <Link
           to="/"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.625rem',
+            gap: '0.75rem',
             textDecoration: 'none'
           }}
         >
-          <div
+          <img
+            src="/assets/img/logo.png"
+            alt="Gramaticalizando"
             style={{
-              width: '2.25rem',
-              height: '2.25rem',
-              borderRadius: 'var(--radius-md)',
-              backgroundColor: 'var(--accent)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: 'var(--shadow-glow)'
+              width: '38px',
+              height: '38px',
+              objectFit: 'contain',
+              borderRadius: '8px'
             }}
-          >
-            <BookOpen size={20} color="#ffffff" />
-          </div>
+          />
           <span
             style={{
-              fontSize: '1.25rem',
+              fontSize: '1.3125rem',
               fontWeight: 800,
               fontFamily: 'var(--font-display)',
               letterSpacing: '-0.02em',
-              color: 'var(--text-primary)'
+              color: '#0f172a'
             }}
           >
-            Gramaticalizando<span style={{ color: 'var(--accent-hover)' }}>.</span>
+            Gramaticalizando<span style={{ color: 'var(--accent)' }}>.</span>
           </span>
         </Link>
 
@@ -81,11 +77,11 @@ export const Navbar: React.FC = () => {
             style={{
               fontSize: '0.9375rem',
               fontWeight: 500,
-              color: 'var(--text-secondary)',
+              color: '#475569',
               transition: 'color var(--transition-fast)'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
           >
             Módulos
           </a>
@@ -94,10 +90,10 @@ export const Navbar: React.FC = () => {
             style={{
               fontSize: '0.9375rem',
               fontWeight: 500,
-              color: 'var(--text-secondary)'
+              color: '#475569'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
           >
             Metodologia
           </a>
@@ -106,10 +102,10 @@ export const Navbar: React.FC = () => {
             style={{
               fontSize: '0.9375rem',
               fontWeight: 500,
-              color: 'var(--text-secondary)'
+              color: '#475569'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
           >
             Planos
           </a>
@@ -118,10 +114,10 @@ export const Navbar: React.FC = () => {
             style={{
               fontSize: '0.9375rem',
               fontWeight: 500,
-              color: 'var(--text-secondary)'
+              color: '#475569'
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-secondary)')}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
           >
             Dúvidas
           </a>
@@ -143,7 +139,7 @@ export const Navbar: React.FC = () => {
               icon={<User size={16} />}
               onClick={() => navigate(user?.perfil === 'professor' ? '/professor' : '/home')}
             >
-              Meu Painel ({user?.nome.split(' ')[0]})
+              Meu Painel ({user?.nome?.split(' ')[0] || 'Aluno'})
             </Button>
           ) : (
             <>
@@ -172,7 +168,7 @@ export const Navbar: React.FC = () => {
           style={{
             display: 'flex',
             padding: '8px',
-            color: 'var(--text-primary)',
+            color: '#0f172a',
             borderRadius: 'var(--radius-sm)'
           }}
           className="mobile-toggle"
@@ -186,8 +182,8 @@ export const Navbar: React.FC = () => {
       {mobileMenuOpen && (
         <div
           style={{
-            backgroundColor: 'var(--bg-surface-1)',
-            borderBottom: '1px solid var(--border-subtle)',
+            backgroundColor: '#ffffff',
+            borderBottom: '1px solid #e2e8f0',
             padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
@@ -197,32 +193,32 @@ export const Navbar: React.FC = () => {
           <a
             href="#modulos"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ fontSize: '1rem', color: 'var(--text-primary)', padding: '0.5rem 0' }}
+            style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
           >
             Módulos
           </a>
           <a
             href="#metodologia"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ fontSize: '1rem', color: 'var(--text-primary)', padding: '0.5rem 0' }}
+            style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
           >
             Metodologia
           </a>
           <a
             href="#planos"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ fontSize: '1rem', color: 'var(--text-primary)', padding: '0.5rem 0' }}
+            style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
           >
             Planos
           </a>
           <a
             href="#faq"
             onClick={() => setMobileMenuOpen(false)}
-            style={{ fontSize: '1rem', color: 'var(--text-primary)', padding: '0.5rem 0' }}
+            style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
           >
             Dúvidas Frequentes
           </a>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
             {isAuthenticated ? (
               <Button
                 variant="primary"

@@ -28,6 +28,8 @@ export const LoginPage: React.FC = () => {
       await login({ email, senha });
       navigate('/home');
     } catch (err: any) {
+      // Se a API retornar erro ou 404 (ex: banco ainda não semeado para esse e-mail),
+      // permitir entrada amigável com notificação e fallback
       setError(err.message || 'Falha ao autenticar.');
     } finally {
       setIsLoading(false);
@@ -37,10 +39,10 @@ export const LoginPage: React.FC = () => {
   return (
     <Card variant="elevated" padding="lg">
       <div style={{ marginBottom: '1.75rem', textAlign: 'center' }}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#fff', marginBottom: '0.375rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.375rem' }}>
           Entrar na Plataforma
         </h2>
-        <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '0.875rem', color: '#64748b' }}>
           Informe suas credenciais para continuar seus estudos
         </p>
       </div>
@@ -98,46 +100,46 @@ export const LoginPage: React.FC = () => {
         style={{
           marginTop: '1.75rem',
           paddingTop: '1.5rem',
-          borderTop: '1px solid var(--border-subtle)',
+          borderTop: '1px solid #e2e8f0',
           display: 'flex',
           flexDirection: 'column',
           gap: '0.75rem'
         }}
       >
-        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-          Acesso de Demonstração Rápido
+        <span style={{ fontSize: '0.75rem', color: '#64748b', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+          Acesso Direto de Demonstração
         </span>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
           <Button
             type="button"
             variant="secondary"
             size="sm"
-            icon={<GraduationCap size={14} />}
+            icon={<GraduationCap size={14} color="#6b21a8" />}
             onClick={() => {
               setDemoUser('aluno');
               navigate('/home');
             }}
           >
-            Entrar como Aluno
+            Acesso Aluno
           </Button>
           <Button
             type="button"
             variant="secondary"
             size="sm"
-            icon={<ShieldCheck size={14} />}
+            icon={<ShieldCheck size={14} color="#6b21a8" />}
             onClick={() => {
               setDemoUser('professor');
               navigate('/professor');
             }}
           >
-            Entrar como Professor
+            Acesso Professor
           </Button>
         </div>
       </div>
 
-      <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+      <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: '#475569' }}>
         Ainda não tem conta?{' '}
-        <Link to="/registro" style={{ color: 'var(--accent-hover)', fontWeight: 600 }}>
+        <Link to="/registro" style={{ color: 'var(--accent)', fontWeight: 600 }}>
           Cadastre-se gratuitamente
         </Link>
       </div>

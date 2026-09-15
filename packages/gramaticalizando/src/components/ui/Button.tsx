@@ -25,19 +25,19 @@ export const Button: React.FC<ButtonProps> = ({
         return {
           backgroundColor: 'var(--accent)',
           color: '#ffffff',
-          boxShadow: 'var(--shadow-glow)'
+          boxShadow: '0 4px 12px rgba(107, 33, 168, 0.25)'
         };
       case 'secondary':
         return {
-          backgroundColor: 'var(--bg-surface-2)',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border-subtle)'
+          backgroundColor: '#f8fafc',
+          color: '#1e293b',
+          border: '1px solid #cbd5e1'
         };
       case 'outline':
         return {
-          backgroundColor: 'transparent',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border-muted)'
+          backgroundColor: '#ffffff',
+          color: 'var(--accent)',
+          border: '1.5px solid var(--accent)'
         };
       case 'ghost':
         return {
@@ -46,9 +46,9 @@ export const Button: React.FC<ButtonProps> = ({
         };
       case 'whatsapp':
         return {
-          backgroundColor: '#25D366',
+          backgroundColor: '#16a34a',
           color: '#ffffff',
-          boxShadow: '0 4px 14px rgba(37, 211, 102, 0.35)'
+          boxShadow: '0 4px 12px rgba(22, 163, 74, 0.25)'
         };
       default:
         return {};
@@ -60,10 +60,10 @@ export const Button: React.FC<ButtonProps> = ({
       case 'sm':
         return { padding: '0.4rem 0.85rem', fontSize: '0.8125rem', borderRadius: 'var(--radius-sm)' };
       case 'lg':
-        return { padding: '0.875rem 1.75rem', fontSize: '1.0625rem', borderRadius: 'var(--radius-md)' };
+        return { padding: '0.875rem 1.75rem', fontSize: '1rem', borderRadius: 'var(--radius-md)' };
       case 'md':
       default:
-        return { padding: '0.625rem 1.25rem', fontSize: '0.9375rem', borderRadius: 'var(--radius-md)' };
+        return { padding: '0.625rem 1.25rem', fontSize: '0.875rem', borderRadius: 'var(--radius-md)' };
     }
   };
 
@@ -88,7 +88,8 @@ export const Button: React.FC<ButtonProps> = ({
         if (!disabled && !isLoading) {
           e.currentTarget.style.transform = 'translateY(-1px)';
           if (variant === 'primary') e.currentTarget.style.backgroundColor = 'var(--accent-hover)';
-          if (variant === 'secondary') e.currentTarget.style.backgroundColor = 'var(--bg-surface-hover)';
+          if (variant === 'secondary') e.currentTarget.style.backgroundColor = '#f1f5f9';
+          if (variant === 'outline') e.currentTarget.style.backgroundColor = 'var(--accent-light)';
           if (variant === 'ghost') e.currentTarget.style.color = 'var(--text-primary)';
         }
       }}
@@ -96,7 +97,8 @@ export const Button: React.FC<ButtonProps> = ({
         if (!disabled && !isLoading) {
           e.currentTarget.style.transform = 'translateY(0)';
           if (variant === 'primary') e.currentTarget.style.backgroundColor = 'var(--accent)';
-          if (variant === 'secondary') e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)';
+          if (variant === 'secondary') e.currentTarget.style.backgroundColor = '#f8fafc';
+          if (variant === 'outline') e.currentTarget.style.backgroundColor = '#ffffff';
           if (variant === 'ghost') e.currentTarget.style.color = 'var(--text-secondary)';
         }
       }}
@@ -111,7 +113,7 @@ export const Button: React.FC<ButtonProps> = ({
     >
       {isLoading ? (
         <>
-          <Loader2 size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
+          <Loader2 size={16} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
           <span>Processando...</span>
         </>
       ) : (
