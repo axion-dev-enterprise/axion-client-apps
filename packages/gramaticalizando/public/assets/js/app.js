@@ -1,4 +1,17 @@
 import { getSession, getStudentPermissions } from './storage.js';
+import { showToast } from './components/Toast.js';
+import { confirmModal, customAlertModal, showModalDialog } from './components/Modal.js';
+
+// Global zero-alert guardrail: route any lingering window.alert to sleek modern toast
+if (typeof window !== 'undefined') {
+  window.showToast = showToast;
+  window.confirmModal = confirmModal;
+  window.customAlertModal = customAlertModal;
+  window.showModalDialog = showModalDialog;
+  window.alert = (mensagem) => {
+    showToast(String(mensagem || ''), 'info', 4000);
+  };
+}
 
 const path = window.location.pathname.split('/').pop() || 'index.html';
 

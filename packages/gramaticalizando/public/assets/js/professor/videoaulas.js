@@ -1,5 +1,7 @@
 import { initProfessorPage } from './base.js';
 import { createVideoLesson, deleteVideoLesson, getVideoLessons, saveVideoLessons } from '../storage.js';
+import { showToast } from '../components/Toast.js';
+import { confirmModal } from '../components/Modal.js';
 
 const session = initProfessorPage('videoaulas');
 if (!session) throw new Error('Acesso negado.');
@@ -133,7 +135,7 @@ if (videoLessonForm) {
     const link = normalizeLink(formData.get('link'));
 
     if (!titulo || !link) {
-      window.alert('Preencha o título e o link da aula para continuar.');
+      showToast('Preencha o título e o link da aula para continuar.', 'aviso');
       return;
     }
 
@@ -149,6 +151,7 @@ if (videoLessonForm) {
     };
 
     createVideoLesson(lesson);
+    showToast('Aula cadastrada com sucesso!', 'sucesso');
     closeModal();
     renderLessons();
   });
@@ -169,17 +172,18 @@ if (viewLessonsTrigger) {
 }
 
 if (videoLessonsList) {
-  videoLessonsList.addEventListener('click', (event) => {
+  videoLessonsList.addEventListener('click', async (event) => {
     const target = event.target.closest('[data-lesson-action]');
     if (!target) return;
 
     const { lessonAction, lessonId } = target.dataset;
     if (lessonAction !== 'delete' || !lessonId) return;
 
-    const shouldDelete = window.confirm('Deseja excluir esta aula da lista?');
+    const shouldDelete = await confirmModal('Deseja excluir esta aula da lista?', 'Excluir Aula', { type: 'danger', confirmText: 'Excluir' });
     if (!shouldDelete) return;
 
     deleteVideoLesson(lessonId);
+    showToast('Aula excluída da lista.', 'info');
     renderLessons();
   });
 }

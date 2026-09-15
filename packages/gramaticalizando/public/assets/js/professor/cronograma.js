@@ -1,5 +1,6 @@
 import { initProfessorPage } from './base.js';
 import { getStudyPlan, saveStudyPlan } from '../storage.js';
+import { showToast } from '../components/Toast.js';
 
 initProfessorPage('cronograma');
 const form = document.getElementById('planForm');
@@ -68,16 +69,16 @@ stagesList.addEventListener('change', async (event) => {
   const file = input.files[0];
   const isPdf = stage.recursoTipo === 'PDF';
   const validType = isPdf ? file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf') : file.type.startsWith('image/');
-  if (!validType) { window.alert(`Selecione ${isPdf ? 'um PDF' : 'uma imagem'} válido.`); input.value = ''; return; }
-  if (file.size > maxResourceSize) { window.alert('O arquivo deve ter no máximo 20 MB.'); input.value = ''; return; }
-  try { stage.recursoLink = await readFileAsDataUrl(file); stage.recursoNome = stage.recursoNome || file.name; renderStages(); } catch (error) { window.alert(error.message); }
+  if (!validType) { showToast(`Selecione ${isPdf ? 'um PDF' : 'uma imagem'} válido.`, 'aviso'); input.value = ''; return; }
+  if (file.size > maxResourceSize) { showToast('O arquivo deve ter no máximo 20 MB.', 'aviso'); input.value = ''; return; }
+  try { stage.recursoLink = await readFileAsDataUrl(file); stage.recursoNome = stage.recursoNome || file.name; renderStages(); } catch (error) { showToast(error.message, 'erro'); }
 });
 document.getElementById('addStageBtn').addEventListener('click', () => { stages.push(newStage()); renderStages(); stagesList.lastElementChild?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); });
 document.getElementById('planName').addEventListener('input', (event) => { document.getElementById('summaryName').textContent = event.target.value.trim() || 'Sem nome'; });
 document.getElementById('planTitle').addEventListener('input', (event) => { document.getElementById('summaryTitle').textContent = event.target.value.trim() || 'Sem título'; });
 ['planStart', 'planEnd'].forEach((id) => document.getElementById(id).addEventListener('change', () => { const start = document.getElementById('planStart').value; const end = document.getElementById('planEnd').value; document.getElementById('summaryPeriod').textContent = start && end ? `${start} até ${end}` : 'Defina as datas'; }));
 
-form.addEventListener('submit', (event) => { event.preventDefault(); const data = new FormData(form); const nome = String(data.get('nome') || '').trim(); const titulo = String(data.get('titulo') || '').trim(); const inicio = String(data.get('inicio') || ''); const fim = String(data.get('fim') || ''); if (!nome || !titulo || !inicio || !fim) return window.alert('Preencha nome, título e período do cronograma.'); if (fim < inicio) return window.alert('A data final deve ser posterior à data inicial.'); if (!stages.length) return window.alert('Adicione pelo menos um bloco.'); if (stages.some((stage) => !stage.titulo.trim() || (stage.recursoTipo === 'Questão' && (!stage.questao.enunciado.trim() || stage.questao.alternativas.some((option) => !option.trim()) || stage.questao.correta === null)))) return window.alert('Complete o enunciado, as quatro alternativas e marque a resposta correta.'); saveStudyPlan({ ...plan, id: plan.id && plan.id !== 'plan-default' ? plan.id : `plan-${Date.now()}`, nome, titulo, objetivo: String(data.get('objetivo') || '').trim(), inicio, fim, etapas: stages, atualizadoEm: new Date().toISOString() }); window.alert('Cronograma salvo em JSON com sucesso.'); });
+form.addEventListener('submit', (event) => { event.preventDefault(); const data = new FormData(form); const nome = String(data.get('nome') || '').trim(); const titulo = String(data.get('titulo') || '').trim(); const inicio = String(data.get('inicio') || ''); const fim = String(data.get('fim') || ''); if (!nome || !titulo || !inicio || !fim) return showToast('Preencha nome, título e período do cronograma.', 'aviso'); if (fim < inicio) return showToast('A data final deve ser posterior à data inicial.', 'aviso'); if (!stages.length) return showToast('Adicione pelo menos um bloco.', 'aviso'); if (stages.some((stage) => !stage.titulo.trim() || (stage.recursoTipo === 'Questão' && (!stage.questao.enunciado.trim() || stage.questao.alternativas.some((option) => !option.trim()) || stage.questao.correta === null)))) return showToast('Complete o enunciado, as quatro alternativas e marque a resposta correta.', 'aviso'); saveStudyPlan({ ...plan, id: plan.id && plan.id !== 'plan-default' ? plan.id : `plan-${Date.now()}`, nome, titulo, objetivo: String(data.get('objetivo') || '').trim(), inicio, fim, etapas: stages, atualizadoEm: new Date().toISOString() }); showToast('Cronograma salvo com sucesso!', 'sucesso'); });
 
 document.getElementById('planName').value = plan.nome === 'Plano de estudos' ? '' : plan.nome || '';
 document.getElementById('planTitle').value = plan.titulo === 'Plano de estudos' ? '' : plan.titulo || '';

@@ -1,5 +1,6 @@
 import { initPage } from './page-base.js';
 import { getSession, getSimulationResult, getSimulations, saveSimulationResult } from './storage.js';
+import { showToast } from './components/Toast.js';
 
 initPage();
 
@@ -183,7 +184,7 @@ previousButton.addEventListener('click', () => {
 
 nextButton.addEventListener('click', () => {
   if (answers[activeIndex] === null) {
-    window.alert('Selecione uma alternativa antes de continuar.');
+    showToast('Selecione uma alternativa antes de continuar.', 'aviso');
     return;
   }
   if (activeIndex < simulation.questoes.length - 1) {

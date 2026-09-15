@@ -1,5 +1,6 @@
 import { initPage } from './page-base.js';
 import { getSession, getEssays, createEssay } from './storage.js';
+import { showToast } from './components/Toast.js';
 
 initPage();
 
@@ -170,7 +171,7 @@ essayForm.addEventListener('submit', (event) => {
   const file = essayPhotoInput.files[0];
 
   if (!theme || !file) {
-    alert('Envie a foto da redação pronta antes de salvar.');
+    showToast('Envie a foto da redação pronta antes de salvar.', 'aviso');
     return;
   }
 
@@ -193,12 +194,14 @@ essayForm.addEventListener('submit', (event) => {
       createEssay(essayItem);
       renderHistory();
       toggleModal(false);
+      showToast('Redação enviada com sucesso para correção!', 'sucesso');
     };
     reader.readAsDataURL(file);
   } else {
     createEssay(essayItem);
     renderHistory();
     toggleModal(false);
+    showToast('Redação enviada com sucesso para correção!', 'sucesso');
   }
 });
 

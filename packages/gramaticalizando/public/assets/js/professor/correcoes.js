@@ -1,6 +1,8 @@
 import { initProfessorPage } from './base.js';
 import { getEssays, updateEssay, getSession } from '../storage.js';
 import { formatDate, safeText } from './utils.js';
+import { confirmModal } from '../components/Modal.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('corrections');
 if (!session) throw new Error('Acesso negado.');
@@ -94,10 +96,11 @@ if (profCorrectionPhoto) {
 }
 
 if (profCorrectionForm) {
-  profCorrectionForm.addEventListener('submit', (event) => {
+  profCorrectionForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!activeEssayId) return;
-    if (!window.confirm('Deseja concluir a correção e salvar as alterações?')) return;
+    const confirmed = await confirmModal('Deseja concluir a correção e salvar as alterações?', 'Concluir Correção');
+    if (!confirmed) return;
 
     const file = profCorrectionPhoto.files[0];
     const nota = profScore.value;
@@ -107,10 +110,11 @@ if (profCorrectionForm) {
       profSubmitBtn.textContent = 'Enviando...';
       const feedback = { message: mensagem || '', foto: fotoData || '', nota: nota ? Number(nota) : null };
       updateEssay(activeEssayId, { feedback, status: 'concluido', corrigidoEm: new Date().toISOString() });
+      showToast('Correção registrada com sucesso!', 'sucesso');
       setTimeout(() => {
         modal.classList.add('hidden');
         window.location.reload();
-      }, 250);
+      }, 400);
     };
 
     if (file) {

@@ -172,7 +172,9 @@
     </div>
   </main>
 
-  <script>
+  <script type="module">
+    import { showToast } from '../assets/js/components/Toast.js';
+
     // Utility functions
     function isEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -250,17 +252,20 @@
       // Save session
       saveSession(user);
       console.log('✅ Sessão salva, redirecionando...');
+      showToast('Login realizado com sucesso! Redirecionando...', 'sucesso', 2000);
 
-      if (user.tipo === 'professor') {
-        window.location.href = '../professor/index.html';
-      } else {
-        const diagnostico = localStorage.getItem('diagnostico_simples');
-        if (diagnostico) {
-          window.location.href = './home.html';
+      setTimeout(() => {
+        if (user.tipo === 'professor') {
+          window.location.href = '../professor/index.html';
         } else {
-          window.location.href = './diagnostico.html';
+          const diagnostico = localStorage.getItem('diagnostico_simples');
+          if (diagnostico) {
+            window.location.href = './home.html';
+          } else {
+            window.location.href = './diagnostico.html';
+          }
         }
-      }
+      }, 500);
     });
 
     console.log('✅ login.html carregado e pronto');

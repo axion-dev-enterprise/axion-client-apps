@@ -192,7 +192,9 @@
     </div>
   </main>
 
-  <script>
+  <script type="module">
+    import { showToast } from '../assets/js/components/Toast.js';
+
     // Utility functions
     function uuid() {
       return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -317,8 +319,15 @@
       console.log('✅ Usuário criado:', user);
       console.log('📊 Usuários no localStorage:', getUsers());
 
-      alert('✅ Conta criada com sucesso!\nRedirecionando para login...');
-      window.location.href = './login.html';
+      showToast('Conta criada com sucesso! Redirecionando para o login...', 'sucesso', 2500);
+      const submitBtn = document.getElementById('submitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Redirecionando...';
+      }
+      setTimeout(() => {
+        window.location.href = './login.html';
+      }, 1200);
     });
 
     console.log('✅ registro.html carregado e pronto');

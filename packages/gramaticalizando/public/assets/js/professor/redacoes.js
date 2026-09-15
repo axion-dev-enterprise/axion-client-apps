@@ -1,6 +1,8 @@
 import { initProfessorPage } from './base.js';
 import { getEssays, updateEssay } from '../storage.js';
 import { normalizeSearch, formatDate, safeText } from './utils.js';
+import { confirmModal } from '../components/Modal.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('essays');
 if (!session) throw new Error('Acesso negado.');
@@ -123,10 +125,11 @@ profCorrectionPhoto.addEventListener('change', (event) => {
   updatePreview(event.target.files[0]);
 });
 
-profCorrectionForm.addEventListener('submit', (event) => {
+profCorrectionForm.addEventListener('submit', async (event) => {
   event.preventDefault();
   if (!activeEssayId) return;
-  if (!window.confirm('Deseja concluir a correção e salvar as alterações?')) return;
+  const confirmed = await confirmModal('Deseja concluir a correção e salvar as alterações?', 'Concluir Correção');
+  if (!confirmed) return;
 
   const file = profCorrectionPhoto.files[0];
   const nota = profScore.value;
@@ -136,6 +139,7 @@ profCorrectionForm.addEventListener('submit', (event) => {
     profSubmitBtn.textContent = 'Enviando...';
     const feedback = { message: mensagem || '', foto: fotoData || '', nota: nota ? Number(nota) : null };
     updateEssay(activeEssayId, { feedback, status: 'concluido', corrigidoEm: new Date().toISOString() });
+    showToast('Correção de redação salva com sucesso!', 'sucesso');
     setTimeout(() => {
       modal.classList.add('hidden');
       renderEssays();

@@ -1,5 +1,7 @@
 import { initProfessorPage } from './base.js';
 import { getContents, deleteContent, updateContent } from '../storage.js';
+import { confirmModal } from '../components/Modal.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('portugues');
 if (!session) throw new Error('Acesso negado.');
@@ -33,7 +35,7 @@ const renderContents = () => {
 	`).join('');
 };
 
-listEl?.addEventListener('click', (event) => {
+listEl?.addEventListener('click', async (event) => {
 	const editBtn = event.target.closest('[data-edit-content]');
 	const delBtn = event.target.closest('[data-delete-content]');
 	const toggleBtn = event.target.closest('[data-toggle-publish]');
@@ -51,14 +53,17 @@ listEl?.addEventListener('click', (event) => {
 		if (!match) return;
 		const nextStatus = match.status === 'publicado' ? 'rascunho' : 'publicado';
 		updateContent(id, { status: nextStatus });
+		showToast(`Status atualizado para ${nextStatus}.`, 'info');
 		renderContents();
 		return;
 	}
 
 	if (delBtn) {
 		const id = delBtn.dataset.deleteContent;
-		if (!window.confirm('Deseja excluir este conteúdo?')) return;
+		const confirmed = await confirmModal('Deseja excluir este conteúdo?', 'Excluir Conteúdo', { type: 'danger', confirmText: 'Excluir' });
+		if (!confirmed) return;
 		deleteContent(id);
+		showToast('Conteúdo excluído com sucesso.', 'info');
 		renderContents();
 	}
 });

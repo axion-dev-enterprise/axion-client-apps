@@ -1,4 +1,10 @@
+@import "./global.css";
+
 /* Shared Dashboard Styles */
 .dashboard-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #fdfcff;
 }
+

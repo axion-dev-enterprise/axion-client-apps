@@ -1,6 +1,7 @@
 import { initProfessorPage } from './base.js';
 import { getSession } from '../storage.js';
 import { formatDate, safeText } from './utils.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('profile');
 if (!session) throw new Error('Acesso negado.');
@@ -18,6 +19,6 @@ profCreatedAt.textContent = formatDate(session.criadoEm);
 
 if (editButton) {
   editButton.addEventListener('click', () => {
-    window.alert('Edição de perfil ainda não implementada nesta versão.');
+    showToast('Edição de perfil disponível na próxima atualização.', 'info');
   });
 }

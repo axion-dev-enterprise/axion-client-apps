@@ -1,4 +1,16 @@
 import { getSession, clearSession } from '../storage.js';
+import { showToast } from '../components/Toast.js';
+import { confirmModal, customAlertModal, showModalDialog } from '../components/Modal.js';
+
+if (typeof window !== 'undefined') {
+  window.showToast = showToast;
+  window.confirmModal = confirmModal;
+  window.customAlertModal = customAlertModal;
+  window.showModalDialog = showModalDialog;
+  window.alert = (mensagem) => {
+    showToast(String(mensagem || ''), 'info', 4000);
+  };
+}
 
 export function initProfessorPage(activeNavKey = '') {
   let session = getSession();

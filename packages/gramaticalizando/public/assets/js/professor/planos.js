@@ -10,6 +10,8 @@ import {
   getStudentPermissions,
   canAccess,
 } from '../storage.js';
+import { confirmModal } from '../components/Modal.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('planos');
 if (!session) throw new Error('Acesso negado.');
@@ -160,7 +162,7 @@ const loadPlanIntoForm = (plan) => {
   planModal.classList.remove('hidden');
 };
 
-plansGrid?.addEventListener('click', (event) => {
+plansGrid?.addEventListener('click', async (event) => {
   const editBtn = event.target.closest('[data-edit-plan]');
   const deleteBtn = event.target.closest('[data-delete-plan]');
   const toggleBtn = event.target.closest('[data-toggle-plan]');
@@ -186,6 +188,7 @@ plansGrid?.addEventListener('click', (event) => {
     };
 
     createPlan(duplicated);
+    showToast('Plano duplicado com sucesso!', 'sucesso');
     renderPlans();
     return;
   }
@@ -195,14 +198,17 @@ plansGrid?.addEventListener('click', (event) => {
     if (!plan) return;
 
     updatePlan(plan.id, { status: plan.status === 'active' ? 'inactive' : 'active' });
+    showToast(`Status do plano alterado para ${plan.status === 'active' ? 'inativo' : 'ativo'}.`, 'info');
     renderPlans();
     return;
   }
 
   if (deleteBtn) {
     const planId = deleteBtn.dataset.deletePlan;
-    if (!window.confirm('Deseja excluir este plano?')) return;
+    const confirmed = await confirmModal('Deseja excluir este plano?', 'Excluir Plano', { type: 'danger', confirmText: 'Excluir' });
+    if (!confirmed) return;
     deletePlan(planId);
+    showToast('Plano excluído com sucesso.', 'info');
     renderPlans();
   }
 });
@@ -240,14 +246,16 @@ planForm?.addEventListener('submit', (event) => {
   };
 
   if (!payload.name) {
-    window.alert('Informe o nome do plano.');
+    showToast('Informe o nome do plano.', 'aviso');
     return;
   }
 
   if (editingPlanId) {
     updatePlan(editingPlanId, payload);
+    showToast('Plano atualizado com sucesso!', 'sucesso');
   } else {
     createPlan(payload);
+    showToast('Plano criado com sucesso!', 'sucesso');
   }
 
   closeModal();

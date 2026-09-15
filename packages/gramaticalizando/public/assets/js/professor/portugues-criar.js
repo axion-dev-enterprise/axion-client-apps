@@ -1,5 +1,6 @@
 import { initProfessorPage } from './base.js';
 import { createContent, getContents, updateContent } from '../storage.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('portugues');
 if (!session) throw new Error('Acesso negado.');
@@ -165,12 +166,12 @@ blocksList.addEventListener('change', async (event) => {
   const isPdf = field.dataset.field === 'pdf';
   const validType = isPdf ? file.type === 'application/pdf' : file.type.startsWith('image/');
   if (!validType) {
-    window.alert(`Selecione ${isPdf ? 'um arquivo PDF' : 'uma imagem'} válido.`);
+    showToast(`Selecione ${isPdf ? 'um arquivo PDF' : 'uma imagem'} válido.`, 'aviso');
     field.value = '';
     return;
   }
   if (file.size > MAX_FILE_SIZE) {
-    window.alert('O arquivo deve ter no máximo 20 MB.');
+    showToast('O arquivo deve ter no máximo 20 MB.', 'aviso');
     field.value = '';
     return;
   }
@@ -179,7 +180,7 @@ blocksList.addEventListener('change', async (event) => {
     block.nome = block.nome || file.name;
     renderBlocks();
   } catch (error) {
-    window.alert(error.message);
+    showToast(error.message, 'erro');
   }
 });
 
@@ -234,8 +235,8 @@ form.addEventListener('submit', (event) => {
   const tema = String(data.get('tema') || '').trim();
   const tipo = String(data.get('tipo') || 'aula');
   const status = String(event.submitter?.value || 'rascunho');
-  if (!titulo || !tema) return window.alert('Preencha o título e o tema do conteúdo.');
-  if (!blocks.length) return window.alert('Adicione pelo menos um bloco ao conteúdo.');
+  if (!titulo || !tema) return showToast('Preencha o título e o tema do conteúdo.', 'aviso');
+  if (!blocks.length) return showToast('Adicione pelo menos um bloco ao conteúdo.', 'aviso');
   if (blocks.some((block) => {
     if (!block.titulo.trim()) return true;
     if (block.tipo === 'texto') return !block.conteudo.trim();
@@ -246,12 +247,15 @@ form.addEventListener('submit', (event) => {
     if (block.tipo === 'imagem') return !block.imagem;
     if (block.tipo === 'pdf') return !block.pdf;
     return !(block.link || '').trim();
-  })) return window.alert('Complete o título e o conteúdo de cada bloco.');
+  })) return showToast('Complete o título e o conteúdo de cada bloco.', 'aviso');
 
   const content = { titulo, tema, tipo, nivel: String(data.get('nivel') || 'Médio'), descricao: String(data.get('descricao') || '').trim(), status, blocos: blocks, atualizadoEm: new Date().toISOString() };
   if (editingId) updateContent(editingId, content);
   else createContent({ id: `content-${Date.now()}`, ...content, criadoEm: new Date().toISOString() });
-  window.location.href = './portugues.html';
+  showToast('Conteúdo salvo com sucesso!', 'sucesso');
+  setTimeout(() => {
+    window.location.href = './portugues.html';
+  }, 700);
 });
 
 const existing = editingId ? getContents().find((content) => content.id === editingId) : null;

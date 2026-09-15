@@ -1,5 +1,7 @@
 import { initProfessorPage } from './base.js';
 import { createSimulation, deleteSimulation, getSimulations } from '../storage.js';
+import { confirmModal } from '../components/Modal.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('simulados');
 if (!session) throw new Error('Acesso negado.');
@@ -38,14 +40,15 @@ const renderSimulations = () => {
   `).join('');
 };
 
-list?.addEventListener('click', (event) => {
+list?.addEventListener('click', async (event) => {
   const button = event.target.closest('[data-delete-simulado]');
   if (!button) return;
 
-  const shouldDelete = window.confirm('Deseja excluir este simulado?');
+  const shouldDelete = await confirmModal('Deseja excluir este simulado?', 'Excluir Simulado', { type: 'danger', confirmText: 'Excluir' });
   if (!shouldDelete) return;
 
   deleteSimulation(button.dataset.deleteSimulado);
+  showToast('Simulado excluído com sucesso.', 'info');
   renderSimulations();
 });
 

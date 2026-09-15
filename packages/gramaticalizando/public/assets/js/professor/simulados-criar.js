@@ -1,5 +1,6 @@
 import { initProfessorPage } from './base.js';
 import { createSimulation, getSimulations, updateSimulation } from '../storage.js';
+import { showToast } from '../components/Toast.js';
 
 const session = initProfessorPage('simulados');
 if (!session) throw new Error('Acesso negado.');
@@ -33,12 +34,15 @@ form.addEventListener('submit', (event) => {
   const titulo = String(data.get('titulo') || '').trim();
   const materia = String(data.get('materia') || '').trim();
   const duracao = Number(data.get('duracao'));
-  if (!titulo || !materia || !duracao || duracao < 1) return window.alert('Preencha título, matéria e duração válida.');
-  if (!questions.length) return window.alert('Adicione pelo menos uma questão.');
-  if (questions.some((question) => !question.pergunta.trim() || question.opcoes.some((option) => !option.trim()) || question.correta === '')) return window.alert('Complete todas as alternativas e marque a resposta correta.');
+  if (!titulo || !materia || !duracao || duracao < 1) return showToast('Preencha título, matéria e duração válida.', 'aviso');
+  if (!questions.length) return showToast('Adicione pelo menos uma questão.', 'aviso');
+  if (questions.some((question) => !question.pergunta.trim() || question.opcoes.some((option) => !option.trim()) || question.correta === '')) return showToast('Complete todas as alternativas e marque a resposta correta.', 'aviso');
   const simulation = { titulo, materia, duracao, dificuldade: String(data.get('dificuldade') || 'Médio'), questoes: questions.map(({ id, ...question }) => question), atualizadoEm: new Date().toISOString() };
   if (editingId) updateSimulation(editingId, simulation); else createSimulation({ id: `sim-${Date.now()}`, ...simulation, criadoEm: new Date().toISOString() });
-  window.location.href = './simulados.html';
+  showToast('Simulado salvo com sucesso!', 'sucesso');
+  setTimeout(() => {
+    window.location.href = './simulados.html';
+  }, 700);
 });
 
 const existing = editingId ? getSimulations().find((simulation) => simulation.id === editingId) : null;
