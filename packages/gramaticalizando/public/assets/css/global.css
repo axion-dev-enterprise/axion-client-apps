@@ -254,6 +254,21 @@ button {
   backdrop-filter: blur(10px);
 }
 
+/* Variante de Alto Contraste para Fundo Claro / Neutro */
+.section-alt .section-badge,
+.section-badge.badge-light {
+  background: #f3e8ff;
+  border: 1px solid #d8b4fe;
+  color: #6b21a8;
+  font-weight: 700;
+}
+
+.section-alt .section-badge .badge-dot,
+.section-badge.badge-light .badge-dot {
+  background: #9333ea;
+  box-shadow: 0 0 8px rgba(147, 51, 234, 0.6);
+}
+
 .badge-dot {
   width: 7px;
   height: 7px;

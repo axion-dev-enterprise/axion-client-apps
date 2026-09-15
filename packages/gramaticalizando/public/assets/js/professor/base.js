@@ -25,12 +25,35 @@ export function initProfessorPage(activeNavKey = '') {
     };
   }
 
-  // Sidebar toggle
+  // Sidebar toggle com backdrop dinâmico
   const menuBtn = document.querySelector('[data-mobile-menu-button]');
   const sidebar = document.querySelector('.professor-sidebar');
   if (menuBtn && sidebar) {
-    menuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('show');
+    let backdrop = document.querySelector('.professor-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'professor-backdrop';
+      document.body.appendChild(backdrop);
+    }
+
+    const toggleSidebar = (show) => {
+      const shouldShow = typeof show === 'boolean' ? show : !sidebar.classList.contains('show');
+      sidebar.classList.toggle('show', shouldShow);
+      backdrop.classList.toggle('show', shouldShow);
+      menuBtn.setAttribute('aria-expanded', String(shouldShow));
+    };
+
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleSidebar();
+    });
+
+    backdrop.addEventListener('click', () => toggleSidebar(false));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar.classList.contains('show')) {
+        toggleSidebar(false);
+      }
     });
   }
 

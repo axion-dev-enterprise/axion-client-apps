@@ -10,6 +10,8 @@
     body {
       min-height: 100vh;
       margin: 0;
+      padding: 3rem 1.25rem;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -19,7 +21,8 @@
     }
 
     .login-shell {
-      width: min(420px, calc(100% - 2rem));
+      width: min(440px, 100%);
+      margin: auto;
       background: #ffffff;
       border: 1px solid rgba(124, 58, 237, 0.14);
       border-radius: 1.5rem;
@@ -155,20 +158,18 @@
         <div class="error-msg" id="erro-password"></div>
       </div>
 
-      <div class="actions">
-        <button type="submit" id="submitBtn" class="btn btn-primary">Entrar</button>
-        <a class='btn btn-secondary' href='/registro' style='justify-content: center; display: inline-flex; background: #f3f0ff; color: #7c3aed; text-decoration: none;'>Criar conta</a>
+      <div class="actions" style="margin-top: 1.5rem;">
+        <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%;">Entrar</button>
       </div>
     </form>
 
-    <div class="login-footer">
-      Não tem uma conta? <a href='/registro'>Cadastre-se</a>
+    <div class="login-footer" style="margin-top: 1.5rem; font-size: 0.95rem; color: #6b607d;">
+      Não tem uma conta? <a href='/registro' style="color: #7c3aed; font-weight: 700; text-decoration: none;">Cadastre-se</a>
     </div>
 
-    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e8e0f0; font-size: 0.85rem; color: #6b607d;">
-      <strong style="display: block; margin-bottom: 0.5rem;">📌 Acessar Painel do Professor:</strong>
-      <p style="margin: 0.3rem 0;">Email: <code style="background: #f3f0ff; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">professor@plataforma.com</code></p>
-      <p style="margin: 0.3rem 0;">Senha: <code style="background: #f3f0ff; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace;">senha123</code></p>
+    <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #f0ebf8; text-align: center; font-size: 0.85rem; color: #6b607d;">
+      <span>É professor ou da equipe pedagógica?</span><br>
+      <a href="/professor" style="color: #7c3aed; font-weight: 600; text-decoration: none; display: inline-inline; margin-top: 0.35rem;">Acessar painel do professor →</a>
     </div>
   </main>
 
