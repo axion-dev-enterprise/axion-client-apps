@@ -439,7 +439,7 @@ export const ProfessorSimulados: React.FC = () => {
                           onChange={() => handleUpdateQuestao(qIdx, 'respostaCorreta', alt.id)}
                           style={{ width: '1rem', height: '1rem', accentColor: 'var(--success)', cursor: 'pointer' }}
                         />
-                        <span style={{ fontWeight: 700, textTransform: 'uppercase', width: '1.25rem' }}>{alt.id})</span>
+                        <span style={{ fontWeight: 700, textTransform: 'uppercase', width: '1.25rem', color: 'var(--text-primary)' }}>{alt.id})</span>
                         <input
                           type="text"
                           style={{

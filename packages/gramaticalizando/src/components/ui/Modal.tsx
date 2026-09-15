@@ -59,6 +59,7 @@ export const Modal: React.FC<ModalProps> = ({
           width: '100%',
           maxWidth,
           backgroundColor: '#ffffff',
+          color: 'var(--text-primary)',
           border: '1px solid var(--border-subtle)',
           borderRadius: 'var(--radius-lg)',
           boxShadow: 'var(--shadow-lg)',
@@ -113,6 +114,7 @@ export const Modal: React.FC<ModalProps> = ({
           style={{
             padding: '1.5rem',
             overflowY: 'auto',
+            backgroundColor: '#ffffff',
             color: 'var(--text-secondary)',
             fontSize: '0.9375rem',
             lineHeight: 1.6

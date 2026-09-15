@@ -196,13 +196,13 @@ export const ProfessorDiagnostico: React.FC = () => {
           </h3>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', fontSize: '0.8125rem' }}>
-          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
             <span style={{ color: 'var(--danger)', fontWeight: 700 }}>Nível Iniciante:</span> Menos de 50% de acertos
           </div>
-          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
             <span style={{ color: 'var(--warning)', fontWeight: 700 }}>Nível Intermediário:</span> 50% a 79% de acertos
           </div>
-          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)' }}>
+          <div style={{ padding: '0.5rem 0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)', color: 'var(--text-primary)' }}>
             <span style={{ color: 'var(--success)', fontWeight: 700 }}>Nível Avançado:</span> 80% ou mais de acertos
           </div>
         </div>
@@ -400,7 +400,7 @@ export const ProfessorDiagnostico: React.FC = () => {
                     onChange={() => setFormRespostaCorreta(alt.id.toLowerCase())}
                     style={{ width: '1.125rem', height: '1.125rem', accentColor: 'var(--success)', cursor: 'pointer' }}
                   />
-                  <span style={{ fontWeight: 700, textTransform: 'uppercase', width: '1.5rem' }}>
+                  <span style={{ fontWeight: 700, textTransform: 'uppercase', width: '1.5rem', color: 'var(--text-primary)' }}>
                     {alt.id})
                   </span>
                   <input

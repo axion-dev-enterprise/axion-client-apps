@@ -95,14 +95,14 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
               <button
                 onClick={() => removeToast(toast.id)}
                 style={{
-                  color: 'var(--text-muted)',
+                  color: 'rgba(255, 255, 255, 0.75)',
                   display: 'flex',
                   padding: '4px',
                   borderRadius: '4px',
                   transition: 'color var(--transition-fast)'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = '#fff')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+                onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'rgba(255, 255, 255, 0.75)')}
                 aria-label="Fechar notificação"
               >
                 <X size={16} />
