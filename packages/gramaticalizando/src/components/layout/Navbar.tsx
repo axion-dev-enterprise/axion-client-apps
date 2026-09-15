@@ -73,6 +73,19 @@ export const Navbar: React.FC = () => {
           className="desktop-nav"
         >
           <a
+            href="#diagnostico"
+            style={{
+              fontSize: '0.9375rem',
+              fontWeight: 600,
+              color: '#6b21a8',
+              transition: 'color var(--transition-fast)'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = '#7e22ce')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#6b21a8')}
+          >
+            Diagnóstico
+          </a>
+          <a
             href="#modulos"
             style={{
               fontSize: '0.9375rem',
@@ -190,6 +203,13 @@ export const Navbar: React.FC = () => {
             gap: '1.25rem'
           }}
         >
+          <a
+            href="#diagnostico"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ fontSize: '1rem', color: '#6b21a8', fontWeight: 600, padding: '0.5rem 0' }}
+          >
+            Diagnóstico Grátis
+          </a>
           <a
             href="#modulos"
             onClick={() => setMobileMenuOpen(false)}

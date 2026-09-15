@@ -7,9 +7,9 @@ const { somenteAluno, somenteAdmin } = require("../middlewares/auth");
 router.get("/aluno/diagnostico/questoes", diagnosticoController.obterQuestoes);
 router.get("/diagnostico/questoes", diagnosticoController.obterQuestoes);
 
-// Processar respostas e salvar no perfil do aluno autenticado
+// Processar respostas (público para teste inicial e com salvamento automático se autenticado)
 router.post("/aluno/diagnostico/processar", somenteAluno, diagnosticoController.processar);
-router.post("/diagnostico/processar", somenteAluno, diagnosticoController.processar);
+router.post("/diagnostico/processar", diagnosticoController.processar);
 
 // Rotas Administrativas (Professor / Admin)
 router.get("/admin/diagnostico", somenteAdmin, diagnosticoController.obterDiagnosticoAdmin);

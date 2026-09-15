@@ -11,7 +11,8 @@ import {
   LogOut,
   User as UserIcon,
   ChevronDown,
-  Shield
+  Shield,
+  Sparkles
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -25,6 +26,7 @@ export const StudentHeader: React.FC = () => {
     { path: '/home', label: 'Início', icon: <Home size={16} /> },
     { path: '/portugues', label: 'Português', icon: <BookOpen size={16} /> },
     { path: '/simulados', label: 'Simulados', icon: <FileCheck2 size={16} /> },
+    { path: '/aluno/diagnostico', label: 'Diagnóstico', icon: <Sparkles size={16} /> },
     { path: '/redacao', label: 'Redação', icon: <PenTool size={16} /> },
     { path: '/cronograma', label: 'Cronograma', icon: <Calendar size={16} /> },
     { path: '/materiais', label: 'Materiais', icon: <FolderDown size={16} /> },

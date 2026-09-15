@@ -16,6 +16,7 @@ import { StudentRedacao } from '../pages/student/StudentRedacao';
 import { StudentCronograma } from '../pages/student/StudentCronograma';
 import { StudentMateriais } from '../pages/student/StudentMateriais';
 import { StudentVideoaulas } from '../pages/student/StudentVideoaulas';
+import { StudentDiagnostico } from '../pages/student/StudentDiagnostico';
 
 import { ProfessorDashboard } from '../pages/professor/ProfessorDashboard';
 import { ProfessorAlunos } from '../pages/professor/ProfessorAlunos';
@@ -34,6 +35,7 @@ export const AppRoutes: React.FC = () => {
       {/* Rotas Públicas da Landing Page */}
       <Route element={<LandingLayout />}>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/diagnostico" element={<StudentDiagnostico />} />
       </Route>
 
       {/* Rotas de Autenticação */}
@@ -49,6 +51,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/aluno" element={<Navigate to="/home" replace />} />
         <Route path="/portugues" element={<StudentPortugues />} />
         <Route path="/simulados" element={<StudentSimulados />} />
+        <Route path="/aluno/diagnostico" element={<StudentDiagnostico />} />
         <Route path="/redacao" element={<StudentRedacao />} />
         <Route path="/cronograma" element={<StudentCronograma />} />
         <Route path="/materiais" element={<StudentMateriais />} />

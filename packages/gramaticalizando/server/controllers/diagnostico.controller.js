@@ -356,9 +356,6 @@ function gerarCronogramaPersonalizado(foco, horasSemanais, lacunas) {
 async function processar(req, res) {
     try {
         const usuario = obterUsuarioAutenticado(req);
-        if (!usuario) {
-            return res.status(401).json({ erro: "Usuário não autenticado." });
-        }
 
         const foco = String(req.body.foco || "concursos").toLowerCase();
         const horasSemanais = Number(req.body.horasSemanais || 6);
@@ -440,19 +437,21 @@ async function processar(req, res) {
             rankingTopicos
         };
 
-        // Salvar no usuário
-        const usuarios = await lerArquivoJson(paths.USUARIOS, []);
-        const idx = usuarios.findIndex(u => u.id === usuario.id);
-        if (idx >= 0) {
-            garantirDadosEstudo(usuarios[idx]);
-            usuarios[idx].estudos.diagnostico = diagnosticoSalvo;
-            usuarios[idx].estudos.cronogramaSemanal = cronogramaSemanal;
-            usuarios[idx].estudos.atividades.push({
-                tipo: "diagnostico",
-                titulo: `Diagnóstico Inicial (${nivel} - ${percentualGeral}%)`,
-                data: agora
-            });
-            await salvarArquivoJson(paths.USUARIOS, usuarios);
+        // Salvar no perfil do usuário caso autenticado
+        if (usuario && usuario.id) {
+            const usuarios = await lerArquivoJson(paths.USUARIOS, []);
+            const idx = usuarios.findIndex(u => u.id === usuario.id);
+            if (idx >= 0) {
+                garantirDadosEstudo(usuarios[idx]);
+                usuarios[idx].estudos.diagnostico = diagnosticoSalvo;
+                usuarios[idx].estudos.cronogramaSemanal = cronogramaSemanal;
+                usuarios[idx].estudos.atividades.push({
+                    tipo: "diagnostico",
+                    titulo: `Diagnóstico Inicial (${nivel} - ${percentualGeral}%)`,
+                    data: agora
+                });
+                await salvarArquivoJson(paths.USUARIOS, usuarios);
+            }
         }
 
         return res.json({
