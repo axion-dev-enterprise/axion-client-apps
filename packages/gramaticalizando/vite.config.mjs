@@ -27,9 +27,35 @@ function getHtmlInputs(dir, baseDir) {
 const publicRoot = resolve(__dirname, 'public');
 const htmlInputs = getHtmlInputs(publicRoot, publicRoot);
 
+// Plugin para espelhar páginas de pages/*.html na raiz de dist/ para Clean URLs perfeitas
+function cleanUrlsMirrorPlugin() {
+  return {
+    name: 'clean-urls-mirror',
+    closeBundle() {
+      const distDir = resolve(__dirname, 'dist');
+      const pagesDir = path.join(distDir, 'pages');
+      if (fs.existsSync(pagesDir)) {
+        const files = fs.readdirSync(pagesDir);
+        for (const file of files) {
+          if (file.endsWith('.html') && file !== 'index.html') {
+            const srcPath = path.join(pagesDir, file);
+            const dstPath = path.join(distDir, file);
+            let content = fs.readFileSync(srcPath, 'utf-8');
+            // Ajustar caminhos de ../assets/ para ./assets/ ou /assets/
+            content = content.replace(/(href|src)=["']\.\.\/assets\//g, '$1="/assets/');
+            fs.writeFileSync(dstPath, content, 'utf-8');
+            console.log(`[clean-urls-mirror] Mirrored pages/${file} -> ${file}`);
+          }
+        }
+      }
+    }
+  };
+}
+
 export default defineConfig({
   root: 'public',
   publicDir: false,
+  plugins: [cleanUrlsMirrorPlugin()],
   build: {
     outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true,
