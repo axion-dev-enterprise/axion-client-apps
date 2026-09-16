@@ -252,15 +252,15 @@ export const StudentPortugues: React.FC = () => {
   const porcentagemGeral = totalAulasGeral > 0 ? Math.round((totalConcluidasGeral / totalAulasGeral) * 100) : 0;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.25rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.25rem' }}>
-            <div style={{ padding: '0.5rem', backgroundColor: 'var(--accent-light)', borderRadius: 'var(--radius-md)', color: 'var(--accent)' }}>
+            <div style={{ padding: '0.5rem', backgroundColor: 'var(--accent-light)', borderRadius: 'var(--radius-md)', color: 'var(--accent)', flexShrink: 0 }}>
               <BookOpen size={24} />
             </div>
-            <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text-primary)', margin: 0 }}>
+            <h1 style={{ fontSize: 'clamp(1.35rem, 4.5vw, 1.75rem)', fontWeight: 800, color: 'var(--text-primary)', margin: 0, lineHeight: 1.25 }}>
               Língua Portuguesa para Concursos
             </h1>
           </div>
@@ -349,18 +349,19 @@ export const StudentPortugues: React.FC = () => {
               >
                 {/* Header do Módulo */}
                 <div
+                  className="modulo-card-header"
                   onClick={() => handleToggleModule(modulo.id)}
                   style={{
-                    padding: '1.25rem 1.5rem',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'space-between',
                     cursor: 'pointer',
                     backgroundColor: isExpanded ? 'var(--bg-surface-2)' : 'transparent',
-                    transition: 'background-color 0.2s ease'
+                    transition: 'background-color 0.2s ease',
+                    gap: '0.75rem'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', flex: 1, minWidth: 0 }}>
                     <span
                       style={{
                         width: '32px',
@@ -372,32 +373,47 @@ export const StudentPortugues: React.FC = () => {
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontWeight: 800,
-                        fontSize: '0.875rem'
+                        fontSize: '0.875rem',
+                        flexShrink: 0,
+                        marginTop: '2px'
                       }}
                     >
                       {modIndex + 1}
                     </span>
-                    <div>
-                      <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 style={{ fontSize: '1.0625rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0, lineHeight: 1.35 }}>
                         {modulo.titulo}
                       </h3>
-                      <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
+                      <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0 0', lineHeight: 1.45, wordBreak: 'break-word' }}>
                         {modulo.descricao}
                       </p>
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0, marginTop: '4px' }}>
+                    <span
+                      style={{
+                        fontSize: '0.75rem',
+                        fontWeight: 600,
+                        color: 'var(--text-muted)',
+                        backgroundColor: 'var(--bg-surface-3)',
+                        padding: '0.2rem 0.55rem',
+                        borderRadius: 'var(--radius-full)',
+                        whiteSpace: 'nowrap',
+                        border: '1px solid var(--border-subtle)'
+                      }}
+                    >
                       {concluidasModulo} / {totalAulasModulo} aulas
                     </span>
-                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    <div style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center' }}>
+                      {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                    </div>
                   </div>
                 </div>
 
                 {/* Grid / Carrossel de Aulas (quando expandido) */}
                 {isExpanded && (
-                  <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--border-subtle)', backgroundColor: '#ffffff' }}>
+                  <div className="modulo-expanded-body" style={{ borderTop: '1px solid var(--border-subtle)', backgroundColor: '#ffffff' }}>
                     {/* Navegação Mobile & Dica de Swipe */}
                     {modulo.aulas.length > 1 && (
                       <div className="aulas-mobile-nav">

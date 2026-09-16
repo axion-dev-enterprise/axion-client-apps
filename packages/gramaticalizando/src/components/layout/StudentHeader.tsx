@@ -71,22 +71,25 @@ export const StudentHeader: React.FC = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.75rem',
-              textDecoration: 'none'
+              gap: '0.625rem',
+              textDecoration: 'none',
+              minWidth: 0
             }}
           >
             <img
               src="/assets/img/logo.png"
               alt="Gramaticalizando"
               style={{
-                height: '2.25rem',
+                height: '2rem',
                 width: 'auto',
-                objectFit: 'contain'
+                objectFit: 'contain',
+                flexShrink: 0
               }}
             />
             <span
+              className="student-header-brand-title"
               style={{
-                fontSize: '1.125rem',
+                fontSize: '1.0625rem',
                 fontWeight: 700,
                 color: 'var(--text-primary)',
                 whiteSpace: 'nowrap'
@@ -113,19 +116,21 @@ export const StudentHeader: React.FC = () => {
           </Link>
 
           {/* User Profile dropdown */}
-          <div style={{ position: 'relative' }}>
+          <div style={{ position: 'relative', flexShrink: 0 }}>
             <button
               onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+              aria-label="Menu do Usuário"
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.625rem',
-                padding: '0.375rem 0.625rem',
+                gap: '0.5rem',
+                padding: '0.25rem 0.5rem',
                 borderRadius: 'var(--radius-md)',
                 backgroundColor: profileDropdownOpen ? 'var(--bg-surface-2)' : 'transparent',
                 transition: 'background-color var(--transition-fast)',
                 cursor: 'pointer',
-                border: '1px solid transparent'
+                border: '1px solid transparent',
+                flexShrink: 0
               }}
             >
               <div
@@ -139,12 +144,16 @@ export const StudentHeader: React.FC = () => {
                   justifyContent: 'center',
                   color: '#ffffff',
                   fontWeight: 700,
-                  fontSize: '0.8125rem'
+                  fontSize: '0.8125rem',
+                  flexShrink: 0
                 }}
               >
                 {getInitials(user?.nome)}
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+              <div
+                className="student-header-user-info"
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}
+              >
                 <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
                   {user?.nome || 'Aluno'}
                 </span>
@@ -152,7 +161,9 @@ export const StudentHeader: React.FC = () => {
                   Plano {user?.plano ? user.plano.toUpperCase() : 'PRO'}
                 </span>
               </div>
-              <ChevronDown size={14} color="var(--text-muted)" />
+              <div className="student-header-user-chevron" style={{ display: 'flex', alignItems: 'center' }}>
+                <ChevronDown size={14} color="var(--text-muted)" />
+              </div>
             </button>
 
             {profileDropdownOpen && (
@@ -305,9 +316,23 @@ export const StudentHeader: React.FC = () => {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
-        @media (max-width: 520px) {
+        @media (max-width: 640px) {
+          .student-header-user-info {
+            display: none !important;
+          }
+          .student-header-user-chevron {
+            display: none !important;
+          }
           .student-portal-badge {
             display: none !important;
+          }
+          .student-header-brand-title {
+            font-size: 1rem !important;
+          }
+        }
+        @media (max-width: 380px) {
+          .student-header-brand-title {
+            font-size: 0.9375rem !important;
           }
         }
       `}</style>
