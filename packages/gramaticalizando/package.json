@@ -9,6 +9,7 @@
     "dev:server": "node server/server.js",
     "build": "vite build",
     "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
     "admin:create": "node scripts/criar-admin.js",
     "seed:admin": "node scripts/criar-admin.js"
   },

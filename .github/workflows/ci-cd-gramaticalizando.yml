@@ -1,0 +1,101 @@
+﻿name: CI/CD Pipeline - Gramaticalizando
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'packages/gramaticalizando/**'
+      - '.github/workflows/ci-cd-gramaticalizando.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'packages/gramaticalizando/**'
+      - '.github/workflows/ci-cd-gramaticalizando.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: gramaticalizando-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: Quality Gate (Typecheck & Build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/gramaticalizando
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: packages/gramaticalizando/package-lock.json
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: TypeScript Typecheck
+        run: npm run typecheck
+
+      - name: Client Vite Build Validation
+        run: npm run build
+
+  deploy-production:
+    name: Deploy to Vercel (Production)
+    needs: quality-gate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/gramaticalizando
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Link Vercel Project Config
+        env:
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        run: |
+          mkdir -p .vercel
+          echo "{\"projectId\":\"$VERCEL_PROJECT_ID\",\"orgId\":\"$VERCEL_ORG_ID\"}" > .vercel/project.json
+
+      - name: Pull Vercel Production Environment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+
+      - name: Build Vercel Production Artifact
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel build --prod --token=$VERCEL_TOKEN
+
+      - name: Deploy Prebuilt Artifact to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prebuilt --prod --yes --token=$VERCEL_TOKEN
+
+      - name: Verify Live Production Endpoint
+        run: |
+          echo "Verificando endpoint de produção live..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L https://gramaticalizando.vercel.app/)
+          echo "Status HTTP retornado: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "ERRO: Endpoint não respondeu HTTP 200 (retornou $STATUS)"
+            exit 1
+          fi
+          echo "Deploy verificado com sucesso!"

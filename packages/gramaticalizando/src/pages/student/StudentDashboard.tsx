@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   BookOpen,
@@ -9,7 +9,10 @@ import {
   ArrowRight,
   TrendingUp,
   Clock,
-  Award
+  Award,
+  MessageCircle,
+  Copy,
+  Check
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Card } from '../../components/ui/Card';
@@ -20,6 +23,7 @@ import { CANONICAL_MODULES } from '../../data/canonical-modules';
 export const StudentDashboard: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [copiado, setCopiado] = useState(false);
 
   const totalAulas = CANONICAL_MODULES.reduce((acc, m) => acc + m.aulas.length, 0);
   const aulasConcluidas = 12; // Exemplo de progresso inicial
@@ -27,6 +31,106 @@ export const StudentDashboard: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Banner de Aprovação Pendente se aplicável */}
+      {user?.statusPlano === 'pendente' && (
+        <Card
+          variant="elevated"
+          padding="md"
+          style={{
+            backgroundColor: '#fffbeb',
+            border: '1px solid #fde68a',
+            borderRadius: '16px'
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <div
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '8px',
+                    backgroundColor: '#fef3c7',
+                    color: '#d97706',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
+                  }}
+                >
+                  <Clock size={20} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#92400e', margin: 0 }}>
+                    Matrícula Aguardando Liberação Docente
+                  </h3>
+                  <p style={{ fontSize: '0.8125rem', color: '#b45309', margin: 0 }}>
+                    Sua solicitação de acesso para o <strong>Plano {user?.plano ? user.plano.toUpperCase() : 'MÉDIO'}</strong> está pendente de confirmação.
+                  </p>
+                </div>
+              </div>
+
+              {user?.codigoReferencia && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    backgroundColor: '#ffffff',
+                    border: '1px solid #fcd34d',
+                    padding: '0.375rem 0.75rem',
+                    borderRadius: '8px'
+                  }}
+                >
+                  <span style={{ fontSize: '0.75rem', color: '#92400e', fontWeight: 600 }}>Ref:</span>
+                  <strong style={{ fontFamily: 'monospace', fontSize: '0.9375rem', color: '#78350f' }}>
+                    {user.codigoReferencia}
+                  </strong>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigator.clipboard.writeText(user.codigoReferencia || '');
+                      setCopiado(true);
+                      setTimeout(() => setCopiado(false), 2000);
+                    }}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: '#92400e',
+                      display: 'flex',
+                      alignItems: 'center',
+                      padding: 0
+                    }}
+                    title="Copiar código"
+                  >
+                    {copiado ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', borderTop: '1px solid #fef3c7', paddingTop: '0.75rem' }}>
+              <a
+                href={`https://wa.me/5521992013060?text=${encodeURIComponent(
+                  `Olá, Professora Wilma! Estou cadastrado no Gramaticalizando. Meu Código de Referência é *${user?.codigoReferencia || ''}* para ativação do Plano *${user?.plano ? user.plano.toUpperCase() : 'MÉDIO'}* (Nome: ${user?.nome || ''}, Email: ${user?.email || ''}). Aguardo a liberação!`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none' }}
+              >
+                <Button variant="whatsapp" size="sm" icon={<MessageCircle size={16} />}>
+                  Avisar Professora no WhatsApp
+                </Button>
+              </a>
+              <span style={{ fontSize: '0.75rem', color: '#92400e' }}>
+                Envie seu código de referência para que a professora aprove sua matrícula na dashboard.
+              </span>
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Banner de Boas-Vindas */}
       <Card
         variant="elevated"

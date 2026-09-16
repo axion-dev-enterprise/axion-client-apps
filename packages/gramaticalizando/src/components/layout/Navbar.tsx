@@ -111,6 +111,19 @@ export const Navbar: React.FC = () => {
             Metodologia
           </a>
           <a
+            href="#depoimentos"
+            style={{
+              fontSize: '0.9375rem',
+              fontWeight: 500,
+              color: '#475569',
+              transition: 'color var(--transition-fast)'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = '#475569')}
+          >
+            Resultados
+          </a>
+          <a
             href="#planos"
             style={{
               fontSize: '0.9375rem',
@@ -223,6 +236,13 @@ export const Navbar: React.FC = () => {
             style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
           >
             Metodologia
+          </a>
+          <a
+            href="#depoimentos"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ fontSize: '1rem', color: '#0f172a', padding: '0.5rem 0' }}
+          >
+            Resultados
           </a>
           <a
             href="#planos"

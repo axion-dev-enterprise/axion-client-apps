@@ -27,12 +27,25 @@ async function registro(req, res) {
         }
 
         const senhaHash = await bcrypt.hash(senha, 10);
+        const plano = ['iniciante', 'medio', 'pro'].includes(String(req.body.plano || '').toLowerCase())
+            ? String(req.body.plano).toLowerCase()
+            : 'medio';
+
+        // Gera código de referência legível de 4 dígitos, ex: GRAM-7429
+        const randSufixo = Math.floor(1000 + Math.random() * 9000);
+        const codigoReferencia = `GRAM-${randSufixo}`;
+
         const novoUsuario = {
             id: crypto.randomUUID(),
             nome,
             email,
             senha: senhaHash,
             tipo: "aluno",
+            plano,
+            statusPlano: "pendente",
+            codigoReferencia,
+            dataSolicitacaoPlano: new Date().toISOString(),
+            dataAprovacaoPlano: null,
             criadoEm: new Date().toISOString()
         };
 
@@ -45,7 +58,10 @@ async function registro(req, res) {
             id: novoUsuario.id,
             nome: novoUsuario.nome,
             email: novoUsuario.email,
-            tipo: "aluno"
+            tipo: "aluno",
+            plano: novoUsuario.plano,
+            statusPlano: novoUsuario.statusPlano,
+            codigoReferencia: novoUsuario.codigoReferencia
         };
 
         return res.json({
@@ -53,7 +69,10 @@ async function registro(req, res) {
             usuario: {
                 id: novoUsuario.id,
                 nome: novoUsuario.nome,
-                email: novoUsuario.email
+                email: novoUsuario.email,
+                plano: novoUsuario.plano,
+                statusPlano: novoUsuario.statusPlano,
+                codigoReferencia: novoUsuario.codigoReferencia
             }
         });
     } catch (erro) {
@@ -91,7 +110,10 @@ async function login(req, res) {
             id: usuario.id,
             nome: usuario.nome,
             email: usuario.email,
-            tipo: "aluno"
+            tipo: "aluno",
+            plano: usuario.plano || "medio",
+            statusPlano: usuario.statusPlano || "ativo",
+            codigoReferencia: usuario.codigoReferencia || `GRAM-${String(usuario.id).replace(/\D/g, '').slice(0, 4) || '1001'}`
         };
 
         return res.json({
@@ -99,7 +121,10 @@ async function login(req, res) {
             usuario: {
                 id: usuario.id,
                 nome: usuario.nome,
-                email: usuario.email
+                email: usuario.email,
+                plano: req.session.usuario.plano,
+                statusPlano: req.session.usuario.statusPlano,
+                codigoReferencia: req.session.usuario.codigoReferencia
             }
         });
     } catch (erro) {
@@ -157,10 +182,40 @@ function adminMe(req, res) {
     return res.json({ sucesso: true, usuario: req.session.usuario });
 }
 
-function alunoMe(req, res) {
+async function alunoMe(req, res) {
     if (!req.session?.usuario) {
         return res.status(401).json({ sucesso: false, mensagem: "Não autenticado." });
     }
+
+    try {
+        const usuarios = await lerArquivoJson(paths.USUARIOS);
+        const atual = usuarios.find(u => u.id === req.session.usuario.id);
+        if (atual) {
+            const plano = atual.plano || "medio";
+            const statusPlano = atual.statusPlano || "ativo";
+            const codigoReferencia = atual.codigoReferencia || `GRAM-${String(atual.id).replace(/\D/g, '').slice(0, 4) || '1001'}`;
+
+            req.session.usuario.plano = plano;
+            req.session.usuario.statusPlano = statusPlano;
+            req.session.usuario.codigoReferencia = codigoReferencia;
+
+            return res.json({
+                sucesso: true,
+                usuario: {
+                    id: atual.id,
+                    nome: atual.nome,
+                    email: atual.email,
+                    tipo: "aluno",
+                    plano,
+                    statusPlano,
+                    codigoReferencia
+                }
+            });
+        }
+    } catch (e) {
+        console.warn("Erro ao buscar dados atualizados do aluno:", e);
+    }
+
     return res.json({ sucesso: true, usuario: req.session.usuario });
 }
 

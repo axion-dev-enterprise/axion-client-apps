@@ -1,11 +1,17 @@
 export type UserRole = 'aluno' | 'professor' | 'admin';
+export type PlanoTipo = 'iniciante' | 'medio' | 'pro';
+export type StatusPlano = 'pendente' | 'ativo' | 'recusado' | 'gratuito';
 
 export interface User {
   id: string;
   nome: string;
   email: string;
   perfil: UserRole;
-  plano?: 'iniciante' | 'medio' | 'pro';
+  plano?: PlanoTipo;
+  statusPlano?: StatusPlano;
+  codigoReferencia?: string;
+  dataSolicitacaoPlano?: string;
+  dataAprovacaoPlano?: string;
   avatar?: string;
   criadoEm?: string;
 }
@@ -19,6 +25,7 @@ export interface RegisterCredentials {
   nome: string;
   email: string;
   senha: string;
+  plano?: PlanoTipo;
 }
 
 export interface AuthState {

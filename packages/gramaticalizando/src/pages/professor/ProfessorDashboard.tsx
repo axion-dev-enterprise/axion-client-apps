@@ -10,7 +10,8 @@ import {
   Download,
   HelpCircle,
   ArrowRight,
-  Plus
+  Plus,
+  Clock
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
@@ -27,19 +28,24 @@ export const ProfessorDashboard: React.FC = () => {
     totalExercicios: 6,
     taxaAcertoGeral: 78
   });
+  const [pendentesCount, setPendentesCount] = useState(0);
 
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const [mats, lsns, exs, tms] = await Promise.all([
+        const [mats, lsns, exs, tms, alns] = await Promise.all([
           adminApi.getMaterias().catch(() => []),
           adminApi.getAulas().catch(() => []),
           adminApi.getExercicios().catch(() => []),
-          adminApi.getTemasRedacao().catch(() => [])
+          adminApi.getTemasRedacao().catch(() => []),
+          adminApi.getAlunos().catch(() => [])
         ]);
 
+        const pendentes = (alns || []).filter(a => a.statusPlano === 'pendente');
+        setPendentesCount(pendentes.length);
+
         setStats({
-          totalAlunos: 5,
+          totalAlunos: alns.length || 5,
           totalMaterias: mats.length || 7,
           totalAulas: lsns.length || 36,
           totalExercicios: exs.length || 6,
@@ -55,7 +61,7 @@ export const ProfessorDashboard: React.FC = () => {
     { label: 'Módulos Cadastrados', value: stats.totalMaterias, icon: <BookOpen size={20} color="var(--accent)" />, change: '7 canônicos ativos' },
     { label: 'Aulas na Plataforma', value: stats.totalAulas, icon: <FileCheck size={20} color="var(--success)" />, change: '100% editáveis' },
     { label: 'Banco de Exercícios', value: stats.totalExercicios, icon: <HelpCircle size={20} color="var(--warning)" />, change: 'Bancas FGV/Vunesp' },
-    { label: 'Alunos Matriculados', value: stats.totalAlunos, icon: <Users size={20} color="#2563eb" />, change: 'Turma ativa' }
+    { label: 'Alunos Matriculados', value: stats.totalAlunos, icon: <Users size={20} color="#2563eb" />, change: pendentesCount > 0 ? `${pendentesCount} aguardando aprovação` : 'Turma ativa' }
   ];
 
   const quickActions = [
@@ -105,6 +111,60 @@ export const ProfessorDashboard: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Alerta de Matrículas Pendentes */}
+      {pendentesCount > 0 && (
+        <Card
+          variant="elevated"
+          padding="md"
+          style={{
+            backgroundColor: '#fffbeb',
+            border: '1px solid #fde68a',
+            borderRadius: '12px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '1rem'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div
+              style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '8px',
+                backgroundColor: '#fef3c7',
+                color: '#d97706',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}
+            >
+              <Clock size={20} />
+            </div>
+            <div>
+              <h4 style={{ fontSize: '1rem', fontWeight: 700, color: '#92400e', margin: 0 }}>
+                {pendentesCount} {pendentesCount === 1 ? 'Matrícula Pendente' : 'Matrículas Pendentes'} de Aprovação
+              </h4>
+              <p style={{ fontSize: '0.8125rem', color: '#b45309', margin: 0 }}>
+                Novos alunos cadastrados aguardando confirmação do plano docente.
+              </p>
+            </div>
+          </div>
+
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => navigate('/professor/alunos')}
+            style={{ backgroundColor: '#d97706', borderColor: '#d97706', fontWeight: 700 }}
+          >
+            Aprovar Matrículas no Painel
+            <ArrowRight size={14} style={{ marginLeft: '4px' }} />
+          </Button>
+        </Card>
+      )}
+
       {/* Stat Cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
         {statCards.map((s, idx) => (

@@ -92,6 +92,129 @@ export const LandingPage: React.FC = () => {
     }
   ];
 
+
+  const whatsappTestimonials = [
+    {
+      id: 'erick',
+      nome: 'Erick Talavera',
+      iniciais: 'ET',
+      avatarBg: '#0284c7',
+      subtitulo: 'Redação para Concursos',
+      concurso: 'GCM SP',
+      nota: '30 Pontos na Redação',
+      mensagens: [
+        { tipo: 'recebida', texto: 'Oi, prof! Boa noite', hora: '22:10' },
+        {
+          tipo: 'recebida',
+          texto: 'Passando pra informar que estou aprovado na redação da GCM SP. Fiz 30 pontos 🙏🏽 (o que pra mim foi surpresa pois achei que iria tirar menos)',
+          hora: '22:10'
+        }
+      ],
+      destaque: 'Aprovado na GCM SP com nota máxima de 30 pontos na prova dissertativa.'
+    },
+    {
+      id: 'phe',
+      nome: '~ Phe 🥋',
+      iniciais: 'P',
+      avatarBg: '#16a34a',
+      subtitulo: '+55 11 96630-1215 • Grupo de Estudos',
+      concurso: 'PMSP',
+      nota: 'Aprovado com Folga',
+      mensagens: [
+        {
+          tipo: 'recebida',
+          texto: 'Pessoal que está estudando, super indico as aulas da prof. Wilma hein, estou aprovado no último concurso da PMSP com folga graças ao seu auxílio! 🙌🏽 @profª Wilma',
+          hora: '09:48',
+          mencao: '@profª Wilma'
+        }
+      ],
+      destaque: 'Aprovação direta no concurso da Polícia Militar do Estado de São Paulo com folga.'
+    },
+    {
+      id: 'thiago',
+      nome: 'Thiago Tavares',
+      iniciais: 'TT',
+      avatarBg: '#d97706',
+      subtitulo: 'Preparação Discursiva',
+      concurso: 'DEGASE',
+      nota: '29 de 30 na Discursiva',
+      mensagens: [
+        {
+          tipo: 'recebida',
+          texto: 'Valeu, professora! graças algumas dicas suas eu consegui alcançar essa nota na prova discursiva do DEGASE 29 de 30. 🙌🏽🥹',
+          hora: '17:36'
+        }
+      ],
+      destaque: '96,6% de aproveitamento na prova discursiva com orientações personalizadas.'
+    },
+    {
+      id: 'juliana',
+      nome: 'Juliana Melo',
+      iniciais: 'JM',
+      avatarBg: '#9333ea',
+      subtitulo: 'Correção Pedagógica Individual',
+      concurso: 'DEGASE',
+      nota: 'Nota 27,50 na Redação',
+      mensagens: [
+        {
+          tipo: 'recebida',
+          texto: 'Oii! Passando aqui para dizer que tirei 27,50 na redação do Degase! 🥳',
+          hora: '17:38',
+          reacao: '❤️'
+        }
+      ],
+      destaque: 'Redação de alta pontuação na banca DEGASE com orientação contínua.'
+    },
+    {
+      id: 'victoria',
+      nome: '~ Victoria',
+      iniciais: 'V',
+      avatarBg: '#ec4899',
+      subtitulo: '+55 13 9... • Mentoria',
+      concurso: 'Concurso Público',
+      nota: 'Nota 34,00 na Redação',
+      mensagens: [
+        { tipo: 'recebida', texto: 'NOTA 34,00', hora: '16:22' },
+        { tipo: 'enviada', texto: 'Ihuuuuul 💖💖🫰🏽', hora: '16:22' },
+        {
+          tipo: 'recebida',
+          texto: '@Prof.ª Wilma Mendonça Super indico, muito atenciosa na correção! 🫰🏽💖🎯',
+          hora: '16:23',
+          mencao: '@Prof.ª Wilma Mendonça',
+          reacao: '❤️'
+        }
+      ],
+      destaque: 'Nota 34,00 e reconhecimento pelo atendimento atencioso nas correções.'
+    },
+    {
+      id: 'anna-jeane',
+      nome: 'Anna Helena & Jeane',
+      iniciais: 'AJ',
+      avatarBg: '#0d9488',
+      subtitulo: 'Comunidade de Alunos • Gramaticalizando',
+      concurso: 'Metodologia & Bizus',
+      nota: 'Didática & Clareza',
+      mensagens: [
+        {
+          tipo: 'recebida',
+          autor: 'Anna Helena',
+          texto: '@profª Wilma Muito obrigada. Adorei a aula e os bizus. Me deu mais clareza e tranquilidade',
+          hora: '20:34',
+          mencao: '@profª Wilma',
+          reacao: '❤️'
+        },
+        {
+          tipo: 'recebida',
+          autor: 'Jeane Abreu',
+          texto: 'Aula muito boa mesmo! Obrigada, prof. Dicas boas para aprender analisar as questões 🙌🏽',
+          hora: '20:36',
+          reacao: '❤️'
+        }
+      ],
+      destaque: 'Segurança e método estruturado para resolução rápida de questões de bancas.'
+    }
+  ];
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem', backgroundColor: '#ffffff' }}>
       {/* Hero Section — White & Roxo com Foto da Professora */}
@@ -129,8 +252,8 @@ export const LandingPage: React.FC = () => {
                   letterSpacing: '-0.025em'
                 }}
               >
-                Aprenda Língua Portuguesa com clareza, método e{' '}
-                <span style={{ color: 'var(--accent)' }}>foco na aprovação</span>.
+                Aprenda Português com clareza, método e{' '}
+                <span style={{ color: 'var(--accent)' }}>foco na sua aprovação</span>.
               </h1>
 
               <p
@@ -140,7 +263,7 @@ export const LandingPage: React.FC = () => {
                   lineHeight: 1.6
                 }}
               >
-                Aulas didáticas direto ao ponto, teoria estruturada da fonética à sintaxe avançada, simulados com questões comentadas e correção personalizada das suas redações.
+                Aulas didáticas direto ao ponto, teoria estruturada da fonética à interpretação de texto avançada, simulados com questões comentadas e correção personalizada das suas redações.
               </p>
 
               <div
@@ -225,12 +348,13 @@ export const LandingPage: React.FC = () => {
               >
                 <img
                   src="/img/professora.png"
-                  alt="Professora do Gramaticalizando"
+                  alt="Professora Wilma — Gramaticalizando"
                   style={{
                     width: '100%',
                     height: 'auto',
-                    maxHeight: '460px',
-                    objectFit: 'contain',
+                    maxHeight: '480px',
+                    objectFit: 'cover',
+                    borderRadius: '20px',
                     display: 'block',
                     margin: '0 auto'
                   }}
@@ -271,7 +395,7 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div>
                     <h4 style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.2 }}>
-                      Acompanhamento Docente
+                      #AcompanhamentoDocente
                     </h4>
                     <p style={{ fontSize: '0.75rem', color: '#64748b' }}>
                       Mentoria e correções individuais em cada etapa
@@ -643,6 +767,260 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+
+      {/* Seção de Resultados Reais & Depoimentos WhatsApp */}
+      <section id="depoimentos" style={{ backgroundColor: '#ffffff', padding: '5rem 0' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <Badge variant="purple" size="sm" style={{ marginBottom: '0.75rem' }}>
+              <MessageCircle size={14} style={{ marginRight: '6px' }} />
+              RESULTADOS REAIS & PROVA SOCIAL
+            </Badge>
+            <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#0f172a', fontWeight: 800, marginBottom: '0.75rem' }}>
+              Mensagens Reais de Quem Foi Aprovado
+            </h2>
+            <p style={{ color: '#475569', maxWidth: '640px', margin: '0 auto', fontSize: '1rem', lineHeight: 1.6 }}>
+              Confira os relatos enviados diretamente no WhatsApp para a <strong>Professora Wilma Mendonça</strong> por alunos aprovados em concursos concorridos e exames de redação.
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '1.75rem',
+              alignItems: 'stretch'
+            }}
+          >
+            {whatsappTestimonials.map((t) => (
+              <div
+                key={t.id}
+                style={{
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = '0 12px 28px -4px rgba(107, 33, 168, 0.12)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px -2px rgba(0, 0, 0, 0.05)';
+                }}
+              >
+                <div>
+                  {/* Topbar Estilo WhatsApp */}
+                  <div
+                    style={{
+                      backgroundColor: '#f0f2f5',
+                      padding: '0.75rem 1rem',
+                      borderBottom: '1px solid #e9edef',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <div
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '50%',
+                          backgroundColor: t.avatarBg,
+                          color: '#ffffff',
+                          fontWeight: 700,
+                          fontSize: '0.875rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0
+                        }}
+                      >
+                        {t.iniciais}
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: '0.9375rem',
+                            fontWeight: 600,
+                            color: '#111b21',
+                            lineHeight: 1.2
+                          }}
+                        >
+                          {t.nome}
+                        </div>
+                        <div style={{ fontSize: '0.75rem', color: '#667781', marginTop: '2px' }}>
+                          {t.subtitulo}
+                        </div>
+                      </div>
+                    </div>
+
+                    <span
+                      style={{
+                        backgroundColor: '#dcfce7',
+                        color: '#15803d',
+                        fontSize: '0.6875rem',
+                        fontWeight: 700,
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '999px',
+                        border: '1px solid #bbf7d0',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {t.nota}
+                    </span>
+                  </div>
+
+                  {/* Fundo do Chat com textura WhatsApp */}
+                  <div
+                    style={{
+                      backgroundColor: '#efeae2',
+                      backgroundImage: 'radial-gradient(#d1d7db 0.8px, transparent 0.8px)',
+                      backgroundSize: '12px 12px',
+                      padding: '1rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.75rem',
+                      minHeight: '210px'
+                    }}
+                  >
+                    {t.mensagens.map((msg, mIdx) => {
+                      const isEnviada = msg.tipo === 'enviada';
+                      return (
+                        <div
+                          key={mIdx}
+                          style={{
+                            alignSelf: isEnviada ? 'flex-end' : 'flex-start',
+                            maxWidth: '92%',
+                            position: 'relative'
+                          }}
+                        >
+                          <div
+                            style={{
+                              backgroundColor: isEnviada ? '#d9fdd3' : '#ffffff',
+                              borderRadius: '8px',
+                              borderTopLeftRadius: isEnviada ? '8px' : '2px',
+                              borderTopRightRadius: isEnviada ? '2px' : '8px',
+                              padding: '0.5rem 0.75rem',
+                              boxShadow: '0 1px 0.5px rgba(11,20,26,.13)',
+                              position: 'relative'
+                            }}
+                          >
+                            {msg.autor && (
+                              <div
+                                style={{
+                                  fontSize: '0.75rem',
+                                  fontWeight: 700,
+                                  color: '#16a34a',
+                                  marginBottom: '2px'
+                                }}
+                              >
+                                ~ {msg.autor}
+                              </div>
+                            )}
+
+                            <div
+                              style={{
+                                fontSize: '0.875rem',
+                                color: '#111b21',
+                                lineHeight: 1.45,
+                                whiteSpace: 'pre-line'
+                              }}
+                            >
+                              {msg.mencao ? (
+                                <>
+                                  {msg.texto.split(msg.mencao).map((part, pIdx, arr) => (
+                                    <React.Fragment key={pIdx}>
+                                      {part}
+                                      {pIdx < arr.length - 1 && (
+                                        <span style={{ color: '#008069', fontWeight: 600 }}>
+                                          {msg.mencao}
+                                        </span>
+                                      )}
+                                    </React.Fragment>
+                                  ))}
+                                </>
+                              ) : (
+                                msg.texto
+                              )}
+                            </div>
+
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'flex-end',
+                                gap: '3px',
+                                marginTop: '4px'
+                              }}
+                            >
+                              <span style={{ fontSize: '0.6875rem', color: '#667781' }}>
+                                {msg.hora}
+                              </span>
+                              {isEnviada && (
+                                <span style={{ color: '#53bdeb', fontSize: '0.75rem', fontWeight: 700 }}>
+                                  ✓✓
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Reação flutuante de emoji */}
+                          {msg.reacao && (
+                            <div
+                              style={{
+                                position: 'relative',
+                                marginTop: '-8px',
+                                marginLeft: isEnviada ? 'auto' : '8px',
+                                marginRight: isEnviada ? '8px' : 'auto',
+                                backgroundColor: '#ffffff',
+                                border: '1px solid #e9edef',
+                                borderRadius: '999px',
+                                padding: '1px 6px',
+                                fontSize: '0.75rem',
+                                width: 'fit-content',
+                                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                                zIndex: 2
+                              }}
+                            >
+                              {msg.reacao}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Footer do Card com o Resultado Factual */}
+                <div
+                  style={{
+                    backgroundColor: '#ffffff',
+                    padding: '0.875rem 1rem',
+                    borderTop: '1px solid #f1f5f9',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.625rem'
+                  }}
+                >
+                  <CheckCircle size={16} color="#16a34a" style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: '0.8125rem', color: '#475569', lineHeight: 1.4 }}>
+                    {t.destaque}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Planos e Preços com Redirecionamento WhatsApp */}
       <section id="planos" style={{ backgroundColor: '#f8fafc', padding: '5rem 0', borderTop: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
         <div className="container">
@@ -714,21 +1092,33 @@ export const LandingPage: React.FC = () => {
                   </ul>
                 </div>
 
-                <a
-                  href={plan.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ textDecoration: 'none', width: '100%' }}
-                >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem', width: '100%' }}>
                   <Button
-                    variant="whatsapp"
+                    variant="primary"
                     size="lg"
-                    icon={<MessageCircle size={18} />}
-                    style={{ width: '100%' }}
+                    icon={<ArrowRight size={18} />}
+                    onClick={() => navigate(`/registro?plano=${plan.id}`)}
+                    style={{ width: '100%', fontWeight: 700 }}
                   >
-                    Assinar no WhatsApp
+                    Matricular no {plan.name}
                   </Button>
-                </a>
+
+                  <a
+                    href={plan.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ textDecoration: 'none', width: '100%' }}
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      icon={<MessageCircle size={16} />}
+                      style={{ width: '100%', borderColor: '#e2e8f0', color: '#475569' }}
+                    >
+                      Dúvidas no WhatsApp
+                    </Button>
+                  </a>
+                </div>
               </Card>
             ))}
           </div>

@@ -108,6 +108,11 @@ export interface AdminAluno {
   id: string;
   nome: string;
   email: string;
+  plano?: 'iniciante' | 'medio' | 'pro';
+  statusPlano?: 'pendente' | 'ativo' | 'recusado';
+  codigoReferencia?: string;
+  dataSolicitacaoPlano?: string;
+  dataAprovacaoPlano?: string | null;
   criadoEm: string;
   aulasConcluidas: number;
   exerciciosConcluidos: number;
@@ -297,9 +302,21 @@ export const adminApi = {
     await request(`/api/admin/materiais-apoio/${id}`, { method: 'DELETE' });
   },
 
-  // Alunos
+  // Alunos & Aprovação de Planos
   async getAlunos(): Promise<AdminAluno[]> {
     const res = await request<{ sucesso: boolean; alunos: AdminAluno[] }>('/api/admin/alunos');
     return res.alunos || [];
+  },
+  async aprovarPlanoAluno(id: string, plano?: string): Promise<{ sucesso: boolean; aluno: any; mensagem: string }> {
+    return request(`/api/admin/alunos/${id}/aprovar`, {
+      method: 'POST',
+      body: JSON.stringify({ plano })
+    });
+  },
+  async atualizarStatusPlano(id: string, statusPlano: string, plano?: string): Promise<{ sucesso: boolean; aluno: any; mensagem: string }> {
+    return request(`/api/admin/alunos/${id}/status`, {
+      method: 'POST',
+      body: JSON.stringify({ statusPlano, plano })
+    });
   }
 };
