@@ -6,6 +6,10 @@ const { somenteAdmin } = require("../middlewares/auth");
 // Aluno / Público
 router.get("/materiais-apoio", materiaisController.listar);
 router.get("/aluno/materiais-apoio", materiaisController.listar);
+router.get("/materiais-apoio/:id/pdf", materiaisController.visualizarPdf);
+router.get("/materiais-apoio/:id/download", materiaisController.downloadPdf);
+router.get("/aluno/materiais-apoio/:id/pdf", materiaisController.visualizarPdf);
+router.get("/aluno/materiais-apoio/:id/download", materiaisController.downloadPdf);
 
 // Admin / Professor
 router.get("/admin/materiais-apoio", somenteAdmin, materiaisController.listarAdmin);

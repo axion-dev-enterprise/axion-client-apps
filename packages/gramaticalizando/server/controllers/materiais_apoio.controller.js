@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson } = require("../data/jsonStore");
+const { gerarBufferMaterial } = require("../utils/materialPdfService");
 
 const MATERIAIS_DEFAULT = [
     {
@@ -10,7 +11,7 @@ const MATERIAIS_DEFAULT = [
         moduloId: "fonetica-fonologia",
         nomeModulo: "Fonética e Fonologia",
         tipo: "pdf",
-        arquivoUrl: "https://gramaticalizando.com.br/docs/manual-fonetica.pdf",
+        arquivoUrl: "/api/materiais-apoio/mat-apoio-1/download",
         tamanho: "3.4 MB",
         paginas: 24,
         criadoEm: new Date().toISOString()
@@ -22,7 +23,7 @@ const MATERIAIS_DEFAULT = [
         moduloId: "ortografia",
         nomeModulo: "Ortografia e Acentuação",
         tipo: "pdf",
-        arquivoUrl: "https://gramaticalizando.com.br/docs/guia-ortografia.pdf",
+        arquivoUrl: "/api/materiais-apoio/mat-apoio-2/download",
         tamanho: "2.8 MB",
         paginas: 18,
         criadoEm: new Date().toISOString()
@@ -34,7 +35,7 @@ const MATERIAIS_DEFAULT = [
         moduloId: "sintaxe",
         nomeModulo: "Análise Sintática",
         tipo: "resumo",
-        arquivoUrl: "https://gramaticalizando.com.br/docs/mapa-sintaxe.pdf",
+        arquivoUrl: "/api/materiais-apoio/mat-apoio-3/download",
         tamanho: "1.9 MB",
         paginas: 8,
         criadoEm: new Date().toISOString()
@@ -46,7 +47,7 @@ const MATERIAIS_DEFAULT = [
         moduloId: "redacao",
         nomeModulo: "Redação Dissertativa",
         tipo: "pdf",
-        arquivoUrl: "https://gramaticalizando.com.br/docs/checklist-redacao.pdf",
+        arquivoUrl: "/api/materiais-apoio/mat-apoio-4/download",
         tamanho: "5.1 MB",
         paginas: 32,
         criadoEm: new Date().toISOString()
@@ -58,6 +59,18 @@ async function obterMateriaisPersistidos() {
     if (!Array.isArray(materiais) || materiais.length === 0) {
         materiais = MATERIAIS_DEFAULT;
         await salvarArquivoJson(paths.MATERIAIS_APOIO, materiais);
+    } else {
+        // Assegura que arquivoUrl aponte para o endpoint canônico
+        let precisaSalvar = false;
+        materiais.forEach(m => {
+            if (!m.arquivoUrl || m.arquivoUrl.includes('gramaticalizando.com.br')) {
+                m.arquivoUrl = `/api/materiais-apoio/${m.id}/download`;
+                precisaSalvar = true;
+            }
+        });
+        if (precisaSalvar) {
+            await salvarArquivoJson(paths.MATERIAIS_APOIO, materiais);
+        }
     }
     return materiais;
 }
@@ -179,10 +192,56 @@ async function excluirAdmin(req, res) {
     }
 }
 
+async function visualizarPdf(req, res) {
+    try {
+        const id = req.params.id;
+        const materiais = await obterMateriaisPersistidos();
+        const material = materiais.find(m => m.id === id);
+
+        const pdfBuffer = gerarBufferMaterial(id, material);
+        const safeTitle = (material?.titulo || 'material-de-apoio')
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/gi, '_');
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", `inline; filename="${safeTitle}.pdf"`);
+        res.setHeader("Content-Length", pdfBuffer.length);
+        res.setHeader("X-Frame-Options", "SAMEORIGIN");
+        res.setHeader("Content-Security-Policy", "frame-ancestors 'self' https://gramaticalizando.axionenterprise.cloud");
+        return res.send(pdfBuffer);
+    } catch (erro) {
+        console.error("Erro visualizar PDF:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao gerar PDF para visualização." });
+    }
+}
+
+async function downloadPdf(req, res) {
+    try {
+        const id = req.params.id;
+        const materiais = await obterMateriaisPersistidos();
+        const material = materiais.find(m => m.id === id);
+
+        const pdfBuffer = gerarBufferMaterial(id, material);
+        const safeTitle = (material?.titulo || 'material-de-apoio')
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/gi, '_');
+
+        res.setHeader("Content-Type", "application/pdf");
+        res.setHeader("Content-Disposition", `attachment; filename="${safeTitle}.pdf"`);
+        res.setHeader("Content-Length", pdfBuffer.length);
+        return res.send(pdfBuffer);
+    } catch (erro) {
+        console.error("Erro download PDF:", erro);
+        return res.status(500).json({ sucesso: false, mensagem: "Erro ao baixar PDF." });
+    }
+}
+
 module.exports = {
     listar,
     listarAdmin,
     criarAdmin,
     atualizarAdmin,
-    excluirAdmin
+    excluirAdmin,
+    visualizarPdf,
+    downloadPdf
 };
