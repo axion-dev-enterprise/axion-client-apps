@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BookOpen,
   CheckCircle2,
@@ -7,6 +7,8 @@ import {
   Search,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   Award,
   Sparkles,
   HelpCircle,
@@ -46,6 +48,18 @@ export const StudentPortugues: React.FC = () => {
   const [revelarExplicacao, setRevelarExplicacao] = useState<Record<string, boolean>>({});
 
   const { showToast } = useToast();
+  const moduleTracksRef = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const handleScrollTrack = (moduleId: string, direction: 'left' | 'right') => {
+    const track = moduleTracksRef.current[moduleId];
+    if (track) {
+      const scrollAmount = track.clientWidth * 0.82;
+      track.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const getStorageKey = () => `gramaticalizando_progresso_${user?.id || 'anon'}`;
 
@@ -367,16 +381,78 @@ export const StudentPortugues: React.FC = () => {
                 </div>
               </div>
 
-              {/* Grid de Aulas (quando expandido) */}
+              {/* Grid / Carrossel de Aulas (quando expandido) */}
               {isExpanded && (
                 <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--border-subtle)', backgroundColor: '#ffffff' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
+                  {/* Navegação Mobile & Dica de Swipe */}
+                  {modulo.aulas.length > 1 && (
+                    <div className="aulas-mobile-nav">
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--accent)' }} />
+                        Deslize para o lado ({totalAulasModulo} aulas) →
+                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleScrollTrack(modulo.id, 'left');
+                          }}
+                          aria-label="Aula anterior"
+                          style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            border: '1px solid var(--border-subtle)',
+                            backgroundColor: 'var(--bg-surface-2)',
+                            color: 'var(--text-secondary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <ChevronLeft size={15} />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleScrollTrack(modulo.id, 'right');
+                          }}
+                          aria-label="Próxima aula"
+                          style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            border: '1px solid var(--border-subtle)',
+                            backgroundColor: 'var(--bg-surface-2)',
+                            color: 'var(--text-secondary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <ChevronRight size={15} />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  <div
+                    className="aulas-carousel-track"
+                    ref={(el) => {
+                      moduleTracksRef.current[modulo.id] = el;
+                    }}
+                  >
                     {modulo.aulas.map((aula) => {
                       const isDone = !!completedLessons[aula.id];
 
                       return (
                         <div
                           key={aula.id}
+                          className="aulas-carousel-card"
                           onClick={() => handleOpenAula(aula)}
                           style={{
                             padding: '1rem',
