@@ -395,7 +395,7 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div>
                     <h4 style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0f172a', lineHeight: 1.2 }}>
-                      #AcompanhamentoDocente
+                      Acompanhamento Docente
                     </h4>
                     <p style={{ fontSize: '0.75rem', color: '#64748b' }}>
                       Mentoria e correções individuais em cada etapa

@@ -12,7 +12,8 @@ import {
   User as UserIcon,
   ChevronDown,
   Shield,
-  Sparkles
+  Sparkles,
+  GraduationCap
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -24,6 +25,7 @@ export const StudentHeader: React.FC = () => {
 
   const tabs = [
     { path: '/home', label: 'Início', icon: <Home size={16} /> },
+    { path: '/vestibular', label: 'Vestibular', icon: <GraduationCap size={16} /> },
     { path: '/portugues', label: 'Português', icon: <BookOpen size={16} /> },
     { path: '/simulados', label: 'Simulados', icon: <FileCheck2 size={16} /> },
     { path: '/aluno/diagnostico', label: 'Diagnóstico', icon: <Sparkles size={16} /> },

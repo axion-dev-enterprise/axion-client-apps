@@ -29,6 +29,7 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
   const menuItems = [
     { path: '/professor', label: 'Visão Geral', icon: <LayoutDashboard size={18} />, exact: true },
     { path: '/professor/alunos', label: 'Alunos Matriculados', icon: <Users size={18} /> },
+    { path: '/professor/vestibular', label: 'Vestibular', icon: <GraduationCap size={18} /> },
     { path: '/professor/aulas', label: 'Módulos & Aulas', icon: <BookOpen size={18} /> },
     { path: '/professor/exercicios', label: 'Banco de Questões', icon: <HelpCircle size={18} /> },
     { path: '/professor/simulados', label: 'Simulados & Provas', icon: <FileCheck size={18} /> },

@@ -17,9 +17,11 @@ import { StudentCronograma } from '../pages/student/StudentCronograma';
 import { StudentMateriais } from '../pages/student/StudentMateriais';
 import { StudentVideoaulas } from '../pages/student/StudentVideoaulas';
 import { StudentDiagnostico } from '../pages/student/StudentDiagnostico';
+import { StudentVestibular } from '../pages/student/StudentVestibular';
 
 import { ProfessorDashboard } from '../pages/professor/ProfessorDashboard';
 import { ProfessorAlunos } from '../pages/professor/ProfessorAlunos';
+import { ProfessorVestibular } from '../pages/professor/ProfessorVestibular';
 import { ProfessorRedacoes } from '../pages/professor/ProfessorRedacoes';
 import { ProfessorAulas } from '../pages/professor/ProfessorAulas';
 import { ProfessorExercicios } from '../pages/professor/ProfessorExercicios';
@@ -49,6 +51,7 @@ export const AppRoutes: React.FC = () => {
       <Route element={<StudentLayout />}>
         <Route path="/home" element={<StudentDashboard />} />
         <Route path="/aluno" element={<Navigate to="/home" replace />} />
+        <Route path="/vestibular" element={<StudentVestibular />} />
         <Route path="/portugues" element={<StudentPortugues />} />
         <Route path="/simulados" element={<StudentSimulados />} />
         <Route path="/aluno/diagnostico" element={<StudentDiagnostico />} />
@@ -63,6 +66,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/professor" element={<ProfessorDashboard />} />
         <Route path="/admin" element={<Navigate to="/professor" replace />} />
         <Route path="/professor/alunos" element={<ProfessorAlunos />} />
+        <Route path="/professor/vestibular" element={<ProfessorVestibular />} />
         <Route path="/professor/aulas" element={<ProfessorAulas />} />
         <Route path="/professor/exercicios" element={<ProfessorExercicios />} />
         <Route path="/professor/simulados" element={<ProfessorSimulados />} />

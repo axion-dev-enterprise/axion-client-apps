@@ -1,0 +1,108 @@
+{
+  "videoaulas": [
+    {
+      "id": "vest-vid-01",
+      "titulo": "Redação ENEM Nota 1000: Repertório Legitimado e Proposta de Intervenção",
+      "vestibular": "ENEM",
+      "duracao": "45 min",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "descricao": "Nesta aula magna exclusiva, a Profª Wilma desconstrói os 5 critérios da matriz de correção do ENEM, apresentando conectivos interparágrafos de alto impacto e modelos de tese infalíveis.",
+      "professor": "Profª Wilma",
+      "criadoEm": "2026-09-10T14:00:00.000Z"
+    },
+    {
+      "id": "vest-vid-02",
+      "titulo": "Discursiva de Português e Literatura da UERJ: Desvendando a Banca",
+      "vestibular": "UERJ",
+      "duracao": "52 min",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "descricao": "Guia estratégico para a prova discursiva da UERJ. Como estruturar a argumentação dialética, interpretação textual profunda das obras indicadas e coesão textual refinada.",
+      "professor": "Profª Wilma",
+      "criadoEm": "2026-09-11T16:30:00.000Z"
+    },
+    {
+      "id": "vest-vid-03",
+      "titulo": "FUVEST & UNICAMP: Sintaxe Expressiva, Ironia e Coesão Avançada",
+      "vestibular": "FUVEST",
+      "duracao": "38 min",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "descricao": "Análise das peculiaridades dos vestibulares paulistas. Como fugir do lugar-comum, utilizar figuras de sintaxe com propriedade e garantir nota máxima na expressão escrita.",
+      "professor": "Profª Wilma",
+      "criadoEm": "2026-09-12T10:15:00.000Z"
+    },
+    {
+      "id": "vest-vid-04",
+      "titulo": "Funções da Linguagem e Variação Linguística Aplicada aos Vestibulares",
+      "vestibular": "Geral",
+      "duracao": "40 min",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "descricao": "Revisão focada nos temas mais recorrentes de Língua Portuguesa em todos os exames vestibulares do país com resolução comentada de questões clássicas.",
+      "professor": "Profª Wilma",
+      "criadoEm": "2026-09-13T11:00:00.000Z"
+    }
+  ],
+  "temas": [
+    {
+      "id": "vest-tema-01",
+      "titulo": "A democratização do acesso aos avanços da inteligência artificial e a inclusão digital no Brasil",
+      "vestibular": "ENEM",
+      "ano": "2026",
+      "instrucoes": "Com base na leitura dos textos motivadores e nos conhecimentos construídos ao longo de sua formação, redija um texto dissertativo-argumentativo em modalidade escrita formal da língua portuguesa sobre o tema, apresentando proposta de intervenção que respeite os direitos humanos. Selecione, organize e relacione, de forma coerente e coesa, argumentos e fatos para a defesa de seu ponto de vista.",
+      "textosMotivadores": "Texto I: A revolução da inteligência artificial redefine postos de trabalho e métodos educacionais em todo o globo...\nTexto II: Dados do Cetic.br apontam disparidade severa no acesso a ferramentas tecnológicas entre classes socioeconômicas no Brasil.",
+      "dataLimite": "2026-11-30"
+    },
+    {
+      "id": "vest-tema-02",
+      "titulo": "A persistência da desigualdade de gênero no trabalho de cuidado não remunerado",
+      "vestibular": "ENEM",
+      "ano": "2026",
+      "instrucoes": "Redija texto dissertativo-argumentativo analisando como a sobrecarga do trabalho invisível afeta o desenvolvimento educacional e profissional das mulheres brasileiras.",
+      "textosMotivadores": "Texto I: O trabalho reprodutivo e de cuidado sustenta as engrenagens econômicas da sociedade contemporânea, embora permaneça invisibilizado nas estatísticas tradicionais...",
+      "dataLimite": "2026-10-31"
+    },
+    {
+      "id": "vest-tema-03",
+      "titulo": "O individualismo exacerbado e o colapso do sentimento comunitário na vida urbana",
+      "vestibular": "UERJ",
+      "ano": "2026",
+      "instrucoes": "Elabore uma dissertação argumentativa com posicionamento crítico e reflexivo sobre a perda da coletividade nas metrópoles contemporâneas, dialogando com os conceitos de cidadania e ética.",
+      "textosMotivadores": "Texto I: Fragmento de obra literária da UERJ destacando o isolamento dos indivíduos em condomínios e telas digitais...",
+      "dataLimite": "2026-12-15"
+    },
+    {
+      "id": "vest-tema-04",
+      "titulo": "A ciência sob suspeita: as fronteiras entre o ceticismo legítimo e o negacionismo perigoso",
+      "vestibular": "FUVEST",
+      "ano": "2026",
+      "instrucoes": "Apresente uma reflexão densa e fundamentada acerca dos limites do questionamento científico e a disseminação de narrativas anticientíficas na esfera pública.",
+      "textosMotivadores": "Texto I: A epistemologia moderna fundamenta-se na dúvida metódica, contudo o obscurantismo contemporâneo apropria-se dessa dúvida para desarticular consensos civilizatórios comprovados...",
+      "dataLimite": "2026-12-20"
+    }
+  ],
+  "redacoes": [
+    {
+      "id": "vest-red-01",
+      "alunoId": "aluno-demo",
+      "alunoNome": "Aluno Demo",
+      "alunoEmail": "aluno@gramaticalizando.com.br",
+      "temaId": "vest-tema-01",
+      "temaTitulo": "A democratização do acesso aos avanços da inteligência artificial e a inclusão digital no Brasil",
+      "vestibular": "ENEM",
+      "arquivoNome": "redacao_ia_inclusao_digital.pdf",
+      "arquivoUrl": "",
+      "texto": "Na contemporaneidade, a evolução exponencial dos algoritmos de inteligência artificial consolida-se como vetor determinante para a produtividade socioeconômica. Contudo, no contexto brasileiro, tal transformação encontra um entrave histórico: a desigualdade no acesso às tecnologias da informação, o que aprofunda o abismo entre classes sociais. Desse modo, faz-se premente analisar a ineficiência estatal em promover a infraestrutura escolar necessária e a carência de letramento digital como catalisadores dessa disparidade.\n\nEm primeiro plano, convém destacar a negligência governamental no que tange à universalização da internet de alta velocidade em polos periféricos e rurais. Sob a ótica do filósofo Zygmunt Bauman, a pós-modernidade é marcada por uma \"cidadania mutilada\", na qual indivíduos são excluídos das esferas mais dinâmicas do saber por carências estruturais. No Brasil, milhares de escolas públicas sequer contam com laboratórios de informática operacionais, inviabilizando que jovens vulneráveis desenvolvam competências basilares no manuseio ético e crítico de IAs generativas.\n\nAdemais, a ausência de diretrizes pedagógicas voltadas à alfabetização algorítmica perpetua a alienação social. De acordo com o educador Paulo Freire, a educação deve capacitar o homem para a leitura crítica do mundo e de suas ferramentas. Quando o ensino restringe-se a abordagens arcaicas, sem contextualizar os impactos da automação no mercado futuro, a tecnologia deixa de ser instrumento de emancipação e passa a ser mecanismo de estratificação, favorecendo apenas quem pode custear capacitações em centros privados de excelência.\n\nPortanto, medidas urgentes são imprescindíveis para mitigar esse cenário. Cabe ao Ministério da Educação, em consonância com o Ministério das Comunicações, instituir o \"Programa Nacional de Inclusão Tecnológica e IA nas Escolas\", por meio de repasses orçamentários dedicados à compra de equipamentos de ponta e capacitação continuada do corpo docente em ferramentas de inteligência artificial. Com essa intervenção articulada, o Brasil caminhará rumo à verdadeira equidade de oportunidades preconizada na Constituição de 1988.",
+      "status": "corrigida",
+      "notaFinal": 960,
+      "criterios": {
+        "c1": 180,
+        "c2": 200,
+        "c3": 180,
+        "c4": 200,
+        "c5": 200
+      },
+      "feedbackProfessora": "Excelente produção dissertativa-argumentativa! A tese é clara, a estrutura sintática é refinada e o repertório legitimado (Bauman e Paulo Freire) articulou-se com fluidez e pertinência ao tema. A proposta de intervenção é completa com agente, ação, meio, efeito e detalhamento primoroso. Pequenos desvios na C1 quanto à regência em períodos complexos no segundo parágrafo, mas nada que comprometa o brilhantismo do texto. Parabéns pelo empenho!",
+      "enviadoEm": "2026-09-12T18:20:00.000Z",
+      "corrigidoEm": "2026-09-13T14:10:00.000Z"
+    }
+  ]
+}
