@@ -62,9 +62,8 @@ app.get(["/health", "/api/health"], (req, res) => {
     });
 });
 
-// Rotas de API (suporta com e sem prefixo /api em serverless)
+// Rotas de API sob o prefixo canônico /api
 app.use("/api", routes);
-app.use(routes);
 
 // Fallback SPA: serve dist/index.html para qualquer rota não-API (Express 5 safe)
 app.use((req, res, next) => {
