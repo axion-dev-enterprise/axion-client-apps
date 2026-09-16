@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  gramaticalizando-app:
+    container_name: gramaticalizando-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "100.73.36.87:3050:3050"
+    environment:
+      - NODE_ENV=production
+      - PORT=3050
+      - DATABASE_URL=postgres://axion:PR9XCvjPgx58L0c7GrXLf9SceY5IjLzggS0rNzHJ7zsxjz1-@axion-pay-postgres:5432/gramaticalizando_db
+      - SESSION_SECRET=gramaticalizando-prod-session-key-axion-2026
+    networks:
+      - axion-agent-net
+
+networks:
+  axion-agent-net:
+    external: true

@@ -89,6 +89,16 @@ if (require("fs").existsSync(DIST_DIR)) {
 }
 app.use(express.static(paths.PUBLIC_DIR, { index: false }));
 
+// Healthcheck canônico para Traefik e Uptime Kuma
+app.get(["/health", "/api/health"], (req, res) => {
+    res.status(200).json({
+        status: "healthy",
+        service: "gramaticalizando-lms",
+        database: require("./db").isDbReady() ? "connected_postgresql" : "fallback_mode",
+        timestamp: new Date().toISOString()
+    });
+});
+
 // Rotas de API (suporta com e sem prefixo /api em serverless)
 app.use("/api", routes);
 app.use(routes);
