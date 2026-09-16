@@ -7,6 +7,7 @@ export interface User {
   nome: string;
   email: string;
   perfil: UserRole;
+  tipo?: string;
   plano?: PlanoTipo;
   statusPlano?: StatusPlano;
   codigoReferencia?: string;

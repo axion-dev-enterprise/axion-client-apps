@@ -9,58 +9,21 @@ const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 
-// Middleware resiliente de parsing JSON compatível com Express 5 e Vercel Serverless
+// Habilita confiança em proxies reversos (Cloudflare + Traefik) para emissão correta de cookies secure
+app.set("trust proxy", 1);
+
+// Middleware de parsing JSON e urlencoded de alta capacidade (25MB para PDFs e redações escaneadas)
+app.use(express.json({ limit: "25mb" }));
+app.use(express.urlencoded({ extended: true, limit: "25mb" }));
+
+// Fallback compatível para buffers/strings residuais
 app.use((req, res, next) => {
-    if (typeof req.body === "string") {
+    if (typeof req.body === "string" && req.body.trim().startsWith("{")) {
         try {
             req.body = JSON.parse(req.body);
         } catch {}
     }
-    if (Buffer.isBuffer(req.body)) {
-        try {
-            req.body = JSON.parse(req.body.toString("utf8"));
-        } catch {}
-    }
-    if (req.body && typeof req.body === "object") {
-        req._body = true;
-        return next();
-    }
-    if (req.method === "GET" || req.method === "HEAD" || req.method === "OPTIONS" || req.method === "DELETE") {
-        return next();
-    }
-    if (req.readableEnded || req.complete) {
-        req.body = req.body || {};
-        req._body = true;
-        return next();
-    }
-    let data = "";
-    req.on("data", chunk => {
-        data += chunk;
-    });
-    req.on("end", () => {
-        if (data) {
-            try {
-                req.body = JSON.parse(data);
-            } catch {
-                req.body = {};
-            }
-        } else {
-            req.body = req.body || {};
-        }
-        req._body = true;
-        next();
-    });
-    req.on("error", () => {
-        req.body = req.body || {};
-        req._body = true;
-        next();
-    });
-});
-app.use((req, res, next) => {
-    if (req._body) {
-        return next();
-    }
-    express.urlencoded({ extended: true })(req, res, next);
+    next();
 });
 
 app.use(

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ProfessorSidebar } from '../components/layout/ProfessorSidebar';
 import { ProfessorHeader } from '../components/layout/ProfessorHeader';
 import { useAuth } from '../context/AuthContext';
@@ -7,13 +7,15 @@ import { useAuth } from '../context/AuthContext';
 export const ProfessorLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, setDemoUser } = useAuth();
-  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user || user.perfil !== 'professor') {
+    if (!user) {
       setDemoUser('professor');
+    } else if (user.perfil !== 'professor' && user.tipo !== 'admin') {
+      navigate('/home');
     }
-  }, [user, setDemoUser]);
+  }, [user, setDemoUser, navigate]);
 
   const getPageTitle = () => {
     if (location.pathname.includes('/alunos')) return 'Alunos Matriculados';

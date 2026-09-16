@@ -50,6 +50,7 @@ async function lerDoPostgres(caminho) {
                     email: row.email,
                     senha: row.senha,
                     tipo: row.tipo,
+                    perfil: row.tipo === 'admin' ? 'professor' : 'aluno',
                     plano: row.plano,
                     statusPlano: row.statusPlano,
                     codigoReferencia: row.codigoReferencia,
@@ -109,7 +110,7 @@ async function lerDoPostgres(caminho) {
                     texto: r.texto,
                     status: r.status,
                     notaFinal: r.nota_final,
-                    criterios: r.criterios,
+                    criterios: typeof r.criterios === 'string' ? JSON.parse(r.criterios) : r.criterios,
                     feedbackProfessora: r.feedback_professora,
                     enviadoEm: r.enviado_em,
                     corrigidoEm: r.corrigido_em
@@ -159,7 +160,7 @@ async function lerDoPostgres(caminho) {
                 descricao: r.descricao,
                 publicado: r.publicado,
                 totalQuestoes: r.total_questoes,
-                questoes: r.questoes || [],
+                questoes: typeof r.questoes === 'string' ? JSON.parse(r.questoes) : (r.questoes || []),
                 criadoEm: r.criado_em,
                 atualizadoEm: r.atualizado_em
             }));
@@ -175,9 +176,60 @@ async function lerDoPostgres(caminho) {
                 tempoMinutos: r.tempo_minutos,
                 publicado: r.publicado,
                 totalQuestoes: r.total_questoes,
-                questoes: r.questoes || [],
+                questoes: typeof r.questoes === 'string' ? JSON.parse(r.questoes) : (r.questoes || []),
                 criadoEm: r.criado_em,
                 atualizadoEm: r.atualizado_em
+            }));
+        }
+
+        if (caminho === paths.REDACOES) {
+            const res = await db.query("SELECT * FROM redacoes ORDER BY criado_em DESC");
+            return res.rows.map(r => ({
+                id: r.id,
+                usuarioId: r.usuario_id,
+                alunoNome: r.aluno_nome,
+                alunoEmail: r.aluno_email,
+                tema: r.tema,
+                texto: r.texto,
+                arquivoUrl: r.arquivo_url,
+                status: r.status,
+                notaGeral: r.nota_geral,
+                competencias: typeof r.competencias === 'string' ? JSON.parse(r.competencias) : r.competencias,
+                feedbackProfessora: r.feedback_professora,
+                criadoEm: r.criado_em,
+                atualizadoEm: r.atualizado_em,
+                corrigidoEm: r.corrigido_em
+            }));
+        }
+
+        if (caminho === paths.TEMAS_REDACAO) {
+            const res = await db.query("SELECT * FROM temas_redacao ORDER BY criado_em DESC");
+            return res.rows.map(r => ({
+                id: r.id,
+                titulo: r.titulo,
+                foco: r.foco,
+                instrucoes: r.instrucoes,
+                categoria: r.categoria,
+                textosMotivadores: typeof r.textos_motivadores === 'string' ? JSON.parse(r.textos_motivadores) : (r.textos_motivadores || []),
+                prazo: r.prazo,
+                criadoEm: r.criado_em
+            }));
+        }
+
+        if (caminho === paths.MATERIAIS_APOIO) {
+            const res = await db.query("SELECT * FROM materiais_apoio ORDER BY criado_em DESC");
+            return res.rows.map(r => ({
+                id: r.id,
+                titulo: r.titulo,
+                descricao: r.descricao,
+                moduloId: r.modulo_id,
+                categoria: r.categoria,
+                tipo: r.tipo,
+                tamanho: r.tamanho,
+                paginas: r.paginas,
+                arquivoUrl: r.arquivo_url || r.download_url,
+                downloadUrl: r.download_url || r.arquivo_url,
+                criadoEm: r.criado_em
             }));
         }
     } catch (err) {
@@ -249,6 +301,13 @@ async function salvarNoPostgres(caminho, dados) {
 
         if (caminho === paths.VESTIBULAR && dados && typeof dados === 'object') {
             if (Array.isArray(dados.videoaulas)) {
+                const idsAtivos = dados.videoaulas.map(v => v.id);
+                if (idsAtivos.length > 0) {
+                    await db.query("DELETE FROM vestibular_videoaulas WHERE id != ALL($1)", [idsAtivos]);
+                } else {
+                    await db.query("DELETE FROM vestibular_videoaulas");
+                }
+
                 for (const v of dados.videoaulas) {
                     await db.query(`
                         INSERT INTO vestibular_videoaulas (id, titulo, vestibular, duracao, url, descricao, professor, criado_em)
@@ -265,6 +324,13 @@ async function salvarNoPostgres(caminho, dados) {
             }
 
             if (Array.isArray(dados.temas)) {
+                const idsAtivos = dados.temas.map(t => t.id);
+                if (idsAtivos.length > 0) {
+                    await db.query("DELETE FROM vestibular_temas WHERE id != ALL($1)", [idsAtivos]);
+                } else {
+                    await db.query("DELETE FROM vestibular_temas");
+                }
+
                 for (const t of dados.temas) {
                     await db.query(`
                         INSERT INTO vestibular_temas (id, titulo, vestibular, ano, instrucoes, textos_motivadores, data_limite)
@@ -282,6 +348,7 @@ async function salvarNoPostgres(caminho, dados) {
 
             if (Array.isArray(dados.redacoes)) {
                 for (const r of dados.redacoes) {
+                    const criteriosJson = typeof r.criterios === 'string' ? r.criterios : JSON.stringify(r.criterios || null);
                     await db.query(`
                         INSERT INTO vestibular_redacoes (id, aluno_id, aluno_nome, aluno_email, tema_id, tema_titulo, vestibular, arquivo_nome, arquivo_url, texto, status, nota_final, criterios, feedback_professora, enviado_em, corrigido_em)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
@@ -294,10 +361,204 @@ async function salvarNoPostgres(caminho, dados) {
                     `, [
                         r.id, r.alunoId, r.alunoNome, r.alunoEmail, r.temaId, r.temaTitulo, r.vestibular,
                         r.arquivoNome, r.arquivoUrl, r.texto, r.status || 'pendente', r.notaFinal || null,
-                        JSON.stringify(r.criterios || null), r.feedbackProfessora || null,
+                        criteriosJson, r.feedbackProfessora || null,
                         r.enviadoEm || new Date().toISOString(), r.corrigidoEm || null
                     ]);
                 }
+            }
+            return true;
+        }
+
+        if (caminho === paths.MATERIAS && Array.isArray(dados)) {
+            const idsAtivos = dados.map(m => m.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM materias WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const m of dados) {
+                await db.query(`
+                    INSERT INTO materias (id, nome, descricao, ordem, icone, total_aulas, criado_em, atualizado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    ON CONFLICT (id) DO UPDATE SET
+                        nome = EXCLUDED.nome,
+                        descricao = EXCLUDED.descricao,
+                        ordem = EXCLUDED.ordem,
+                        icone = EXCLUDED.icone,
+                        total_aulas = EXCLUDED.total_aulas,
+                        atualizado_em = EXCLUDED.atualizado_em
+                `, [
+                    m.id, m.nome, m.descricao || null, m.ordem || 1, m.icone || 'BookOpen',
+                    m.totalAulas || 0, m.criadoEm || new Date().toISOString(), m.atualizadoEm || new Date().toISOString()
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.AULAS && Array.isArray(dados)) {
+            const idsAtivos = dados.map(a => a.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM aulas WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const a of dados) {
+                await db.query(`
+                    INSERT INTO aulas (id, materia_id, titulo, subtitulo, conteudo, duracao, ordem, video_url, material_pdf_url, publicado, criado_em, atualizado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                    ON CONFLICT (id) DO UPDATE SET
+                        materia_id = EXCLUDED.materia_id,
+                        titulo = EXCLUDED.titulo,
+                        subtitulo = EXCLUDED.subtitulo,
+                        conteudo = EXCLUDED.conteudo,
+                        duracao = EXCLUDED.duracao,
+                        ordem = EXCLUDED.ordem,
+                        video_url = EXCLUDED.video_url,
+                        material_pdf_url = EXCLUDED.material_pdf_url,
+                        publicado = EXCLUDED.publicado,
+                        atualizado_em = EXCLUDED.atualizado_em
+                `, [
+                    a.id, a.materiaId, a.titulo, a.subtitulo || null, a.conteudo || null,
+                    a.duracao || '25 min', a.ordem || 1, a.videoUrl || null, a.materialPdfUrl || null,
+                    a.publicado !== undefined ? a.publicado : true,
+                    a.criadoEm || new Date().toISOString(), a.atualizadoEm || new Date().toISOString()
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.EXERCICIOS && Array.isArray(dados)) {
+            const idsAtivos = dados.map(e => e.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM exercicios WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const e of dados) {
+                const questoesJson = typeof e.questoes === 'string' ? e.questoes : JSON.stringify(e.questoes || []);
+                await db.query(`
+                    INSERT INTO exercicios (id, materia_id, aula_id, titulo, descricao, publicado, total_questoes, questoes, criado_em, atualizado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                    ON CONFLICT (id) DO UPDATE SET
+                        materia_id = EXCLUDED.materia_id,
+                        aula_id = EXCLUDED.aula_id,
+                        titulo = EXCLUDED.titulo,
+                        descricao = EXCLUDED.descricao,
+                        publicado = EXCLUDED.publicado,
+                        total_questoes = EXCLUDED.total_questoes,
+                        questoes = EXCLUDED.questoes,
+                        atualizado_em = EXCLUDED.atualizado_em
+                `, [
+                    e.id, e.materiaId || null, e.aulaId || null, e.titulo, e.descricao || null,
+                    e.publicado !== undefined ? e.publicado : true,
+                    Array.isArray(e.questoes) ? e.questoes.length : (e.totalQuestoes || 0),
+                    questoesJson,
+                    e.criadoEm || new Date().toISOString(), e.atualizadoEm || new Date().toISOString()
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.SIMULADOS && Array.isArray(dados)) {
+            const idsAtivos = dados.map(s => s.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM simulados WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const s of dados) {
+                const questoesJson = typeof s.questoes === 'string' ? s.questoes : JSON.stringify(s.questoes || []);
+                await db.query(`
+                    INSERT INTO simulados (id, titulo, descricao, banca, tempo_minutos, publicado, total_questoes, questoes, criado_em, atualizado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                    ON CONFLICT (id) DO UPDATE SET
+                        titulo = EXCLUDED.titulo,
+                        descricao = EXCLUDED.descricao,
+                        banca = EXCLUDED.banca,
+                        tempo_minutos = EXCLUDED.tempo_minutos,
+                        publicado = EXCLUDED.publicado,
+                        total_questoes = EXCLUDED.total_questoes,
+                        questoes = EXCLUDED.questoes,
+                        atualizado_em = EXCLUDED.atualizado_em
+                `, [
+                    s.id, s.titulo, s.descricao || null, s.banca || 'Geral', s.tempoMinutos || 60,
+                    s.publicado !== undefined ? s.publicado : true,
+                    Array.isArray(s.questoes) ? s.questoes.length : (s.totalQuestoes || 0),
+                    questoesJson,
+                    s.criadoEm || new Date().toISOString(), s.atualizadoEm || new Date().toISOString()
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.REDACOES && Array.isArray(dados)) {
+            for (const r of dados) {
+                const competenciasJson = typeof r.competencias === 'string' ? r.competencias : JSON.stringify(r.competencias || null);
+                await db.query(`
+                    INSERT INTO redacoes (id, usuario_id, aluno_nome, aluno_email, tema, texto, arquivo_url, status, nota_geral, competencias, feedback_professora, criado_em, atualizado_em, corrigido_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+                    ON CONFLICT (id) DO UPDATE SET
+                        status = EXCLUDED.status,
+                        nota_geral = EXCLUDED.nota_geral,
+                        competencias = EXCLUDED.competencias,
+                        feedback_professora = EXCLUDED.feedback_professora,
+                        atualizado_em = EXCLUDED.atualizado_em,
+                        corrigido_em = EXCLUDED.corrigido_em
+                `, [
+                    r.id, r.usuarioId || null, r.alunoNome || null, r.alunoEmail || null,
+                    r.tema, r.texto || null, r.arquivoUrl || null,
+                    r.status || 'pendente', r.notaGeral !== undefined ? r.notaGeral : null,
+                    competenciasJson, r.feedbackProfessora || null,
+                    r.criadoEm || new Date().toISOString(),
+                    r.atualizadoEm || new Date().toISOString(),
+                    r.corrigidoEm || null
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.TEMAS_REDACAO && Array.isArray(dados)) {
+            const idsAtivos = dados.map(t => t.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM temas_redacao WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const t of dados) {
+                const textosMotivadoresJson = typeof t.textosMotivadores === 'string' ? t.textosMotivadores : JSON.stringify(t.textosMotivadores || []);
+                await db.query(`
+                    INSERT INTO temas_redacao (id, titulo, foco, instrucoes, categoria, textos_motivadores, prazo, criado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                    ON CONFLICT (id) DO UPDATE SET
+                        titulo = EXCLUDED.titulo,
+                        foco = EXCLUDED.foco,
+                        instrucoes = EXCLUDED.instrucoes,
+                        categoria = EXCLUDED.categoria,
+                        textos_motivadores = EXCLUDED.textos_motivadores,
+                        prazo = EXCLUDED.prazo
+                `, [
+                    t.id, t.titulo, t.foco || null, t.instrucoes || null, t.categoria || null,
+                    textosMotivadoresJson, t.prazo || null, t.criadoEm || new Date().toISOString()
+                ]);
+            }
+            return true;
+        }
+
+        if (caminho === paths.MATERIAIS_APOIO && Array.isArray(dados)) {
+            const idsAtivos = dados.map(m => m.id);
+            if (idsAtivos.length > 0) {
+                await db.query("DELETE FROM materiais_apoio WHERE id != ALL($1)", [idsAtivos]);
+            }
+            for (const m of dados) {
+                await db.query(`
+                    INSERT INTO materiais_apoio (id, titulo, descricao, modulo_id, categoria, tipo, tamanho, paginas, arquivo_url, download_url, criado_em)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                    ON CONFLICT (id) DO UPDATE SET
+                        titulo = EXCLUDED.titulo,
+                        descricao = EXCLUDED.descricao,
+                        modulo_id = EXCLUDED.modulo_id,
+                        categoria = EXCLUDED.categoria,
+                        tipo = EXCLUDED.tipo,
+                        tamanho = EXCLUDED.tamanho,
+                        paginas = EXCLUDED.paginas,
+                        arquivo_url = EXCLUDED.arquivo_url,
+                        download_url = EXCLUDED.download_url
+                `, [
+                    m.id, m.titulo, m.descricao || null, m.moduloId || null, m.categoria || null,
+                    m.tipo || 'pdf', m.tamanho || null, m.paginas || null,
+                    m.arquivoUrl || m.downloadUrl || null, m.downloadUrl || m.arquivoUrl || null,
+                    m.criadoEm || new Date().toISOString()
+                ]);
             }
             return true;
         }

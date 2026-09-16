@@ -59,6 +59,7 @@ async function registro(req, res) {
             nome: novoUsuario.nome,
             email: novoUsuario.email,
             tipo: "aluno",
+            perfil: "aluno",
             plano: novoUsuario.plano,
             statusPlano: novoUsuario.statusPlano,
             codigoReferencia: novoUsuario.codigoReferencia
@@ -70,6 +71,8 @@ async function registro(req, res) {
                 id: novoUsuario.id,
                 nome: novoUsuario.nome,
                 email: novoUsuario.email,
+                tipo: "aluno",
+                perfil: "aluno",
                 plano: novoUsuario.plano,
                 statusPlano: novoUsuario.statusPlano,
                 codigoReferencia: novoUsuario.codigoReferencia
@@ -111,6 +114,7 @@ async function login(req, res) {
             nome: usuario.nome,
             email: usuario.email,
             tipo: "aluno",
+            perfil: "aluno",
             plano: usuario.plano || "medio",
             statusPlano: usuario.statusPlano || "ativo",
             codigoReferencia: usuario.codigoReferencia || `GRAM-${String(usuario.id).replace(/\D/g, '').slice(0, 4) || '1001'}`
@@ -122,6 +126,8 @@ async function login(req, res) {
                 id: usuario.id,
                 nome: usuario.nome,
                 email: usuario.email,
+                tipo: "aluno",
+                perfil: "aluno",
                 plano: req.session.usuario.plano,
                 statusPlano: req.session.usuario.statusPlano,
                 codigoReferencia: req.session.usuario.codigoReferencia
@@ -157,16 +163,19 @@ async function adminLogin(req, res) {
             id: admin.id,
             nome: admin.nome,
             email: admin.email,
-            tipo: "admin"
+            tipo: "admin",
+            perfil: "professor"
         };
 
         return res.json({
             sucesso: true,
+            autenticado: true,
             usuario: {
                 id: admin.id,
                 nome: admin.nome,
                 email: admin.email,
-                tipo: "admin"
+                tipo: "admin",
+                perfil: "professor"
             }
         });
     } catch (erro) {
@@ -177,14 +186,15 @@ async function adminLogin(req, res) {
 
 function adminMe(req, res) {
     if (!req.session?.usuario || req.session.usuario.tipo !== "admin") {
-        return res.status(401).json({ sucesso: false, mensagem: "Não autenticado." });
+        return res.status(401).json({ sucesso: false, autenticado: false, mensagem: "Não autenticado." });
     }
-    return res.json({ sucesso: true, usuario: req.session.usuario });
+    const usr = { ...req.session.usuario, perfil: "professor" };
+    return res.json({ sucesso: true, autenticado: true, usuario: usr });
 }
 
 async function alunoMe(req, res) {
     if (!req.session?.usuario) {
-        return res.status(401).json({ sucesso: false, mensagem: "Não autenticado." });
+        return res.status(401).json({ sucesso: false, autenticado: false, mensagem: "Não autenticado." });
     }
 
     try {
@@ -198,14 +208,17 @@ async function alunoMe(req, res) {
             req.session.usuario.plano = plano;
             req.session.usuario.statusPlano = statusPlano;
             req.session.usuario.codigoReferencia = codigoReferencia;
+            req.session.usuario.perfil = "aluno";
 
             return res.json({
                 sucesso: true,
+                autenticado: true,
                 usuario: {
                     id: atual.id,
                     nome: atual.nome,
                     email: atual.email,
                     tipo: "aluno",
+                    perfil: "aluno",
                     plano,
                     statusPlano,
                     codigoReferencia
@@ -216,7 +229,8 @@ async function alunoMe(req, res) {
         console.warn("Erro ao buscar dados atualizados do aluno:", e);
     }
 
-    return res.json({ sucesso: true, usuario: req.session.usuario });
+    const usr = { ...req.session.usuario, perfil: req.session.usuario.tipo === 'admin' ? 'professor' : 'aluno' };
+    return res.json({ sucesso: true, autenticado: true, usuario: usr });
 }
 
 function logout(req, res) {

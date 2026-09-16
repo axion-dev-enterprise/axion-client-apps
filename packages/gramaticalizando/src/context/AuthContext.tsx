@@ -25,20 +25,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const checkAuth = async () => {
       try {
         const res = await authApi.me();
-        if (res.autenticado && res.usuario) {
-          setUser(res.usuario);
+        if ((res.autenticado || res.sucesso) && res.usuario) {
+          const usr: User = {
+            ...res.usuario,
+            perfil: res.usuario.perfil || (res.usuario.tipo === 'admin' ? 'professor' : 'aluno')
+          };
+          setUser(usr);
+          localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
         } else {
           // Checar se há usuário em localStorage de fallback
           const saved = localStorage.getItem('gramaticalizando_user');
           if (saved) {
-            setUser(JSON.parse(saved));
+            const parsed = JSON.parse(saved);
+            const usr: User = {
+              ...parsed,
+              perfil: parsed.perfil || (parsed.tipo === 'admin' ? 'professor' : 'aluno')
+            };
+            setUser(usr);
           }
         }
       } catch {
         const saved = localStorage.getItem('gramaticalizando_user');
         if (saved) {
           try {
-            setUser(JSON.parse(saved));
+            const parsed = JSON.parse(saved);
+            const usr: User = {
+              ...parsed,
+              perfil: parsed.perfil || (parsed.tipo === 'admin' ? 'professor' : 'aluno')
+            };
+            setUser(usr);
           } catch {}
         }
       } finally {
@@ -54,9 +69,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const res = await authApi.login(credentials);
       if (res.sucesso && res.usuario) {
-        setUser(res.usuario);
-        localStorage.setItem('gramaticalizando_user', JSON.stringify(res.usuario));
-        showToast(`Bem-vindo de volta, ${res.usuario.nome}!`, 'success');
+        const usr: User = {
+          ...res.usuario,
+          perfil: res.usuario.perfil || (res.usuario.tipo === 'admin' ? 'professor' : 'aluno')
+        };
+        setUser(usr);
+        localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
+        showToast(`Bem-vindo de volta, ${usr.nome}!`, 'success');
       }
     } catch (err: any) {
       showToast(err.message || 'Erro ao realizar login', 'error');
@@ -71,8 +90,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       const res = await authApi.register(credentials);
       if (res.sucesso && res.usuario) {
-        setUser(res.usuario);
-        localStorage.setItem('gramaticalizando_user', JSON.stringify(res.usuario));
+        const usr: User = {
+          ...res.usuario,
+          perfil: res.usuario.perfil || (res.usuario.tipo === 'admin' ? 'professor' : 'aluno')
+        };
+        setUser(usr);
+        localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
         showToast('Conta criada com sucesso! Aproveite seus estudos.', 'success');
       }
     } catch (err: any) {
@@ -94,20 +117,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const setDemoUser = (role: 'aluno' | 'professor') => {
     const demoUser: User = role === 'professor' ? {
-      id: 'prof-demo',
-      nome: 'Prof. Marcos Silva',
-      email: 'professor@gramaticalizando.com.br',
-      perfil: 'professor'
+      id: 'prof-wilma-admin',
+      nome: 'Profª Wilma Barbosa',
+      email: 'professora@gramaticalizando.com.br',
+      perfil: 'professor',
+      tipo: 'admin',
+      plano: 'pro',
+      statusPlano: 'ativo',
+      codigoReferencia: 'GRAM-ADMIN'
     } : {
       id: 'aluno-demo',
-      nome: 'Lucas Oliveira',
+      nome: 'Aluno Demonstração',
       email: 'aluno@gramaticalizando.com.br',
       perfil: 'aluno',
-      plano: 'pro'
+      tipo: 'aluno',
+      plano: 'medio',
+      statusPlano: 'pendente',
+      codigoReferencia: 'GRAM-DEMO'
     };
     setUser(demoUser);
     localStorage.setItem('gramaticalizando_user', JSON.stringify(demoUser));
-    showToast(`Ambiente demonstrativo ativado como ${role === 'professor' ? 'Professor' : 'Aluno'}!`, 'info');
+    showToast(`Ambiente demonstrativo ativado como ${role === 'professor' ? 'Profª Wilma' : 'Aluno'}!`, 'info');
   };
 
   return (

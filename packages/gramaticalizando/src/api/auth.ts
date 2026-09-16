@@ -16,7 +16,7 @@ export const authApi = {
     });
   },
 
-  async me(): Promise<{ autenticado: boolean; usuario?: User }> {
+  async me(): Promise<{ sucesso?: boolean; autenticado?: boolean; usuario?: User }> {
     return request('/api/me');
   },
 
