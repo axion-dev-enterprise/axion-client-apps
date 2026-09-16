@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const diagnosticoController = require("../controllers/diagnostico.controller");
-const { somenteAluno, somenteAdmin } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Questões do diagnóstico (públicas para o teste/onboarding)
-router.get("/aluno/diagnostico/questoes", diagnosticoController.obterQuestoes);
-router.get("/diagnostico/questoes", diagnosticoController.obterQuestoes);
+// Questões do diagnóstico (exclusivas para alunos com plano aprovado)
+router.get("/aluno/diagnostico/questoes", somentePlanoAprovado, diagnosticoController.obterQuestoes);
+router.get("/diagnostico/questoes", somentePlanoAprovado, diagnosticoController.obterQuestoes);
 
-// Processar respostas (público para teste inicial e com salvamento automático se autenticado)
-router.post("/aluno/diagnostico/processar", somenteAluno, diagnosticoController.processar);
-router.post("/diagnostico/processar", diagnosticoController.processar);
+// Processar respostas
+router.post("/aluno/diagnostico/processar", somentePlanoAprovado, diagnosticoController.processar);
+router.post("/diagnostico/processar", somentePlanoAprovado, diagnosticoController.processar);
 
 // Rotas Administrativas (Professor / Admin)
 router.get("/admin/diagnostico", somenteAdmin, diagnosticoController.obterDiagnosticoAdmin);

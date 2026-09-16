@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const redacoesController = require("../controllers/redacoes.controller");
-const { somenteAdmin, somenteAluno } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Aluno
-router.get("/aluno/redacoes/temas", redacoesController.obterTemas);
-router.get("/aluno/redacoes", somenteAluno, redacoesController.listarAluno);
-router.post("/aluno/redacoes", somenteAluno, redacoesController.enviar);
+// Aluno com Plano Aprovado
+router.get("/aluno/redacoes/temas", somentePlanoAprovado, redacoesController.obterTemas);
+router.get("/aluno/redacoes", somentePlanoAprovado, redacoesController.listarAluno);
+router.post("/aluno/redacoes", somentePlanoAprovado, redacoesController.enviar);
 
 // Admin / Profª Wilma
 router.get("/admin/redacoes", somenteAdmin, redacoesController.listarAdmin);

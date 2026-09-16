@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const materiasController = require("../controllers/materias.controller");
-const { somenteAdmin } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Rotas Públicas / Aluno
-router.get("/materias", materiasController.listar);
-router.get("/materias/:id", materiasController.obterPorId);
+// Rotas protegidas para Alunos com plano aprovado ou Professora
+router.get("/materias", somentePlanoAprovado, materiasController.listar);
+router.get("/materias/:id", somentePlanoAprovado, materiasController.obterPorId);
 
 // Rotas Administrativas
 router.get("/admin/materias", somenteAdmin, materiasController.listar);

@@ -119,7 +119,7 @@ async function login(req, res) {
             tipo: isAdmin ? "admin" : "aluno",
             perfil: isAdmin ? "professor" : "aluno",
             plano: usuario.plano || (isAdmin ? "pro" : "medio"),
-            statusPlano: usuario.statusPlano || "ativo",
+            statusPlano: usuario.statusPlano || (isAdmin ? "ativo" : "pendente"),
             codigoReferencia: usuario.codigoReferencia || (isAdmin ? "GRAM-ADMIN" : `GRAM-${String(usuario.id).replace(/\D/g, '').slice(0, 4) || '1001'}`)
         };
 
@@ -206,7 +206,7 @@ async function alunoMe(req, res) {
         const atual = usuarios.find(u => u.id === req.session.usuario.id);
         if (atual) {
             const plano = atual.plano || "medio";
-            const statusPlano = atual.statusPlano || "ativo";
+            const statusPlano = atual.statusPlano || (atual.tipo === 'admin' ? "ativo" : "pendente");
             const codigoReferencia = atual.codigoReferencia || `GRAM-${String(atual.id).replace(/\D/g, '').slice(0, 4) || '1001'}`;
 
             req.session.usuario.plano = plano;

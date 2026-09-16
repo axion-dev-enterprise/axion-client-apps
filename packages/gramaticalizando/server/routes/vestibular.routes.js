@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const vestibularController = require("../controllers/vestibular.controller");
-const { somenteAdmin, somenteAluno } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Aluno & Público
-router.get("/vestibular/conteudo", vestibularController.obterConteudoVestibular);
-router.get("/aluno/vestibular/redacoes", somenteAluno, vestibularController.listarRedacoesAluno);
-router.post("/aluno/vestibular/redacoes", somenteAluno, vestibularController.enviarRedacaoAluno);
+// Aluno com Plano Aprovado
+router.get("/vestibular/conteudo", somentePlanoAprovado, vestibularController.obterConteudoVestibular);
+router.get("/aluno/vestibular/redacoes", somentePlanoAprovado, vestibularController.listarRedacoesAluno);
+router.post("/aluno/vestibular/redacoes", somentePlanoAprovado, vestibularController.enviarRedacaoAluno);
 
 // Admin / Profª Wilma
 router.get("/admin/vestibular", somenteAdmin, vestibularController.listarAdmin);

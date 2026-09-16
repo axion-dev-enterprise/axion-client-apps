@@ -13,7 +13,8 @@ import {
   ChevronDown,
   Shield,
   Sparkles,
-  GraduationCap
+  GraduationCap,
+  Lock
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -255,11 +256,14 @@ export const StudentHeader: React.FC = () => {
         >
           {tabs.map((tab) => {
             const isActive = location.pathname === tab.path || (tab.path !== '/home' && location.pathname.startsWith(tab.path));
+            const isPlanoPendente = user?.perfil === 'aluno' && user?.statusPlano !== 'ativo';
+            const isBloqueado = isPlanoPendente && tab.path !== '/home';
 
             return (
               <Link
                 key={tab.path}
                 to={tab.path}
+                title={isBloqueado ? 'Conteúdo exclusivo para matrículas aprovadas' : undefined}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -267,22 +271,26 @@ export const StudentHeader: React.FC = () => {
                   padding: '0.625rem 0.875rem',
                   fontSize: '0.875rem',
                   fontWeight: isActive ? 600 : 500,
-                  color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
+                  color: isActive ? 'var(--accent)' : isBloqueado ? 'var(--text-muted)' : 'var(--text-secondary)',
                   borderBottom: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
                   whiteSpace: 'nowrap',
+                  opacity: isBloqueado && !isActive ? 0.75 : 1,
                   transition: 'all var(--transition-fast)'
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) e.currentTarget.style.color = 'var(--accent)';
                 }}
                 onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = 'var(--text-secondary)';
+                  if (!isActive) e.currentTarget.style.color = isBloqueado ? 'var(--text-muted)' : 'var(--text-secondary)';
                 }}
               >
                 <span style={{ color: isActive ? 'var(--accent)' : 'var(--text-muted)' }}>
                   {tab.icon}
                 </span>
                 <span>{tab.label}</span>
+                {isBloqueado && (
+                  <Lock size={12} style={{ color: '#d97706', marginLeft: '-0.2rem' }} />
+                )}
               </Link>
             );
           })}

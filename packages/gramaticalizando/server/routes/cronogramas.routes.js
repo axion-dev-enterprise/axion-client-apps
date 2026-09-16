@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const cronogramasController = require("../controllers/cronogramas.controller");
-const { somenteAluno, somenteAdmin } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Aluno
-router.get("/aluno/cronograma", somenteAluno, cronogramasController.obterCronogramaAluno);
-router.post("/aluno/cronograma/toggle", somenteAluno, cronogramasController.toggleItemCronograma);
+// Aluno com Plano Aprovado
+router.get("/aluno/cronograma", somentePlanoAprovado, cronogramasController.obterCronogramaAluno);
+router.post("/aluno/cronograma/toggle", somentePlanoAprovado, cronogramasController.toggleItemCronograma);
 
 // Admin / Professor
 router.get("/admin/cronogramas", somenteAdmin, cronogramasController.listarAdmin);

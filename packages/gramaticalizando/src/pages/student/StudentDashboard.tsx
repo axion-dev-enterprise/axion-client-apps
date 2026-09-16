@@ -15,9 +15,15 @@ import {
   Check,
   Sparkles,
   Layers,
-  GraduationCap
+  GraduationCap,
+  Lock,
+  RefreshCw,
+  FolderDown,
+  Video,
+  ShieldCheck
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext';
 import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
@@ -28,9 +34,11 @@ import { cronogramaApi, Cronograma } from '../../api/cronograma';
 import { Redacao } from '../../types/essay';
 
 export const StudentDashboard: React.FC = () => {
-  const { user } = useAuth();
+  const { user, refreshUser } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const [copiado, setCopiado] = useState(false);
+  const [verificando, setVerificando] = useState(false);
   const [statusPlanoEfetivo, setStatusPlanoEfetivo] = useState(user?.statusPlano || 'pendente');
 
   // Dados Reais da API
@@ -93,107 +101,302 @@ export const StudentDashboard: React.FC = () => {
   const exerciciosFeitos = dashboardData?.estatisticas?.exerciciosFeitos ?? 0;
   const taxaAcerto = dashboardData?.estatisticas?.taxaAcerto ?? 0;
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
-      {/* Banner de Aprovação Pendente se aplicável */}
-      {statusPlanoEfetivo === 'pendente' && (
+  const handleVerificarLiberacao = async () => {
+    setVerificando(true);
+    try {
+      const updated = await refreshUser();
+      const novoStatus = updated?.statusPlano || 'pendente';
+      setStatusPlanoEfetivo(novoStatus);
+      if (novoStatus === 'ativo') {
+        showToast('Parabéns! Sua matrícula foi aprovada com sucesso. Conteúdo liberado!', 'success');
+      } else {
+        showToast('Sua matrícula ainda está aguardando liberação da Professora Wilma.', 'info');
+      }
+    } catch {
+      showToast('Erro ao verificar status. Tente novamente.', 'error');
+    } finally {
+      setVerificando(false);
+    }
+  };
+
+  if (statusPlanoEfetivo !== 'ativo') {
+    const whatsappMsg = encodeURIComponent(
+      `Olá, Professora Wilma! Sou o aluno ${user?.nome || ''}, fiz meu cadastro no Plano ${(user?.plano || 'iniciante').toUpperCase()} e meu código de referência é ${user?.codigoReferencia || ''}. Poderia aprovar minha matrícula na plataforma? Muito obrigado!`
+    );
+
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+        {/* Card Principal de Matrícula em Análise */}
         <Card
           variant="elevated"
-          padding="md"
+          padding="lg"
           style={{
-            backgroundColor: '#fffbeb',
+            backgroundColor: '#ffffff',
             border: '1px solid #fde68a',
-            borderRadius: '16px'
+            borderRadius: '20px',
+            boxShadow: '0 10px 25px -5px rgba(217, 119, 6, 0.08), 0 8px 10px -6px rgba(217, 119, 6, 0.04)',
+            overflow: 'hidden'
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <div
-                  style={{
-                    width: '38px',
-                    height: '38px',
-                    borderRadius: '8px',
-                    backgroundColor: '#fef3c7',
-                    color: '#d97706',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0
-                  }}
-                >
-                  <Clock size={20} />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#92400e', margin: 0 }}>
-                    Matrícula Aguardando Liberação Docente
-                  </h3>
-                  <p style={{ fontSize: '0.8125rem', color: '#b45309', margin: 0 }}>
-                    Sua solicitação de acesso para o <strong>Plano {user?.plano ? user.plano.toUpperCase() : 'MÉDIO'}</strong> está pendente de confirmação.
-                  </p>
+          {/* Header Superior Dourado */}
+          <div
+            style={{
+              padding: '1rem 1.5rem',
+              margin: '-1.5rem -1.5rem 1.5rem -1.5rem',
+              backgroundColor: '#fffbeb',
+              borderBottom: '1px solid #fef3c7',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '1rem'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+              <div
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '10px',
+                  backgroundColor: '#fef3c7',
+                  color: '#d97706',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: '1px solid #fde68a'
+                }}
+              >
+                <Clock size={18} />
+              </div>
+              <div>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#92400e', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  Matrícula em Análise Docente
+                </span>
+                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#78350f' }}>
+                  Aguardando Liberação da Professora Wilma
                 </div>
               </div>
-
-              {user?.codigoReferencia && (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    backgroundColor: '#ffffff',
-                    border: '1px solid #fcd34d',
-                    padding: '0.375rem 0.75rem',
-                    borderRadius: '8px'
-                  }}
-                >
-                  <span style={{ fontSize: '0.75rem', color: '#92400e', fontWeight: 600 }}>Ref:</span>
-                  <strong style={{ fontFamily: 'monospace', fontSize: '0.9375rem', color: '#78350f' }}>
-                    {user.codigoReferencia}
-                  </strong>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigator.clipboard.writeText(user.codigoReferencia || '');
-                      setCopiado(true);
-                      setTimeout(() => setCopiado(false), 2000);
-                    }}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      cursor: 'pointer',
-                      color: '#92400e',
-                      display: 'flex',
-                      alignItems: 'center',
-                      padding: 0
-                    }}
-                    title="Copiar código"
-                  >
-                    {copiado ? <Check size={14} color="#16a34a" /> : <Copy size={14} />}
-                  </button>
-                </div>
-              )}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap', borderTop: '1px solid #fef3c7', paddingTop: '0.75rem' }}>
+            {user?.codigoReferencia && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #fcd34d',
+                  padding: '0.4rem 0.85rem',
+                  borderRadius: '10px'
+                }}
+              >
+                <span style={{ fontSize: '0.75rem', color: '#92400e', fontWeight: 600 }}>Ref:</span>
+                <strong style={{ fontFamily: 'monospace', fontSize: '1rem', color: '#78350f' }}>
+                  {user.codigoReferencia}
+                </strong>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(user.codigoReferencia || '');
+                    setCopiado(true);
+                    setTimeout(() => setCopiado(false), 2000);
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    color: '#92400e',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: 0
+                  }}
+                  title="Copiar código"
+                >
+                  {copiado ? <Check size={16} color="#16a34a" /> : <Copy size={16} />}
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Corpo do Card */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div>
+              <h2 style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.5rem 0', letterSpacing: '-0.02em' }}>
+                Olá, {user?.nome || 'Estudante'}! Seja muito bem-vindo(a).
+              </h2>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+                Sua solicitação de matrícula para o <strong>Plano {(user?.plano || 'iniciante').toUpperCase()}</strong> foi registrada no sistema. Por diretriz pedagógica e organização das turmas de Língua Portuguesa, as aulas e materiais são desbloqueados assim que a <strong>Professora Wilma Barbosa</strong> confirma a ativação no painel docente.
+              </p>
+            </div>
+
+            {/* Ações de Comunicação e Refresh */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', paddingTop: '0.5rem' }}>
               <a
-                href={`https://wa.me/5521992013060?text=${encodeURIComponent(
-                  `Olá, Professora Wilma! Estou cadastrado no Gramaticalizando. Meu Código de Referência é *${user?.codigoReferencia || ''}* para ativação do Plano *${user?.plano ? user.plano.toUpperCase() : 'MÉDIO'}* (Nome: ${user?.nome || ''}, Email: ${user?.email || ''}). Aguardo a liberação!`
-                )}`}
+                href={`https://wa.me/5521972954456?text=${whatsappMsg}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ textDecoration: 'none' }}
               >
-                <Button variant="whatsapp" size="sm" icon={<MessageCircle size={16} />}>
+                <Button
+                  variant="primary"
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    backgroundColor: '#16a34a',
+                    borderColor: '#16a34a',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    fontWeight: 700,
+                    fontSize: '0.925rem'
+                  }}
+                >
+                  <MessageCircle size={18} />
                   Avisar Professora no WhatsApp
                 </Button>
               </a>
-              <span style={{ fontSize: '0.75rem', color: '#92400e' }}>
-                Envie seu código de referência para que a professora aprove sua matrícula na dashboard.
-              </span>
+
+              <Button
+                variant="outline"
+                onClick={handleVerificarLiberacao}
+                disabled={verificando}
+                style={{
+                  padding: '0.75rem 1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  fontWeight: 600
+                }}
+              >
+                <RefreshCw size={16} className={verificando ? 'animate-spin' : ''} />
+                {verificando ? 'Verificando...' : 'Verificar Liberação Agora'}
+              </Button>
             </div>
           </div>
         </Card>
-      )}
+
+        {/* Vitrine de Conteúdos que serão Liberados */}
+        <div>
+          <div style={{ marginBottom: '1.25rem' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 0.25rem 0' }}>
+              Conteúdos do seu Plano Aguardando Liberação
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0 }}>
+              Assim que sua matrícula for aprovada, todo o ecossistema de estudos abaixo será desbloqueado automaticamente.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+            <Card
+              padding="lg"
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '16px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: 'var(--accent-light)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <BookOpen size={20} />
+                </div>
+                <Badge variant="warning" size="sm">
+                  <Lock size={12} style={{ marginRight: '0.25rem' }} /> Bloqueado
+                </Badge>
+              </div>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+                Aulas de Língua Portuguesa
+              </h4>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Videoaulas completas e estruturadas com foco em concursos e vestibulares, abrangendo gramática, morfologia e sintaxe.
+              </p>
+            </Card>
+
+            <Card
+              padding="lg"
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '16px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <FileCheck2 size={20} />
+                </div>
+                <Badge variant="warning" size="sm">
+                  <Lock size={12} style={{ marginRight: '0.25rem' }} /> Bloqueado
+                </Badge>
+              </div>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+                Simulados e Exercícios
+              </h4>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Simulados cronometrados com gabarito pedagógico e banco de questões comentadas pela professora.
+              </p>
+            </Card>
+
+            <Card
+              padding="lg"
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '16px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#eff6ff', color: '#2563eb', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <PenTool size={20} />
+                </div>
+                <Badge variant="warning" size="sm">
+                  <Lock size={12} style={{ marginRight: '0.25rem' }} /> Bloqueado
+                </Badge>
+              </div>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+                Laboratório de Redação
+              </h4>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Envio de redações nos temas oficiais de vestibulares e concursos com avaliação e nota individual.
+              </p>
+            </Card>
+
+            <Card
+              padding="lg"
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px solid var(--border-subtle)',
+                borderRadius: '16px',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <div style={{ width: '42px', height: '42px', borderRadius: '10px', backgroundColor: '#faf5ff', color: '#7c3aed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <FolderDown size={20} />
+                </div>
+                <Badge variant="warning" size="sm">
+                  <Lock size={12} style={{ marginRight: '0.25rem' }} /> Bloqueado
+                </Badge>
+              </div>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
+                Apostilas & Materiais em PDF
+              </h4>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Material complementar em PDF preparado para download e visualização integrada pelo navegador.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
 
       {/* Banner de Boas-Vindas */}
       <Card

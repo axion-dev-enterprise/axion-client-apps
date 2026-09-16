@@ -10,6 +10,7 @@ interface AuthContextType {
   login: (credentials: LoginCredentials) => Promise<User>;
   register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<User | null>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -116,6 +117,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     showToast('Sessão encerrada com sucesso.', 'info');
   };
 
+  const refreshUser = async (): Promise<User | null> => {
+    try {
+      const res = await authApi.me();
+      if ((res.autenticado || res.sucesso) && res.usuario) {
+        const usr: User = {
+          ...res.usuario,
+          perfil: res.usuario.perfil || (res.usuario.tipo === 'admin' ? 'professor' : 'aluno')
+        };
+        setUser(usr);
+        localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
+        return usr;
+      }
+    } catch (err) {
+      console.warn('Erro ao atualizar dados do usuário:', err);
+    }
+    return user;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -124,7 +143,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: !!user,
         login,
         register,
-        logout
+        logout,
+        refreshUser
       }}
     >
       {children}

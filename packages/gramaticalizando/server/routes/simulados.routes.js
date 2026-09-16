@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const simuladosController = require("../controllers/simulados.controller");
-const { somenteAdmin } = require("../middlewares/auth");
+const { somenteAdmin, somentePlanoAprovado } = require("../middlewares/auth");
 
-// Rotas públicas / aluno
-router.get("/simulados", simuladosController.listar);
-router.get("/aluno/simulados", simuladosController.listar);
-router.get("/simulados/:id", simuladosController.obterPorId);
-router.get("/aluno/simulados/:id", simuladosController.obterPorId);
-router.post("/simulados/:id/finalizar", simuladosController.finalizarSimulado);
-router.post("/aluno/simulados/:id/finalizar", simuladosController.finalizarSimulado);
+// Rotas protegidas para aluno com plano aprovado
+router.get("/simulados", somentePlanoAprovado, simuladosController.listar);
+router.get("/aluno/simulados", somentePlanoAprovado, simuladosController.listar);
+router.get("/simulados/:id", somentePlanoAprovado, simuladosController.obterPorId);
+router.get("/aluno/simulados/:id", somentePlanoAprovado, simuladosController.obterPorId);
+router.post("/simulados/:id/finalizar", somentePlanoAprovado, simuladosController.finalizarSimulado);
+router.post("/aluno/simulados/:id/finalizar", somentePlanoAprovado, simuladosController.finalizarSimulado);
 
 // Rotas administrativas (Professor)
 router.get("/admin/simulados", somenteAdmin, simuladosController.listarAdmin);
