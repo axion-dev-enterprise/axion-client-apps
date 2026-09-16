@@ -87,12 +87,14 @@ export const StudentHeader: React.FC = () => {
               style={{
                 fontSize: '1.125rem',
                 fontWeight: 700,
-                color: 'var(--text-primary)'
+                color: 'var(--text-primary)',
+                whiteSpace: 'nowrap'
               }}
             >
               Gramaticalizando
             </span>
             <span
+              className="student-portal-badge"
               style={{
                 fontSize: '0.6875rem',
                 fontWeight: 600,
@@ -101,7 +103,8 @@ export const StudentHeader: React.FC = () => {
                 backgroundColor: 'var(--accent-light)',
                 color: 'var(--accent)',
                 borderRadius: 'var(--radius-full)',
-                border: '1px solid var(--accent-border)'
+                border: '1px solid var(--accent-border)',
+                whiteSpace: 'nowrap'
               }}
             >
               Portal do Aluno
@@ -238,6 +241,7 @@ export const StudentHeader: React.FC = () => {
 
         {/* Linha Inferior: Abas de Estudo (Tabs) */}
         <nav
+          className="student-tabs-nav"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -282,6 +286,21 @@ export const StudentHeader: React.FC = () => {
           })}
         </nav>
       </div>
+
+      <style>{`
+        .student-tabs-nav::-webkit-scrollbar {
+          display: none;
+        }
+        .student-tabs-nav {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        @media (max-width: 520px) {
+          .student-portal-badge {
+            display: none !important;
+          }
+        }
+      `}</style>
     </header>
   );
 };

@@ -230,9 +230,9 @@ export const LandingPage: React.FC = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
               alignItems: 'center',
-              gap: '3.5rem'
+              gap: 'clamp(2rem, 4vw, 3.5rem)'
             }}
           >
             {/* Coluna da Esquerda: Textos e CTAs */}
@@ -423,8 +423,8 @@ export const LandingPage: React.FC = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-              gap: '3rem',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+              gap: 'clamp(1.75rem, 3.5vw, 3rem)',
               alignItems: 'center'
             }}
           >
@@ -685,6 +685,68 @@ export const LandingPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Seção Metodologia — 3 Pilares do Método Gramaticalizando */}
+      <section id="metodologia" className="container" style={{ paddingTop: '1rem', paddingBottom: '2rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+          <Badge variant="purple" size="sm" style={{ marginBottom: '0.75rem' }}>
+            MÉTODO EXCLUSIVO
+          </Badge>
+          <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', color: '#0f172a', marginBottom: '0.75rem' }}>
+            Como Funciona a Nossa Metodologia
+          </h2>
+          <p style={{ color: '#475569', maxWidth: '640px', margin: '0 auto' }}>
+            Um passo a passo estruturado para você sair da dúvida e alcançar a nota máxima em provas de concursos e vestibulares.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+            gap: '1.75rem'
+          }}
+        >
+          {/* Pilar 1 */}
+          <Card variant="default" padding="lg" style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f3e8ff', color: '#6b21a8', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+              <Sparkles size={22} />
+            </div>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+              1. Diagnóstico de Nivelamento
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6 }}>
+              Identifique imediatamente as lacunas teóricas e os pontos fracos antes de começar a estudar tópicos avançados.
+            </p>
+          </Card>
+
+          {/* Pilar 2 */}
+          <Card variant="default" padding="lg" style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f3e8ff', color: '#6b21a8', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+              <BookOpen size={22} />
+            </div>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+              2. Teoria Prática com Bizus
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6 }}>
+              Regras gramaticais explicadas com clareza e macetes de memorização para resolução rápida de questões de bancas.
+            </p>
+          </Card>
+
+          {/* Pilar 3 */}
+          <Card variant="default" padding="lg" style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0' }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#f3e8ff', color: '#6b21a8', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+              <PenTool size={22} />
+            </div>
+            <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+              3. Correção Cirúrgica
+            </h3>
+            <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6 }}>
+              Devolutivas detalhadas critério a critério pela Professora Wilma para lapidar sua redação rumo à nota máxima.
+            </p>
+          </Card>
+        </div>
+      </section>
+
       {/* Módulos do Curso */}
       <section id="modulos" className="container">
         <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
@@ -702,7 +764,7 @@ export const LandingPage: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))',
             gap: '1.5rem'
           }}
         >
@@ -787,7 +849,7 @@ export const LandingPage: React.FC = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))',
               gap: '1.75rem',
               alignItems: 'stretch'
             }}
@@ -1039,7 +1101,7 @@ export const LandingPage: React.FC = () => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
               gap: '2rem',
               alignItems: 'stretch'
             }}

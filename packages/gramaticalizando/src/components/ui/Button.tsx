@@ -6,6 +6,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   icon?: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -14,6 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
   size = 'md',
   isLoading = false,
   icon,
+  fullWidth = false,
   className = '',
   disabled,
   style,
@@ -80,6 +82,7 @@ export const Button: React.FC<ButtonProps> = ({
         transition: 'all var(--transition-fast)',
         opacity: disabled || isLoading ? 0.65 : 1,
         cursor: disabled || isLoading ? 'not-allowed' : 'pointer',
+        width: fullWidth ? '100%' : undefined,
         ...getVariantStyles(),
         ...getSizeStyles(),
         ...style

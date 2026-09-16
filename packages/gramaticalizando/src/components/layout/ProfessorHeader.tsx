@@ -44,24 +44,39 @@ export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSideba
         >
           <Menu size={20} />
         </button>
-        <h1 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+        <h1
+          style={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: 'var(--text-primary)',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: 'clamp(140px, 35vw, 400px)'
+          }}
+        >
           {title}
         </h1>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <Badge variant="purple" size="sm">
-          <ShieldCheck size={14} />
-          Docente Verificado
-        </Badge>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-          <span>{user?.nome || 'Docente'}</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+        <div className="header-badge-docente">
+          <Badge variant="purple" size="sm">
+            <ShieldCheck size={14} />
+            Docente Verificado
+          </Badge>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)', fontSize: '0.875rem', whiteSpace: 'nowrap' }}>
+          <span>{user?.nome?.split(' ')[0] || 'Docente'}</span>
         </div>
       </div>
 
       <style>{`
         @media (min-width: 993px) {
           .sidebar-toggle-btn { display: none !important; }
+        }
+        @media (max-width: 600px) {
+          .header-badge-docente { display: none !important; }
         }
       `}</style>
     </header>

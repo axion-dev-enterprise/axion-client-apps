@@ -155,7 +155,7 @@ button {
   background: #94a3b8;
 }
 
-/* Container */
+/* Container e Responsividade */
 .container {
   width: 100%;
   max-width: 1200px;
@@ -165,9 +165,29 @@ button {
   padding-right: 1.25rem;
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     padding-left: 2rem;
     padding-right: 2rem;
   }
 }
+
+/* Regras de Proteção de Layout & Responsividade */
+img, svg, video, canvas, audio, iframe, embed, object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Evitar quebras indesejadas de palavras em cabeçalhos */
+h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
