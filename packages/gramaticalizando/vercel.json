@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "gramaticalizando.vercel.app"
+        }
+      ],
+      "destination": "https://gramaticalizando.axionenterprise.cloud/$1",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api" },
     { "source": "/aluno", "destination": "/index.html" },

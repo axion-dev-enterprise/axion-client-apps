@@ -22,10 +22,18 @@ import { Modal } from '../../components/ui/Modal';
 import { CANONICAL_MODULES } from '../../data/canonical-modules';
 import { Aula, Modulo, Exercicio } from '../../types/courses';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 import { adminApi } from '../../api/admin';
 import { coursesApi } from '../../api/courses';
 
+interface LocalProgressData {
+  completedLessons: Record<string, boolean>;
+  respostasExercicios: Record<string, number>;
+  revelarExplicacao: Record<string, boolean>;
+}
+
 export const StudentPortugues: React.FC = () => {
+  const { user } = useAuth();
   const [modules, setModules] = useState<Modulo[]>(CANONICAL_MODULES);
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedModule, setExpandedModule] = useState<string | null>('fonetica-fonologia');
@@ -39,9 +47,41 @@ export const StudentPortugues: React.FC = () => {
 
   const { showToast } = useToast();
 
-  const loadData = async () => {
+  const getStorageKey = () => `gramaticalizando_progresso_${user?.id || 'anon'}`;
+
+  const loadLocalProgress = (): LocalProgressData => {
     try {
-      // 1. Carregar módulos do backend ou canônicos
+      const raw = localStorage.getItem(getStorageKey());
+      if (raw) {
+        return JSON.parse(raw);
+      }
+    } catch {}
+    return { completedLessons: {}, respostasExercicios: {}, revelarExplicacao: {} };
+  };
+
+  const saveLocalProgress = (updater: (prev: LocalProgressData) => LocalProgressData) => {
+    try {
+      const current = loadLocalProgress();
+      const updated = updater(current);
+      localStorage.setItem(getStorageKey(), JSON.stringify(updated));
+    } catch {}
+  };
+
+  const loadData = async () => {
+    // 1. Carrega imediatamente o progresso do LocalStorage para renderização instantânea (anti-flicker e F5 safe)
+    const local = loadLocalProgress();
+    if (Object.keys(local.completedLessons).length > 0) {
+      setCompletedLessons(local.completedLessons);
+    }
+    if (Object.keys(local.respostasExercicios).length > 0) {
+      setRespostasExercicios(local.respostasExercicios);
+    }
+    if (Object.keys(local.revelarExplicacao).length > 0) {
+      setRevelarExplicacao(local.revelarExplicacao);
+    }
+
+    try {
+      // 2. Carregar módulos do backend ou canônicos e dashboard
       const [mats, lsns, dash] = await Promise.all([
         adminApi.getMaterias().catch(() => []),
         adminApi.getAulas().catch(() => []),
@@ -79,9 +119,10 @@ export const StudentPortugues: React.FC = () => {
         }
       }
 
-      // 2. Carregar aulas concluídas reais do aluno
+      // 3. Unificar aulas concluídas reais do aluno (Backend + LocalStorage)
+      const mapaConcluidas: Record<string, boolean> = { ...local.completedLessons };
+
       if (dash && Array.isArray(dash.cursos)) {
-        const mapaConcluidas: Record<string, boolean> = {};
         dash.cursos.forEach(curso => {
           if (Array.isArray(curso.aulas)) {
             curso.aulas.forEach(a => {
@@ -91,8 +132,13 @@ export const StudentPortugues: React.FC = () => {
             });
           }
         });
-        setCompletedLessons(mapaConcluidas);
       }
+
+      setCompletedLessons(mapaConcluidas);
+      saveLocalProgress(prev => ({
+        ...prev,
+        completedLessons: mapaConcluidas
+      }));
     } catch (err) {
       console.warn('Erro ao carregar conteúdo de Português:', err);
     }
@@ -100,7 +146,7 @@ export const StudentPortugues: React.FC = () => {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [user?.id]);
 
   const handleToggleModule = (moduleId: string) => {
     setExpandedModule(expandedModule === moduleId ? null : moduleId);
@@ -108,8 +154,11 @@ export const StudentPortugues: React.FC = () => {
 
   const handleOpenAula = async (aula: Aula) => {
     setSelectedAula(aula);
-    setRespostasExercicios({});
-    setRevelarExplicacao({});
+
+    // Carrega respostas salvas localmente para que o aluno não perca os exercícios feitos
+    const local = loadLocalProgress();
+    setRespostasExercicios(local.respostasExercicios || {});
+    setRevelarExplicacao(local.revelarExplicacao || {});
 
     try {
       const exs = await coursesApi.getExercises(aula.moduloId);
@@ -123,38 +172,44 @@ export const StudentPortugues: React.FC = () => {
     const isJaConcluida = !!completedLessons[aulaId];
 
     if (!isJaConcluida) {
+      // 1. Atualização imediata no estado e no LocalStorage (zero latency, zero perda em F5)
+      setCompletedLessons(prev => {
+        const next = { ...prev, [aulaId]: true };
+        saveLocalProgress(p => ({ ...p, completedLessons: next }));
+        return next;
+      });
+
+      showToast('Aula concluída com sucesso! Seu progresso foi salvo.', 'success');
+
+      // 2. Sincroniza em segundo plano com o banco de dados PostgreSQL
       try {
-        const res = await coursesApi.concluirAula(aulaId);
-        if (res && res.sucesso) {
-          setCompletedLessons((prev) => ({ ...prev, [aulaId]: true }));
-          showToast('Aula concluída com sucesso! Seu progresso foi salvo.', 'success');
-        } else {
-          setCompletedLessons((prev) => ({ ...prev, [aulaId]: true }));
-          showToast('Aula marcada como concluída.', 'success');
-        }
+        await coursesApi.concluirAula(aulaId);
       } catch (err) {
-        setCompletedLessons((prev) => ({ ...prev, [aulaId]: true }));
-        showToast('Aula marcada como concluída.', 'success');
+        console.warn('Sincronização em segundo plano da aula:', err);
       }
     } else {
-      setCompletedLessons((prev) => {
-        const updated = { ...prev };
-        delete updated[aulaId];
-        return updated;
+      setCompletedLessons(prev => {
+        const next = { ...prev };
+        delete next[aulaId];
+        saveLocalProgress(p => ({ ...p, completedLessons: next }));
+        return next;
       });
       showToast('Status da aula atualizado.', 'info');
     }
   };
 
   const handleResponderExercicio = (exId: string, alternativaIndex: number) => {
-    setRespostasExercicios(prev => ({
-      ...prev,
-      [exId]: alternativaIndex
-    }));
-    setRevelarExplicacao(prev => ({
-      ...prev,
-      [exId]: true
-    }));
+    setRespostasExercicios(prev => {
+      const next = { ...prev, [exId]: alternativaIndex };
+      saveLocalProgress(p => ({ ...p, respostasExercicios: next }));
+      return next;
+    });
+
+    setRevelarExplicacao(prev => {
+      const next = { ...prev, [exId]: true };
+      saveLocalProgress(p => ({ ...p, revelarExplicacao: next }));
+      return next;
+    });
   };
 
   const filteredModules = modules.map((mod) => {

@@ -16,7 +16,10 @@ services:
       - SESSION_SECRET=gramaticalizando-prod-session-key-axion-2026
     networks:
       - axion-agent-net
+      - axion-pay-auth-private
 
 networks:
   axion-agent-net:
+    external: true
+  axion-pay-auth-private:
     external: true

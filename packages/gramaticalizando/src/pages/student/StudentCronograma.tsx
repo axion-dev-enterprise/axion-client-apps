@@ -15,19 +15,44 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { cronogramaApi, Cronograma, MetaCronograma } from '../../api/cronograma';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const StudentCronograma: React.FC = () => {
+  const { user } = useAuth();
   const [cronograma, setCronograma] = useState<Cronograma | null>(null);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const { showToast } = useToast();
 
+  const getStorageKey = () => `gramaticalizando_cronograma_${user?.id || 'anon'}`;
+
+  const loadLocalMetas = (): Record<string, boolean> => {
+    try {
+      const raw = localStorage.getItem(getStorageKey());
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return {};
+  };
+
+  const saveLocalMetas = (metas: Record<string, boolean>) => {
+    try {
+      localStorage.setItem(getStorageKey(), JSON.stringify(metas));
+    } catch {}
+  };
+
   const loadCronograma = async () => {
+    const localMetas = loadLocalMetas();
+
     try {
       setLoading(true);
       const data = await cronogramaApi.getMeuCronograma();
-      if (data) {
-        setCronograma(data);
+      if (data && Array.isArray(data.dias)) {
+        // Unifica status de conclusão (Servidor + LocalStorage)
+        const diasAtualizados = data.dias.map(d => ({
+          ...d,
+          concluido: localMetas[d.id] !== undefined ? localMetas[d.id] : !!d.concluido
+        }));
+        setCronograma({ ...data, dias: diasAtualizados });
       }
     } catch (err: any) {
       showToast('Não foi possível carregar o cronograma atualizado.', 'warning');
@@ -38,27 +63,38 @@ export const StudentCronograma: React.FC = () => {
 
   useEffect(() => {
     loadCronograma();
-  }, []);
+  }, [user?.id]);
 
   const handleToggleMeta = async (diaId: string) => {
     try {
       setUpdatingId(diaId);
+
+      // 1. Atualização otimista imediata no estado e LocalStorage
+      setCronograma((prev) => {
+        if (!prev) return prev;
+        const currentItem = prev.dias.find(d => d.id === diaId);
+        const novoStatus = currentItem ? !currentItem.concluido : true;
+
+        const localMetas = loadLocalMetas();
+        localMetas[diaId] = novoStatus;
+        saveLocalMetas(localMetas);
+
+        return {
+          ...prev,
+          dias: prev.dias.map((d) => (d.id === diaId ? { ...d, concluido: novoStatus } : d))
+        };
+      });
+
+      // 2. Sincroniza em segundo plano com a API
       const res = await cronogramaApi.toggleMeta(diaId);
       if (res && res.sucesso) {
-        setCronograma((prev) => {
-          if (!prev) return prev;
-          return {
-            ...prev,
-            dias: prev.dias.map((d) => (d.id === diaId ? { ...d, concluido: res.concluido } : d))
-          };
-        });
         showToast(
           res.concluido ? 'Meta concluída! Excelente disciplina.' : 'Meta desmarcada.',
           res.concluido ? 'success' : 'info'
         );
       }
     } catch (e) {
-      showToast('Falha ao atualizar status da meta.', 'error');
+      showToast('Status salvo localmente.', 'info');
     } finally {
       setUpdatingId(null);
     }
