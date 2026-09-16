@@ -24,8 +24,18 @@ import {
   ResultadoSimulado
 } from '../../api/simulados';
 import { useToast } from '../../context/ToastContext';
+import { useAuth } from '../../context/AuthContext';
+
+interface LocalSimuladoAttempt {
+  concluido: boolean;
+  porcentagem: number;
+  corretas: number;
+  total: number;
+  concluidoEm: string;
+}
 
 export const StudentSimulados: React.FC = () => {
+  const { user } = useAuth();
   const [simulados, setSimulados] = useState<SimuladoItemResumo[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -44,11 +54,42 @@ export const StudentSimulados: React.FC = () => {
 
   const { showToast } = useToast();
 
+  const getStorageKey = () => `gramaticalizando_simulados_${user?.id || 'anon'}`;
+
+  const loadLocalAttempts = (): Record<string, LocalSimuladoAttempt> => {
+    try {
+      const raw = localStorage.getItem(getStorageKey());
+      if (raw) return JSON.parse(raw);
+    } catch {}
+    return {};
+  };
+
+  const saveLocalAttempt = (simId: string, attempt: LocalSimuladoAttempt) => {
+    try {
+      const current = loadLocalAttempts();
+      current[simId] = attempt;
+      localStorage.setItem(getStorageKey(), JSON.stringify(current));
+    } catch {}
+  };
+
   const loadSimulados = async () => {
+    const localAttempts = loadLocalAttempts();
+
     try {
       setLoading(true);
       const list = await simuladosApi.listar();
-      setSimulados(list);
+      const merged = list.map(s => {
+        const local = localAttempts[s.id];
+        const isDone = s.concluido || (local && local.concluido);
+        return {
+          ...s,
+          concluido: isDone,
+          ultimaNota: s.ultimaNota !== null && s.ultimaNota !== undefined ? s.ultimaNota : (local ? local.porcentagem : null),
+          corretas: s.corretas !== null && s.corretas !== undefined ? s.corretas : (local ? local.corretas : null),
+          concluidoEm: s.concluidoEm || (local ? local.concluidoEm : null)
+        };
+      });
+      setSimulados(merged);
     } catch (err: any) {
       showToast(err.message || 'Erro ao carregar simulados.', 'error');
     } finally {
@@ -58,7 +99,7 @@ export const StudentSimulados: React.FC = () => {
 
   useEffect(() => {
     loadSimulados();
-  }, []);
+  }, [user?.id]);
 
   // Timer do Simulado
   useEffect(() => {
@@ -125,6 +166,16 @@ export const StudentSimulados: React.FC = () => {
       const res = await simuladosApi.finalizar(simuladoAtivo.id, respostas);
       if (res) {
         setResultado(res);
+
+        // Salva imediatamente no LocalStorage (offline-first, zero perda de progresso)
+        saveLocalAttempt(simuladoAtivo.id, {
+          concluido: true,
+          porcentagem: res.porcentagem,
+          corretas: res.corretas,
+          total: res.total,
+          concluidoEm: new Date().toISOString()
+        });
+
         showToast(`Simulado concluído! Aproveitamento: ${res.porcentagem}%`, 'success');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -567,16 +618,22 @@ export const StudentSimulados: React.FC = () => {
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 padding: '1.5rem',
-                border: '1px solid var(--border-subtle)',
+                border: sim.concluido ? '1px solid var(--success)' : '1px solid var(--border-subtle)',
+                borderLeft: sim.concluido ? '4px solid var(--success)' : '1px solid var(--border-subtle)',
                 borderRadius: 'var(--radius-lg)',
-                backgroundColor: '#ffffff',
+                backgroundColor: sim.concluido ? 'rgba(16, 185, 129, 0.02)' : '#ffffff',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
                 transition: 'all 0.2s ease'
               }}
             >
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <Badge variant="purple">{sim.banca}</Badge>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Badge variant="purple">{sim.banca}</Badge>
+                    {sim.concluido && (
+                      <Badge variant="success" size="sm">Concluído</Badge>
+                    )}
+                  </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                     <Clock size={14} />
                     <span>{sim.tempoMinutos} min</span>
@@ -589,6 +646,15 @@ export const StudentSimulados: React.FC = () => {
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '1.25rem' }}>
                   {sim.descricao || 'Simulado completo focado nas peculiaridades e pegadinhas da banca examinadora.'}
                 </p>
+
+                {sim.concluido && sim.ultimaNota !== null && sim.ultimaNota !== undefined && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem', padding: '0.625rem 0.875rem', backgroundColor: 'rgba(16, 185, 129, 0.08)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                    <CheckCircle size={16} color="var(--success)" />
+                    <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--success)' }}>
+                      Último resultado: <strong>{sim.ultimaNota}%</strong> ({sim.corretas}/{sim.totalQuestoes} acertos)
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem' }}>
@@ -597,11 +663,11 @@ export const StudentSimulados: React.FC = () => {
                 </span>
                 <Button
                   onClick={() => handleIniciarSimulado(sim.id)}
-                  variant="primary"
+                  variant={sim.concluido ? 'outline' : 'primary'}
                   style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                 >
-                  <Play size={14} />
-                  <span>Iniciar Simulado</span>
+                  {sim.concluido ? <RotateCcw size={14} /> : <Play size={14} />}
+                  <span>{sim.concluido ? 'Refazer Simulado' : 'Iniciar Simulado'}</span>
                 </Button>
               </div>
             </Card>

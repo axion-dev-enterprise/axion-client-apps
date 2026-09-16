@@ -115,17 +115,43 @@ async function obterSimuladosPersistidos() {
 async function listar(req, res) {
     try {
         const simulados = await obterSimuladosPersistidos();
+        const user = obterUsuarioAutenticado(req);
+        const userSimuladosMap = {};
+
+        if (user && user.id) {
+            try {
+                const usuarios = await lerArquivoJson(paths.USUARIOS);
+                const usuario = usuarios.find(u => u.id === user.id);
+                if (usuario && usuario.estudos && Array.isArray(usuario.estudos.simulados)) {
+                    usuario.estudos.simulados.forEach(s => {
+                        if (!userSimuladosMap[s.simuladoId]) {
+                            userSimuladosMap[s.simuladoId] = s;
+                        }
+                    });
+                }
+            } catch (errUser) {
+                console.warn("Aviso ao mapear simulados do usuário:", errUser.message);
+            }
+        }
+
         const lista = simulados
             .filter(s => s.publicado !== false)
-            .map(s => ({
-                id: s.id,
-                titulo: s.titulo,
-                descricao: s.descricao,
-                banca: s.banca,
-                tempoMinutos: s.tempoMinutos,
-                totalQuestoes: Array.isArray(s.questoes) ? s.questoes.length : 0,
-                criadoEm: s.criadoEm
-            }));
+            .map(s => {
+                const tentativa = userSimuladosMap[s.id];
+                return {
+                    id: s.id,
+                    titulo: s.titulo,
+                    descricao: s.descricao,
+                    banca: s.banca,
+                    tempoMinutos: s.tempoMinutos,
+                    totalQuestoes: Array.isArray(s.questoes) ? s.questoes.length : 0,
+                    criadoEm: s.criadoEm,
+                    concluido: !!tentativa,
+                    ultimaNota: tentativa ? tentativa.porcentagem : null,
+                    corretas: tentativa ? tentativa.corretas : null,
+                    concluidoEm: tentativa ? tentativa.concluidoEm : null
+                };
+            });
 
         return res.json({ sucesso: true, simulados: lista });
     } catch (erro) {
@@ -309,6 +335,70 @@ async function finalizarSimulado(req, res) {
         });
 
         const porcentagem = total > 0 ? Math.round((corretas / total) * 100) : 0;
+
+        // Persistência no histórico do aluno
+        const user = obterUsuarioAutenticado(req);
+        if (user && user.id) {
+            try {
+                const usuarios = await lerArquivoJson(paths.USUARIOS);
+                const usuario = usuarios.find(u => u.id === user.id);
+                if (usuario) {
+                    const estudos = garantirDadosEstudo(usuario);
+                    if (!Array.isArray(estudos.simulados)) {
+                        estudos.simulados = [];
+                    }
+
+                    const agora = new Date().toISOString();
+                    const registroSimulado = {
+                        id: crypto.randomUUID(),
+                        simuladoId: sim.id,
+                        titulo: sim.titulo,
+                        banca: sim.banca,
+                        total,
+                        corretas,
+                        erradas: total - corretas,
+                        porcentagem,
+                        respostas,
+                        concluidoEm: agora
+                    };
+                    estudos.simulados.unshift(registroSimulado);
+
+                    // Atualiza exercícios do aluno para refletir nas métricas globais
+                    if (!Array.isArray(estudos.exercicios)) {
+                        estudos.exercicios = [];
+                    }
+                    estudos.exercicios.unshift({
+                        id: crypto.randomUUID(),
+                        exercicioId: sim.id,
+                        titulo: `Simulado: ${sim.titulo}`,
+                        total,
+                        corretas,
+                        erradas: total - corretas,
+                        porcentagem,
+                        tipo: "simulado",
+                        concluidoEm: agora
+                    });
+
+                    // Registra na timeline de atividades do aluno
+                    if (!Array.isArray(estudos.atividades)) {
+                        estudos.atividades = [];
+                    }
+                    estudos.atividades.unshift({
+                        id: crypto.randomUUID(),
+                        tipo: "simulado",
+                        titulo: `Simulado concluído: ${sim.titulo}`,
+                        descricao: `${corretas} de ${total} acertos (${porcentagem}% de aproveitamento).`,
+                        referenciaId: sim.id,
+                        criadoEm: agora
+                    });
+
+                    estudos.ultimoAcesso = agora;
+                    await salvarArquivoJson(paths.USUARIOS, usuarios);
+                }
+            } catch (errSave) {
+                console.warn("Aviso ao salvar histórico do simulado:", errSave.message);
+            }
+        }
 
         return res.json({
             sucesso: true,

@@ -8,6 +8,10 @@ export interface SimuladoItemResumo {
   tempoMinutos: number;
   totalQuestoes: number;
   criadoEm?: string;
+  concluido?: boolean;
+  ultimaNota?: number | null;
+  corretas?: number | null;
+  concluidoEm?: string | null;
 }
 
 export interface SimuladoQuestao {
