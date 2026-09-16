@@ -1,4 +1,4 @@
-﻿name: CI/CD Pipeline - Gramaticalizando
+name: CI/CD Pipeline - Gramaticalizando
 
 on:
   push:
@@ -29,10 +29,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20.x
+      - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
           cache-dependency-path: packages/gramaticalizando/package-lock.json
 
@@ -50,18 +50,15 @@ jobs:
     needs: quality-gate
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: packages/gramaticalizando
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20.x
+      - name: Setup Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
