@@ -98,6 +98,37 @@ export const RegisterPage: React.FC = () => {
       const savedUser = savedUserStr ? JSON.parse(savedUserStr) : null;
       const refCode = savedUser?.codigoReferencia || `GRAM-${Math.floor(1000 + Math.random() * 9000)}`;
 
+      // Persistir imediatamente no espelho local compartilhado de alunos (Triple-layer storage)
+      const novoAlunoLocal = {
+        id: savedUser?.id || `local-${Date.now()}`,
+        nome,
+        email,
+        plano,
+        statusPlano: 'pendente',
+        codigoReferencia: refCode,
+        dataSolicitacaoPlano: new Date().toISOString(),
+        criadoEm: new Date().toISOString(),
+        aulasConcluidas: 0,
+        exerciciosConcluidos: 0,
+        taxaAcerto: 0
+      };
+
+      try {
+        const storedStr = localStorage.getItem('gramaticalizando_registered_students');
+        const storedList = storedStr ? JSON.parse(storedStr) : [];
+        const semDuplicata = storedList.filter((a: any) => a.email.toLowerCase() !== email.toLowerCase());
+        semDuplicata.unshift(novoAlunoLocal);
+        localStorage.setItem('gramaticalizando_registered_students', JSON.stringify(semDuplicata));
+
+        // Disparar sincronização entre abas
+        window.dispatchEvent(new Event('storage'));
+        if (typeof BroadcastChannel !== 'undefined') {
+          const channel = new BroadcastChannel('gramaticalizando_channel');
+          channel.postMessage({ type: 'NOVO_ALUNO', aluno: novoAlunoLocal });
+          channel.close();
+        }
+      } catch {}
+
       setDadosSucesso({
         codigoReferencia: refCode,
         plano,

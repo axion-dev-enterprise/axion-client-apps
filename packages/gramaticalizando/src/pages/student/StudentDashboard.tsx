@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   BookOpen,
@@ -24,6 +24,24 @@ export const StudentDashboard: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [copiado, setCopiado] = useState(false);
+  const [statusPlanoEfetivo, setStatusPlanoEfetivo] = useState(user?.statusPlano || 'pendente');
+
+  useEffect(() => {
+    try {
+      const storedStr = localStorage.getItem('gramaticalizando_registered_students');
+      if (storedStr && user?.email) {
+        const storedList = JSON.parse(storedStr);
+        const aluno = storedList.find((a: any) => a.email.toLowerCase() === user.email.toLowerCase());
+        if (aluno && aluno.statusPlano) {
+          setStatusPlanoEfetivo(aluno.statusPlano);
+          return;
+        }
+      }
+    } catch {}
+    if (user?.statusPlano) {
+      setStatusPlanoEfetivo(user.statusPlano);
+    }
+  }, [user]);
 
   const totalAulas = CANONICAL_MODULES.reduce((acc, m) => acc + m.aulas.length, 0);
   const aulasConcluidas = 12; // Exemplo de progresso inicial
@@ -32,7 +50,7 @@ export const StudentDashboard: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
       {/* Banner de Aprovação Pendente se aplicável */}
-      {user?.statusPlano === 'pendente' && (
+      {statusPlanoEfetivo === 'pendente' && (
         <Card
           variant="elevated"
           padding="md"

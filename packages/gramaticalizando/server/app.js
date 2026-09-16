@@ -11,7 +11,26 @@ const app = express();
 
 // Middleware resiliente de parsing JSON compatível com Express 5 e Vercel Serverless
 app.use((req, res, next) => {
+    if (typeof req.body === "string") {
+        try {
+            req.body = JSON.parse(req.body);
+        } catch {}
+    }
+    if (Buffer.isBuffer(req.body)) {
+        try {
+            req.body = JSON.parse(req.body.toString("utf8"));
+        } catch {}
+    }
     if (req.body && typeof req.body === "object") {
+        req._body = true;
+        return next();
+    }
+    if (req.method === "GET" || req.method === "HEAD" || req.method === "OPTIONS" || req.method === "DELETE") {
+        return next();
+    }
+    if (req.readableEnded || req.complete) {
+        req.body = req.body || {};
+        req._body = true;
         return next();
     }
     let data = "";
@@ -25,14 +44,24 @@ app.use((req, res, next) => {
             } catch {
                 req.body = {};
             }
+        } else {
+            req.body = req.body || {};
         }
+        req._body = true;
         next();
     });
     req.on("error", () => {
+        req.body = req.body || {};
+        req._body = true;
         next();
     });
 });
-app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    if (req._body) {
+        return next();
+    }
+    express.urlencoded({ extended: true })(req, res, next);
+});
 
 app.use(
     session({
