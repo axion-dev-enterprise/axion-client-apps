@@ -89,12 +89,12 @@ const DADOS_PADRAO = {
 
 async function obterDadosVestibular() {
     let dados = await lerArquivoJson(paths.VESTIBULAR);
-    if (!dados || typeof dados !== "object" || !Array.isArray(dados.videoaulas)) {
-        dados = DADOS_PADRAO;
+    if (!dados || typeof dados !== "object") {
+        dados = { videoaulas: [], temas: [], redacoes: [] };
         await salvarArquivoJson(paths.VESTIBULAR, dados);
     }
-    if (!Array.isArray(dados.videoaulas)) dados.videoaulas = DADOS_PADRAO.videoaulas;
-    if (!Array.isArray(dados.temas)) dados.temas = DADOS_PADRAO.temas;
+    if (!Array.isArray(dados.videoaulas)) dados.videoaulas = [];
+    if (!Array.isArray(dados.temas)) dados.temas = [];
     if (!Array.isArray(dados.redacoes)) dados.redacoes = [];
     return dados;
 }

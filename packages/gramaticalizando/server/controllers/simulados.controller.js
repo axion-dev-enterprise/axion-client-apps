@@ -104,8 +104,8 @@ const SIMULADOS_DEFAULT = [
 
 async function obterSimuladosPersistidos() {
     let simulados = await lerArquivoJson(paths.SIMULADOS);
-    if (!Array.isArray(simulados) || simulados.length === 0) {
-        simulados = SIMULADOS_DEFAULT;
+    if (!Array.isArray(simulados)) {
+        simulados = [];
         await salvarArquivoJson(paths.SIMULADOS, simulados);
     }
     return simulados;

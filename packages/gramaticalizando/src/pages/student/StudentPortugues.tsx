@@ -36,9 +36,9 @@ interface LocalProgressData {
 
 export const StudentPortugues: React.FC = () => {
   const { user } = useAuth();
-  const [modules, setModules] = useState<Modulo[]>(CANONICAL_MODULES);
+  const [modules, setModules] = useState<Modulo[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [expandedModule, setExpandedModule] = useState<string | null>('fonetica-fonologia');
+  const [expandedModule, setExpandedModule] = useState<string | null>(null);
   const [selectedAula, setSelectedAula] = useState<Aula | null>(null);
   const [completedLessons, setCompletedLessons] = useState<Record<string, boolean>>({});
 
@@ -128,9 +128,12 @@ export const StudentPortugues: React.FC = () => {
           };
         });
 
+        setModules(grouped);
         if (grouped.length > 0) {
-          setModules(grouped);
+          setExpandedModule(prev => prev || grouped[0].id);
         }
+      } else {
+        setModules([]);
       }
 
       // 3. Unificar aulas concluídas reais do aluno (Backend + LocalStorage)
@@ -317,197 +320,209 @@ export const StudentPortugues: React.FC = () => {
       </div>
 
       {/* Lista de Módulos & Aulas */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-        {filteredModules.map((modulo, modIndex) => {
-          const isExpanded = expandedModule === modulo.id;
-          const concluidasModulo = modulo.aulas.filter((a) => completedLessons[a.id]).length;
-          const totalAulasModulo = modulo.aulas.length;
+      {filteredModules.length === 0 ? (
+        <Card style={{ padding: '3.5rem 2rem', textAlign: 'center' }}>
+          <BookOpen size={48} style={{ color: 'var(--text-muted)', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+            Nenhum módulo ou aula disponível no momento
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', maxWidth: '450px', margin: '0 auto' }}>
+            A Professora Wilma está preparando os primeiros módulos e aulas oficiais. Fique atento às publicações da plataforma!
+          </p>
+        </Card>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {filteredModules.map((modulo, modIndex) => {
+            const isExpanded = expandedModule === modulo.id;
+            const concluidasModulo = modulo.aulas.filter((a) => completedLessons[a.id]).length;
+            const totalAulasModulo = modulo.aulas.length;
 
-          return (
-            <Card
-              key={modulo.id}
-              style={{
-                border: '1px solid var(--border-subtle)',
-                borderRadius: 'var(--radius-lg)',
-                backgroundColor: '#ffffff',
-                overflow: 'hidden'
-              }}
-            >
-              {/* Header do Módulo */}
-              <div
-                onClick={() => handleToggleModule(modulo.id)}
+            return (
+              <Card
+                key={modulo.id}
                 style={{
-                  padding: '1.25rem 1.5rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  cursor: 'pointer',
-                  backgroundColor: isExpanded ? 'var(--bg-surface-2)' : 'transparent',
-                  transition: 'background-color 0.2s ease'
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 'var(--radius-lg)',
+                  backgroundColor: '#ffffff',
+                  overflow: 'hidden'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <span
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: 'var(--radius-md)',
-                      backgroundColor: 'var(--accent-light)',
-                      color: 'var(--accent)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontWeight: 800,
-                      fontSize: '0.875rem'
-                    }}
-                  >
-                    {modIndex + 1}
-                  </span>
-                  <div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-                      {modulo.titulo}
-                    </h3>
-                    <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
-                      {modulo.descricao}
-                    </p>
+                {/* Header do Módulo */}
+                <div
+                  onClick={() => handleToggleModule(modulo.id)}
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                    backgroundColor: isExpanded ? 'var(--bg-surface-2)' : 'transparent',
+                    transition: 'background-color 0.2s ease'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <span
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: 'var(--radius-md)',
+                        backgroundColor: 'var(--accent-light)',
+                        color: 'var(--accent)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontWeight: 800,
+                        fontSize: '0.875rem'
+                      }}
+                    >
+                      {modIndex + 1}
+                    </span>
+                    <div>
+                      <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                        {modulo.titulo}
+                      </h3>
+                      <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0' }}>
+                        {modulo.descricao}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                      {concluidasModulo} / {totalAulasModulo} aulas
+                    </span>
+                    {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                    {concluidasModulo} / {totalAulasModulo} aulas
-                  </span>
-                  {isExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-                </div>
-              </div>
-
-              {/* Grid / Carrossel de Aulas (quando expandido) */}
-              {isExpanded && (
-                <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--border-subtle)', backgroundColor: '#ffffff' }}>
-                  {/* Navegação Mobile & Dica de Swipe */}
-                  {modulo.aulas.length > 1 && (
-                    <div className="aulas-mobile-nav">
-                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--accent)' }} />
-                        Deslize para o lado ({totalAulasModulo} aulas) →
-                      </span>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleScrollTrack(modulo.id, 'left');
-                          }}
-                          aria-label="Aula anterior"
-                          style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            border: '1px solid var(--border-subtle)',
-                            backgroundColor: 'var(--bg-surface-2)',
-                            color: 'var(--text-secondary)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <ChevronLeft size={15} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleScrollTrack(modulo.id, 'right');
-                          }}
-                          aria-label="Próxima aula"
-                          style={{
-                            width: '28px',
-                            height: '28px',
-                            borderRadius: '50%',
-                            border: '1px solid var(--border-subtle)',
-                            backgroundColor: 'var(--bg-surface-2)',
-                            color: 'var(--text-secondary)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          <ChevronRight size={15} />
-                        </button>
+                {/* Grid / Carrossel de Aulas (quando expandido) */}
+                {isExpanded && (
+                  <div style={{ padding: '1.25rem 1.5rem', borderTop: '1px solid var(--border-subtle)', backgroundColor: '#ffffff' }}>
+                    {/* Navegação Mobile & Dica de Swipe */}
+                    {modulo.aulas.length > 1 && (
+                      <div className="aulas-mobile-nav">
+                        <span style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--accent)' }} />
+                          Deslize para o lado ({totalAulasModulo} aulas) →
+                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScrollTrack(modulo.id, 'left');
+                            }}
+                            aria-label="Aula anterior"
+                            style={{
+                              width: '28px',
+                              height: '28px',
+                              borderRadius: '50%',
+                              border: '1px solid var(--border-subtle)',
+                              backgroundColor: 'var(--bg-surface-2)',
+                              color: 'var(--text-secondary)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            <ChevronLeft size={15} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleScrollTrack(modulo.id, 'right');
+                            }}
+                            aria-label="Próxima aula"
+                            style={{
+                              width: '28px',
+                              height: '28px',
+                              borderRadius: '50%',
+                              border: '1px solid var(--border-subtle)',
+                              backgroundColor: 'var(--bg-surface-2)',
+                              color: 'var(--text-secondary)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            <ChevronRight size={15} />
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
 
-                  <div
-                    className="aulas-carousel-track"
-                    ref={(el) => {
-                      moduleTracksRef.current[modulo.id] = el;
-                    }}
-                  >
-                    {modulo.aulas.map((aula) => {
-                      const isDone = !!completedLessons[aula.id];
+                    <div
+                      ref={(el) => {
+                        moduleTracksRef.current[modulo.id] = el;
+                      }}
+                      className="aulas-carousel-track"
+                    >
+                      {modulo.aulas.map((aula) => {
+                        const isDone = !!completedLessons[aula.id];
 
-                      return (
-                        <div
-                          key={aula.id}
-                          className="aulas-carousel-card"
-                          onClick={() => handleOpenAula(aula)}
-                          style={{
-                            padding: '1rem',
-                            borderRadius: 'var(--radius-md)',
-                            border: isDone ? '1px solid var(--success)' : '1px solid var(--border-subtle)',
-                            backgroundColor: isDone ? 'rgba(16, 185, 129, 0.03)' : 'var(--bg-surface-1)',
-                            cursor: 'pointer',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            gap: '0.75rem',
-                            transition: 'all 0.15s ease'
-                          }}
-                        >
-                          <div>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                                Aula #{aula.ordem}
-                              </span>
-                              {isDone ? (
-                                <Badge variant="success" size="sm">Concluída</Badge>
-                              ) : (
-                                <Badge variant="neutral" size="sm">Pendente</Badge>
+                        return (
+                          <div
+                            key={aula.id}
+                            className="aulas-carousel-card"
+                            onClick={() => handleOpenAula(aula)}
+                            style={{
+                              padding: '1rem',
+                              borderRadius: 'var(--radius-md)',
+                              border: isDone ? '1px solid var(--success)' : '1px solid var(--border-subtle)',
+                              backgroundColor: isDone ? 'rgba(16, 185, 129, 0.03)' : 'var(--bg-surface-1)',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'space-between',
+                              gap: '0.75rem',
+                              transition: 'all 0.15s ease'
+                            }}
+                          >
+                            <div>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                                  Aula #{aula.ordem}
+                                </span>
+                                {isDone ? (
+                                  <Badge variant="success" size="sm">Concluída</Badge>
+                                ) : (
+                                  <Badge variant="neutral" size="sm">Pendente</Badge>
+                                )}
+                              </div>
+
+                              <h4 style={{ fontSize: '0.925rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+                                {aula.titulo}
+                              </h4>
+                              {aula.subtitulo && (
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0', lineHeight: 1.4 }}>
+                                  {aula.subtitulo}
+                                </p>
                               )}
                             </div>
 
-                            <h4 style={{ fontSize: '0.925rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
-                              {aula.titulo}
-                            </h4>
-                            {aula.subtitulo && (
-                              <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: '0.25rem 0 0', lineHeight: 1.4 }}>
-                                {aula.subtitulo}
-                              </p>
-                            )}
-                          </div>
-
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', paddingTop: '0.5rem', borderTop: '1px dashed var(--border-subtle)' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                              <Clock size={13} />
-                              <span>{aula.duracao || '25 min'}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.75rem', color: 'var(--text-muted)', paddingTop: '0.5rem', borderTop: '1px dashed var(--border-subtle)' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                                <Clock size={13} />
+                                <span>{aula.duracao || '25 min'}</span>
+                              </div>
+                              <span style={{ color: 'var(--accent)', fontWeight: 600 }}>
+                                Estudar Aula →
+                              </span>
                             </div>
-                            <span style={{ color: 'var(--accent)', fontWeight: 600 }}>
-                              Estudar Aula →
-                            </span>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-            </Card>
-          );
-        })}
-      </div>
+                )}
+              </Card>
+            );
+          })}
+        </div>
+      )}
 
       {/* Modal Detalhado da Aula */}
       <Modal

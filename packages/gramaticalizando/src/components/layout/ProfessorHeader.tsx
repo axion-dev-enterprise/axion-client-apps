@@ -1,7 +1,9 @@
-import React from 'react';
-import { Menu, ShieldCheck, Bell } from 'lucide-react';
+import React, { useState } from 'react';
+import { Menu, ShieldCheck, Sparkles } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Badge } from '../ui/Badge';
+import { Button } from '../ui/Button';
+import { GuiaUploadModal } from '../professor/GuiaUploadModal';
 
 export interface ProfessorHeaderProps {
   onToggleSidebar: () => void;
@@ -10,6 +12,7 @@ export interface ProfessorHeaderProps {
 
 export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSidebar, title }) => {
   const { user } = useAuth();
+  const [guiaAberto, setGuiaAberto] = useState(false);
 
   return (
     <header
@@ -60,6 +63,21 @@ export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSideba
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexShrink: 0 }}>
+        <Button
+          variant="outline"
+          size="sm"
+          icon={<Sparkles size={14} />}
+          onClick={() => setGuiaAberto(true)}
+          style={{
+            borderColor: 'var(--accent)',
+            color: 'var(--accent)',
+            fontWeight: 600,
+            fontSize: '0.8125rem'
+          }}
+        >
+          Guia de Uploads
+        </Button>
+
         <div className="header-badge-docente">
           <Badge variant="purple" size="sm">
             <ShieldCheck size={14} />
@@ -70,6 +88,8 @@ export const ProfessorHeader: React.FC<ProfessorHeaderProps> = ({ onToggleSideba
           <span>{user?.nome?.split(' ')[0] || 'Docente'}</span>
         </div>
       </div>
+
+      <GuiaUploadModal isOpen={guiaAberto} onClose={() => setGuiaAberto(false)} />
 
       <style>{`
         @media (min-width: 993px) {

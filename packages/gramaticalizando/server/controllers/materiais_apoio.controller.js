@@ -56,8 +56,8 @@ const MATERIAIS_DEFAULT = [
 
 async function obterMateriaisPersistidos() {
     let materiais = await lerArquivoJson(paths.MATERIAIS_APOIO);
-    if (!Array.isArray(materiais) || materiais.length === 0) {
-        materiais = MATERIAIS_DEFAULT;
+    if (!Array.isArray(materiais)) {
+        materiais = [];
         await salvarArquivoJson(paths.MATERIAIS_APOIO, materiais);
     } else {
         // Assegura que arquivoUrl aponte para o endpoint canônico

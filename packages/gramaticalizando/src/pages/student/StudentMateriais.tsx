@@ -30,48 +30,7 @@ interface MaterialApoioItem {
 
 export const StudentMateriais: React.FC = () => {
   const { showToast } = useToast();
-  const [materiais, setMateriais] = useState<MaterialApoioItem[]>([
-    {
-      id: 'mat-apoio-1',
-      titulo: 'Manual Completo de Fonética e Fonologia',
-      categoria: 'Fonética e Fonologia',
-      tamanho: '3.4 MB',
-      formato: 'PDF',
-      arquivoUrl: '/api/materiais-apoio/mat-apoio-1/download',
-      descricao: 'Tabelas mnemônicas de encontros vocálicos, consonantais e separação silábica rigorosa para bancas examinadoras.',
-      paginas: 24
-    },
-    {
-      id: 'mat-apoio-2',
-      titulo: 'Guia Definitivo do Novo Acordo Ortográfico',
-      categoria: 'Ortografia e Acentuação',
-      tamanho: '2.8 MB',
-      formato: 'PDF',
-      arquivoUrl: '/api/materiais-apoio/mat-apoio-2/download',
-      descricao: 'Regras práticas do hífen, acentuação diferencial, paroxítonas e palavras compostas.',
-      paginas: 18
-    },
-    {
-      id: 'mat-apoio-3',
-      titulo: 'Mapa Mental — Sintaxe do Período Composto',
-      categoria: 'Análise Sintática',
-      tamanho: '1.9 MB',
-      formato: 'PDF',
-      arquivoUrl: '/api/materiais-apoio/mat-apoio-3/download',
-      descricao: 'Esquema visual colorido de orações coordenadas e subordinadas substantivas, adjetivas e adverbiais.',
-      paginas: 8
-    },
-    {
-      id: 'mat-apoio-4',
-      titulo: 'Checklist de Ouro para a Redação Nota Máxima',
-      categoria: 'Redação Dissertativa',
-      tamanho: '5.1 MB',
-      formato: 'PDF',
-      arquivoUrl: '/api/materiais-apoio/mat-apoio-4/download',
-      descricao: 'Os 5 critérios de avaliação, repertórios socioculturais curingas e modelos de proposta de intervenção.',
-      paginas: 32
-    }
-  ]);
+  const [materiais, setMateriais] = useState<MaterialApoioItem[]>([]);
 
   // Estado do Leitor de PDF
   const [leitorAberto, setLeitorAberto] = useState(false);
@@ -82,19 +41,23 @@ export const StudentMateriais: React.FC = () => {
     const load = async () => {
       try {
         const res = await request<{ sucesso: boolean; materiais: any[] }>('/api/materiais-apoio');
-        if (res.sucesso && Array.isArray(res.materiais) && res.materiais.length > 0) {
+        if (res.sucesso && Array.isArray(res.materiais)) {
           setMateriais(res.materiais.map(m => ({
             id: m.id,
             titulo: m.titulo,
-            categoria: m.nomeModulo || 'Geral',
+            categoria: m.nomeModulo || m.categoria || 'Geral',
             tamanho: m.tamanho || '2.5 MB',
             formato: (m.tipo || 'PDF').toUpperCase(),
             arquivoUrl: `/api/materiais-apoio/${m.id}/download`,
             descricao: m.descricao,
             paginas: m.paginas || 20
           })));
+        } else {
+          setMateriais([]);
         }
-      } catch {}
+      } catch {
+        setMateriais([]);
+      }
     };
     load();
   }, []);
@@ -144,92 +107,104 @@ export const StudentMateriais: React.FC = () => {
       </div>
 
       {/* Grid de Materiais */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '1.5rem' }}>
-        {materiais.map((mat) => {
-          const downloadUrl = `/api/materiais-apoio/${mat.id}/download`;
-          const visualizarUrl = `/api/materiais-apoio/${mat.id}/pdf`;
+      {materiais.length === 0 ? (
+        <Card style={{ padding: '3.5rem 2rem', textAlign: 'center' }}>
+          <FolderDown size={48} style={{ color: 'var(--text-muted)', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+            Nenhum material de apoio disponível no momento
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', maxWidth: '450px', margin: '0 auto' }}>
+            A Professora Wilma disponibilizará as apostilas, resumos e cadernos de estudo em PDF em breve.
+          </p>
+        </Card>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '1.5rem' }}>
+          {materiais.map((mat) => {
+            const downloadUrl = `/api/materiais-apoio/${mat.id}/download`;
+            const visualizarUrl = `/api/materiais-apoio/${mat.id}/pdf`;
 
-          return (
-            <Card
-              key={mat.id}
-              variant="interactive"
-              padding="lg"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                gap: '1.25rem',
-                backgroundColor: '#ffffff',
-                border: '1px solid #e2e8f0',
-                borderRadius: '14px',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-                  <Badge variant="purple" size="sm">
-                    {mat.categoria}
-                  </Badge>
-                  <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-                    {mat.tamanho}
-                  </span>
+            return (
+              <Card
+                key={mat.id}
+                variant="interactive"
+                padding="lg"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  gap: '1.25rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '14px',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                }}
+              >
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                    <Badge variant="purple" size="sm">
+                      {mat.categoria}
+                    </Badge>
+                    <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                      {mat.tamanho}
+                    </span>
+                  </div>
+
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem', lineHeight: 1.4 }}>
+                    {mat.titulo}
+                  </h3>
+
+                  <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.55 }}>
+                    {mat.descricao}
+                  </p>
                 </div>
 
-                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem', lineHeight: 1.4 }}>
-                  {mat.titulo}
-                </h3>
-
-                <p style={{ fontSize: '0.875rem', color: '#475569', lineHeight: 1.55 }}>
-                  {mat.descricao}
-                </p>
-              </div>
-
-              {/* Botões de Ação: Leitor Integrado + Download Nativo */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-                <Button
-                  variant="primary"
-                  size="md"
-                  icon={<BookOpen size={16} />}
-                  onClick={() => abrirLeitor(mat)}
-                  style={{
-                    width: '100%',
-                    backgroundColor: '#7c3aed',
-                    color: '#ffffff',
-                    boxShadow: '0 4px 12px rgba(124, 58, 237, 0.25)',
-                    fontWeight: 600
-                  }}
-                >
-                  Visualizar no Leitor
-                </Button>
-
-                {/* Link de Download Nativo do Navegador */}
-                <a
-                  href={downloadUrl}
-                  download={`${mat.titulo}.pdf`}
-                  onClick={() => dispararDownloadNativo(mat)}
-                  style={{ textDecoration: 'none', width: '100%' }}
-                >
+                {/* Botões de Ação: Leitor Integrado + Download Nativo */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
                   <Button
-                    variant="outline"
+                    variant="primary"
                     size="md"
-                    icon={<Download size={16} />}
+                    icon={<BookOpen size={16} />}
+                    onClick={() => abrirLeitor(mat)}
                     style={{
                       width: '100%',
-                      borderColor: '#cbd5e1',
-                      color: '#334155',
-                      fontWeight: 600,
-                      backgroundColor: '#ffffff'
+                      backgroundColor: '#7c3aed',
+                      color: '#ffffff',
+                      boxShadow: '0 4px 12px rgba(124, 58, 237, 0.25)',
+                      fontWeight: 600
                     }}
                   >
-                    Baixar Material em PDF
+                    Visualizar no Leitor
                   </Button>
-                </a>
-              </div>
-            </Card>
-          );
-        })}
-      </div>
+
+                  {/* Link de Download Nativo do Navegador */}
+                  <a
+                    href={downloadUrl}
+                    download={`${mat.titulo}.pdf`}
+                    onClick={() => dispararDownloadNativo(mat)}
+                    style={{ textDecoration: 'none', width: '100%' }}
+                  >
+                    <Button
+                      variant="outline"
+                      size="md"
+                      icon={<Download size={16} />}
+                      style={{
+                        width: '100%',
+                        borderColor: '#cbd5e1',
+                        color: '#334155',
+                        fontWeight: 600,
+                        backgroundColor: '#ffffff'
+                      }}
+                    >
+                      Baixar Material em PDF
+                    </Button>
+                  </a>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      )}
 
       {/* ========================================================= */}
       {/* MODAL: PDF READER INTEGRADO COM TELA CHEIA                */}

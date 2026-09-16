@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -16,6 +16,7 @@ import {
   Calendar
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { GuiaUploadModal } from '../professor/GuiaUploadModal';
 
 export interface ProfessorSidebarProps {
   isOpen: boolean;
@@ -26,6 +27,7 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [guiaAberto, setGuiaAberto] = useState(false);
 
   const menuItems = [
     { path: '/professor', label: 'Visão Geral', icon: <LayoutDashboard size={18} />, exact: true },
@@ -184,6 +186,32 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
           })}
         </nav>
 
+        {/* Botão de Destaque: Guia de Uploads */}
+        <div style={{ padding: '0 0.875rem 0.875rem' }}>
+          <button
+            onClick={() => setGuiaAberto(true)}
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem',
+              padding: '0.625rem',
+              borderRadius: '8px',
+              backgroundColor: 'var(--accent-light)',
+              color: 'var(--accent)',
+              border: '1px solid var(--accent-border)',
+              fontSize: '0.8125rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <Sparkles size={15} />
+            <span>Guia de Uploads</span>
+          </button>
+        </div>
+
         {/* Footer actions */}
         <div
           style={{
@@ -236,6 +264,8 @@ export const ProfessorSidebar: React.FC<ProfessorSidebarProps> = ({ isOpen, onCl
           </button>
         </div>
       </aside>
+
+      <GuiaUploadModal isOpen={guiaAberto} onClose={() => setGuiaAberto(false)} />
 
       <style>{`
         @media (max-width: 992px) {

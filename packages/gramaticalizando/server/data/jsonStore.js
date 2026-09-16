@@ -373,6 +373,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(m => m.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM materias WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM materias");
             }
             for (const m of dados) {
                 await db.query(`
@@ -397,6 +399,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(a => a.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM aulas WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM aulas");
             }
             for (const a of dados) {
                 await db.query(`
@@ -427,6 +431,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(e => e.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM exercicios WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM exercicios");
             }
             for (const e of dados) {
                 const questoesJson = typeof e.questoes === 'string' ? e.questoes : JSON.stringify(e.questoes || []);
@@ -457,6 +463,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(s => s.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM simulados WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM simulados");
             }
             for (const s of dados) {
                 const questoesJson = typeof s.questoes === 'string' ? s.questoes : JSON.stringify(s.questoes || []);
@@ -513,6 +521,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(t => t.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM temas_redacao WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM temas_redacao");
             }
             for (const t of dados) {
                 const textosMotivadoresJson = typeof t.textosMotivadores === 'string' ? t.textosMotivadores : JSON.stringify(t.textosMotivadores || []);
@@ -538,6 +548,8 @@ async function salvarNoPostgres(caminho, dados) {
             const idsAtivos = dados.map(m => m.id);
             if (idsAtivos.length > 0) {
                 await db.query("DELETE FROM materiais_apoio WHERE id != ALL($1)", [idsAtivos]);
+            } else {
+                await db.query("DELETE FROM materiais_apoio");
             }
             for (const m of dados) {
                 await db.query(`

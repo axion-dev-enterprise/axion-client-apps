@@ -382,62 +382,76 @@ export const StudentVestibular: React.FC = () => {
                 </div>
 
                 {/* Seleção do Tema */}
-                <div style={{ marginBottom: '1.25rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                    1. Escolha a Proposta Temática:
-                  </label>
-                  <select
-                    value={selectedTema?.id || ''}
-                    onChange={(e) => {
-                      const found = temas.find((t) => t.id === e.target.value);
-                      if (found) setSelectedTema(found);
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      borderRadius: '8px',
-                      border: '1px solid var(--border-subtle)',
-                      backgroundColor: '#f8fafc',
-                      fontSize: '0.875rem',
-                      fontWeight: 600,
-                      color: 'var(--text-primary)',
-                      outline: 'none'
-                    }}
-                  >
-                    {filteredTemas.map((t) => (
-                      <option key={t.id} value={t.id}>
-                        [{t.vestibular}] {t.titulo}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Box de Instruções do Tema Selecionado */}
-                {selectedTema && (
-                  <div
-                    style={{
-                      backgroundColor: '#eff6ff',
-                      border: '1px solid #bfdbfe',
-                      borderRadius: '8px',
-                      padding: '1rem',
-                      marginBottom: '1.5rem'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                      <Badge variant="info">{selectedTema.vestibular} - Edição {selectedTema.ano || '2026'}</Badge>
-                      {selectedTema.dataLimite && (
-                        <span style={{ fontSize: '0.75rem', color: '#1e40af', fontWeight: 600 }}>
-                          Prazo: {selectedTema.dataLimite}
-                        </span>
-                      )}
-                    </div>
-                    <h4 style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#1e3a8a', marginBottom: '0.5rem', lineHeight: 1.3 }}>
-                      {selectedTema.titulo}
+                {filteredTemas.length === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-secondary)' }}>
+                    <AlertCircle size={36} style={{ margin: '0 auto 0.75rem', color: 'var(--text-muted)' }} />
+                    <h4 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                      Nenhuma proposta temática disponível
                     </h4>
-                    <p style={{ fontSize: '0.8125rem', color: '#1e293b', lineHeight: 1.5, margin: 0 }}>
-                      {selectedTema.instrucoes}
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: 0 }}>
+                      Aguarde o lançamento dos próximos temas de redação pela Professora Wilma.
                     </p>
                   </div>
+                ) : (
+                  <>
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                        1. Escolha a Proposta Temática:
+                      </label>
+                      <select
+                        value={selectedTema?.id || ''}
+                        onChange={(e) => {
+                          const found = temas.find((t) => t.id === e.target.value);
+                          if (found) setSelectedTema(found);
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          borderRadius: '8px',
+                          border: '1px solid var(--border-subtle)',
+                          backgroundColor: '#f8fafc',
+                          fontSize: '0.875rem',
+                          fontWeight: 600,
+                          color: 'var(--text-primary)',
+                          outline: 'none'
+                        }}
+                      >
+                        {filteredTemas.map((t) => (
+                          <option key={t.id} value={t.id}>
+                            [{t.vestibular}] {t.titulo}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Box de Instruções do Tema Selecionado */}
+                    {selectedTema && (
+                      <div
+                        style={{
+                          backgroundColor: '#eff6ff',
+                          border: '1px solid #bfdbfe',
+                          borderRadius: '8px',
+                          padding: '1rem',
+                          marginBottom: '1.5rem'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                          <Badge variant="info">{selectedTema.vestibular} - Edição {selectedTema.ano || '2026'}</Badge>
+                          {selectedTema.dataLimite && (
+                            <span style={{ fontSize: '0.75rem', color: '#1e40af', fontWeight: 600 }}>
+                              Prazo: {selectedTema.dataLimite}
+                            </span>
+                          )}
+                        </div>
+                        <h4 style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#1e3a8a', marginBottom: '0.5rem', lineHeight: 1.3 }}>
+                          {selectedTema.titulo}
+                        </h4>
+                        <p style={{ fontSize: '0.8125rem', color: '#1e293b', lineHeight: 1.5, margin: 0 }}>
+                          {selectedTema.instrucoes}
+                        </p>
+                      </div>
+                    )}
+                  </>
                 )}
 
                 {/* Modalidade de Envio: Texto ou PDF */}
