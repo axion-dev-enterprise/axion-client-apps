@@ -2,154 +2,10 @@ const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
-const QUESTOES_DIAGNOSTICO = [
-    {
-        id: "diag-interp-1",
-        topico: "interpretacao",
-        nomeTopico: "Interpretação de Texto",
-        enunciado: "No trecho: 'A tecnologia não nos torna mais inteligentes; ela apenas amplifica nossas intenções prévias', o autor estabelece entre as orações uma relação de:",
-        alternativas: [
-            { id: "a", texto: "Causa e consequência." },
-            { id: "b", texto: "Retificação ou contraposição com adição." },
-            { id: "c", texto: "Finalidade e concessão." },
-            { id: "d", texto: "Comparação de superioridade." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "O ponto e vírgula introduz uma ideia retificadora e de contraposição ('não nos torna... apenas amplifica'), delimitando o real papel da tecnologia."
-    },
-    {
-        id: "diag-interp-2",
-        topico: "interpretacao",
-        nomeTopico: "Interpretação de Texto",
-        enunciado: "Infere-se de um texto quando a informação:",
-        alternativas: [
-            { id: "a", texto: "Está expressa e literalmente escrita na superfície textual." },
-            { id: "b", texto: "É deduzida logicamente a partir de pistas contextuais e pressupostos." },
-            { id: "c", texto: "Contradiz a tese defendida pelo autor." },
-            { id: "d", texto: "Depende exclusivamente da opinião pessoal e subjetiva do leitor." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "A inferência é a dedução lógica e contextual construída a partir de pistas deixadas pelo texto, diferente da leitura puramente literal."
-    },
-    {
-        id: "diag-sintaxe-1",
-        topico: "sintaxe",
-        nomeTopico: "Análise Sintática",
-        enunciado: "Em 'Necessita-se de servidores dedicados na administração pública', o termo 'de servidores dedicados' exerce a função sintática de:",
-        alternativas: [
-            { id: "a", texto: "Objeto direto preposicionado." },
-            { id: "b", texto: "Objeto indireto." },
-            { id: "c", texto: "Complemento nominal." },
-            { id: "d", texto: "Agente da passiva." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "O verbo 'necessitar' é transitivo indireto (quem necessita, necessita DE algo). O 'se' é índice de indeterminação do sujeito."
-    },
-    {
-        id: "diag-sintaxe-2",
-        topico: "sintaxe",
-        nomeTopico: "Análise Sintática",
-        enunciado: "Assinale a alternativa em que a oração destacada é subordinada substantiva subjetiva:",
-        alternativas: [
-            { id: "a", texto: "Quero [que você estude com dedicação]." },
-            { id: "b", texto: "É indispensável [que o candidato domine a norma-padrão]." },
-            { id: "c", texto: "Tenho certeza [de que seremos aprovados]." },
-            { id: "d", texto: "A verdade é [que a disciplina supera a motivação]." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "Na oração principal 'É indispensável', o verbo de ligação + predicativo exigem um sujeito, que é a oração 'que o candidato domine a norma-padrão'."
-    },
-    {
-        id: "diag-concord-1",
-        topico: "concordancia",
-        nomeTopico: "Concordância Verbal e Nominal",
-        enunciado: "Indique a oração que respeita rigorosamente a concordância segundo a norma-padrão:",
-        alternativas: [
-            { id: "a", texto: "Houveram muitos recursos contra o gabarito preliminar." },
-            { id: "b", texto: "Fazem três anos que me preparo para este concurso." },
-            { id: "c", texto: "Mais de um candidato contestou a questão anulada." },
-            { id: "d", texto: "Alugam-se salas comerciais no centro da cidade." }
-        ],
-        respostaCorreta: "d",
-        explicacao: "Em 'Alugam-se salas', 'salas comerciais' é sujeito paciente e 'se' é partícula apassivadora, logo o verbo pluraliza ('alugam-se'). Em 'a' e 'b', 'haver' e 'fazer' com sentido de tempo/existência são impessoais (havia/faz)."
-    },
-    {
-        id: "diag-concord-2",
-        topico: "concordancia",
-        nomeTopico: "Concordância Verbal e Nominal",
-        enunciado: "No que tange à concordância nominal, assinale a frase correta:",
-        alternativas: [
-            { id: "a", texto: "A aluna respondeu que ela mesmo redigiu o texto." },
-            { id: "b", texto: "Seguem anexo as folhas de redação corrigidas." },
-            { id: "c", texto: "É necessária dedicação constante para vencer a concorrência." },
-            { id: "d", texto: "Eram estudantes bastante esforçadas." }
-        ],
-        respostaCorreta: "d",
-        explicacao: "Em 'd', 'bastante' funciona como advérbio de intensidade (modifica o adjetivo 'esforçadas'), portanto é invariável."
-    },
-    {
-        id: "diag-crase-1",
-        topico: "crase",
-        nomeTopico: "Emprego do Acento Indicativo de Crase",
-        enunciado: "O acento grave indicador de crase está empregado corretamente em:",
-        alternativas: [
-            { id: "a", texto: "O diretor começou à expor as novas diretrizes pedagógicas." },
-            { id: "b", texto: "Entregou a premiação à aluna mais disciplinada da turma." },
-            { id: "c", texto: "Após o almoço, os professores caminharam à pé até a biblioteca." },
-            { id: "d", texto: "Solicitamos orientações à Sua Excelência durante o evento." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "Quem entrega, entrega algo A alguém (preposição 'a' + artigo definido feminino 'a aluna' = 'à aluna'). Diante de verbo ('expor'), palavra masculina ('pé') e pronome de tratamento ('Sua Excelência') não ocorre crase."
-    },
-    {
-        id: "diag-crase-2",
-        topico: "crase",
-        nomeTopico: "Emprego do Acento Indicativo de Crase",
-        enunciado: "Assinale o caso em que o uso do acento grave é FACULTATIVO:",
-        alternativas: [
-            { id: "a", texto: "Enviei os relatórios à minha professora de português." },
-            { id: "b", texto: "Fomos à praia de Copacabana no domingo." },
-            { id: "c", texto: "A aula começará às oito horas em ponto." },
-            { id: "d", texto: "Refiro-me àqueles candidatos aprovados no certame." }
-        ],
-        respostaCorreta: "a",
-        explicacao: "Diante de pronomes possessivos femininos no singular ('minha', 'tua', 'sua'), o artigo é facultativo, tornando o uso da crase facultativo."
-    },
-    {
-        id: "diag-pont-1",
-        topico: "pontuacao",
-        nomeTopico: "Pontuação e Emprego da Vírgula",
-        enunciado: "Assinale a alternativa pontuada de forma INCORRETA segundo a norma-padrão:",
-        alternativas: [
-            { id: "a", texto: "Os estudantes dedicados, conquistaram as primeiras colocações." },
-            { id: "b", texto: "Brasília, 21 de abril de 1960, nasceu sob forte expectativa." },
-            { id: "c", texto: "Portanto, caros alunos, mantenham o foco nas revisões." },
-            { id: "d", texto: "Quando a prova começou, o silêncio tomou conta da sala." }
-        ],
-        respostaCorreta: "a",
-        explicacao: "É proibido separar por vírgula o sujeito direto ('Os estudantes dedicados') do seu respectivo predicado/verbo ('conquistaram')."
-    },
-    {
-        id: "diag-pont-2",
-        topico: "pontuacao",
-        nomeTopico: "Pontuação e Emprego da Vírgula",
-        enunciado: "Em 'O professor explicou a matéria; os alunos, atentos, faziam anotações', a vírgula entre 'atentos' tem função de isolar um:",
-        alternativas: [
-            { id: "a", texto: "Vocativo." },
-            { id: "b", texto: "Predicativo do sujeito deslocado." },
-            { id: "c", texto: "Aposto especificativo." },
-            { id: "d", texto: "Adjunto adverbial de lugar." }
-        ],
-        respostaCorreta: "b",
-        explicacao: "'Atentos' é adjetivo qualificando o sujeito 'os alunos' e intercalado entre sujeito e verbo, exercendo a função de predicativo do sujeito deslocado."
-    }
-];
-
 async function obterQuestoesPersistidas() {
     let dados = await lerArquivoJson(paths.DIAGNOSTICO);
-    if (!Array.isArray(dados) || dados.length === 0) {
-        dados = QUESTOES_DIAGNOSTICO;
-        await salvarArquivoJson(paths.DIAGNOSTICO, dados);
+    if (!Array.isArray(dados)) {
+        dados = [];
     }
     return dados;
 }
@@ -471,7 +327,6 @@ async function processar(req, res) {
 }
 
 module.exports = {
-    QUESTOES_DIAGNOSTICO,
     obterQuestoes,
     processar,
     obterDiagnosticoAdmin,

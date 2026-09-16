@@ -381,19 +381,33 @@ export const StudentVestibular: React.FC = () => {
                   </h2>
                 </div>
 
-                {/* Seleção do Tema */}
+                {/* Seleção do Tema e Formulário */}
                 {filteredTemas.length === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '2rem 1rem', color: 'var(--text-secondary)' }}>
-                    <AlertCircle size={36} style={{ margin: '0 auto 0.75rem', color: 'var(--text-muted)' }} />
-                    <h4 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+                  <div style={{ textAlign: 'center', padding: '2.5rem 1.5rem', color: 'var(--text-secondary)' }}>
+                    <div
+                      style={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '12px',
+                        backgroundColor: '#f1f5f9',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 1rem',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      <AlertCircle size={24} />
+                    </div>
+                    <h4 style={{ fontSize: '1.0625rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
                       Nenhuma proposta temática disponível
                     </h4>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: 0 }}>
-                      Aguarde o lançamento dos próximos temas de redação pela Professora Wilma.
+                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5, maxWidth: '360px', marginInline: 'auto' }}>
+                      Aguarde o lançamento dos próximos temas de redação de vestibular pela Professora Wilma Barbosa.
                     </p>
                   </div>
                 ) : (
-                  <>
+                  <form onSubmit={handleSubmitEssay}>
                     <div style={{ marginBottom: '1.25rem' }}>
                       <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
                         1. Escolha a Proposta Temática:
@@ -451,62 +465,59 @@ export const StudentVestibular: React.FC = () => {
                         </p>
                       </div>
                     )}
-                  </>
-                )}
 
-                {/* Modalidade de Envio: Texto ou PDF */}
-                <div style={{ marginBottom: '1.25rem' }}>
-                  <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
-                    2. Modalidade de Submissão:
-                  </label>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
-                    <button
-                      type="button"
-                      onClick={() => setSubmissionMode('texto')}
-                      style={{
-                        flex: 1,
-                        padding: '0.65rem',
-                        borderRadius: '8px',
-                        border: submissionMode === 'texto' ? '2px solid var(--primary)' : '1px solid var(--border-subtle)',
-                        backgroundColor: submissionMode === 'texto' ? '#f0fdf4' : '#ffffff',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: submissionMode === 'texto' ? 'var(--primary)' : 'var(--text-secondary)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.35rem'
-                      }}
-                    >
-                      <FileText size={16} /> Digitar no Editor
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSubmissionMode('pdf')}
-                      style={{
-                        flex: 1,
-                        padding: '0.65rem',
-                        borderRadius: '8px',
-                        border: submissionMode === 'pdf' ? '2px solid var(--primary)' : '1px solid var(--border-subtle)',
-                        backgroundColor: submissionMode === 'pdf' ? '#eff6ff' : '#ffffff',
-                        fontSize: '0.875rem',
-                        fontWeight: 600,
-                        color: submissionMode === 'pdf' ? '#1e40af' : 'var(--text-secondary)',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.35rem'
-                      }}
-                    >
-                      <Upload size={16} /> Enviar PDF Escaneado
-                    </button>
-                  </div>
-                </div>
+                    {/* Modalidade de Envio: Texto ou PDF */}
+                    <div style={{ marginBottom: '1.25rem' }}>
+                      <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+                        2. Modalidade de Submissão:
+                      </label>
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button
+                          type="button"
+                          onClick={() => setSubmissionMode('texto')}
+                          style={{
+                            flex: 1,
+                            padding: '0.65rem',
+                            borderRadius: '8px',
+                            border: submissionMode === 'texto' ? '2px solid var(--primary)' : '1px solid var(--border-subtle)',
+                            backgroundColor: submissionMode === 'texto' ? '#f0fdf4' : '#ffffff',
+                            fontSize: '0.875rem',
+                            fontWeight: 600,
+                            color: submissionMode === 'texto' ? 'var(--primary)' : 'var(--text-secondary)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.35rem'
+                          }}
+                        >
+                          <FileText size={16} /> Digitar no Editor
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setSubmissionMode('pdf')}
+                          style={{
+                            flex: 1,
+                            padding: '0.65rem',
+                            borderRadius: '8px',
+                            border: submissionMode === 'pdf' ? '2px solid var(--primary)' : '1px solid var(--border-subtle)',
+                            backgroundColor: submissionMode === 'pdf' ? '#eff6ff' : '#ffffff',
+                            fontSize: '0.875rem',
+                            fontWeight: 600,
+                            color: submissionMode === 'pdf' ? '#1e40af' : 'var(--text-secondary)',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.35rem'
+                          }}
+                        >
+                          <Upload size={16} /> Enviar PDF Escaneado
+                        </button>
+                      </div>
+                    </div>
 
-                {/* Formulário Conforme o Modo */}
-                <form onSubmit={handleSubmitEssay}>
+                    {/* Formulário Conforme o Modo */}
                   {submissionMode === 'texto' ? (
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
@@ -596,6 +607,7 @@ export const StudentVestibular: React.FC = () => {
                     {isSubmitting ? 'Enviando para a Profª Wilma...' : 'Submeter Redação para Correção'}
                   </Button>
                 </form>
+              )}
               </Card>
             </div>
 
@@ -735,24 +747,41 @@ export const StudentVestibular: React.FC = () => {
                 overflow: 'hidden'
               }}
             >
-              <iframe
-                src={
-                  playingVideo.url.includes('youtube.com') || playingVideo.url.includes('youtu.be')
-                    ? playingVideo.url.replace('watch?v=', 'embed/')
-                    : playingVideo.url
-                }
-                title={playingVideo.titulo}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  border: 0
-                }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {playingVideo.url?.endsWith('.mp4') || playingVideo.url?.endsWith('.webm') || playingVideo.url?.startsWith('/uploads/') ? (
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  src={playingVideo.url}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain'
+                  }}
+                />
+              ) : (
+                <iframe
+                  src={
+                    playingVideo.url.includes('youtube.com') || playingVideo.url.includes('youtu.be')
+                      ? playingVideo.url.replace('watch?v=', 'embed/')
+                      : playingVideo.url
+                  }
+                  title={playingVideo.titulo}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 0
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', gap: '0.5rem' }}>

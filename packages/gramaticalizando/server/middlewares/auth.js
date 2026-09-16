@@ -95,11 +95,25 @@ function somentePlanoAprovado(req, res, next) {
         });
 }
 
+function somenteAutenticado(req, res, next) {
+    const usuario = req.session?.usuario;
+    if (!usuario || !usuario.id) {
+        return res.status(401).json({
+            sucesso: false,
+            mensagem: "Acesso não autorizado ou sessão expirada. Por favor, faça login."
+        });
+    }
+    req.usuarioAutenticado = usuario;
+    return next();
+}
+
 module.exports = {
     somenteAdmin,
     protegerPaginaAdmin,
     obterUsuarioAutenticado,
     somenteAluno,
-    somentePlanoAprovado
+    somentePlanoAprovado,
+    somenteAutenticado,
+    protegerRotaApi: somenteAutenticado
 };
 

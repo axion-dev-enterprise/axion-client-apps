@@ -149,87 +149,95 @@ export const StudentCronograma: React.FC = () => {
         </Button>
       </div>
 
-      {/* Card de Progresso Semanal */}
-      <Card
-        variant="elevated"
-        padding="lg"
-        style={{
-          backgroundColor: '#ffffff',
-          border: '1px solid var(--border-subtle)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <div>
-            <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
-              Progresso da Semana Atual
-            </span>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0.25rem 0 0 0' }}>
-              {concluidas} de {totalMetas} metas cumpridas
-            </h3>
-          </div>
-          <div style={{ textAlign: 'right' }}>
-            <span style={{ fontSize: '1.75rem', fontWeight: 800, color: progresso === 100 ? 'var(--success)' : 'var(--accent)' }}>
-              {progresso}%
-            </span>
-          </div>
+      {/* Conteúdo do Cronograma */}
+      {loading && dias.length === 0 ? (
+        <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
+          Carregando cronograma de estudos...
         </div>
-
-        {/* Barra de Progresso Visual */}
-        <div
-          style={{
-            width: '100%',
-            height: '10px',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: '#f1f5f9',
-            overflow: 'hidden'
-          }}
-        >
-          <div
+      ) : totalMetas === 0 ? (
+        <Card style={{ padding: '3.5rem 2rem', textAlign: 'center', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)' }}>
+          <CalendarIcon size={48} style={{ color: 'var(--text-muted)', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+            Nenhum cronograma definido no momento
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', maxWidth: '480px', margin: '0 auto' }}>
+            A Professora Wilma está estruturando o cronograma semanal de estudos para os planos de matrícula. Fique atento às publicações da plataforma!
+          </p>
+        </Card>
+      ) : (
+        <>
+          {/* Card de Progresso Semanal */}
+          <Card
+            variant="elevated"
+            padding="lg"
             style={{
-              width: `${progresso}%`,
-              height: '100%',
-              backgroundColor: progresso === 100 ? 'var(--success)' : 'var(--accent)',
-              borderRadius: 'var(--radius-full)',
-              transition: 'width 0.4s ease'
+              backgroundColor: '#ffffff',
+              border: '1px solid var(--border-subtle)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
             }}
-          />
-        </div>
-      </Card>
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div>
+                <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                  Progresso da Semana Atual
+                </span>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0.25rem 0 0 0' }}>
+                  {concluidas} de {totalMetas} metas cumpridas
+                </h3>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: '1.75rem', fontWeight: 800, color: progresso === 100 ? 'var(--success)' : 'var(--accent)' }}>
+                  {progresso}%
+                </span>
+              </div>
+            </div>
 
-      {/* Lista de Metas do Cronograma */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {loading && dias.length === 0 ? (
-          <div style={{ padding: '3rem', textAlign: 'center', color: 'var(--text-muted)' }}>
-            Carregando cronograma de estudos...
-          </div>
-        ) : dias.length === 0 ? (
-          <Card padding="lg" style={{ textAlign: 'center', color: 'var(--text-muted)' }}>
-            Nenhuma meta cadastrada no cronograma no momento.
-          </Card>
-        ) : (
-          dias.map((item, index) => {
-            const isDone = !!item.concluido;
-            const isUpdating = updatingId === item.id;
-
-            return (
-              <Card
-                key={item.id || index}
-                padding="md"
+            {/* Barra de Progresso Visual */}
+            <div
+              style={{
+                width: '100%',
+                height: '10px',
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--bg-surface-3)',
+                overflow: 'hidden'
+              }}
+            >
+              <div
                 style={{
-                  borderLeft: `4px solid ${isDone ? 'var(--success)' : 'var(--accent)'}`,
-                  backgroundColor: isDone ? '#fafdfb' : '#ffffff',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '1rem',
-                  transition: 'all var(--transition-fast)'
+                  width: `${progresso}%`,
+                  height: '100%',
+                  backgroundColor: progresso === 100 ? 'var(--success)' : 'var(--accent)',
+                  borderRadius: 'var(--radius-full)',
+                  transition: 'width 0.4s ease'
                 }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', minWidth: '220px' }}>
+              />
+            </div>
+          </Card>
+
+          {/* Lista de Metas do Cronograma */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {dias.map((item, index) => {
+              const isDone = !!item.concluido;
+              const isUpdating = updatingId === item.id;
+
+              return (
+                <Card
+                  key={item.id || index}
+                  padding="md"
+                  style={{
+                    borderLeft: `4px solid ${isDone ? 'var(--success)' : 'var(--accent)'}`,
+                    backgroundColor: isDone ? '#fafdfb' : '#ffffff',
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    transition: 'all var(--transition-fast)'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', minWidth: '220px' }}>
                   <div
                     style={{
                       width: '2.75rem',
@@ -278,9 +286,10 @@ export const StudentCronograma: React.FC = () => {
                 </div>
               </Card>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      </>
+      )}
     </div>
   );
 };

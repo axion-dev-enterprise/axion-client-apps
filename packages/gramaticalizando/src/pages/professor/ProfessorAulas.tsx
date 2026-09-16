@@ -16,6 +16,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
+import { FileUploadZone } from '../../components/ui/FileUploadZone';
 import { adminApi, AdminMateria, AdminAula } from '../../api/admin';
 import { useToast } from '../../context/ToastContext';
 
@@ -482,18 +483,20 @@ export const ProfessorAulas: React.FC = () => {
             onChange={(e) => setAulaForm({ ...aulaForm, subtitulo: e.target.value })}
           />
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <Input
-              label="URL do Vídeo (YouTube / Vimeo / MP4)"
-              placeholder="https://youtube.com/watch?v=..."
-              value={aulaForm.videoUrl}
-              onChange={(e) => setAulaForm({ ...aulaForm, videoUrl: e.target.value })}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+            <FileUploadZone
+              label="Videoaula (Upload de Vídeo ou Link)"
+              tipo="video"
+              valueUrl={aulaForm.videoUrl}
+              onChange={(url) => setAulaForm({ ...aulaForm, videoUrl: url })}
+              helperText="Upload de arquivo MP4/WebM ou link externo"
             />
-            <Input
-              label="URL do Material de Apoio (PDF)"
-              placeholder="https://.../apostila.pdf"
-              value={aulaForm.materialPdfUrl}
-              onChange={(e) => setAulaForm({ ...aulaForm, materialPdfUrl: e.target.value })}
+            <FileUploadZone
+              label="Material de Apoio (Upload PDF ou Link)"
+              tipo="pdf"
+              valueUrl={aulaForm.materialPdfUrl}
+              onChange={(url) => setAulaForm({ ...aulaForm, materialPdfUrl: url })}
+              helperText="Upload direto do documento PDF complementar"
             />
           </div>
 

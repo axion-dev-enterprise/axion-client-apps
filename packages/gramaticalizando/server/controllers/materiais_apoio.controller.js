@@ -3,57 +3,6 @@ const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson } = require("../data/jsonStore");
 const { gerarBufferMaterial } = require("../utils/materialPdfService");
 
-const MATERIAIS_DEFAULT = [
-    {
-        id: "mat-apoio-1",
-        titulo: "Manual Completo de Fonética e Fonologia",
-        descricao: "Tabelas mnemônicas de encontros vocálicos, consonantais e separação silábica rigorosa para bancas examinadoras.",
-        moduloId: "fonetica-fonologia",
-        nomeModulo: "Fonética e Fonologia",
-        tipo: "pdf",
-        arquivoUrl: "/api/materiais-apoio/mat-apoio-1/download",
-        tamanho: "3.4 MB",
-        paginas: 24,
-        criadoEm: new Date().toISOString()
-    },
-    {
-        id: "mat-apoio-2",
-        titulo: "Guia Definitivo do Novo Acordo Ortográfico",
-        descricao: "Regras práticas do hífen, acentuação diferencial, paroxítonas e palavras compostas.",
-        moduloId: "ortografia",
-        nomeModulo: "Ortografia e Acentuação",
-        tipo: "pdf",
-        arquivoUrl: "/api/materiais-apoio/mat-apoio-2/download",
-        tamanho: "2.8 MB",
-        paginas: 18,
-        criadoEm: new Date().toISOString()
-    },
-    {
-        id: "mat-apoio-3",
-        titulo: "Mapa Mental — Sintaxe do Período Composto",
-        descricao: "Esquema visual colorido de orações coordenadas e subordinadas substantivas, adjetivas e adverbiais.",
-        moduloId: "sintaxe",
-        nomeModulo: "Análise Sintática",
-        tipo: "resumo",
-        arquivoUrl: "/api/materiais-apoio/mat-apoio-3/download",
-        tamanho: "1.9 MB",
-        paginas: 8,
-        criadoEm: new Date().toISOString()
-    },
-    {
-        id: "mat-apoio-4",
-        titulo: "Checklist de Ouro para a Redação Nota Máxima",
-        descricao: "Os 5 critérios de avaliação, repertórios socioculturais curingas e modelos de proposta de intervenção.",
-        moduloId: "redacao",
-        nomeModulo: "Redação Dissertativa",
-        tipo: "pdf",
-        arquivoUrl: "/api/materiais-apoio/mat-apoio-4/download",
-        tamanho: "5.1 MB",
-        paginas: 32,
-        criadoEm: new Date().toISOString()
-    }
-];
-
 async function obterMateriaisPersistidos() {
     let materiais = await lerArquivoJson(paths.MATERIAIS_APOIO);
     if (!Array.isArray(materiais)) {

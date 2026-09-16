@@ -12,9 +12,9 @@ const app = express();
 // Habilita confiança em proxies reversos (Cloudflare + Traefik) para emissão correta de cookies secure
 app.set("trust proxy", 1);
 
-// Middleware de parsing JSON e urlencoded de alta capacidade (25MB para PDFs e redações escaneadas)
-app.use(express.json({ limit: "25mb" }));
-app.use(express.urlencoded({ extended: true, limit: "25mb" }));
+// Middleware de parsing JSON e urlencoded de alta capacidade (100MB para PDFs e vídeos)
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ extended: true, limit: "100mb" }));
 
 // Fallback compatível para buffers/strings residuais
 app.use((req, res, next) => {
@@ -51,6 +51,7 @@ if (require("fs").existsSync(DIST_DIR)) {
     app.use(express.static(DIST_DIR));
 }
 app.use(express.static(paths.PUBLIC_DIR, { index: false }));
+app.use("/uploads", express.static(paths.UPLOADS_DIR, { acceptRanges: true, maxAge: "7d" }));
 
 // Healthcheck canônico para Traefik e Uptime Kuma
 app.get(["/health", "/api/health"], (req, res) => {

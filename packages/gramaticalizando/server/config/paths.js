@@ -39,10 +39,25 @@ if (isVercel) {
     }
 }
 
+const UPLOADS_DIR = isVercel ? "/tmp/gramaticalizando_uploads" : path.join(ROOT_DIR, "uploads");
+const UPLOADS_PDF_DIR = path.join(UPLOADS_DIR, "pdf");
+const UPLOADS_VIDEOS_DIR = path.join(UPLOADS_DIR, "videos");
+
+try {
+    if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    if (!fs.existsSync(UPLOADS_PDF_DIR)) fs.mkdirSync(UPLOADS_PDF_DIR, { recursive: true });
+    if (!fs.existsSync(UPLOADS_VIDEOS_DIR)) fs.mkdirSync(UPLOADS_VIDEOS_DIR, { recursive: true });
+} catch (err) {
+    console.warn("Aviso ao criar diretórios de upload:", err.message);
+}
+
 module.exports = {
     ROOT_DIR,
     PUBLIC_DIR,
     DATA_DIR,
+    UPLOADS_DIR,
+    UPLOADS_PDF_DIR,
+    UPLOADS_VIDEOS_DIR,
     USUARIOS: path.join(DATA_DIR, "usuarios.json"),
     MATERIAS: path.join(DATA_DIR, "materias.json"),
     AULAS: path.join(DATA_DIR, "aulas.json"),

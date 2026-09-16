@@ -13,6 +13,7 @@ const simuladosRoutes = require("./simulados.routes");
 const materiaisApoioRoutes = require("./materiais_apoio.routes");
 const vestibularRoutes = require("./vestibular.routes");
 const cronogramasRoutes = require("./cronogramas.routes");
+const uploadRoutes = require("./upload.routes");
 
 router.use(authRoutes);
 router.use("/admin", adminRoutes);
@@ -26,5 +27,6 @@ router.use(simuladosRoutes);
 router.use(materiaisApoioRoutes);
 router.use(vestibularRoutes);
 router.use(cronogramasRoutes);
+router.use(uploadRoutes);
 
 module.exports = router;

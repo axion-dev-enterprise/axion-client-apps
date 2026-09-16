@@ -25,49 +25,6 @@ export const StudentVideoaulas: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { showToast } = useToast();
 
-  const DEFAULT_VIDEOS: VideoItem[] = [
-    {
-      id: 'vid-1',
-      titulo: 'Masterclass: Desmistificando o Acento Indicativo de Crase',
-      modulo: 'Análise Sintática & Regência',
-      duracao: '42 min',
-      professor: 'Profª Wilma Barbosa',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      conteudo: 'Regras práticas e mnemônicos essenciais para gabaritar crase em concursos da Vunesp, FGV e FCC.',
-      thumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      id: 'vid-2',
-      titulo: 'Laboratório: Como Redigir a Proposta de Intervenção Nota Máxima',
-      modulo: 'Redação Dissertativa',
-      duracao: '38 min',
-      professor: 'Profª Wilma Barbosa',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      conteudo: 'Os 5 elementos obrigatórios: Agente, Ação, Meio/Modo, Efeito e Detalhamento explicados passo a passo.',
-      thumbnail: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      id: 'vid-3',
-      titulo: 'Análise de Pegadinhas: As 10 Questões Mais Ardilosas da FGV',
-      modulo: 'Resolução de Questões',
-      duracao: '50 min',
-      professor: 'Profª Wilma Barbosa',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      conteudo: 'Resolução comentada de provas recentes com ênfase na semântica textual e sintaxe de regência.',
-      thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80'
-    },
-    {
-      id: 'vid-4',
-      titulo: 'Sintaxe do Período Composto: Orações Subordinadas Substantivas',
-      modulo: 'Sintaxe Avançada',
-      duracao: '45 min',
-      professor: 'Profª Wilma Barbosa',
-      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-      conteudo: 'Diferenciação clara entre orações substantivas, adjetivas e adverbiais com aplicação prática em bancas.',
-      thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80'
-    }
-  ];
-
   useEffect(() => {
     const carregarAulasComVideo = async () => {
       try {
@@ -82,7 +39,7 @@ export const StudentVideoaulas: React.FC = () => {
 
         const aulasComVideo = aulas.filter(a => a.videoUrl && a.publicado !== false);
         if (aulasComVideo.length > 0) {
-          const formatadas: VideoItem[] = aulasComVideo.map((a, idx) => ({
+          const formatadas: VideoItem[] = aulasComVideo.map((a) => ({
             id: a.id,
             titulo: a.titulo,
             modulo: String(mapaMaterias.get(a.materiaId) || 'Língua Portuguesa'),
@@ -90,14 +47,14 @@ export const StudentVideoaulas: React.FC = () => {
             professor: 'Profª Wilma Barbosa',
             videoUrl: a.videoUrl,
             conteudo: a.conteudo || a.subtitulo,
-            thumbnail: DEFAULT_VIDEOS[idx % DEFAULT_VIDEOS.length].thumbnail
+            thumbnail: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&auto=format&fit=crop&q=80'
           }));
           setVideos(formatadas);
         } else {
-          setVideos(DEFAULT_VIDEOS);
+          setVideos([]);
         }
       } catch (err) {
-        setVideos(DEFAULT_VIDEOS);
+        setVideos([]);
       } finally {
         setLoading(false);
       }
@@ -141,6 +98,16 @@ export const StudentVideoaulas: React.FC = () => {
         <div style={{ textAlign: 'center', padding: '4rem 1rem', color: 'var(--text-muted)' }}>
           Carregando videoteca...
         </div>
+      ) : videos.length === 0 ? (
+        <Card style={{ padding: '3.5rem 2rem', textAlign: 'center', backgroundColor: '#ffffff', border: '1px solid var(--border-subtle)' }}>
+          <Video size={48} style={{ color: 'var(--text-muted)', margin: '0 auto 1rem' }} />
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+            Nenhuma videoaula publicada no momento
+          </h3>
+          <p style={{ color: 'var(--text-secondary)', maxWidth: '480px', margin: '0 auto' }}>
+            A Professora Wilma Barbosa disponibilizará as primeiras videoaulas e transmissões gravadas nesta seção. Fique atento às publicações da plataforma!
+          </p>
+        </Card>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '1.5rem' }}>
           {videos.map((vid) => (
@@ -234,20 +201,43 @@ export const StudentVideoaulas: React.FC = () => {
                 backgroundColor: '#000000'
               }}
             >
-              <iframe
-                src={selectedVideo.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ'}
-                title={selectedVideo.titulo}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  border: 0
-                }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {selectedVideo.videoUrl?.endsWith('.mp4') || selectedVideo.videoUrl?.endsWith('.webm') || selectedVideo.videoUrl?.startsWith('/uploads/') ? (
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  src={selectedVideo.videoUrl}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain'
+                  }}
+                />
+              ) : (
+                <iframe
+                  src={
+                    selectedVideo.videoUrl?.includes('youtube.com/watch')
+                      ? selectedVideo.videoUrl.replace('watch?v=', 'embed/')
+                      : selectedVideo.videoUrl?.includes('youtu.be/')
+                      ? `https://www.youtube.com/embed/${selectedVideo.videoUrl.split('youtu.be/')[1]?.split('?')[0]}`
+                      : selectedVideo.videoUrl || ''
+                  }
+                  title={selectedVideo.titulo}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    border: 0
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
             </div>
 
             {/* Informações da Aula */}

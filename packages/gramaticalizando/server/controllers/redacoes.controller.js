@@ -3,38 +3,10 @@ const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
-const TEMAS_PADRAO = [
-    {
-        id: "tema-enem-01",
-        titulo: "Os desafios da mobilidade urbana sustentável no Brasil",
-        foco: "ENEM",
-        instrucoes: "A partir da leitura dos textos motivadores e com base nos conhecimentos construídos ao longo de sua formação, redija texto dissertativo-argumentativo em modalidade escrita formal da língua portuguesa sobre o tema, apresentando proposta de intervenção que respeite os direitos humanos. Selecione, organize e relacione, de forma coerente e coesa, argumentos e fatos para defesa de seu ponto de vista."
-    },
-    {
-        id: "tema-concurso-01",
-        titulo: "O papel do servidor público na garantia dos direitos fundamentais do cidadão",
-        foco: "Concursos",
-        instrucoes: "Elabore um texto dissertativo-argumentativo abordando os princípios da legalidade, impessoalidade, moralidade, publicidade e eficiência (LIMPE), e como a atuação proba e célere do servidor público impacta diretamente a concretização dos direitos do cidadão."
-    },
-    {
-        id: "tema-enem-02",
-        titulo: "A inteligência artificial e os impactos no trabalho e na ética contemporânea",
-        foco: "Geral",
-        instrucoes: "Discuta como a automação algorítmica e a IA generativa desafiam a formação profissional, a regulação estatal e as relações interpessoais na sociedade atual."
-    },
-    {
-        id: "tema-vestibular-01",
-        titulo: "Caminhos para combater a evasão escolar e valorizar o ensino público no Brasil",
-        foco: "ENEM / Vestibulares",
-        instrucoes: "Analise os fatores socioeconômicos e pedagógicos associados ao abandono escolar e proponha ações concretas para fortalecer a permanência dos jovens nas escolas."
-    }
-];
-
 async function obterTemasPersistidos() {
     let temas = await lerArquivoJson(paths.TEMAS_REDACAO);
-    if (!Array.isArray(temas) || temas.length === 0) {
-        temas = TEMAS_PADRAO;
-        await salvarArquivoJson(paths.TEMAS_REDACAO, temas);
+    if (!Array.isArray(temas)) {
+        temas = [];
     }
     return temas;
 }
@@ -44,10 +16,10 @@ async function obterTemas(req, res) {
         const temas = await obterTemasPersistidos();
         return res.json({
             sucesso: true,
-            temas
+            temas: temas || []
         });
     } catch (erro) {
-        return res.json({ sucesso: true, temas: TEMAS_PADRAO });
+        return res.json({ sucesso: true, temas: [] });
     }
 }
 

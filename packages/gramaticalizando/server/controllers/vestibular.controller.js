@@ -3,90 +3,6 @@ const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
-const DADOS_PADRAO = {
-    videoaulas: [
-        {
-            id: "vest-vid-01",
-            titulo: "Redação ENEM Nota 1000: Repertório Legitimado e Proposta de Intervenção",
-            vestibular: "ENEM",
-            duracao: "45 min",
-            url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            descricao: "Nesta aula magna exclusiva, a Profª Wilma desconstrói os 5 critérios da matriz de correção do ENEM, apresentando conectivos interparágrafos de alto impacto e modelos de tese infalíveis.",
-            professor: "Profª Wilma",
-            criadoEm: "2026-09-10T14:00:00.000Z"
-        },
-        {
-            id: "vest-vid-02",
-            titulo: "Discursiva de Português e Literatura da UERJ: Desvendando a Banca",
-            vestibular: "UERJ",
-            duracao: "52 min",
-            url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            descricao: "Guia estratégico para a prova discursiva da UERJ. Como estruturar a argumentação dialética, interpretação textual profunda das obras indicadas e coesão textual refinada.",
-            professor: "Profª Wilma",
-            criadoEm: "2026-09-11T16:30:00.000Z"
-        },
-        {
-            id: "vest-vid-03",
-            titulo: "FUVEST & UNICAMP: Sintaxe Expressiva, Ironia e Coesão Avançada",
-            vestibular: "FUVEST",
-            duracao: "38 min",
-            url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            descricao: "Análise das peculiaridades dos vestibulares paulistas. Como fugir do lugar-comum, utilizar figuras de sintaxe com propriedade e garantir nota máxima na expressão escrita.",
-            professor: "Profª Wilma",
-            criadoEm: "2026-09-12T10:15:00.000Z"
-        },
-        {
-            id: "vest-vid-04",
-            titulo: "Funções da Linguagem e Variação Linguística Aplicada aos Vestibulares",
-            vestibular: "Geral",
-            duracao: "40 min",
-            url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            descricao: "Revisão focada nos temas mais recorrentes de Língua Portuguesa em todos os exames vestibulares do país com resolução comentada de questões clássicas.",
-            professor: "Profª Wilma",
-            criadoEm: "2026-09-13T11:00:00.000Z"
-        }
-    ],
-    temas: [
-        {
-            id: "vest-tema-01",
-            titulo: "A democratização do acesso aos avanços da inteligência artificial e a inclusão digital no Brasil",
-            vestibular: "ENEM",
-            ano: "2026",
-            instrucoes: "Com base na leitura dos textos motivadores e nos conhecimentos construídos ao longo de sua formação, redija um texto dissertativo-argumentativo em modalidade escrita formal da língua portuguesa sobre o tema, apresentando proposta de intervenção que respeite os direitos humanos.",
-            textosMotivadores: "Texto I: A revolução da inteligência artificial redefine postos de trabalho e métodos educacionais em todo o globo...\nTexto II: Dados do Cetic.br apontam disparidade severa no acesso a ferramentas tecnológicas entre classes socioeconômicas no Brasil.",
-            dataLimite: "2026-11-30"
-        },
-        {
-            id: "vest-tema-02",
-            titulo: "A persistência da desigualdade de gênero no trabalho de cuidado não remunerado",
-            vestibular: "ENEM",
-            ano: "2026",
-            instrucoes: "Redija texto dissertativo-argumentativo analisando como a sobrecarga do trabalho invisível afeta o desenvolvimento educacional e profissional das mulheres brasileiras.",
-            textosMotivadores: "Texto I: O trabalho reprodutivo e de cuidado sustenta as engrenagens econômicas da sociedade contemporânea...",
-            dataLimite: "2026-10-31"
-        },
-        {
-            id: "vest-tema-03",
-            titulo: "O individualismo exacerbado e o colapso do sentimento comunitário na vida urbana",
-            vestibular: "UERJ",
-            ano: "2026",
-            instrucoes: "Elabore uma dissertação argumentativa com posicionamento crítico e reflexivo sobre a perda da coletividade nas metrópoles contemporâneas.",
-            textosMotivadores: "Texto I: Fragmento de obra literária da UERJ destacando o isolamento dos indivíduos em condomínios e telas digitais...",
-            dataLimite: "2026-12-15"
-        },
-        {
-            id: "vest-tema-04",
-            titulo: "A ciência sob suspeita: as fronteiras entre o ceticismo legítimo e o negacionismo perigoso",
-            vestibular: "FUVEST",
-            ano: "2026",
-            instrucoes: "Apresente uma reflexão densa e fundamentada acerca dos limites do questionamento científico e a disseminação de narrativas anticientíficas na esfera pública.",
-            textosMotivadores: "Texto I: A epistemologia moderna fundamenta-se na dúvida metódica, contudo o obscurantismo contemporâneo desarticula consensos civilizatórios comprovados...",
-            dataLimite: "2026-12-20"
-        }
-    ],
-    redacoes: []
-};
-
 async function obterDadosVestibular() {
     let dados = await lerArquivoJson(paths.VESTIBULAR);
     if (!dados || typeof dados !== "object") {
@@ -105,14 +21,14 @@ async function obterConteudoVestibular(req, res) {
         const dados = await obterDadosVestibular();
         return res.json({
             sucesso: true,
-            videoaulas: dados.videoaulas,
-            temas: dados.temas
+            videoaulas: dados.videoaulas || [],
+            temas: dados.temas || []
         });
     } catch (erro) {
         return res.json({
             sucesso: true,
-            videoaulas: DADOS_PADRAO.videoaulas,
-            temas: DADOS_PADRAO.temas
+            videoaulas: [],
+            temas: []
         });
     }
 }

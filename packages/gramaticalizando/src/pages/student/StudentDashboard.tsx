@@ -457,8 +457,11 @@ export const StudentDashboard: React.FC = () => {
               size="md"
               onClick={() => navigate('/cronograma')}
               style={{
-                borderColor: 'rgba(255, 255, 255, 0.4)',
-                color: '#ffffff'
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                borderColor: 'rgba(255, 255, 255, 0.5)',
+                color: '#ffffff',
+                fontWeight: 600,
+                backdropFilter: 'blur(8px)'
               }}
             >
               Ver Cronograma

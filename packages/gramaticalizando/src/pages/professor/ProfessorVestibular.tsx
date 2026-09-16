@@ -20,6 +20,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
+import { FileUploadZone } from '../../components/ui/FileUploadZone';
 import {
   vestibularApi,
   VideoaulaVestibular,
@@ -807,15 +808,13 @@ export const ProfessorVestibular: React.FC = () => {
                 />
               </div>
             </div>
-            <div>
-              <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: '0.25rem' }}>Link do Vídeo (YouTube / Vimeo / Drive):</label>
-              <Input
-                value={videoForm.url}
-                onChange={(e) => setVideoForm({ ...videoForm, url: e.target.value })}
-                placeholder="https://www.youtube.com/watch?v=..."
-                required
-              />
-            </div>
+            <FileUploadZone
+              label="Videoaula (Upload MP4 / WebM ou Link)"
+              tipo="video"
+              valueUrl={videoForm.url}
+              onChange={(url) => setVideoForm({ ...videoForm, url })}
+              helperText="Upload direto do vídeo ou informe link externo"
+            />
             <div>
               <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 700, marginBottom: '0.25rem' }}>Descrição da Aula:</label>
               <textarea

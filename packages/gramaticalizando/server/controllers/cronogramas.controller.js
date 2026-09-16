@@ -3,41 +3,6 @@ const paths = require("../config/paths");
 const { lerArquivoJson, salvarArquivoJson, garantirDadosEstudo } = require("../data/jsonStore");
 const { obterUsuarioAutenticado } = require("../middlewares/auth");
 
-const CRONOGRAMAS_DEFAULT = [
-    {
-        id: "cron-iniciante",
-        titulo: "Cronograma Essencial — Iniciante & Concursos Básicos",
-        descricao: "Plano estruturado de 6 dias por semana focado na fixação das regras fundamentais da língua portuguesa.",
-        plano: "iniciante",
-        dias: [
-            { id: "d1", dia: "Segunda-feira", modulo: "Módulo 01: Fonética e Fonologia", aula: "Divisão Silábica & Encontros Vocálicos", duracao: "45 min", tipo: "teoria" },
-            { id: "d2", dia: "Terça-feira", modulo: "Módulo 02: Ortografia", aula: "Regras Gerais de Acentuação (Oxítonas e Paroxítonas)", duracao: "35 min", tipo: "teoria" },
-            { id: "d3", dia: "Quarta-feira", modulo: "Módulo 02: Ortografia", aula: "Regras do Hífen & Casos Especiais", duracao: "40 min", tipo: "exercicio" },
-            { id: "d4", dia: "Quinta-feira", modulo: "Módulo 03: Semântica", aula: "Sinônimos, Antônimos e Polissemia", duracao: "30 min", tipo: "teoria" },
-            { id: "d5", dia: "Sexta-feira", modulo: "Redação Prática", aula: "Estruturação do Parágrafo de Introdução", duracao: "50 min", tipo: "redacao" },
-            { id: "d6", dia: "Sábado", modulo: "Simulado Semanal", aula: "Treinamento de 20 Questões Gabaritadas", duracao: "60 min", tipo: "simulado" }
-        ],
-        publicado: true,
-        criadoEm: new Date().toISOString()
-    },
-    {
-        id: "cron-medio",
-        titulo: "Cronograma Intensivo — Nível Médio & Carreiras Administrativas",
-        descricao: "Foco aprofundado em Sintaxe, Crase, Regência e produção semanal de redação dissertativa.",
-        plano: "medio",
-        dias: [
-            { id: "d1", dia: "Segunda-feira", modulo: "Módulo 04: Morfologia", aula: "Classes de Palavras & Verbos Transitivos", duracao: "50 min", tipo: "teoria" },
-            { id: "d2", dia: "Terça-feira", modulo: "Módulo 05: Sintaxe", aula: "Termos Essenciais da Oração (Sujeito & Predicado)", duracao: "45 min", tipo: "teoria" },
-            { id: "d3", dia: "Quarta-feira", modulo: "Módulo 06: Crase & Regência", aula: "Regência Verbal dos 20 Verbos Mais Cobrados", duracao: "45 min", tipo: "exercicio" },
-            { id: "d4", dia: "Quinta-feira", modulo: "Módulo 06: Crase & Regência", aula: "Casos Obrigatórios e Proibitivos de Crase", duracao: "40 min", tipo: "teoria" },
-            { id: "d5", dia: "Sexta-feira", modulo: "Laboratório de Redação", aula: "Redação Completa sobre Tema da Semana", duracao: "60 min", tipo: "redacao" },
-            { id: "d6", dia: "Sábado", modulo: "Simulado Geral", aula: "Simulado FGV/Vunesp 30 Questões Comentadas", duracao: "75 min", tipo: "simulado" }
-        ],
-        publicado: true,
-        criadoEm: new Date().toISOString()
-    }
-];
-
 // Obter cronograma para o aluno autenticado
 async function obterCronogramaAluno(req, res) {
     try {
@@ -48,7 +13,7 @@ async function obterCronogramaAluno(req, res) {
 
         const [usuarios, cronogramasCadastrados] = await Promise.all([
             lerArquivoJson(paths.USUARIOS),
-            lerArquivoJson(paths.CRONOGRAMAS).catch(() => CRONOGRAMAS_DEFAULT)
+            lerArquivoJson(paths.CRONOGRAMAS).catch(() => [])
         ]);
 
         const usuario = usuarios.find(u => u.id === user.id);
@@ -59,22 +24,26 @@ async function obterCronogramaAluno(req, res) {
         const estudos = garantirDadosEstudo(usuario);
 
         // Se o aluno já tem cronograma personalizado gerado pelo diagnóstico ou selecionado
-        if (estudos.cronogramaSemanal && Array.isArray(estudos.cronogramaSemanal.dias)) {
+        if (estudos.cronogramaSemanal && Array.isArray(estudos.cronogramaSemanal.dias) && estudos.cronogramaSemanal.dias.length > 0) {
             return res.json({
                 sucesso: true,
                 cronograma: estudos.cronogramaSemanal
             });
         }
 
-        // Caso contrário, pegar o cronograma padrão do plano do aluno
-        const listaCronogramas = Array.isArray(cronogramasCadastrados) && cronogramasCadastrados.length > 0
-            ? cronogramasCadastrados
-            : CRONOGRAMAS_DEFAULT;
-
+        // Buscar cronograma cadastrado pela professora para o plano do aluno
+        const listaCronogramas = Array.isArray(cronogramasCadastrados) ? cronogramasCadastrados : [];
         const planoUsuario = String(usuario.plano || "iniciante").toLowerCase();
         let selecionado = listaCronogramas.find(c => c.plano === planoUsuario && c.publicado !== false);
+        if (!selecionado && listaCronogramas.length > 0) {
+            selecionado = listaCronogramas.find(c => c.publicado !== false);
+        }
+
         if (!selecionado) {
-            selecionado = listaCronogramas[0] || CRONOGRAMAS_DEFAULT[0];
+            return res.json({
+                sucesso: true,
+                cronograma: null
+            });
         }
 
         // Criar cópia com status de cada dia
@@ -83,7 +52,7 @@ async function obterCronogramaAluno(req, res) {
             titulo: selecionado.titulo,
             descricao: selecionado.descricao,
             plano: selecionado.plano,
-            dias: selecionado.dias.map(d => ({
+            dias: (selecionado.dias || []).map(d => ({
                 ...d,
                 concluido: false
             }))
@@ -159,10 +128,9 @@ async function toggleItemCronograma(req, res) {
 
 async function listarAdmin(req, res) {
     try {
-        let cronogramas = await lerArquivoJson(paths.CRONOGRAMAS).catch(() => null);
-        if (!Array.isArray(cronogramas) || cronogramas.length === 0) {
-            cronogramas = CRONOGRAMAS_DEFAULT;
-            await salvarArquivoJson(paths.CRONOGRAMAS, cronogramas);
+        let cronogramas = await lerArquivoJson(paths.CRONOGRAMAS).catch(() => []);
+        if (!Array.isArray(cronogramas)) {
+            cronogramas = [];
         }
         return res.json({ sucesso: true, cronogramas });
     } catch (erro) {

@@ -55,144 +55,11 @@ interface DiagnosticoResultado {
   }[];
 }
 
-const QUESTOES_FALLBACK: Questao[] = [
-  {
-    id: 1,
-    topico: 'Interpretação de Texto',
-    enunciado: 'Em "O silêncio das ruas não era ausência de vida, mas uma trégua necessária", a conjunção "mas" estabelece com a oração anterior uma relação de:',
-    alternativas: [
-      { id: '1_a', letra: 'A', texto: 'Adição de fatos rotineiros' },
-      { id: '1_b', letra: 'B', texto: 'Oposição ou contraste de sentidos' },
-      { id: '1_c', letra: 'C', texto: 'Conclusão lógica do argumento' },
-      { id: '1_d', letra: 'D', texto: 'Causa determinante do silêncio' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'A conjunção coordenativa adversativa "mas" expressa contraste, oposição ou ressalva em relação à oração anterior.'
-  },
-  {
-    id: 2,
-    topico: 'Sintaxe',
-    enunciado: 'Assinale a alternativa em que o termo em destaque funciona como SUJEITO da oração: "Faltavam-lhe [recursos] para concluir o projeto no prazo".',
-    alternativas: [
-      { id: '2_a', letra: 'A', texto: 'Recursos' },
-      { id: '2_b', letra: 'B', texto: 'Lhe (objeto indireto)' },
-      { id: '2_c', letra: 'C', texto: 'O sujeito é oculto ou elíptico' },
-      { id: '2_d', letra: 'D', texto: 'O sujeito é indeterminado' }
-    ],
-    respostaCorreta: 'A',
-    explicacao: 'Quem faltava? "Recursos" faltavam a ele (lhe). O termo "recursos" é o sujeito simples posposto do verbo faltar.'
-  },
-  {
-    id: 3,
-    topico: 'Crase',
-    enunciado: 'O sinal indicativo de crase está empregado CORRETAMENTE de acordo com a norma-padrão em:',
-    alternativas: [
-      { id: '3_a', letra: 'A', texto: 'Ele começou à redigir o documento com rapidez.' },
-      { id: '3_b', letra: 'B', texto: 'Encaminhamos a solicitação à diretoria executiva.' },
-      { id: '3_c', letra: 'C', texto: 'Referiu-se à todas as regras do edital anterior.' },
-      { id: '3_d', letra: 'D', texto: 'Fez uma promessa à prazo sem garantia legal.' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'Há crase diante de substantivo feminino determinado ("a diretoria") regido por preposição exigida pelo verbo encaminhar ("a + a = à"). Não há crase antes de verbo, pronome indefinido ou palavra masculina.'
-  },
-  {
-    id: 4,
-    topico: 'Concordância Verbal',
-    enunciado: 'Indique a frase que respeita integralmente as regras de concordância verbal da norma-padrão:',
-    alternativas: [
-      { id: '4_a', letra: 'A', texto: 'Haviam muitos candidatos aguardando o resultado oficial.' },
-      { id: '4_b', letra: 'B', texto: 'Fazem dois anos que não se realiza concurso para o órgão.' },
-      { id: '4_c', letra: 'C', texto: 'Alugam-se salas comerciais no centro da cidade.' },
-      { id: '4_d', letra: 'D', texto: 'Tratam-se de questões prioritárias para a gestão pública.' }
-    ],
-    respostaCorreta: 'C',
-    explicacao: 'Com a partícula apassivadora "se", o verbo concorda com o sujeito paciente: "Salas comerciais são alugadas" -> "Alugam-se salas comerciais". Os verbos "haver" e "fazer" de tempo são impessoais (ficam no singular).'
-  },
-  {
-    id: 5,
-    topico: 'Pontuação',
-    enunciado: 'O uso da vírgula está ADEQUADO e fundamentado nas regras gramaticais em:',
-    alternativas: [
-      { id: '5_a', letra: 'A', texto: 'Os professores dedicados, corrigiram todas as redações ontem.' },
-      { id: '5_b', letra: 'B', texto: 'Durante a prova de Português, o candidato manteve a serenidade.' },
-      { id: '5_c', letra: 'C', texto: 'A aluna declarou, que pretendia revisar as questões de crase.' },
-      { id: '5_d', letra: 'D', texto: 'Comprei cadernos, canetas, e, apostilas para o semestre.' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'A vírgula isola o adjunto adverbial de tempo deslocado ("Durante a prova de Português"). É proibido separar sujeito do predicado ou verbo do seu objeto direto com vírgula.'
-  },
-  {
-    id: 6,
-    topico: 'Regência Verbal',
-    enunciado: 'A regência verbal atende à norma-padrão da língua na seguinte alternativa:',
-    alternativas: [
-      { id: '6_a', letra: 'A', texto: 'O médico assistiu o paciente durante toda a intervenção cirúrgica.' },
-      { id: '6_b', letra: 'B', texto: 'Todos os cidadãos aspiram um país com mais oportunidades.' },
-      { id: '6_c', letra: 'C', texto: 'Prefiro estudar gramática do que perder tempo com distrações.' },
-      { id: '6_d', letra: 'D', texto: 'O servidor visou ao passaporte antes do embarque internacional.' }
-    ],
-    respostaCorreta: 'A',
-    explicacao: 'No sentido de prestar socorro ou auxílio, o verbo "assistir" é transitivo direto (rege objeto sem preposição). Já no sentido de almejar, "aspirar" exige preposição "a". E quem prefere, prefere uma coisa A outra.'
-  },
-  {
-    id: 7,
-    topico: 'Morfologia',
-    enunciado: 'Na oração "O candidato que estuda com disciplina atinge seus objetivos", a palavra "que" classifica-se como:',
-    alternativas: [
-      { id: '7_a', letra: 'A', texto: 'Conjunção integrante que introduz oração substantiva' },
-      { id: '7_b', letra: 'B', texto: 'Pronome relativo que retoma o termo antecedente "candidato"' },
-      { id: '7_c', letra: 'C', texto: 'Partícula expletiva ou de realce estilístico' },
-      { id: '7_d', letra: 'D', texto: 'Advérbio de intensidade com valor conotativo' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'O "que" substitui o substantivo "candidato" e introduz uma oração subordinada adjetiva restritiva: "O candidato O QUAL estuda com disciplina". Trata-se de pronome relativo.'
-  },
-  {
-    id: 8,
-    topico: 'Ortografia e Acentuação',
-    enunciado: 'Segundo o Acordo Ortográfico vigente, assinale a opção em que todas as palavras estão grafadas e acentuadas CORRETAMENTE:',
-    alternativas: [
-      { id: '8_a', letra: 'A', texto: 'Idéia, assembléia, vôo, jibóia' },
-      { id: '8_b', letra: 'B', texto: 'Micro-ondas, anti-inflamatório, ideia, heroico' },
-      { id: '8_c', letra: 'C', texto: 'Auto-escola, para-quedas, hiper-resistente, pólen' },
-      { id: '8_d', letra: 'D', texto: 'Anti-social, semi-aberto, gratuíto, rúbrica' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'Com o Acordo Ortográfico, letras iguais se separam por hífen ("micro-ondas", "anti-inflamatório") e perdeu-se o acento dos ditongos abertos "ei" e "oi" nas palavras paroxítonas ("ideia", "heroico").'
-  },
-  {
-    id: 9,
-    topico: 'Sintaxe do Período Composto',
-    enunciado: 'Em "Embora houvesse divergências conceituais, os especialistas homologaram a proposta", a oração destacada expressa sentido de:',
-    alternativas: [
-      { id: '9_a', letra: 'A', texto: 'Concessão (fato que poderia inviabilizar o principal, mas não impede)' },
-      { id: '9_b', letra: 'B', texto: 'Causa (o motivo determinante da homologação)' },
-      { id: '9_c', letra: 'C', texto: 'Proporção (evolução simultânea das duas orações)' },
-      { id: '9_d', letra: 'D', texto: 'Condição indispensável para o cumprimento da meta' }
-    ],
-    respostaCorreta: 'A',
-    explicacao: '"Embora" é a clássica conjunção subordinativa concessiva, indicando um obstáculo ou ressalva que não impede a realização da oração principal.'
-  },
-  {
-    id: 10,
-    topico: 'Colocação Pronominal',
-    enunciado: 'A próclise é OBRIGATÓRIA segundo a norma culta na seguinte opção:',
-    alternativas: [
-      { id: '10_a', letra: 'A', texto: 'Entregou-me o relatório assinado no final da tarde.' },
-      { id: '10_b', letra: 'B', texto: 'Não se esqueça de revisar os tópicos mais recorrentes da banca.' },
-      { id: '10_c', letra: 'C', texto: 'Desejo dedicar-me integralmente aos estudos neste semestre.' },
-      { id: '10_d', letra: 'D', texto: 'Quando puder, avise-nos com antecedência sobre o horário.' }
-    ],
-    respostaCorreta: 'B',
-    explicacao: 'A palavra de sentido negativo "Não" é fator atrativo obrigatório de próclise ("Não se esqueça"), impossibilitando a ênclise.'
-  }
-];
-
 export const StudentDiagnostico: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
 
-  const [questoes, setQuestoes] = useState<Questao[]>(QUESTOES_FALLBACK);
+  const [questoes, setQuestoes] = useState<Questao[]>([]);
   const [carregandoQuestoes, setCarregandoQuestoes] = useState(true);
   const [respostas, setRespostas] = useState<{ [questaoId: string]: string }>({});
   const [indiceAtual, setIndiceAtual] = useState(0);
@@ -201,7 +68,7 @@ export const StudentDiagnostico: React.FC = () => {
   const [exibirGabarito, setExibirGabarito] = useState(false);
   const [erro, setErro] = useState<string | null>(null);
 
-  // Carregar questões do backend com fallback resiliente
+  // Carregar questões do backend
   useEffect(() => {
     let montado = true;
     const carregar = async () => {
@@ -211,12 +78,13 @@ export const StudentDiagnostico: React.FC = () => {
         });
         if (resp.ok) {
           const dados = await resp.json();
-          if (dados && Array.isArray(dados.questoes) && dados.questoes.length > 0 && montado) {
+          if (dados && Array.isArray(dados.questoes) && montado) {
             setQuestoes(dados.questoes);
           }
         }
       } catch (e) {
-        console.warn('Usando banco de questões canônico local para o diagnóstico.', e);
+        console.warn('Nenhuma questão de diagnóstico disponível no momento.', e);
+        if (montado) setQuestoes([]);
       } finally {
         if (montado) setCarregandoQuestoes(false);
       }
@@ -485,7 +353,9 @@ export const StudentDiagnostico: React.FC = () => {
                   >
                     <BookOpen size={20} />
                   </div>
-                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>10 Questões Reais</h3>
+                  <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#0f172a' }}>
+                    {questoes.length > 0 ? `${questoes.length} Questões Reais` : 'Questões Reais'}
+                  </h3>
                 </div>
                 <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.5 }}>
                   Questões selecionadas e calibradas com padrão das principais bancas de concursos públicos e vestibulares.
@@ -587,25 +457,61 @@ export const StudentDiagnostico: React.FC = () => {
               </div>
             </Card>
 
-            {/* CTA Iniciar */}
-            <div style={{ textAlign: 'center' }}>
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => setEtapa('quiz')}
+            {/* CTA Iniciar ou Estado Vazio */}
+            {questoes.length === 0 ? (
+              <div
                 style={{
-                  fontSize: '1.0625rem',
-                  padding: '1rem 2.5rem',
-                  boxShadow: '0 10px 25px -5px rgba(107, 33, 168, 0.3)'
+                  textAlign: 'center',
+                  padding: '2.5rem 1.5rem',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '1px dashed #cbd5e1',
+                  maxWidth: '560px',
+                  margin: '0 auto'
                 }}
               >
-                Iniciar Diagnóstico Agora
-                <ArrowRight size={20} style={{ marginLeft: '8px' }} />
-              </Button>
-              <p style={{ fontSize: '0.8125rem', color: '#64748b', marginTop: '0.875rem' }}>
-                Totalmente gratuito • Não requer cartão de crédito • Resultado instantâneo
-              </p>
-            </div>
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    backgroundColor: '#f3e8ff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    margin: '0 auto 1rem',
+                    color: '#6b21a8'
+                  }}
+                >
+                  <Sparkles size={24} />
+                </div>
+                <h3 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.5rem' }}>
+                  Diagnóstico Pedagógico em Calibração
+                </h3>
+                <p style={{ fontSize: '0.875rem', color: '#64748b', lineHeight: 1.6, maxWidth: '440px', margin: '0 auto' }}>
+                  A Professora Wilma Barbosa está calibrando a nova bateria de questões oficiais para este período letivo. O teste diagnóstico estará liberado em breve!
+                </p>
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center' }}>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  onClick={() => setEtapa('quiz')}
+                  style={{
+                    fontSize: '1.0625rem',
+                    padding: '1rem 2.5rem',
+                    boxShadow: '0 10px 25px -5px rgba(107, 33, 168, 0.3)'
+                  }}
+                >
+                  Iniciar Diagnóstico Agora
+                  <ArrowRight size={20} style={{ marginLeft: '8px' }} />
+                </Button>
+                <p style={{ fontSize: '0.8125rem', color: '#64748b', marginTop: '0.875rem' }}>
+                  Totalmente gratuito • Não requer cartão de crédito • Resultado instantâneo
+                </p>
+              </div>
+            )}
           </div>
         )}
 

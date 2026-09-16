@@ -14,6 +14,9 @@ services:
       - PORT=3050
       - DATABASE_URL=postgres://axion:PR9XCvjPgx58L0c7GrXLf9SceY5IjLzggS0rNzHJ7zsxjz1-@axion-pay-postgres:5432/gramaticalizando_db
       - SESSION_SECRET=gramaticalizando-prod-session-key-axion-2026
+    volumes:
+      - ./uploads:/app/uploads
+      - ./data:/app/data
     networks:
       - axion-agent-net
       - axion-pay-auth-private

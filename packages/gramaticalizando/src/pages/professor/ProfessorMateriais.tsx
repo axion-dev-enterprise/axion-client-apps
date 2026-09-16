@@ -14,6 +14,7 @@ import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
+import { FileUploadZone } from '../../components/ui/FileUploadZone';
 import { adminApi, AdminMaterialApoio, AdminMateria } from '../../api/admin';
 import { useToast } from '../../context/ToastContext';
 
@@ -283,11 +284,19 @@ export const ProfessorMateriais: React.FC = () => {
             />
           </div>
 
-          <Input
-            label="URL do Arquivo / PDF *"
-            placeholder="https://gramaticalizando.com.br/docs/..."
-            value={formArquivoUrl}
-            onChange={(e) => setFormArquivoUrl(e.target.value)}
+          <FileUploadZone
+            label="Upload do Arquivo PDF *"
+            tipo="pdf"
+            valueUrl={formArquivoUrl}
+            onChange={(url, meta) => {
+              setFormArquivoUrl(url);
+              if (meta?.tamanho) setFormTamanho(meta.tamanho);
+              if (meta?.filename && !formTitulo) {
+                const nameWithoutExt = meta.filename.replace(/\.pdf$/i, '').replace(/[-_]/g, ' ');
+                setFormTitulo(nameWithoutExt);
+              }
+            }}
+            helperText="Selecione o arquivo da apostila em PDF para upload direto (até 50MB)"
           />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
@@ -298,7 +307,7 @@ export const ProfessorMateriais: React.FC = () => {
               onChange={(e) => setFormTamanho(e.target.value)}
             />
             <Input
-              label="Páginas"
+              label="Páginas Estimadas"
               type="number"
               min={1}
               value={formPaginas}
