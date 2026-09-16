@@ -2,16 +2,53 @@ import { request } from './client';
 import { Modulo, Aula, Exercicio } from '../types/courses';
 import { CANONICAL_MODULES } from '../data/canonical-modules';
 
+export interface DashboardAlunoResponse {
+  usuario: {
+    id: string;
+    nome: string;
+    email: string;
+    plano: string;
+  };
+  diagnostico?: any;
+  cronogramaSemanal?: any;
+  estatisticas: {
+    aulasConcluidas: number;
+    exerciciosFeitos: number;
+    taxaAcerto: number;
+    trilhasAtivas: number;
+    sequencia: number;
+  };
+  cursos: Array<{
+    id: string;
+    nome: string;
+    totalAulas: number;
+    aulasConcluidas: number;
+    progresso: number;
+    aulas: Array<{
+      id: string;
+      titulo: string;
+      conteudo?: string;
+      concluida: boolean;
+    }>;
+  }>;
+  atividades: Array<{
+    id?: string;
+    tipo: string;
+    titulo: string;
+    data?: string;
+    criadoEm?: string;
+  }>;
+}
+
 export const coursesApi = {
   async getModules(): Promise<Modulo[]> {
     try {
       const remote = await request<any[]>('/api/materias');
       if (Array.isArray(remote) && remote.length > 0) {
-        // Se a API retornar matérias cadastradas, mesclamos com os módulos canônicos
         return CANONICAL_MODULES;
       }
     } catch {
-      // Fallback seguro para os 7 módulos canônicos locais
+      // Fallback seguro para os módulos canônicos locais
     }
     return CANONICAL_MODULES;
   },
@@ -26,9 +63,7 @@ export const coursesApi = {
       const url = moduloId ? `/api/exercicios?materia=${encodeURIComponent(moduloId)}` : '/api/exercicios';
       const list = await request<Exercicio[]>(url);
       if (Array.isArray(list) && list.length > 0) return list;
-    } catch {
-      // Fallback
-    }
+    } catch {}
 
     // Banco de questões canônicas
     return [
@@ -85,5 +120,23 @@ export const coursesApi = {
         explicacao: 'A crase é facultativa antes de pronomes possessivos femininos no singular acompanhados de substantivo (à minha professora ou a minha professora).'
       }
     ];
+  },
+
+  async concluirAula(aulaId: string): Promise<{ sucesso: boolean; mensagem?: string; concluida?: boolean; totalAulasConcluidas?: number }> {
+    return request<{ sucesso: boolean; mensagem?: string; concluida?: boolean; totalAulasConcluidas?: number }>(`/api/aluno/aulas/${aulaId}/concluir`, {
+      method: 'POST'
+    });
+  },
+
+  async getDashboardAluno(): Promise<DashboardAlunoResponse | null> {
+    try {
+      const res = await request<{ sucesso: boolean; dashboard: DashboardAlunoResponse }>('/api/dashboard/aluno');
+      if (res && res.sucesso && res.dashboard) {
+        return res.dashboard;
+      }
+    } catch (err) {
+      console.warn('Erro ao carregar dashboard do aluno:', err);
+    }
+    return null;
   }
 };

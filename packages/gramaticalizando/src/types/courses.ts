@@ -7,6 +7,8 @@ export interface Aula {
   duracao?: string;
   ordem: number;
   completa?: boolean;
+  videoUrl?: string;
+  materialPdfUrl?: string;
 }
 
 export interface Modulo {

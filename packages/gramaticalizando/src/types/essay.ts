@@ -16,6 +16,7 @@ export interface Redacao {
   status: 'pendente' | 'em_correcao' | 'corrigida';
   notaFinal?: number; // 0-1000
   criterios?: CriteriosNota;
+  competencias?: CriteriosNota;
   comentariosProfessor?: string;
   enviadaEm: string;
   corrigidaEm?: string;

@@ -28,6 +28,7 @@ import { ProfessorExercicios } from '../pages/professor/ProfessorExercicios';
 import { ProfessorSimulados } from '../pages/professor/ProfessorSimulados';
 import { ProfessorDiagnostico } from '../pages/professor/ProfessorDiagnostico';
 import { ProfessorMateriais } from '../pages/professor/ProfessorMateriais';
+import { ProfessorCronograma } from '../pages/professor/ProfessorCronograma';
 
 import { NotFoundPage } from '../pages/NotFoundPage';
 
@@ -72,6 +73,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/professor/simulados" element={<ProfessorSimulados />} />
         <Route path="/professor/diagnostico" element={<ProfessorDiagnostico />} />
         <Route path="/professor/redacoes" element={<ProfessorRedacoes />} />
+        <Route path="/professor/cronograma" element={<ProfessorCronograma />} />
         <Route path="/professor/materiais" element={<ProfessorMateriais />} />
       </Route>
 

@@ -205,7 +205,9 @@ export const StudentDiagnostico: React.FC = () => {
     let montado = true;
     const carregar = async () => {
       try {
-        const resp = await fetch('/api/diagnostico/questoes');
+        const resp = await fetch('/api/diagnostico/questoes', {
+          credentials: 'include'
+        });
         if (resp.ok) {
           const dados = await resp.json();
           if (dados && Array.isArray(dados.questoes) && dados.questoes.length > 0 && montado) {
@@ -257,26 +259,69 @@ export const StudentDiagnostico: React.FC = () => {
 
     // Formatar payload para submissão
     const payloadRespostas = questoes.map(q => ({
-      questaoId: q.id,
-      alternativa: respostas[q.id] || ''
+      questaoId: String(q.id),
+      resposta: respostas[q.id] || ''
     }));
 
     try {
-      const resp = await fetch('/api/diagnostico/processar', {
+      const resp = await fetch('/api/aluno/diagnostico/processar', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          ...(localStorage.getItem('token') ? { 'Authorization': `Bearer ${localStorage.getItem('token')}` } : {})
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ respostas: payloadRespostas })
+        credentials: 'include',
+        body: JSON.stringify({
+          foco: 'concursos',
+          horasSemanais: 6,
+          respostas: payloadRespostas
+        })
       });
 
       if (resp.ok) {
         const dados = await resp.json();
-        setResultado(dados);
-        setEtapa('resultado');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
+        if (dados && dados.sucesso && dados.diagnostico) {
+          const diag = dados.diagnostico;
+          const correcoes = Array.isArray(dados.correcoesIndividuais) ? dados.correcoesIndividuais : [];
+
+          const topicosDesemp: { [key: string]: { total: number; acertos: number } } = {};
+          if (diag.resultadosPorTopico) {
+            Object.keys(diag.resultadosPorTopico).forEach(k => {
+              const t = diag.resultadosPorTopico[k];
+              topicosDesemp[t.nome || k] = { total: t.total, acertos: t.acertos };
+            });
+          }
+
+          const gabarito = correcoes.map((c: any, idx: number) => ({
+            questaoId: c.questaoId || idx + 1,
+            enunciado: c.enunciado || `Questão ${idx + 1}`,
+            suaResposta: c.respostaAluno ? c.respostaAluno.toUpperCase() : 'Não respondida',
+            respostaCorreta: c.respostaCorreta ? c.respostaCorreta.toUpperCase() : 'A',
+            correta: !!c.acertou,
+            topico: c.topico || 'Geral',
+            explicacao: c.explicacao || 'Explicação da Professora Wilma Barbosa.'
+          }));
+
+          const nivelFormatado: 'Iniciante' | 'Intermediário' | 'Avançado' =
+            diag.nivel === 'Avançado' ? 'Avançado' : diag.nivel === 'Intermediário' ? 'Intermediário' : 'Iniciante';
+
+          setResultado({
+            score: diag.totalAcertos,
+            totalQuestoes: diag.totalQuestoes,
+            nivel: nivelFormatado,
+            recomendacoes: diag.lacunasIdentificadas && diag.lacunasIdentificadas.length > 0
+              ? diag.lacunasIdentificadas.map((lacuna: string) => `Reforçar estudo intensivo em: ${lacuna}`)
+              : ['Excelente! Mantenha a prática constante com simulados e redações.'],
+            pontosFortes: nivelFormatado === 'Avançado'
+              ? ['Domínio sólido da sintaxe, concordância e interpretação']
+              : ['Boa dedicação e leitura atenta dos enunciados'],
+            topicosDesempenho: topicosDesemp,
+            gabaritoComentado: gabarito
+          });
+
+          setEtapa('resultado');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
       }
     } catch (e) {
       console.warn('Processamento local seguro do diagnóstico disparado:', e);

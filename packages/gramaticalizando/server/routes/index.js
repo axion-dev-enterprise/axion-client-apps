@@ -12,6 +12,7 @@ const diagnosticoRoutes = require("./diagnostico.routes");
 const simuladosRoutes = require("./simulados.routes");
 const materiaisApoioRoutes = require("./materiais_apoio.routes");
 const vestibularRoutes = require("./vestibular.routes");
+const cronogramasRoutes = require("./cronogramas.routes");
 
 router.use(authRoutes);
 router.use("/admin", adminRoutes);
@@ -24,5 +25,6 @@ router.use(diagnosticoRoutes);
 router.use(simuladosRoutes);
 router.use(materiaisApoioRoutes);
 router.use(vestibularRoutes);
+router.use(cronogramasRoutes);
 
 module.exports = router;
