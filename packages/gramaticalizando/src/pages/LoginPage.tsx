@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, ArrowRight, ShieldCheck, GraduationCap } from 'lucide-react';
+import { Mail, Lock, ArrowRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Card } from '../components/ui/Card';
@@ -12,7 +12,7 @@ export const LoginPage: React.FC = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const { login, setDemoUser } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,12 +25,14 @@ export const LoginPage: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await login({ email, senha });
-      navigate('/home');
+      const loggedUser = await login({ email, senha });
+      if (loggedUser?.tipo === 'admin' || loggedUser?.perfil === 'professor') {
+        navigate('/professor');
+      } else {
+        navigate('/home');
+      }
     } catch (err: any) {
-      // Se a API retornar erro ou 404 (ex: banco ainda não semeado para esse e-mail),
-      // permitir entrada amigável com notificação e fallback
-      setError(err.message || 'Falha ao autenticar.');
+      setError(err.message || 'Falha ao autenticar. Verifique suas credenciais.');
     } finally {
       setIsLoading(false);
     }
@@ -43,7 +45,7 @@ export const LoginPage: React.FC = () => {
           Entrar na Plataforma
         </h2>
         <p style={{ fontSize: '0.875rem', color: '#64748b' }}>
-          Informe suas credenciais para continuar seus estudos
+          Informe suas credenciais para acessar seus estudos
         </p>
       </div>
 
@@ -95,49 +97,7 @@ export const LoginPage: React.FC = () => {
         </Button>
       </form>
 
-      {/* Demo fast-access switch */}
-      <div
-        style={{
-          marginTop: '1.75rem',
-          paddingTop: '1.5rem',
-          borderTop: '1px solid #e2e8f0',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.75rem'
-        }}
-      >
-        <span style={{ fontSize: '0.75rem', color: '#64748b', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-          Acesso Direto de Demonstração
-        </span>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            icon={<GraduationCap size={14} color="#6b21a8" />}
-            onClick={() => {
-              setDemoUser('aluno');
-              navigate('/home');
-            }}
-          >
-            Acesso Aluno
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            icon={<ShieldCheck size={14} color="#6b21a8" />}
-            onClick={() => {
-              setDemoUser('professor');
-              navigate('/professor');
-            }}
-          >
-            Acesso Professor
-          </Button>
-        </div>
-      </div>
-
-      <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: '#475569' }}>
+      <div style={{ marginTop: '1.75rem', paddingTop: '1.25rem', borderTop: '1px solid #e2e8f0', textAlign: 'center', fontSize: '0.875rem', color: '#475569' }}>
         Ainda não tem conta?{' '}
         <Link to="/registro" style={{ color: 'var(--accent)', fontWeight: 600 }}>
           Cadastre-se gratuitamente

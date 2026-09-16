@@ -20,7 +20,7 @@ import { useAuth } from '../../context/AuthContext';
 export const StudentHeader: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout, setDemoUser } = useAuth();
+  const { user, logout } = useAuth();
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   const tabs = [
@@ -177,35 +177,37 @@ export const StudentHeader: React.FC = () => {
                   <p style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-primary)' }}>{user?.nome}</p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user?.email}</p>
                 </div>
-                <button
-                  onClick={() => {
-                    setProfileDropdownOpen(false);
-                    navigate('/professor');
-                  }}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.625rem',
-                    padding: '0.5rem 0.75rem',
-                    fontSize: '0.875rem',
-                    color: 'var(--text-secondary)',
-                    borderRadius: 'var(--radius-sm)',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    width: '100%'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)';
-                    e.currentTarget.style.color = 'var(--accent)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = 'var(--text-secondary)';
-                  }}
-                >
-                  <Shield size={16} color="var(--accent)" />
-                  <span>Painel do Professor</span>
-                </button>
+                {(user?.tipo === 'admin' || user?.perfil === 'professor') && (
+                  <button
+                    onClick={() => {
+                      setProfileDropdownOpen(false);
+                      navigate('/professor');
+                    }}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.625rem',
+                      padding: '0.5rem 0.75rem',
+                      fontSize: '0.875rem',
+                      color: 'var(--text-secondary)',
+                      borderRadius: 'var(--radius-sm)',
+                      textAlign: 'left',
+                      cursor: 'pointer',
+                      width: '100%'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--bg-surface-2)';
+                      e.currentTarget.style.color = 'var(--accent)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
+                    }}
+                  >
+                    <Shield size={16} color="var(--accent)" />
+                    <span>Painel do Professor</span>
+                  </button>
+                )}
                 <button
                   onClick={() => {
                     setProfileDropdownOpen(false);

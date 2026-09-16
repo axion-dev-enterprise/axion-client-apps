@@ -91,7 +91,6 @@ async function login(req, res) {
 
         const usuarios = await lerArquivoJson(paths.USUARIOS);
         const usuario = usuarios.find(item =>
-            item.tipo !== "admin" &&
             String(item.email).toLowerCase() === email
         );
 
@@ -104,37 +103,42 @@ async function login(req, res) {
             return res.status(401).json({ sucesso: false, mensagem: "E-mail ou senha incorretos." });
         }
 
-        const estudos = garantirDadosEstudo(usuario);
-        estudos.ultimoAcesso = new Date().toISOString();
-        await salvarArquivoJson(paths.USUARIOS, usuarios);
+        const isAdmin = usuario.tipo === "admin";
 
-        // PERSISTÊNCIA DA SESSÃO SEGURA DO ALUNO
+        if (!isAdmin) {
+            const estudos = garantirDadosEstudo(usuario);
+            estudos.ultimoAcesso = new Date().toISOString();
+            await salvarArquivoJson(paths.USUARIOS, usuarios);
+        }
+
+        // PERSISTÊNCIA DA SESSÃO SEGURA
         req.session.usuario = {
             id: usuario.id,
             nome: usuario.nome,
             email: usuario.email,
-            tipo: "aluno",
-            perfil: "aluno",
-            plano: usuario.plano || "medio",
+            tipo: isAdmin ? "admin" : "aluno",
+            perfil: isAdmin ? "professor" : "aluno",
+            plano: usuario.plano || (isAdmin ? "pro" : "medio"),
             statusPlano: usuario.statusPlano || "ativo",
-            codigoReferencia: usuario.codigoReferencia || `GRAM-${String(usuario.id).replace(/\D/g, '').slice(0, 4) || '1001'}`
+            codigoReferencia: usuario.codigoReferencia || (isAdmin ? "GRAM-ADMIN" : `GRAM-${String(usuario.id).replace(/\D/g, '').slice(0, 4) || '1001'}`)
         };
 
         return res.json({
             sucesso: true,
+            autenticado: true,
             usuario: {
                 id: usuario.id,
                 nome: usuario.nome,
                 email: usuario.email,
-                tipo: "aluno",
-                perfil: "aluno",
+                tipo: req.session.usuario.tipo,
+                perfil: req.session.usuario.perfil,
                 plano: req.session.usuario.plano,
                 statusPlano: req.session.usuario.statusPlano,
                 codigoReferencia: req.session.usuario.codigoReferencia
             }
         });
     } catch (erro) {
-        console.error("Erro login aluno:", erro);
+        console.error("Erro login:", erro);
         return res.status(500).json({ sucesso: false, mensagem: "Erro interno do servidor." });
     }
 }

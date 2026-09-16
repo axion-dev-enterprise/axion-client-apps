@@ -56,36 +56,6 @@ export const ProfessorAlunos: React.FC = () => {
         }
       } catch {}
 
-      // Se ainda estiver totalmente vazio em ambiente estático, carregar demonstrativo seguro
-      if (listaBase.length === 0) {
-        listaBase = [
-          {
-            id: '1',
-            nome: 'Ana Beatriz Souza',
-            email: 'ana.beatriz@email.com',
-            plano: 'pro',
-            statusPlano: 'ativo',
-            codigoReferencia: 'GRAM-4821',
-            criadoEm: new Date().toISOString(),
-            aulasConcluidas: 12,
-            exerciciosConcluidos: 6,
-            taxaAcerto: 85
-          },
-          {
-            id: '2',
-            nome: 'Carlos Eduardo Lima',
-            email: 'carlos.lima@email.com',
-            plano: 'medio',
-            statusPlano: 'pendente',
-            codigoReferencia: 'GRAM-7924',
-            criadoEm: new Date().toISOString(),
-            aulasConcluidas: 0,
-            exerciciosConcluidos: 0,
-            taxaAcerto: 0
-          }
-        ];
-      }
-
       setAlunos(listaBase);
       if (showNotification) {
         showToast('Lista de matrículas atualizada com sucesso!', 'success');

@@ -79,30 +79,5 @@
       "dataLimite": "2026-12-20"
     }
   ],
-  "redacoes": [
-    {
-      "id": "vest-red-01",
-      "alunoId": "aluno-demo",
-      "alunoNome": "Aluno Demo",
-      "alunoEmail": "aluno@gramaticalizando.com.br",
-      "temaId": "vest-tema-01",
-      "temaTitulo": "A democratização do acesso aos avanços da inteligência artificial e a inclusão digital no Brasil",
-      "vestibular": "ENEM",
-      "arquivoNome": "redacao_ia_inclusao_digital.pdf",
-      "arquivoUrl": "",
-      "texto": "Na contemporaneidade, a evolução exponencial dos algoritmos de inteligência artificial consolida-se como vetor determinante para a produtividade socioeconômica. Contudo, no contexto brasileiro, tal transformação encontra um entrave histórico: a desigualdade no acesso às tecnologias da informação, o que aprofunda o abismo entre classes sociais. Desse modo, faz-se premente analisar a ineficiência estatal em promover a infraestrutura escolar necessária e a carência de letramento digital como catalisadores dessa disparidade.\n\nEm primeiro plano, convém destacar a negligência governamental no que tange à universalização da internet de alta velocidade em polos periféricos e rurais. Sob a ótica do filósofo Zygmunt Bauman, a pós-modernidade é marcada por uma \"cidadania mutilada\", na qual indivíduos são excluídos das esferas mais dinâmicas do saber por carências estruturais. No Brasil, milhares de escolas públicas sequer contam com laboratórios de informática operacionais, inviabilizando que jovens vulneráveis desenvolvam competências basilares no manuseio ético e crítico de IAs generativas.\n\nAdemais, a ausência de diretrizes pedagógicas voltadas à alfabetização algorítmica perpetua a alienação social. De acordo com o educador Paulo Freire, a educação deve capacitar o homem para a leitura crítica do mundo e de suas ferramentas. Quando o ensino restringe-se a abordagens arcaicas, sem contextualizar os impactos da automação no mercado futuro, a tecnologia deixa de ser instrumento de emancipação e passa a ser mecanismo de estratificação, favorecendo apenas quem pode custear capacitações em centros privados de excelência.\n\nPortanto, medidas urgentes são imprescindíveis para mitigar esse cenário. Cabe ao Ministério da Educação, em consonância com o Ministério das Comunicações, instituir o \"Programa Nacional de Inclusão Tecnológica e IA nas Escolas\", por meio de repasses orçamentários dedicados à compra de equipamentos de ponta e capacitação continuada do corpo docente em ferramentas de inteligência artificial. Com essa intervenção articulada, o Brasil caminhará rumo à verdadeira equidade de oportunidades preconizada na Constituição de 1988.",
-      "status": "corrigida",
-      "notaFinal": 960,
-      "criterios": {
-        "c1": 180,
-        "c2": 200,
-        "c3": 180,
-        "c4": 200,
-        "c5": 200
-      },
-      "feedbackProfessora": "Excelente produção dissertativa-argumentativa! A tese é clara, a estrutura sintática é refinada e o repertório legitimado (Bauman e Paulo Freire) articulou-se com fluidez e pertinência ao tema. A proposta de intervenção é completa com agente, ação, meio, efeito e detalhamento primoroso. Pequenos desvios na C1 quanto à regência em períodos complexos no segundo parágrafo, mas nada que comprometa o brilhantismo do texto. Parabéns pelo empenho!",
-      "enviadoEm": "2026-09-12T18:20:00.000Z",
-      "corrigidoEm": "2026-09-13T14:10:00.000Z"
-    }
-  ]
+  "redacoes": []
 }

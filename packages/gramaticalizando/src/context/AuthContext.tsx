@@ -7,10 +7,9 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   isAuthenticated: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
+  login: (credentials: LoginCredentials) => Promise<User>;
   register: (credentials: RegisterCredentials) => Promise<void>;
   logout: () => Promise<void>;
-  setDemoUser: (role: 'aluno' | 'professor') => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -76,7 +75,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(usr);
         localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
         showToast(`Bem-vindo de volta, ${usr.nome}!`, 'success');
+        return usr;
       }
+      throw new Error('Falha ao autenticar.');
     } catch (err: any) {
       showToast(err.message || 'Erro ao realizar login', 'error');
       throw err;
@@ -115,31 +116,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     showToast('Sessão encerrada com sucesso.', 'info');
   };
 
-  const setDemoUser = (role: 'aluno' | 'professor') => {
-    const demoUser: User = role === 'professor' ? {
-      id: 'prof-wilma-admin',
-      nome: 'Profª Wilma Barbosa',
-      email: 'professora@gramaticalizando.com.br',
-      perfil: 'professor',
-      tipo: 'admin',
-      plano: 'pro',
-      statusPlano: 'ativo',
-      codigoReferencia: 'GRAM-ADMIN'
-    } : {
-      id: 'aluno-demo',
-      nome: 'Aluno Demonstração',
-      email: 'aluno@gramaticalizando.com.br',
-      perfil: 'aluno',
-      tipo: 'aluno',
-      plano: 'medio',
-      statusPlano: 'pendente',
-      codigoReferencia: 'GRAM-DEMO'
-    };
-    setUser(demoUser);
-    localStorage.setItem('gramaticalizando_user', JSON.stringify(demoUser));
-    showToast(`Ambiente demonstrativo ativado como ${role === 'professor' ? 'Profª Wilma' : 'Aluno'}!`, 'info');
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -148,8 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isAuthenticated: !!user,
         login,
         register,
-        logout,
-        setDemoUser
+        logout
       }}
     >
       {children}

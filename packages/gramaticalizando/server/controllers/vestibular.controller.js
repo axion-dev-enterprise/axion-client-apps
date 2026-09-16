@@ -121,9 +121,11 @@ async function obterConteudoVestibular(req, res) {
 async function listarRedacoesAluno(req, res) {
     try {
         const usuario = obterUsuarioAutenticado(req);
+        if (!usuario || !usuario.id) {
+            return res.json({ sucesso: true, redacoes: [] });
+        }
         const dados = await obterDadosVestibular();
-        const alunoId = usuario?.id || "aluno-demo";
-        const redacoesAluno = dados.redacoes.filter(r => r.alunoId === alunoId);
+        const redacoesAluno = dados.redacoes.filter(r => r.alunoId === usuario.id);
         return res.json({
             sucesso: true,
             redacoes: redacoesAluno
@@ -137,6 +139,9 @@ async function listarRedacoesAluno(req, res) {
 async function enviarRedacaoAluno(req, res) {
     try {
         const usuario = obterUsuarioAutenticado(req);
+        if (!usuario || !usuario.id) {
+            return res.status(401).json({ sucesso: false, mensagem: "Faça login para submeter redações." });
+        }
         const { temaId, vestibular, texto, arquivoNome, arquivoUrl } = req.body || {};
 
         if (!temaId) {
@@ -151,9 +156,9 @@ async function enviarRedacaoAluno(req, res) {
 
         const novaRedacao = {
             id: "vest-red-" + crypto.randomUUID().slice(0, 8),
-            alunoId: usuario?.id || "aluno-demo",
-            alunoNome: usuario?.nome || "Aluno Dedicado",
-            alunoEmail: usuario?.email || "aluno@gramaticalizando.com.br",
+            alunoId: usuario.id,
+            alunoNome: usuario.nome || "Aluno",
+            alunoEmail: usuario.email || "",
             temaId,
             temaTitulo: tema ? tema.titulo : "Tema Geral de Vestibular",
             vestibular: vestibular || tema?.vestibular || "Geral",
