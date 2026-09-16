@@ -114,10 +114,10 @@ export const LandingPage: React.FC = () => {
     },
     {
       id: 'phe',
-      nome: '~ Phe 🥋',
+      nome: 'Felipe (Phe)',
       iniciais: 'P',
       avatarBg: '#16a34a',
-      subtitulo: '+55 11 96630-1215 • Grupo de Estudos',
+      subtitulo: 'Aluno Aprovado • Grupo de Estudos',
       concurso: 'PMSP',
       nota: 'Aprovado com Folga',
       mensagens: [
@@ -167,10 +167,10 @@ export const LandingPage: React.FC = () => {
     },
     {
       id: 'victoria',
-      nome: '~ Victoria',
+      nome: 'Victoria',
       iniciais: 'V',
       avatarBg: '#ec4899',
-      subtitulo: '+55 13 9... • Mentoria',
+      subtitulo: 'Aluna de Mentoria • Redação',
       concurso: 'Concurso Público',
       nota: 'Nota 34,00 na Redação',
       mensagens: [
