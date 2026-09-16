@@ -13,7 +13,8 @@ import {
   ChevronRight,
   HelpCircle,
   FileCheck,
-  GraduationCap
+  GraduationCap,
+  Check
 } from 'lucide-react';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -22,12 +23,12 @@ import { useAuth } from '../../context/AuthContext';
 
 interface Alternativa {
   id: string;
-  letra: string;
+  letra?: string;
   texto: string;
 }
 
 interface Questao {
-  id: number;
+  id: number | string;
   enunciado: string;
   textoApoio?: string;
   alternativas: Alternativa[];
@@ -44,7 +45,7 @@ interface DiagnosticoResultado {
   pontosFortes: string[];
   topicosDesempenho: { [key: string]: { total: number; acertos: number } };
   gabaritoComentado: {
-    questaoId: number;
+    questaoId: number | string;
     enunciado: string;
     suaResposta: string;
     respostaCorreta: string;
@@ -193,7 +194,7 @@ export const StudentDiagnostico: React.FC = () => {
 
   const [questoes, setQuestoes] = useState<Questao[]>(QUESTOES_FALLBACK);
   const [carregandoQuestoes, setCarregandoQuestoes] = useState(true);
-  const [respostas, setRespostas] = useState<{ [questaoId: number]: string }>({});
+  const [respostas, setRespostas] = useState<{ [questaoId: string]: string }>({});
   const [indiceAtual, setIndiceAtual] = useState(0);
   const [etapa, setEtapa] = useState<'intro' | 'quiz' | 'processando' | 'resultado'>('intro');
   const [resultado, setResultado] = useState<DiagnosticoResultado | null>(null);
@@ -226,16 +227,36 @@ export const StudentDiagnostico: React.FC = () => {
     };
   }, []);
 
+  const getAlternativaId = (alt: Alternativa, idx: number): string => {
+    if (alt.id) return String(alt.id).trim().toLowerCase();
+    if (alt.letra) return String(alt.letra).trim().toLowerCase();
+    return ['a', 'b', 'c', 'd', 'e'][idx] || String(idx);
+  };
+
+  const getAlternativaLetra = (alt: Alternativa, idx: number): string => {
+    if (alt.letra && typeof alt.letra === 'string' && alt.letra.trim()) {
+      return alt.letra.trim().toUpperCase();
+    }
+    if (alt.id) {
+      const str = String(alt.id).trim();
+      if (str.length === 1) return str.toUpperCase();
+      const match = str.match(/[a-zA-Z]$/);
+      if (match) return match[0].toUpperCase();
+    }
+    const letras = ['A', 'B', 'C', 'D', 'E'];
+    return letras[idx] || String(idx + 1);
+  };
+
   const questaoAtual = questoes[indiceAtual] || questoes[0];
   const totalQuestoes = questoes.length;
-  const totalRespondidas = Object.keys(respostas).length;
+  const totalRespondidas = Object.values(respostas).filter(Boolean).length;
   const progressoPercent = Math.round(((indiceAtual + 1) / totalQuestoes) * 100);
 
-  const selecionarAlternativa = (letra: string) => {
+  const selecionarAlternativa = (valor: string) => {
     if (!questaoAtual) return;
     setRespostas(prev => ({
       ...prev,
-      [questaoAtual.id]: letra
+      [String(questaoAtual.id)]: valor.toLowerCase()
     }));
   };
 
@@ -260,7 +281,7 @@ export const StudentDiagnostico: React.FC = () => {
     // Formatar payload para submissão
     const payloadRespostas = questoes.map(q => ({
       questaoId: String(q.id),
-      resposta: respostas[q.id] || ''
+      resposta: respostas[String(q.id)] || respostas[q.id] || ''
     }));
 
     try {
@@ -330,7 +351,7 @@ export const StudentDiagnostico: React.FC = () => {
     // Fallback pedagógico rigoroso caso a API falhe
     let score = 0;
     const gabaritoComentado = questoes.map(q => {
-      const suaResposta = respostas[q.id] || '';
+      const suaResposta = respostas[String(q.id)] || respostas[q.id] || '';
       const respostaCorreta = q.respostaCorreta || 'A';
       const correta = suaResposta.toUpperCase() === respostaCorreta.toUpperCase();
       if (correta) score++;
@@ -682,25 +703,35 @@ export const StudentDiagnostico: React.FC = () => {
 
               {/* Lista de Alternativas */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-                {questaoAtual.alternativas.map((alt) => {
-                  const selecionada = respostas[questaoAtual.id] === alt.letra;
+                {questaoAtual.alternativas.map((alt, idx) => {
+                  const altId = getAlternativaId(alt, idx);
+                  const altLetra = getAlternativaLetra(alt, idx);
+                  const respAtual = respostas[String(questaoAtual.id)] || respostas[questaoAtual.id];
+                  const selecionada = Boolean(
+                    respAtual &&
+                    (respAtual.toLowerCase() === altId ||
+                     respAtual.toLowerCase() === altLetra.toLowerCase())
+                  );
+
                   return (
                     <button
-                      key={alt.id}
+                      key={alt.id || idx}
                       type="button"
-                      onClick={() => selecionarAlternativa(alt.letra)}
+                      onClick={() => selecionarAlternativa(altId)}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
+                        justifyContent: 'space-between',
                         gap: '1rem',
                         width: '100%',
-                        padding: '1rem 1.25rem',
+                        padding: '1.1rem 1.25rem',
                         textAlign: 'left',
-                        backgroundColor: selecionada ? '#faf5ff' : '#ffffff',
-                        border: selecionada ? '2px solid #6b21a8' : '1px solid #cbd5e1',
-                        borderRadius: '10px',
+                        backgroundColor: selecionada ? '#f5f3ff' : '#ffffff',
+                        border: selecionada ? '2px solid #7c3aed' : '1.5px solid #e2e8f0',
+                        borderRadius: '12px',
                         cursor: 'pointer',
                         transition: 'all 0.15s ease',
+                        boxShadow: selecionada ? '0 4px 14px rgba(124, 58, 237, 0.12)' : 'none',
                         outline: 'none'
                       }}
                       onMouseEnter={(e) => {
@@ -711,38 +742,62 @@ export const StudentDiagnostico: React.FC = () => {
                       }}
                       onMouseLeave={(e) => {
                         if (!selecionada) {
-                          e.currentTarget.style.borderColor = '#cbd5e1';
+                          e.currentTarget.style.borderColor = '#e2e8f0';
                           e.currentTarget.style.backgroundColor = '#ffffff';
                         }
                       }}
                     >
-                      <span
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
+                        <span
+                          style={{
+                            width: '36px',
+                            height: '36px',
+                            borderRadius: '10px',
+                            backgroundColor: selecionada ? '#7c3aed' : '#f1f5f9',
+                            border: selecionada ? '1.5px solid #6d28d9' : '1.5px solid #cbd5e1',
+                            color: selecionada ? '#ffffff' : '#334155',
+                            fontWeight: 800,
+                            fontSize: '0.9375rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            boxShadow: selecionada ? '0 2px 6px rgba(124, 58, 237, 0.3)' : 'none'
+                          }}
+                        >
+                          {altLetra}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: '0.975rem',
+                            color: selecionada ? '#4c1d95' : '#1e293b',
+                            fontWeight: selecionada ? 600 : 450,
+                            lineHeight: 1.55
+                          }}
+                        >
+                          {alt.texto}
+                        </span>
+                      </div>
+
+                      {/* Indicador Checked Unmistakable */}
+                      <div
                         style={{
-                          width: '32px',
-                          height: '32px',
-                          borderRadius: '8px',
-                          backgroundColor: selecionada ? '#6b21a8' : '#f1f5f9',
-                          color: selecionada ? '#ffffff' : '#475569',
-                          fontWeight: 700,
-                          fontSize: '0.875rem',
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '50%',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          flexShrink: 0
+                          border: selecionada ? '2px solid #7c3aed' : '2px solid #cbd5e1',
+                          backgroundColor: selecionada ? '#7c3aed' : '#ffffff',
+                          flexShrink: 0,
+                          transition: 'all 0.15s ease'
                         }}
                       >
-                        {alt.letra}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: '0.9375rem',
-                          color: selecionada ? '#581c87' : '#1e293b',
-                          fontWeight: selecionada ? 600 : 400,
-                          lineHeight: 1.5
-                        }}
-                      >
-                        {alt.texto}
-                      </span>
+                        {selecionada ? (
+                          <Check size={14} color="#ffffff" strokeWidth={3} />
+                        ) : null}
+                      </div>
                     </button>
                   );
                 })}
@@ -768,26 +823,30 @@ export const StudentDiagnostico: React.FC = () => {
               </Button>
 
               <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {questoes.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setIndiceAtual(idx)}
-                    style={{
-                      width: '32px',
-                      height: '32px',
-                      borderRadius: '6px',
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      border: idx === indiceAtual ? '2px solid #6b21a8' : '1px solid #e2e8f0',
-                      backgroundColor: respostas[questoes[idx].id] ? '#f3e8ff' : '#ffffff',
-                      color: idx === indiceAtual ? '#6b21a8' : respostas[questoes[idx].id] ? '#7e22ce' : '#64748b',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {idx + 1}
-                  </button>
-                ))}
+                {questoes.map((_, idx) => {
+                  const qId = questoes[idx].id;
+                  const respondida = Boolean(respostas[String(qId)] || respostas[qId]);
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setIndiceAtual(idx)}
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '6px',
+                        fontSize: '0.75rem',
+                        fontWeight: 700,
+                        border: idx === indiceAtual ? '2px solid #6b21a8' : '1px solid #e2e8f0',
+                        backgroundColor: respondida ? '#f3e8ff' : '#ffffff',
+                        color: idx === indiceAtual ? '#6b21a8' : respondida ? '#7e22ce' : '#64748b',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
               </div>
 
               {indiceAtual < totalQuestoes - 1 ? (

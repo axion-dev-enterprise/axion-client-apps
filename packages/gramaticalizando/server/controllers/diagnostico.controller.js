@@ -163,7 +163,11 @@ async function obterQuestoes(req, res) {
             topico: q.topico,
             nomeTopico: q.nomeTopico,
             enunciado: q.enunciado,
-            alternativas: q.alternativas
+            alternativas: (q.alternativas || []).map((alt, idx) => ({
+                id: alt.id || ["a", "b", "c", "d", "e"][idx],
+                letra: (alt.letra || alt.id || ["A", "B", "C", "D", "E"][idx]).toUpperCase(),
+                texto: alt.texto
+            }))
         }));
 
         return res.json({
