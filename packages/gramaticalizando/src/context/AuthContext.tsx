@@ -16,7 +16,19 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      const saved = localStorage.getItem('gramaticalizando_user');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          ...parsed,
+          perfil: parsed.perfil || (parsed.tipo === 'admin' ? 'professor' : 'aluno')
+        };
+      }
+    } catch {}
+    return null;
+  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { showToast } = useToast();
 
@@ -33,29 +45,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(usr);
           localStorage.setItem('gramaticalizando_user', JSON.stringify(usr));
         } else {
-          // Checar se há usuário em localStorage de fallback
-          const saved = localStorage.getItem('gramaticalizando_user');
-          if (saved) {
-            const parsed = JSON.parse(saved);
-            const usr: User = {
-              ...parsed,
-              perfil: parsed.perfil || (parsed.tipo === 'admin' ? 'professor' : 'aluno')
-            };
-            setUser(usr);
-          }
+          setUser(null);
+          localStorage.removeItem('gramaticalizando_user');
         }
-      } catch {
-        const saved = localStorage.getItem('gramaticalizando_user');
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
-            const usr: User = {
-              ...parsed,
-              perfil: parsed.perfil || (parsed.tipo === 'admin' ? 'professor' : 'aluno')
-            };
-            setUser(usr);
-          } catch {}
-        }
+      } catch (err) {
+        console.warn('Falha transitória na verificação de sessão:', err);
       } finally {
         setIsLoading(false);
       }

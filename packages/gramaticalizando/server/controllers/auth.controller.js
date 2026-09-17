@@ -189,10 +189,10 @@ async function adminLogin(req, res) {
 }
 
 function adminMe(req, res) {
-    if (!req.session?.usuario || req.session.usuario.tipo !== "admin") {
+    if (!req.session?.usuario || (req.session.usuario.tipo !== "admin" && req.session.usuario.perfil !== "professor")) {
         return res.status(401).json({ sucesso: false, autenticado: false, mensagem: "Não autenticado." });
     }
-    const usr = { ...req.session.usuario, perfil: "professor" };
+    const usr = { ...req.session.usuario, tipo: "admin", perfil: "professor" };
     return res.json({ sucesso: true, autenticado: true, usuario: usr });
 }
 
@@ -205,14 +205,18 @@ async function alunoMe(req, res) {
         const usuarios = await lerArquivoJson(paths.USUARIOS);
         const atual = usuarios.find(u => u.id === req.session.usuario.id);
         if (atual) {
-            const plano = atual.plano || "medio";
-            const statusPlano = atual.statusPlano || (atual.tipo === 'admin' ? "ativo" : "pendente");
-            const codigoReferencia = atual.codigoReferencia || `GRAM-${String(atual.id).replace(/\D/g, '').slice(0, 4) || '1001'}`;
+            const isAdmin = atual.tipo === "admin" || atual.perfil === "professor" || req.session.usuario.tipo === "admin" || req.session.usuario.perfil === "professor";
+            const tipo = isAdmin ? "admin" : (atual.tipo || "aluno");
+            const perfil = isAdmin ? "professor" : (atual.perfil || "aluno");
+            const plano = atual.plano || (isAdmin ? "pro" : "medio");
+            const statusPlano = atual.statusPlano || (isAdmin ? "ativo" : "pendente");
+            const codigoReferencia = atual.codigoReferencia || (isAdmin ? "GRAM-ADMIN" : `GRAM-${String(atual.id).replace(/\D/g, '').slice(0, 4) || '1001'}`);
 
+            req.session.usuario.tipo = tipo;
+            req.session.usuario.perfil = perfil;
             req.session.usuario.plano = plano;
             req.session.usuario.statusPlano = statusPlano;
             req.session.usuario.codigoReferencia = codigoReferencia;
-            req.session.usuario.perfil = "aluno";
 
             return res.json({
                 sucesso: true,
@@ -221,8 +225,8 @@ async function alunoMe(req, res) {
                     id: atual.id,
                     nome: atual.nome,
                     email: atual.email,
-                    tipo: "aluno",
-                    perfil: "aluno",
+                    tipo,
+                    perfil,
                     plano,
                     statusPlano,
                     codigoReferencia
@@ -230,10 +234,15 @@ async function alunoMe(req, res) {
             });
         }
     } catch (e) {
-        console.warn("Erro ao buscar dados atualizados do aluno:", e);
+        console.warn("Erro ao buscar dados atualizados do usuário:", e);
     }
 
-    const usr = { ...req.session.usuario, perfil: req.session.usuario.tipo === 'admin' ? 'professor' : 'aluno' };
+    const isAdmin = req.session.usuario.tipo === "admin" || req.session.usuario.perfil === "professor";
+    const usr = {
+        ...req.session.usuario,
+        tipo: isAdmin ? "admin" : "aluno",
+        perfil: isAdmin ? "professor" : "aluno"
+    };
     return res.json({ sucesso: true, autenticado: true, usuario: usr });
 }
 
